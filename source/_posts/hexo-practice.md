@@ -14,7 +14,9 @@ tags:
 #### 下载
 - Node和Git必须要有
 - `npm install -g hexo-cli`下载hexo的脚手架,可以全局使用hexo命令
- ---
+
+---
+
 #### 建站
 
 - `hexo init <folder>`初始化文件夹，如果不写folder，那么则在当前目录初始化，如果写了folder则在当前目录创建这个folder，并在folder里面初始化
@@ -61,6 +63,8 @@ tags:
     - `npm install hexo-material`采用npm方式安装。也可以在`theme`文件夹下面采用`git clone`下载，缺点是很慢，优点是方便更新
     - `npm update hexo-material`，npm更新。如果是`git clone`的话，直接拉取远程分支更新。
     - `npm`方式安装后的库在`node_modules`，需要将它复制出来到`theme`文件夹下，然后改名为 __material__
+
+---
 
 ## 分支策略
 - hexo分支用来保存源代码和编辑文章，每次编辑完文章首先应该推送hexo分支到远端，然后切换到master分支，合并hexo分支。
