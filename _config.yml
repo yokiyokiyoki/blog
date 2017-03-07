@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Blog
-subtitle:Yoki
-description:Yoki的博客，记录生活和技术
-author: Yoki
+title: Hexo
+subtitle: Yoki
+description: Yoki的博客，记录生活和技术
+author: John Doe
 language:
 timezone:
 
@@ -68,4 +68,6 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/yokiyokiyoki/blog.git
+  branch: master
