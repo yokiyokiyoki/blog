@@ -1,7 +1,7 @@
 ---
 title: Hexo的开始
 date: 2017-03-07 15:29:00
-tags:
+tags: Hexo
 ---
 
 # 基于Hexo的博客

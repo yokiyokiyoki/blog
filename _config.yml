@@ -5,9 +5,9 @@
 # Site
 title: Blog
 subtitle: Yoki
-description: Yoki的博客，记录生活和技术
+description: 云在青天水在瓶
 author: Yoki
-language: zh-CN
+language: zh-Hans
 timezone:
 
 # URL
@@ -65,7 +65,16 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 
 theme: next
-
+# 头像
+avatar: /images/avatar.jpg 
+# JiaThis 分享服务
+jiathis: true
+# 站内搜索
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
