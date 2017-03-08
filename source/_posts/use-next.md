@@ -1,9 +1,9 @@
 ---
-title: use-next
+title: next主题使用
 date: 2017-03-08 14:37:41
 tags: Hexo
 ---
-# next主题初步使用
+# 初步使用
 
 ## 选择Scheme
 > 目前支持三种Scheme
