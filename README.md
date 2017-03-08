@@ -5,5 +5,3 @@
 ## 分支作用
 hexo分支用来保存源代码，master分支用来发布。
 
-## 博客地址
-[blog](https://yokiyokiyoki.github.io/blog/)
