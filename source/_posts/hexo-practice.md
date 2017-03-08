@@ -38,6 +38,8 @@ tags:
 | author | 本作者啦~ |
 | language | 网站语言，这里是zh-CN |
 | timezone | 网站时区，默认是电脑的时区 |
+| url | 这里是https://yokiyokiyoki.github.io/blog/ |
+| root | 根目录是/blog/，这里是css和js找到资源的地方 |
 
 2. __拓展__
 
@@ -57,15 +59,15 @@ tags:
 ---
 
 ## 主题
->采用了material原质主题，[GitHub](https://github.com/viosey/hexo-theme-material)和[官网](https://material.viosey.com/)
+>采用了next主题，[GitHub](https://github.com/iissnan/hexo-theme-next)和[官网](http://theme-next.iissnan.com/)
 
--  安装「Material」
-    - `npm install hexo-material`采用npm方式安装。也可以在`theme`文件夹下面采用`git clone`下载，缺点是很慢，优点是方便更新
-    - `npm update hexo-material`，npm更新。如果是`git clone`的话，直接拉取远程分支更新。
-    - `npm`方式安装后的库在`node_modules`，需要将它复制出来到`theme`文件夹下，然后改名为 __material__
+-  安装「Next」
+    - 在`theme`文件夹下面采用`git clone`下载，缺点是很慢，优点是方便更新
+    - 更新：直接拉取远程分支更新。
+    - 在`theme`文件夹下，然后改名为 __next__
 
 ---
 
 ## 分支策略
 - hexo分支用来保存源代码和编辑文章，每次编辑完文章首先应该推送hexo分支到远端，然后切换到master分支，合并hexo分支。
-- master分支用来部署静态页面。先执行`hexo g`再`hexo d`
+- master分支用来部署静态页面。先`hexo clean`然后执行`hexo g`最后`hexo d`
