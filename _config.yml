@@ -67,8 +67,7 @@ pagination_dir: page
 theme: next
 # 头像
 avatar: /images/avatar.jpg 
-# JiaThis 分享服务
-jiathis: true
+
 # 站内搜索
 search:
   path: search.xml
