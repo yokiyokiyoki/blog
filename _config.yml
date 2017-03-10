@@ -67,7 +67,6 @@ pagination_dir: page
 theme: next
 # 头像
 avatar: /images/avatar.jpg 
-
 # 站内搜索
 search:
   path: search.xml

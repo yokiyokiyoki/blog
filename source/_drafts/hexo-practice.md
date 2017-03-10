@@ -71,3 +71,10 @@ tags: Hexo
 ## 分支策略
 - hexo分支用来保存源代码和编辑文章，每次编辑完文章首先应该推送hexo分支到远端，然后切换到master分支，合并hexo分支。
 - master分支用来部署静态页面。先`hexo clean`然后执行`hexo g`最后`hexo d`
+
+## 私密文章
+> 草稿其实就是相当于很多博客都有的`私密文章`功能
+
+- `hexo new draft "draftName"`会在source/_drafts目录下生成一个文件，但是这个文件不被显示在页面上，链接也访问不到。也就是说如果你想把某一篇文章移除显示，又不舍得删除，可以把它移动到_drafts目录之中。
+- 如果希望强行预览草稿，更改配置文件。`reder_drafts:true`。或者`hexo server --drafts`启动命令行
+- 也可以发布草稿，`hexo publish [layout] <title>`,`layout` 来指定布局
