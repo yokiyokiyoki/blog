@@ -68,7 +68,7 @@ tags: Hexo
 
 ---
 
-## 分支策略
+## 分支发布策略
 - hexo分支用来保存源代码和编辑文章，每次编辑完文章首先应该推送hexo分支到远端，然后切换到master分支，合并hexo分支。
 - master分支用来部署静态页面。先`hexo clean`然后执行`hexo g`最后`hexo d`
 

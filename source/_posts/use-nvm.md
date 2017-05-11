@@ -7,11 +7,14 @@ tags: "node"
 # Node Version Manager（node版本管理）
 
 ## 使用nvm安装和管理node
-> node版本更新很快，为了能在版本之间迅速切换，我们要使用nvm来安装和管理。
+> node版本更新很快，为了能在版本之间迅速切换，我们要使用nvm来安装和管理。<br>
+用nvm下载了相应的node也会下载相应的npm进行管理
 
 #### 安装nvm
 
 我们可以从[Github](https://github.com/coreybutler/nvm-windows)下载
+
+默认安装路径是`C:\Users\Administrator\AppData\Roaming\nvm`，存放我们下载的各个版本的node
 > 验证安装，打开控制台，输入`nvm`,看是否输出所有命令
 
 #### 命令
