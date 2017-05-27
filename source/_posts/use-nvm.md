@@ -2,6 +2,7 @@
 title: 使用nvm
 date: 2017-03-10 11:04:09
 tags: "node"
+comments: false
 ---
 
 # Node Version Manager（node版本管理）

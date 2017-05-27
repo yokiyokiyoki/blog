@@ -2,6 +2,7 @@
 title: 使用promise
 date: 2017-05-17 15:16:13
 tags: "ES6"
+comments: false
 ---
 ### Promise
 > Promise作为ES6的特性，可以很好地创建异步工作流

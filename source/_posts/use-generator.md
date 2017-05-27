@@ -2,6 +2,7 @@
 title: Generator函数
 date: 2017-05-23 15:04:59
 tags: 'ES6'
+comments: false
 ---
 ### Generator函数
 > generator是生成器。generator可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。

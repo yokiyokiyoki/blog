@@ -1,7 +1,8 @@
 ---
 title: next主题使用
 date: 2017-03-08 14:37:41
-tags: Hexo
+tags: "Hexo"
+comments: false
 ---
 # 初步使用
 

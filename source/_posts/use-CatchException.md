@@ -2,6 +2,7 @@
 title: 异常
 date: 2017-05-18 15:59:06
 tags: "ES6"
+comments: false
 ---
 ### throw
 > 用来抛出一个异常，throw expression
