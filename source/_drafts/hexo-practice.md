@@ -52,6 +52,7 @@ comments: false
 ---
 
 #### 命令
+- `hexo new ..`写新的日志
 - `hexo g`生成静态文件,不简写的话是`hexo generate`
 - `hexo d`部署到`github`，不简写的话是`hexo deploy`
 - `hexo s`本地启动服务预览，不简写的话是`hexo server`
