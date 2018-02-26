@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[2018]]></title>
+    <url>%2Fblog%2F2018%2F02%2F25%2F2018%2F</url>
+    <content type="text"><![CDATA[总结与展望2017总结 工作上 官网方面：17年1月进入到公司，当时正值官网重构，组长为了锻炼我，便让我参与到了官网的重构当中。 产品方面：官网完成之后，雷达刚好升级2.0，我去负责其中两个模块的迁移。之后一直负责雷达的开发，维护过立方，聚合，接触了很多公司的产品。 项目方面：期间维护MIG系统，并且重构了整个DBA，能更快地迁移类似的模块。后来参与研发ipsos雷达。 学习上 关于vue：这一年，也算写了大量的vue代码，但vue封装了大量的js代码，屏蔽底层实现细节，所以我很清楚会写vue并不算什么，在前端框架日新月异的今天，只有深入地了解并掌握其中原理，才能以不变应万变。 关于可视化方向：由于echarts底层封装实在是过于复杂，也没有仔细去研究，只能去应用它的api，这是我所遗憾的地方。 关于构建工具：先是接触了gulp，但并不是了解得很清楚。而对于webpack这一块，配置得也算还可以，也大概知晓构建工具在前端方面的应用，但是我觉得不要满足于只做一个配置工程师，知道思想最为重要，要知道为什么会有压缩代码，合并请求等操作。 关于读书：喜欢看人物传记，比如爱因斯坦。物理学和哲学上有趣的书也看了不少,极大的开阔了我的眼界。关于JavaScript的书，把《你不知道的JavaScript》也翻了一遍，对于算法（图解算法）也大概翻了一下。 关于印象笔记：只是自己选择的一种记录的工具，因为之前请教别人的时候发现，别人说了一遍方法，但是会很快忘记，所以这时候最好把它记录下来。笔记里记录了今年工作上遇到的问题，方便自己快速复查。 总结 总的来说，这一年，觉得自己是”开眼看世界”的一年，知道自己是热爱前端的，也知道一个好的前端工程师，他首先得是一个工程师，势必要了解算法，http等基础知识。而纵向学习是提升学习深度的结果，而不是追求学习广度的结果。 2018展望 工作上 前端系统搭建:yoda系统搭建。 后端：学习一下java，希望能接触组内一些后端的项目，简单写些接口。 业务组件库：业务上建立一个属于自己乃至于公司的组件库，因为做产品发现，一个好用的业务组件能提升很多开发效率。 数据分析：由于我们团队比较偏向分析，可以多向分析师取经。眼光应该放宽一点，学习数据方面的分析，才能对公司的产品和项目有更好的感知度。 学习上 MVVM框架：希望能熟练使用react和angular，最终目标希望能自己造一个小巧的mvvm框架，当然造轮子的意义是为了自己学习。 Node开发：能编写一个express或者koa的中间件。熟练掌握CRUD应用。 构建工具：梳理前端构建工具，把常用的大概研究一遍。 Typescript：学习typescript，相信强类型一定会在将来被纳入ECMAScript的标准。 关于笔记：希望能把每天要做的事，坚持写在oneNote，养成良好习惯。而工作上要记下来的写在印象笔记。 Java：目标是能写控制器里的代码。 关于可视化方向：学习d3.js和three.js。 关于读书：坚持读书，温故知新更为重要。 关于英语：英语实在是太重要了，每周背一篇新概念。 生活习惯 保持精力充沛的前提是要有足够的锻炼，如果每天实在是没有忙到要加班的情况，可以九点走，放好书包后出来跑半小时的步。 坚持八点起床，注意自己的仪容仪表。 总结 多增加了一个维度，同时希望自己能真正对得起工程师这个title。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Generator函数]]></title>
+    <url>%2Fblog%2F2017%2F05%2F23%2Fuse-generator%2F</url>
+    <content type="text"><![CDATA[Generator函数 generator是生成器。generator可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。 generator函数的创建 ES6中用function*来创建生成器函数 当想要generator产生一个值之后暂停执行，需要使用到yield（生成）关键字，有点类似于return关键字（都可以返回一个值），只是yield返回值之后generator函数会暂停运行 12345function* ticketGenerate()&#123; //创建一个取号机 yield 1; yield 2; yield 3;&#125; yield*是委派至另一个生成器函数 12345678910111213141516171819function* anotherGenerator(i) &#123; yield i + 1; yield i + 2; yield i + 3;&#125;function* generator(i)&#123; yield i; yield* anotherGenerator(i); yield i + 10;&#125;var gen = generator(10);console.log(gen.next().value); // 10console.log(gen.next().value); // 11console.log(gen.next().value); // 12console.log(gen.next().value); // 13console.log(gen.next().value); // 20 generator函数的使用 ticketGenerate()不会马上执行它的主体，而是会返回一个这个生成器函数的迭代器对象 当这个迭代器对象的next方法被调用时候，生成器函数的主体会执行到第一个yield表达式，该表达式定义了迭代器对象返回的值。 next()返回一个对象：{value:1,done:false}，value属性是产出的值，done属性是表示生成器是否已经产出了它最后的值。12const ticket=ticketGenerate() //返回一个生成器对象ticket.next() //&#123;value: 1, done: false&#125; 影响generator的状态 next()的另一个妙用是可以给它传递值，它会被视为generator中的yield语句的结果对待。 因此next是在generator运行过程中向其传递信息的方式。我们可以借此来重置取号机，将号码变为0。123456789101112function* ticketGenerator()&#123; for(var i=0;true;i++)&#123; var reset=yield i; if(reset) &#123;i=-1&#125; &#125;&#125;var takeANumber = ticketGenerator(); console.log(takeANumber.next().value); //0 console.log(takeANumber.next().value); //1 console.log(takeANumber.next().value); //2 console.log(takeANumber.next(true).value); //0 console.log(takeANumber.next().value); //1]]></content>
+      <tags>
+        <tag>ES6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[异常]]></title>
+    <url>%2Fblog%2F2017%2F05%2F18%2Fuse-CatchException%2F</url>
+    <content type="text"><![CDATA[throw 用来抛出一个异常，throw expression throw 12 //抛出数值12的异常 throw ‘err’ //抛出字符串’err’的异常 throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下throw new Error(‘123’) 也可以创建自定义错误12345function UserException(message)&#123; this.name='UserException'; this.message=message&#125;throw new UserException('用户消息错误') try..catch大法 配合throw能找出自己程序的异常 123456789101112function printValue(value)&#123; if(value==1)&#123; throw new Error('值是1错误') &#125;else&#123; console.log(value) &#125;&#125;try&#123; printValue(1)&#125;catch(e)&#123; console.log(e.message,e.name,e.stack)&#125;]]></content>
+      <tags>
+        <tag>ES6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用promise]]></title>
+    <url>%2Fblog%2F2017%2F05%2F17%2Fuse-promise%2F</url>
+    <content type="text"><![CDATA[Promise Promise作为ES6的特性，可以很好地创建异步工作流 Promise是构造函数 Promise只有三种状态（pending，resolve，reject），pending是刚创建Promise实例的状态，然后一旦转为resolve或者reject，就不可变更 创建Promise 以封装xhr为例子 1234567891011121314151617function getURL(url)&#123; return new Promise((resolve,reject)=&gt;&#123; //Promise构造函数接受一个函数，这个函数接受两个参数 let xhr = new XMLHttpRequest() xhr.open('GET',url,true) xhr.onload=function()&#123; if(xhr.status==200)&#123; resolve(JSON.parse(xhr.responseText)) //如果成功响应，那么把这个值填充到resolve &#125;else&#123; reject(new Error(xhr.statusText)) //把该错误对象填充到reject里面 &#125; &#125; xhr.onError=function()&#123; reject(new Error(xhr.statusText)) //把该错误对象填充到reject里面 &#125; xhr.send(null) &#125;)&#125; reject必须是接受一个错误对象实例，比如new Error(&#39;12&#39;)里面是什么类型的都可以 使用Promise 使用上面封装xhr的getURL的函数，该函数返回一个Promise实例 Promise的实例方法有两个：then和catch，这个两个方法都返回新的Promise对象 then有两个参数。then(onfilled,onrejected)，第一个是参数值resolve来填充，第二个是reject来填充 catch实则是then(undefined,onrejected)的别名，但是一般情况下都是用这个 then检测不了自身Promise对象onfilled出了异常，而catch是基于对上次的then产生的promise对象 1234567let url1='http://azu.github.io/promises-book/json/comment.json', url2='http://azu.github.io/promises-book/json/people.json'getURL(url1).then((val)=&gt;&#123; console.log(val) //这里是onfilled填充&#125;).catch(error=&gt;&#123; console.log(error) //这里是onrejected填充&#125;) Promise chain获取上次promise的返回值 由于Promise 链式调用的时候，每个Promise都是独立的。但是可以通过return值来传给下一个Promise，因为return了值是填充了当前Promise对象的resolve1promise.then(val=&gt;&#123;return val&#125;).then(val=&gt;&#123;console.log(val)&#125;) Promise静态方法 Promise.resolve(42) === new Promise((resolve,reject)=&gt;resolve(42)) ,是它的语法糖 Promise.reject(new Error(42)) === new Promise((resolve,reject)=&gt;reject(new Error(42))) 是它的语法糖 如果有多个Promise同时需要判断才能进行下一步，可以用Promise.all([promise1,promise2])。这个then方法返回的参数也是一个数组，跟promise1和promise2的顺序一样。需要注意的是，all是并行执行的。 Promise.race([promise1,promise2]) 则和数组的some方法很像，只要有一个promise对象进入 FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。 123456promise.all([getURL(url1),getURL(url2)]).then(function(result)&#123; console.log(result) //[getURL(url1)的结果，getURL(url2)的结果]&#125;)promise.race([getURL(url1),getURL(url2)]).then(function(value)&#123; console.log(value) //一旦这两个promise对象有一个完成了onfilled或onrejected状态，那么就会进行后续的then，所以这里then的参数只有一个value。但不并不会影响其他promise对象的进行，只是它们的结果值不会出现在then的里面&#125;)]]></content>
+      <tags>
+        <tag>ES6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用nvm]]></title>
+    <url>%2Fblog%2F2017%2F03%2F10%2Fuse-nvm%2F</url>
+    <content type="text"><![CDATA[Node Version Manager（node版本管理）使用nvm安装和管理node node版本更新很快，为了能在版本之间迅速切换，我们要使用nvm来安装和管理。用nvm下载了相应的node也会下载相应的npm进行管理 安装nvm我们可以从Github下载 默认安装路径是C:\Users\Administrator\AppData\Roaming\nvm，存放我们下载的各个版本的node 验证安装，打开控制台，输入nvm,看是否输出所有命令 命令 nvm list #查看本地所有node版本 nvm install 4.2.2 #安装 4.2.2 版本 nvm use 4.2.2 #切换至 4.2.2 版本 nvm uninstall 4.2.2 #卸载4.2.2 版本 镜像 nvm默认的下载地址是http://nodejs.org/dist/,这是国外的服务器，在国内下载速度很慢。 需要把下列代码复制到你nvm的安装路径下的setting.txt12node_mirror: https://npm.taobao.org/mirrors/node/npm_mirror: https://npm.taobao.org/mirrors/npm/]]></content>
+      <tags>
+        <tag>node</tag>
+      </tags>
+  </entry>
+</search>
