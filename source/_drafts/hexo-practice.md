@@ -71,6 +71,7 @@ comments: false
 ---
 
 ## 分支发布策略
+- 直接在hexo开发，master不用管
 - 第一次先下载好next主题，不然会生成空的html
 - 可以先删除`.deploy_git`文件
 - hexo分支用来保存源代码和编辑文章，每次编辑完文章首先应该推送hexo分支到远端，先`hexo clean`然后执行`hexo g`最后`hexo d`,就会制动部署。
