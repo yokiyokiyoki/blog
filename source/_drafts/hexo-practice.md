@@ -54,7 +54,7 @@ comments: false
 #### 命令
 - `hexo new ..`写新的日志
 - `hexo g`生成静态文件,不简写的话是`hexo generate`
-- `hexo d`部署到`github`，不简写的话是`hexo deploy`
+- `hexo d`部署到`github`，不简写的话是`hexo deploy`（可以先删除deploy_git文件）
 - `hexo s`本地启动服务预览，不简写的话是`hexo server`
 - `hexo clean`清除缓存文件 (db.json) 和已生成的静态文件 (public)。在某些情况（尤其是更换主题后），如果发现对站点的更改无论如何也不生效，可能需要运行该命令。
 - `hexo version`显示`Hexo`的版本
@@ -71,8 +71,9 @@ comments: false
 ---
 
 ## 分支发布策略
-- hexo分支用来保存源代码和编辑文章，每次编辑完文章首先应该推送hexo分支到远端，然后切换到master分支，合并hexo分支。
-- master分支用来部署静态页面。先`hexo clean`然后执行`hexo g`最后`hexo d`
+- 可以先删除`.deploy_git`文件
+- hexo分支用来保存源代码和编辑文章，每次编辑完文章首先应该推送hexo分支到远端，先`hexo clean`然后执行`hexo g`最后`hexo d`,就会制动部署。
+- master分支用来部署静态页面。
 
 ## 私密文章
 > 草稿其实就是相当于很多博客都有的`私密文章`功能
