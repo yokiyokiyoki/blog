@@ -63,3 +63,27 @@ var f = (function() {})();
 1 ^ (function() {})();
 1 > (function() {})();
 ```
+
+> 6.如何优雅的取整
+
+```javascript
+let a = ~~2.33; //2
+
+let b = 2.33 | 0; //2
+
+let c = 2.33 >> 0; //2
+```
+
+> 金钱数字取千分位的非正则优雅实现
+
+```javascript
+function formatCash(str) {
+  return str
+    .split("")
+    .reverse()
+    .reduce((prev, next, index) => {
+      return (index % 3 ? next : next + ",") + prev;
+    });
+}
+console.log(formatCash("1234567890")); // 1,234,567,890
+```
