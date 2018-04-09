@@ -74,9 +74,10 @@ let b = 2.33 | 0; //2
 let c = 2.33 >> 0; //2
 ```
 
-> 金钱数字取千分位的非正则优雅实现
+> 7.金钱数字取千分位的非正则优雅实现
 
 ```javascript
+//用reduce
 function formatCash(str) {
   return str
     .split("")
@@ -86,4 +87,11 @@ function formatCash(str) {
     });
 }
 console.log(formatCash("1234567890")); // 1,234,567,890
+```
+
+> 8.最短代码实现数组去重
+
+```javascript
+[...new Set([1, "1", 2, 1, 1, 3])];
+//[1,'1',2,3]
 ```
