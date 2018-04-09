@@ -106,7 +106,7 @@ animation:name duration timing-function delay iteration-count direction
 * 复杂度高会减慢渲染速度（任何过度使用 dom 的应用都不快）
 * 不适合游戏应用
 
-> svg 画圆
+> svg 示例
 
 ```javascript
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -126,3 +126,7 @@ animation:name duration timing-function delay iteration-count direction
 * width 和 height 设定 svg 文档的高度和宽度
 * version 指定所使用的 svg 版本
 * xmlns 定义 svg 命名空间
+
+#### webgl
+
+* webgl 使得网页在支持 canvas 标签的浏览器中，不需要安装任何插件
