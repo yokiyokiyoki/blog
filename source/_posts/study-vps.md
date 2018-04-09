@@ -14,8 +14,8 @@ tags:
 
 ### vps 能做什么
 
-* 可以进行科学上网，参见[搭建 ss 服务器]
-* vps 可以配置一个 ip 或者多个 ip。既然有了 ip 那么干的事情就多了。(https://github.com/Austin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAss%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B)
+* 可以进行科学上网，参见[搭建 ss 服务器](https://github.com/Austin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAss%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B)
+* vps 可以配置一个 ip 或者多个 ip。既然有了 ip 那么干的事情就多了。
 * 同时想了解一下 linux 服务器或者部署自己的小作品，这个时候一个配置较低的 vps 就可以发挥作用了。比如托管静态页面，爬虫，起 node 服务等等。
 
 ### 一些 vps 推荐
