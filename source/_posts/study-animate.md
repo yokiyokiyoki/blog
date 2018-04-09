@@ -4,7 +4,7 @@ date: 2017-11-23 14:32:05
 tags: css
 ---
 
-### 基本概念
+## 基本概念
 
 * 帧：在动画过程中，每一幅静止画面即为一“帧”
 * 帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz)
@@ -15,13 +15,13 @@ tags: css
 
 帧率越高，屏幕上图片闪烁感就越小，稳定性也就越高。人的眼睛不容易察觉 75Hz 以上刷新频率带来的闪烁感。
 
-### 实现方式
+## 实现方式
 
 > * js：通过定时器（setTimeout 和 setInterval）来改变元素样式，或者使用 requestAnimationFrame
 > * css3:transition 和 animation
 > * html5:使用 html5 提供的绘图方式(canvas/svg/webgl)
 
-#### requestAnimationFrame
+### requestAnimationFrame
 
 * 这个 api 是浏览器用于定时循环操作的一个接口，类似于 setTimeout,主要用途是按帧对网页进行重绘
 * 目的是为了让各种网页动画效果（dom 动画，canvas 动画，svg 动画，webgl 动画）能够有一个统一的刷新机制，从而节省系统资源，提供系统性能，改善视觉效果。
@@ -57,7 +57,7 @@ cancelAnimationFrame(requestID);
 * 在隐藏或不可见的元素中，将不会进行重绘或回流，这就意味着更少的 cpu，gpu 和内存使用量
 * 所以它是性能优化版/专为动画量身打造的 setTimeout，不同的是它不是自己指定回调函数运行的时间，而是跟着浏览器内建的刷新频率来执行回调，这就能达到浏览器所能实现动画的最佳效果
 
-#### transition
+### transition
 
 * css 中的 transition 属性允许块级元素中的属性在指定的时间内平滑的改变
 
@@ -70,7 +70,7 @@ transition:property duration timing-function delay
 * timing-function 规定速度效果的曲线(linear/ease..)
 * delay 规定过渡效果何时开始
 
-#### animation
+### animation
 
 * 跟 transition 比较，作用于元素本身而不是样式属性,可以使用关键帧的概念，应该说可以实现更自由的动画效果
 
@@ -85,7 +85,7 @@ animation:name duration timing-function delay iteration-count direction
 * iteration-count 规定动画应该播放的次数
 * animation-direction 规定是否应该轮流反向播放动画(normal/alternate)
 
-#### Canvas
+### Canvas
 
 * html5 新增的元素，作为页面图形绘制的容器，可用于使用 js 中的脚本来绘制图形。
 * 它可以用于绘制图形，制作照片，创建动画，甚至可以进行实时视频处理或者渲染
@@ -96,7 +96,7 @@ animation:name duration timing-function delay iteration-count direction
 * 能够以.pbg 或者.jpg 格式保存结果图像
 * 最适合图像密集型的游戏，其中的许多对象会被频繁重绘
 
-#### SVG
+### SVG
 
 * scalable vector graphics==可缩放矢量图形，用来定义用于网络的基于矢量的图形，使用 xml 格式定义图像
   > 它具有如下特点
@@ -127,7 +127,14 @@ animation:name duration timing-function delay iteration-count direction
 * version 指定所使用的 svg 版本
 * xmlns 定义 svg 命名空间
 
-#### webgl
+### webgl
 
 * webgl 使得网页在支持 canvas 标签的浏览器中，不需要安装任何插件，便可以使用基于 OpenGL ES 2.0 的 api 在 canvas 中进行 3D 渲染。
 * webgl 由 js 控制代码，和在计算机的图形处理单元（GPU）中执行的特效代码(shader code,渲染代码)组成
+
+## 常用的动画库
+
+* [Ani.js--基于 css 动画的生命处理库](http://anijs.github.io/)
+* [Dynamics.js--创建具有物理运动效果动画的 js 库](http://dynamicsjs.com/)
+* [Animate.css--齐全的 css3 动画库](https://daneden.github.io/animate.css/)
+* [Three.js--快速搭建 webgl 项目](https://threejs.org/examples/#webgl_animation_cloth)
