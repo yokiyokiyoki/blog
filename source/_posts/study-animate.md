@@ -95,3 +95,34 @@ animation:name duration timing-function delay iteration-count direction
 * 弱的文本渲染能力
 * 能够以.pbg 或者.jpg 格式保存结果图像
 * 最适合图像密集型的游戏，其中的许多对象会被频繁重绘
+
+#### SVG
+
+* scalable vector graphics==可缩放矢量图形，用来定义用于网络的基于矢量的图形，使用 xml 格式定义图像
+  > 它具有如下特点
+* 不依赖分辨率，基于矢量图
+* 支持事件处理器
+* 最适合带有大型渲染区域的应用程序，如谷歌地图
+* 复杂度高会减慢渲染速度（任何过度使用 dom 的应用都不快）
+* 不适合游戏应用
+
+> svg 画圆
+
+```javascript
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <rect
+    x="50"
+    y="20"
+    rx="20"
+    ry="20"
+    width="150"
+    height="150"
+    style="fill:red;stroke:black;stroke-width:5;opacity:0.5"
+  />
+</svg>
+```
+
+* svg 代码以<svg>根元素开始。
+* width 和 height 设定 svg 文档的高度和宽度
+* version 指定所使用的 svg 版本
+* xmlns 定义 svg 命名空间
