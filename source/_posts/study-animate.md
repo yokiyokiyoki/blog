@@ -129,4 +129,5 @@ animation:name duration timing-function delay iteration-count direction
 
 #### webgl
 
-* webgl 使得网页在支持 canvas 标签的浏览器中，不需要安装任何插件
+* webgl 使得网页在支持 canvas 标签的浏览器中，不需要安装任何插件，便可以使用基于 OpenGL ES 2.0 的 api 在 canvas 中进行 3D 渲染。
+* webgl 由 js 控制代码，和在计算机的图形处理单元（GPU）中执行的特效代码(shader code,渲染代码)组成
