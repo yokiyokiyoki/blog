@@ -17,3 +17,13 @@ tags: javascript
 ([][[]]+[])[+!![]]+([]+{})[!+[]+!![]]
 输出 'nb'
 ```
+
+> 3.javascript 代码错误处理方式
+
+```javascript
+try {
+  something;
+} catch (e) {
+  window.location.href = "http://stackoverflow.com/search?q=[js]+" + e.message;
+}
+```
