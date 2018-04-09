@@ -27,3 +27,14 @@ try {
   window.location.href = "http://stackoverflow.com/search?q=[js]+" + e.message;
 }
 ```
+
+> 4.如何优雅的取随机字符串
+
+```javascript
+Math.random()
+  .toString(16)
+  .substring(2);
+Math.random()
+  .toString(36)
+  .substring(2);
+```
