@@ -122,7 +122,7 @@ animation:name duration timing-function delay iteration-count direction
 </svg>
 ```
 
-* svg 代码以<svg>根元素开始。
+* svg 代码以 svg 根元素开始。
 * width 和 height 设定 svg 文档的高度和宽度
 * version 指定所使用的 svg 版本
 * xmlns 定义 svg 命名空间
