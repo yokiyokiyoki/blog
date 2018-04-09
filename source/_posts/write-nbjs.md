@@ -4,21 +4,7 @@ date: 2018-12-03 18:53:56
 tags: javascript
 ---
 
-> 1.如何用代码写出 sb
-
-```javascript
-(!(~+[])+{})[--[~+""][+[]]*[~+[]] + ~~!+[]]+({}+[])[[~!+[]]*~+[]]
-输出 'sb'
-```
-
-> 2.如何用代码写出 nb
-
-```javascript
-([][[]]+[])[+!![]]+([]+{})[!+[]+!![]]
-输出 'nb'
-```
-
-> 3.javascript 代码错误处理方式
+> 1.javascript 代码错误处理方式
 
 ```javascript
 try {
@@ -28,7 +14,7 @@ try {
 }
 ```
 
-> 4.如何优雅的取随机字符串
+> 2.如何优雅的取随机字符串
 
 ```javascript
 Math.random()
@@ -39,32 +25,7 @@ Math.random()
   .substring(2);
 ```
 
-> 5.匿名 IIFE 的 n 种写法
-
-```javascript
-(function() {})();
-(function() {})();
-[(function() {})()];
-
-~(function() {})();
-!(function() {})();
-+(function() {})();
--(function() {})();
-
-delete (function() {})();
-typeof (function() {})();
-void (function() {})();
-new function() {}();
-new function() {}();
-
-var f = (function() {})();
-
-1, (function() {})();
-1 ^ (function() {})();
-1 > (function() {})();
-```
-
-> 6.如何优雅的取整
+> 3.如何优雅的取整
 
 ```javascript
 let a = ~~2.33; //2
@@ -74,7 +35,7 @@ let b = 2.33 | 0; //2
 let c = 2.33 >> 0; //2
 ```
 
-> 7.金钱数字取千分位的非正则优雅实现
+> 4.金钱数字取千分位的非正则优雅实现
 
 ```javascript
 //用reduce
@@ -87,23 +48,26 @@ function formatCash(str) {
     });
 }
 console.log(formatCash("1234567890")); // 1,234,567,890
+//toLocaleString
+(23333333).toLocaleString("en-US");
+("23,333,333");
 ```
 
-> 8.最短代码实现数组去重
+> 5.最短代码实现数组去重
 
 ```javascript
 [...new Set([1, "1", 2, 1, 1, 3])];
 //[1,'1',2,3]
 ```
 
-> 9.最短代码实现一个长度为 m(6)且值都为 n（8）的数组
+> 6.最短代码实现一个长度为 m(6)且值都为 n（8）的数组
 
 ```javascript
 Array(6).fill(8);
 //[8,8,8,8,8,8]
 ```
 
-> 10.短路表达式
+> 7.短路表达式
 
 ```javascript
 var a = b && 1;
@@ -121,4 +85,24 @@ if (b) {
 } else {
   a = 1;
 }
+```
+
+> 8.颜色 rgb 和 hex 的相互转换
+
+```javascript
+function rgbToHex(r, g, b) {
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      }
+    : null;
+}
+
+alert(hexToRgb("#0033ff").g); // "51";
 ```
