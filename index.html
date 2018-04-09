@@ -412,6 +412,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/11/09/study-processAndthread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/11/09/study-processAndthread/" itemprop="url">进程和线程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T11:56:29+08:00">
+                2017-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>进程(process)和线程（thread）</p>
+</blockquote>
+<ul>
+<li>进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。</li>
+<li>进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。</li>
+<li>线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈。</li>
+</ul>
+<blockquote>
+<p>他们之间的关系是</p>
+</blockquote>
+<ul>
+<li>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（就是通常说的主线程）</li>
+<li>资源分配给进程，同一进程的所有线程共享该进程的所有资源</li>
+<li>线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的方法实现同步。</li>
+<li>处理机分给线程，即真正在处理机上运行得是线程</li>
+<li>线程是指进程内的一个执行单元，也是进程内的可调度实体</li>
+</ul>
+<blockquote>
+<p>他们之间的区别</p>
+</blockquote>
+<ul>
+<li>调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位</li>
+<li>并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。</li>
+<li>拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但也可以访问隶属于进程的资源。</li>
+</ul>
+<blockquote>
+<p>生动形象</p>
+</blockquote>
+<ul>
+<li>书面上，进程和线程基本是一个东西，只是进程可以包含若干个线程。此外就是在操作系统中的层级上，也就是粒度不同外，没有其他大的区别。在一般使用中，需要就多开几个线程。</li>
+<li>形象的说，进程就是一个项目组，每个程序员就是里面的线程，当然一个程序员也可以是一个项目组，对应的一个进程只有一个线程，而且还是主线程。公司里面的任务是分配给项目组级别的，也就是说系统资源是分配给进程的，但是干活的是程序员（线程）。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/09/24/think/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -697,7 +849,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2017/05/18/use-CatchException/" itemprop="url">异常</a></h1>
+                <a class="post-title-link" href="/blog/2017/05/18/use-CatchException/" itemprop="url">js里的异常</a></h1>
         
 
         <div class="post-meta">
@@ -1132,7 +1284,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1145,7 +1297,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
