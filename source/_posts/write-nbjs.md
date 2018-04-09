@@ -1,6 +1,6 @@
 ---
 title: javascript装逼指南
-date: 2018-04-09 18:53:56
+date: 2018-12-03 18:53:56
 tags: javascript
 ---
 
@@ -37,4 +37,29 @@ Math.random()
 Math.random()
   .toString(36)
   .substring(2);
+```
+
+> 5.匿名 IIFE 的 n 种写法
+
+```javascript
+(function() {})();
+(function() {})();
+[(function() {})()];
+
+~(function() {})();
+!(function() {})();
++(function() {})();
+-(function() {})();
+
+delete (function() {})();
+typeof (function() {})();
+void (function() {})();
+new function() {}();
+new function() {}();
+
+var f = (function() {})();
+
+1, (function() {})();
+1 ^ (function() {})();
+1 > (function() {})();
 ```
