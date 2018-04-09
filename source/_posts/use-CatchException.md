@@ -1,5 +1,5 @@
 ---
-title: 异常
+title: js里的异常
 date: 2017-05-18 15:59:06
 tags: "ES6"
 comments: false
