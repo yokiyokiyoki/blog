@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[浏览器怎么渲染]]></title>
-    <url>%2Fblog%2F2018%2F04%2F10%2Fstudy-render%2F</url>
-    <content type="text"><![CDATA[为什么要知道浏览器是怎么渲染的 作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。 关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染出页面 了解浏览器渲染的过程与原理，很大程度上是为了优化关键渲染路径 为了保障首屏内容的最快速显示，通常会提到渐进式页面渲染，但是为了渐进式页面渲染，就要做资源的拆分，怎么拆分，这是按场景考虑的 浏览器渲染页面过程 1.dns 查询 2.tcp 连接 3.http 请求即响应 4.服务端响应 5.客户端渲染 客户端渲染 以下步骤不一定一次性顺序完成，如果 dom 或者 cssom 被修改，则以下过程需要重复执行，这样才能计算哪些像素在屏幕上需要重新渲染 1.处理 html 标记并构建 dom 树 2.处理 css 并构建 cssom 树 3.将 dom 树和 cssom 树合并成一个渲染树 4.根据渲染树来布局，以计算每个节点的几何信息 5.将各个节点绘制到屏幕上 阻塞渲染 现代浏览器是并行加载资源的。当 HTML 解析器(html parser)被脚本阻塞的时候，解析器虽然会停止构建 dom，但仍然会识别该脚本后面的资源，并进行预加载。 默认情况下，css 被视为阻塞渲染的资源，这意味着浏览器将不会渲染任何已处理的内容，直到 cssdom 构建完毕 js 不仅可以读取和修改 dom 属性，还可以读取和修改 cssom 属性 存在阻塞的 css 资源的时候，浏览器就会延迟 js 的执行和 dom 构建 当浏览器遇到一个 script 标记的时候，dom 构建将暂停，直到脚本完成执行 cssom 构建的时候，js 执行将暂停，直到 cssdom 就绪 所以 script 标签的位置很重要，实际使用的时候，可以遵循下面两个原则 css 优先：引入顺序上，css 资源先于 js 资源 js 应该尽量少影响 dom 的构建 CSS 渲染树(Render-Tree)的关键渲染路径中，要求同时具有 dom 和 cssom，之后才会构建渲染树。所以 html 和 css 都是被阻塞的资源。html 一定是需要的，那么可以从 css 上想办法。 精简 css 并尽快提供它，例如将多个 css 合并成一个，并进行压缩 JavaScript 实际工程，常常将 js 资源放到文档底部 defer 和 async 可以改变阻塞模式 defer defer 属性表示延迟执行引入的 js，这段 js 加载时候 html 也并未停止解析，这两个过程是并行的 整个 document 解析完毕且 defer-script 也加载完成之后（这两件事情的顺序无关），会执行所有由 defer-script 加载的 JavaScript 代码，然后触发 DOMContentLoaded 事件。 123&lt;script src="app1.js" defer&gt;&lt;/script&gt;&lt;script src="app2.js" defer&gt;&lt;/script&gt;&lt;script src="app3.js" defer&gt;&lt;/script&gt; defer 不会改变 script 中代码的执行顺序，示例代码会按照 1，2，3 的顺序执行。 async123&lt;script src="app.js" async&gt;&lt;/script&gt;&lt;script src="ad.js" async&gt;&lt;/script&gt;&lt;script src="statistics.js" async&gt;&lt;/script&gt; async 属性表示异步执行引入的 JavaScript，与 defer 的区别在于，如果已经加载好，就会开始执行——无论此刻是 HTML 解析阶段还是 DOMContentLoaded 触发之后。需要注意的是，这种方式加载的 JavaScript 依然会阻塞 load 事件。换句话说，async-script 可能在 DOMContentLoaded 触发之前或之后执行，但一定在 load 触发之前执行。 多个 async-script 的执行顺序是不确定的。所以 app.js 和 ad.js 和 statistics.js 不一定是顺序执行，谁先加载完谁先执行。]]></content>
-      <tags>
-        <tag>浏览器</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[2017展望与2018总结]]></title>
     <url>%2Fblog%2F2018%2F02%2F25%2F2018%2F</url>
     <content type="text"><![CDATA[2017 总结 工作上 官网方面：17 年 1 月进入到公司，当时正值官网重构，组长为了锻炼我，便让我参与到了官网的重构当中。 产品方面：官网完成之后，雷达刚好升级 2.0，我去负责其中两个模块的迁移。之后一直负责雷达的开发，维护过立方，聚合，接触了很多公司的产品。 项目方面：期间维护 MIG 系统，并且重构了整个 DBA，能更快地迁移类似的模块。后来参与研发 ipsos 雷达。 学习上 关于 vue：这一年，也算写了大量的 vue 代码，但 vue 封装了大量的 js 代码，屏蔽底层实现细节，所以我很清楚会写 vue 并不算什么，在前端框架日新月异的今天，只有深入地了解并掌握其中原理，才能以不变应万变。 关于可视化方向：由于 echarts 底层封装实在是过于复杂，也没有仔细去研究，只能去应用它的 api，这是我所遗憾的地方。 关于构建工具：先是接触了 gulp，但并不是了解得很清楚。而对于 webpack 这一块，配置得也算还可以，也大概知晓构建工具在前端方面的应用，但是我觉得不要满足于只做一个配置工程师，知道思想最为重要，要知道为什么会有压缩代码，合并请求等操作。 关于读书：喜欢看人物传记，比如爱因斯坦。物理学和哲学上有趣的书也看了不少,极大的开阔了我的眼界。关于 JavaScript 的书，把《你不知道的 JavaScript》也翻了一遍，对于算法（图解算法）也大概翻了一下。 关于印象笔记：只是自己选择的一种记录的工具，因为之前请教别人的时候发现，别人说了一遍方法，但是会很快忘记，所以这时候最好把它记录下来。笔记里记录了今年工作上遇到的问题，方便自己快速复查。 总结 总的来说，这一年，觉得自己是”开眼看世界”的一年，知道自己是热爱前端的，也知道一个好的前端工程师，他首先得是一个工程师，势必要了解算法，http 等基础知识。而纵向学习是提升学习深度的结果，而不是追求学习广度的结果。 2018 展望 工作上 前端系统搭建:yoda 系统搭建。 后端：学习一下 java，希望能接触组内一些后端的项目，简单写些接口。 业务组件库：业务上建立一个属于自己乃至于公司的组件库，因为做产品发现，一个好用的业务组件能提升很多开发效率。 数据分析：由于我们团队比较偏向分析，可以多向分析师取经。眼光应该放宽一点，学习数据方面的分析，才能对公司的产品和项目有更好的感知度。 学习上 MVVM 框架：希望能熟练使用 react 和 angular，最终目标希望能自己造一个小巧的 mvvm 框架，当然造轮子的意义是为了自己学习。 Node 开发：能编写一个 express 或者 koa 的中间件。熟练掌握 CRUD 应用。 构建工具：梳理前端构建工具，把常用的大概研究一遍。 Typescript：学习 typescript，相信强类型一定会在将来被纳入 ECMAScript 的标准。 关于笔记：希望能把每天要做的事，坚持写在 oneNote，养成良好习惯。而工作上要记下来的写在印象笔记。 Java：能熟练进行 web 开发。 关于可视化方向：学习 d3.js 和 three.js。 关于读书：坚持读书，温故知新更为重要。 关于英语：英语实在是太重要了，需要加强学习。 生活习惯 保持精力充沛的前提是要有足够的锻炼，如果每天实在是没有忙到要加班的情况，可以九点走，放好书包后出来跑半小时的步。 坚持八点起床，注意自己的仪容仪表。 总结 多增加了一个维度，同时希望自己能真正对得起工程师这个 title。]]></content>
       <tags>
         <tag>生活随想</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浏览器怎么渲染]]></title>
+    <url>%2Fblog%2F2018%2F01%2F10%2Fstudy-render%2F</url>
+    <content type="text"><![CDATA[为什么要知道浏览器是怎么渲染的 作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。 关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染出页面 了解浏览器渲染的过程与原理，很大程度上是为了优化关键渲染路径 为了保障首屏内容的最快速显示，通常会提到渐进式页面渲染，但是为了渐进式页面渲染，就要做资源的拆分，怎么拆分，这是按场景考虑的 浏览器渲染页面过程 1.dns 查询 2.tcp 连接 3.http 请求即响应 4.服务端响应 5.客户端渲染 客户端渲染 以下步骤不一定一次性顺序完成，如果 dom 或者 cssom 被修改，则以下过程需要重复执行，这样才能计算哪些像素在屏幕上需要重新渲染 1.处理 html 标记并构建 dom 树 2.处理 css 并构建 cssom 树 3.将 dom 树和 cssom 树合并成一个渲染树 4.根据渲染树来布局，以计算每个节点的几何信息 5.将各个节点绘制到屏幕上 阻塞渲染 现代浏览器是并行加载资源的。当 HTML 解析器(html parser)被脚本阻塞的时候，解析器虽然会停止构建 dom，但仍然会识别该脚本后面的资源，并进行预加载。 默认情况下，css 被视为阻塞渲染的资源，这意味着浏览器将不会渲染任何已处理的内容，直到 cssdom 构建完毕 js 不仅可以读取和修改 dom 属性，还可以读取和修改 cssom 属性 存在阻塞的 css 资源的时候，浏览器就会延迟 js 的执行和 dom 构建 当浏览器遇到一个 script 标记的时候，dom 构建将暂停，直到脚本完成执行 cssom 构建的时候，js 执行将暂停，直到 cssdom 就绪 所以 script 标签的位置很重要，实际使用的时候，可以遵循下面两个原则 css 优先：引入顺序上，css 资源先于 js 资源 js 应该尽量少影响 dom 的构建 CSS 渲染树(Render-Tree)的关键渲染路径中，要求同时具有 dom 和 cssom，之后才会构建渲染树。所以 html 和 css 都是被阻塞的资源。html 一定是需要的，那么可以从 css 上想办法。 精简 css 并尽快提供它，例如将多个 css 合并成一个，并进行压缩 JavaScript 实际工程，常常将 js 资源放到文档底部 defer 和 async 可以改变阻塞模式 defer defer 属性表示延迟执行引入的 js，这段 js 加载时候 html 也并未停止解析，这两个过程是并行的 整个 document 解析完毕且 defer-script 也加载完成之后（这两件事情的顺序无关），会执行所有由 defer-script 加载的 JavaScript 代码，然后触发 DOMContentLoaded 事件。 123&lt;script src="app1.js" defer&gt;&lt;/script&gt;&lt;script src="app2.js" defer&gt;&lt;/script&gt;&lt;script src="app3.js" defer&gt;&lt;/script&gt; defer 不会改变 script 中代码的执行顺序，示例代码会按照 1，2，3 的顺序执行。 async123&lt;script src="app.js" async&gt;&lt;/script&gt;&lt;script src="ad.js" async&gt;&lt;/script&gt;&lt;script src="statistics.js" async&gt;&lt;/script&gt; async 属性表示异步执行引入的 JavaScript，与 defer 的区别在于，如果已经加载好，就会开始执行——无论此刻是 HTML 解析阶段还是 DOMContentLoaded 触发之后。需要注意的是，这种方式加载的 JavaScript 依然会阻塞 load 事件。换句话说，async-script 可能在 DOMContentLoaded 触发之前或之后执行，但一定在 load 触发之前执行。 多个 async-script 的执行顺序是不确定的。所以 app.js 和 ad.js 和 statistics.js 不一定是顺序执行，谁先加载完谁先执行。]]></content>
+      <tags>
+        <tag>浏览器</tag>
       </tags>
   </entry>
   <entry>
@@ -83,6 +83,14 @@
     <content type="text"><![CDATA[Node Version Manager（node版本管理）使用nvm安装和管理node node版本更新很快，为了能在版本之间迅速切换，我们要使用nvm来安装和管理。用nvm下载了相应的node也会下载相应的npm进行管理 安装nvm我们可以从Github下载 默认安装路径是C:\Users\Administrator\AppData\Roaming\nvm，存放我们下载的各个版本的node 验证安装，打开控制台，输入nvm,看是否输出所有命令 命令 nvm list #查看本地所有node版本 nvm install 4.2.2 #安装 4.2.2 版本 nvm use 4.2.2 #切换至 4.2.2 版本 nvm uninstall 4.2.2 #卸载4.2.2 版本 镜像 nvm默认的下载地址是http://nodejs.org/dist/,这是国外的服务器，在国内下载速度很慢。 需要把下列代码复制到你nvm的安装路径下的setting.txt12node_mirror: https://npm.taobao.org/mirrors/node/npm_mirror: https://npm.taobao.org/mirrors/npm/]]></content>
       <tags>
         <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2Fblog%2F2017%2F02%2F15%2FhelloWorld%2F</url>
+    <content type="text"><![CDATA[在程序的世界里，开始的话就循例来一个 hello world 一级标题 在文字前面加上#表示标题 标题一共有六级（6 个#号）在 _#_ 后面加上空格，才是标准的 md 语法 列表 在文字前面加上- 列表 1 列表 2 引用 在文字前面加上&gt; 图片与链接 插入链接与图片的语法的区别在于一个!号;图片为：;链接为：; 粗体 两个*包含一段文本就是粗体 _粗体_ 表格12345| Tables | Are | Cool || ------------- |:-------------:| -----:|| col 3 is | right-aligned | $1600 || col 2 is | centered | $12 || zebra stripes | are neat | $1 | Tables Are Cool col 3 is right-aligned $1600 col 2 is centered $12 zebra stripes are neat $1 代码框 用三个` 把中间的代码包裹,在第一段点之后加语言名可以显示代码高亮 1console.log(12); 分割线 分割线的语法为三个-]]></content>
+      <tags>
+        <tag>markdown</tag>
       </tags>
   </entry>
 </search>
