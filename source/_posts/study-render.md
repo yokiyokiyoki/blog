@@ -50,3 +50,14 @@ tags: 浏览器
 
 * css 优先：引入顺序上，css 资源先于 js 资源
 * js 应该尽量少影响 dom 的构建
+
+### CSS
+
+> 渲染树(Render-Tree)的关键渲染路径中，要求同时具有 dom 和 cssom，之后才会构建渲染树。所以 html 和 css 都是被阻塞的资源。html 一定是需要的，那么可以从 css 上想办法。
+
+* 精简 css 并尽快提供它，例如将多个 css 合并成一个，并进行压缩
+
+### JavaScript
+
+* 实际工程，常常将 js 资源放到文档底部
+* defer 和 async 可以改变阻塞模式
