@@ -61,3 +61,27 @@ tags: 浏览器
 
 * 实际工程，常常将 js 资源放到文档底部
 * defer 和 async 可以改变阻塞模式
+
+#### defer
+
+* defer 属性表示延迟执行引入的 js，这段 js 加载时候 html 也并未停止解析，这两个过程是并行的
+* 整个 document 解析完毕且 defer-script 也加载完成之后（这两件事情的顺序无关），会执行所有由 defer-script 加载的 JavaScript 代码，然后触发 DOMContentLoaded 事件。
+
+```javascript
+<script src="app1.js" defer></script>
+<script src="app2.js" defer></script>
+<script src="app3.js" defer></script>
+```
+
+* defer 不会改变 script 中代码的执行顺序，示例代码会按照 1，2，3 的顺序执行。
+
+#### async
+
+```javascript
+<script src="app.js" async></script>
+<script src="ad.js" async></script>
+<script src="statistics.js" async></script>
+```
+
+* async 属性表示异步执行引入的 JavaScript，与 defer 的区别在于，如果已经加载好，就会开始执行——无论此刻是 HTML 解析阶段还是 DOMContentLoaded 触发之后。需要注意的是，这种方式加载的 JavaScript 依然会阻塞 load 事件。换句话说，async-script 可能在 DOMContentLoaded 触发之前或之后执行，但一定在 load 触发之前执行。
+* 多个 async-script 的执行顺序是不确定的。所以 app.js 和 ad.js 和 statistics.js 不一定是顺序执行，谁先加载完谁先执行。
