@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="计算机," />
+  <meta name="keywords" content="浏览器," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="进程(process)和线程（thread）   进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。 进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。 线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂">
-<meta name="keywords" content="计算机">
+<meta name="description" content="为什么要知道浏览器是怎么渲染的 作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js">
+<meta name="keywords" content="浏览器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="进程和线程">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/11/09/study-processAndthread/index.html">
+<meta property="og:title" content="浏览器怎么渲染">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/04/10/study-render/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="进程(process)和线程（thread）   进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。 进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。 线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂">
+<meta property="og:description" content="为什么要知道浏览器是怎么渲染的 作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T06:16:23.541Z">
+<meta property="og:updated_time" content="2018-04-10T03:33:58.141Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="进程和线程">
-<meta name="twitter:description" content="进程(process)和线程（thread）   进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。 进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。 线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂">
+<meta name="twitter:title" content="浏览器怎么渲染">
+<meta name="twitter:description" content="为什么要知道浏览器是怎么渲染的 作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2017/11/09/study-processAndthread/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/04/10/study-render/"/>
 
 
 
 
 
-  <title>进程和线程 | Blog</title>
+  <title>浏览器怎么渲染 | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/11/09/study-processAndthread/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/10/study-render/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">进程和线程</h1>
+          <h1 class="post-title" itemprop="name headline">浏览器怎么渲染</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T11:56:29+08:00">
-                2017-11-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-10T10:26:50+08:00">
+                2018-04-10
               </time>
             
 
@@ -334,38 +334,76 @@
       
 
       
-        <blockquote>
-<p>进程(process)和线程（thread）</p>
+        <h2 id="为什么要知道浏览器是怎么渲染的"><a href="#为什么要知道浏览器是怎么渲染的" class="headerlink" title="为什么要知道浏览器是怎么渲染的"></a>为什么要知道浏览器是怎么渲染的</h2><ul>
+<li>作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。</li>
+<li>现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。</li>
+</ul>
+<h3 id="关键渲染路径"><a href="#关键渲染路径" class="headerlink" title="关键渲染路径"></a>关键渲染路径</h3><ul>
+<li>关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容</li>
+<li>比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染出页面</li>
+<li>了解浏览器渲染的过程与原理，很大程度上是为了优化关键渲染路径</li>
+<li>为了保障首屏内容的最快速显示，通常会提到渐进式页面渲染，但是为了渐进式页面渲染，就要做资源的拆分，怎么拆分，这是按场景考虑的</li>
+</ul>
+<h2 id="浏览器渲染页面过程"><a href="#浏览器渲染页面过程" class="headerlink" title="浏览器渲染页面过程"></a>浏览器渲染页面过程</h2><ul>
+<li>1.dns 查询</li>
+<li>2.tcp 连接</li>
+<li>3.http 请求即响应</li>
+<li>4.服务端响应</li>
+<li>5.客户端渲染</li>
+</ul>
+<h3 id="客户端渲染"><a href="#客户端渲染" class="headerlink" title="客户端渲染"></a>客户端渲染</h3><blockquote>
+<p>以下步骤不一定一次性顺序完成，如果 dom 或者 cssom 被修改，则以下过程需要重复执行，这样才能计算哪些像素在屏幕上需要重新渲染</p>
 </blockquote>
 <ul>
-<li>进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。</li>
-<li>进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。</li>
-<li>线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈。</li>
+<li>1.处理 html 标记并构建 dom 树</li>
+<li>2.处理 css 并构建 cssom 树</li>
+<li>3.将 dom 树和 cssom 树合并成一个渲染树</li>
+<li>4.根据渲染树来布局，以计算每个节点的几何信息</li>
+<li>5.将各个节点绘制到屏幕上</li>
+</ul>
+<h2 id="阻塞渲染"><a href="#阻塞渲染" class="headerlink" title="阻塞渲染"></a>阻塞渲染</h2><blockquote>
+<p>现代浏览器是并行加载资源的。当 HTML 解析器(html parser)被脚本阻塞的时候，解析器虽然会停止构建 dom，但仍然会识别该脚本后面的资源，并进行预加载。</p>
+</blockquote>
+<ul>
+<li>默认情况下，css 被视为阻塞渲染的资源，这意味着浏览器将不会渲染任何已处理的内容，直到 cssdom 构建完毕</li>
+<li>js 不仅可以读取和修改 dom 属性，还可以读取和修改 cssom 属性</li>
 </ul>
 <blockquote>
-<p>他们之间的关系是</p>
+<p>存在阻塞的 css 资源的时候，浏览器就会延迟 js 的执行和 dom 构建</p>
 </blockquote>
 <ul>
-<li>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（就是通常说的主线程）</li>
-<li>资源分配给进程，同一进程的所有线程共享该进程的所有资源</li>
-<li>线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的方法实现同步。</li>
-<li>处理机分给线程，即真正在处理机上运行得是线程</li>
-<li>线程是指进程内的一个执行单元，也是进程内的可调度实体</li>
+<li>当浏览器遇到一个 script 标记的时候，dom 构建将暂停，直到脚本完成执行</li>
+<li>cssom 构建的时候，js 执行将暂停，直到 cssdom 就绪</li>
 </ul>
 <blockquote>
-<p>他们之间的区别</p>
+<p>所以 script 标签的位置很重要，实际使用的时候，可以遵循下面两个原则</p>
 </blockquote>
 <ul>
-<li>调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位</li>
-<li>并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。</li>
-<li>拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但也可以访问隶属于进程的资源。</li>
+<li>css 优先：引入顺序上，css 资源先于 js 资源</li>
+<li>js 应该尽量少影响 dom 的构建</li>
 </ul>
-<blockquote>
-<p>生动形象</p>
+<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><blockquote>
+<p>渲染树(Render-Tree)的关键渲染路径中，要求同时具有 dom 和 cssom，之后才会构建渲染树。所以 html 和 css 都是被阻塞的资源。html 一定是需要的，那么可以从 css 上想办法。</p>
 </blockquote>
 <ul>
-<li>书面上，进程和线程基本是一个东西，只是进程可以包含若干个线程。此外就是在操作系统中的层级上，也就是粒度不同外，没有其他大的区别。在一般使用中，需要就多开几个线程。</li>
-<li>形象的说，进程就是一个项目组，每个程序员就是里面的线程，当然一个程序员也可以是一个项目组，对应的一个进程只有一个线程，而且还是主线程。公司里面的任务是分配给项目组级别的，也就是说系统资源是分配给进程的，但是干活的是程序员（线程）。</li>
+<li>精简 css 并尽快提供它，例如将多个 css 合并成一个，并进行压缩</li>
+</ul>
+<h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><ul>
+<li>实际工程，常常将 js 资源放到文档底部</li>
+<li>defer 和 async 可以改变阻塞模式</li>
+</ul>
+<h4 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h4><ul>
+<li>defer 属性表示延迟执行引入的 js，这段 js 加载时候 html 也并未停止解析，这两个过程是并行的</li>
+<li>整个 document 解析完毕且 defer-script 也加载完成之后（这两件事情的顺序无关），会执行所有由 defer-script 加载的 JavaScript 代码，然后触发 DOMContentLoaded 事件。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"app1.js"</span> defer&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"app2.js"</span> defer&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"app3.js"</span> defer&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>defer 不会改变 script 中代码的执行顺序，示例代码会按照 1，2，3 的顺序执行。</li>
+</ul>
+<h4 id="async"><a href="#async" class="headerlink" title="async"></a>async</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"app.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"ad.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"statistics.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>async 属性表示异步执行引入的 JavaScript，与 defer 的区别在于，如果已经加载好，就会开始执行——无论此刻是 HTML 解析阶段还是 DOMContentLoaded 触发之后。需要注意的是，这种方式加载的 JavaScript 依然会阻塞 load 事件。换句话说，async-script 可能在 DOMContentLoaded 触发之前或之后执行，但一定在 load 触发之前执行。</li>
+<li>多个 async-script 的执行顺序是不确定的。所以 app.js 和 ad.js 和 statistics.js 不一定是顺序执行，谁先加载完谁先执行。</li>
 </ul>
 
       
@@ -384,7 +422,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/计算机/" rel="tag"># 计算机</a>
+            <a href="/blog/tags/浏览器/" rel="tag"># 浏览器</a>
           
         </div>
       
@@ -397,8 +435,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2017/09/24/think/" rel="next" title="杂乱无章">
-                <i class="fa fa-chevron-left"></i> 杂乱无章
+              <a href="/blog/2018/02/25/2018/" rel="next" title="2017展望与2018总结">
+                <i class="fa fa-chevron-left"></i> 2017展望与2018总结
               </a>
             
           </div>
@@ -406,10 +444,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2017/11/23/study-animate/" rel="prev" title="动画了解一下">
-                动画了解一下 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -461,8 +495,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -517,6 +560,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要知道浏览器是怎么渲染的"><span class="nav-number">1.</span> <span class="nav-text">为什么要知道浏览器是怎么渲染的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键渲染路径"><span class="nav-number">1.1.</span> <span class="nav-text">关键渲染路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器渲染页面过程"><span class="nav-number">2.</span> <span class="nav-text">浏览器渲染页面过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端渲染"><span class="nav-number">2.1.</span> <span class="nav-text">客户端渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞渲染"><span class="nav-number">3.</span> <span class="nav-text">阻塞渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS"><span class="nav-number">3.1.</span> <span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-number">3.2.</span> <span class="nav-text">JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defer"><span class="nav-number">3.2.1.</span> <span class="nav-text">defer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#async"><span class="nav-number">3.2.2.</span> <span class="nav-text">async</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
