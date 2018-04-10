@@ -78,6 +78,14 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[函数节流和防抖]]></title>
+    <url>%2Fblog%2F2017%2F04%2F10%2FthrottleAndDebounce%2F</url>
+    <content type="text"><![CDATA[节流（throttle） 函数节流是指一定时间内只跑一次函数，就像是技能 cd，你再怎么按它一段时间内只能触发一次。 主要思想就是设置一个守卫（flag），如果 setTimeout 已经执行过了就不会创建新的 setTimeout 123456789101112131415let scrollFun = function(time) &#123; let canRun = true; //初始化守卫变量 return function() &#123; if (canRun) &#123; canRun = false; setTimeout(() =&gt; &#123; console.log("throttle"); //3s后变量才为true，才可以继续执行if条件 canRun = true; &#125;, time); &#125; &#125;;&#125;;//3s执行一次window.scroll = scrollFun(3000); 适用于窗口 resize 防抖(debounce) 函数防抖呢，就是频繁触发后，一旦空闲下来才开始执行这个函数。就像公交车司机，如果有人陆续刷卡，司机一直停车等待，直到所有人上来了才回开车。 主要思想就是如果频繁触发，就取消上一个，重新创建一个规定时长的 setTimeout 123456789101112let debounce = function(time) &#123; let setTimeId = null; return function() &#123; //取消上一个的 clearTimeout(setTimeId); setTimeId = setTimeout(() =&gt; &#123; console.log("debounce"); &#125;, time); &#125;;&#125;;//直到没有输入后，3s后才执行$(el).input(dubounce(3000)); 适用于输入框输入持续监听等]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用nvm]]></title>
     <url>%2Fblog%2F2017%2F03%2F10%2Fuse-nvm%2F</url>
     <content type="text"><![CDATA[Node Version Manager（node版本管理）使用nvm安装和管理node node版本更新很快，为了能在版本之间迅速切换，我们要使用nvm来安装和管理。用nvm下载了相应的node也会下载相应的npm进行管理 安装nvm我们可以从Github下载 默认安装路径是C:\Users\Administrator\AppData\Roaming\nvm，存放我们下载的各个版本的node 验证安装，打开控制台，输入nvm,看是否输出所有命令 命令 nvm list #查看本地所有node版本 nvm install 4.2.2 #安装 4.2.2 版本 nvm use 4.2.2 #切换至 4.2.2 版本 nvm uninstall 4.2.2 #卸载4.2.2 版本 镜像 nvm默认的下载地址是http://nodejs.org/dist/,这是国外的服务器，在国内下载速度很慢。 需要把下列代码复制到你nvm的安装路径下的setting.txt12node_mirror: https://npm.taobao.org/mirrors/node/npm_mirror: https://npm.taobao.org/mirrors/npm/]]></content>
