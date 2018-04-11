@@ -4,6 +4,8 @@ date: 2017-05-11 11:04:02
 tags: javascript
 ---
 
+## 简单介绍
+
 > 看到 vue 模板里都是用**{{内容}}**包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了
 
 * es6 的字符串模板用起来实在是舒服，所以简单用**{{内容}}**实现一下
@@ -15,20 +17,24 @@ str.replace(reg,function(match,key)=>{})
 // /\{\{(.*?)\}\}/g;
 ```
 
+## 正则表达
+
 * **.\*?**是正则的固定搭配用法，就是表示非贪婪模式，尽可能匹配少的意思
 * **.\***则表示贪婪模式
 
 ```javascript
-// 源字符串：aa<div>test1</div>bb<div>test2</div>cc
+源字符串：aa<div>test1</div>bb<div>test2</div>cc
 
-// 正则表达式一：<div>.*</div>
+正则表达式一：<div>.*</div>
 
-// 匹配结果一：<div>test1</div>bb<div>test2</div>(从头部匹配到尾部，从第一个div到最后的那个</div>)
+匹配结果一：<div>test1</div>bb<div>test2</div>(从头部匹配到尾部，从第一个div到最后的那个</div>)
 
-// 正则表达式二：<div>.*?</div>
+正则表达式二：<div>.*?</div>
 
-// 匹配结果二：<div>test1</div>（这里指的是一次匹配结果，不使用\/g，所以没包括<div>test2</div>）
+匹配结果二：<div>test1</div>（这里指的是一次匹配结果，不使用\/g，所以没包括<div>test2</div>）
 ```
+
+## 简单实现
 
 * 所以有上面的简单铺垫，可以简单写出
 
