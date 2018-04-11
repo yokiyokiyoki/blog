@@ -266,6 +266,141 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/05/11/study-replace-template/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/05/11/study-replace-template/" itemprop="url">模板字符串的替换</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-11T11:04:02+08:00">
+                2017-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>看到 vue 模板里都是用<strong></strong>包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了</p>
+</blockquote>
+<ul>
+<li>es6 的字符串模板用起来实在是舒服，所以简单用<strong></strong>实现一下</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数</span></span><br><span class="line">str.replace(reg,<span class="function"><span class="keyword">function</span>(<span class="params">match,key</span>)=&gt;</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//正则匹配&#123;&#123;内容&#125;&#125;，应该是/\&#123;\&#123;(.*?)\&#125;\&#125;/，用\转义&#123;和&#125;</span></span><br><span class="line"><span class="comment">// /\&#123;\&#123;(.*?)\&#125;\&#125;/g;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>.*?</strong>是正则的固定搭配用法，就是表示非贪婪模式，尽可能匹配少的意思</li>
+<li><strong>.*</strong>则表示贪婪模式</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 源字符串：aa&lt;div&gt;test1&lt;/div&gt;bb&lt;div&gt;test2&lt;/div&gt;cc</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正则表达式一：&lt;div&gt;.*&lt;/div&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配结果一：&lt;div&gt;test1&lt;/div&gt;bb&lt;div&gt;test2&lt;/div&gt;(从头部匹配到尾部，从第一个div到最后的那个&lt;/div&gt;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正则表达式二：&lt;div&gt;.*?&lt;/div&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配结果二：&lt;div&gt;test1&lt;/div&gt;（这里指的是一次匹配结果，不使用\/g，所以没包括&lt;div&gt;test2&lt;/div&gt;）</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>所以有上面的简单铺垫，可以简单写出</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">template, context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> template.replace(<span class="regexp">/\&#123;\&#123;(.*?)\&#125;\&#125;/g</span>, (match, key) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(match, key); <span class="comment">//match是&#123;&#123;name &#125;&#125;，key是name</span></span><br><span class="line">    <span class="keyword">return</span> context[key.trim()];</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//可以使用trim去掉前后空格</span></span><br><span class="line"><span class="keyword">const</span> template = <span class="string">"我是&#123;&#123;name   &#125;&#125;，现在&#123;&#123;age   &#125;&#125;岁"</span>;</span><br><span class="line"><span class="keyword">const</span> context = &#123; <span class="attr">name</span>: <span class="string">"yoki"</span>, <span class="attr">age</span>: <span class="string">"20"</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(render(template, context));</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/04/10/throttleAndDebounce/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -762,7 +897,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
