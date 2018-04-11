@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="看到 vue 模板里都是用包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了   es6 的字符串模板用起来实在是舒服，所以简单用实现一下  1234// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数str.replace(reg,function(match,key)=&amp;gt;&amp;#123;&amp;#125">
+<meta name="description" content="简单介绍 看到 vue 模板里都是用包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了   es6 的字符串模板用起来实在是舒服，所以简单用实现一下  1234// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数str.replace(reg,function(match,key)=&amp;gt;&amp;#123;&amp;">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模板字符串的替换">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/05/11/study-replace-template/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="看到 vue 模板里都是用包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了   es6 的字符串模板用起来实在是舒服，所以简单用实现一下  1234// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数str.replace(reg,function(match,key)=&amp;gt;&amp;#123;&amp;#125">
+<meta property="og:description" content="简单介绍 看到 vue 模板里都是用包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了   es6 的字符串模板用起来实在是舒服，所以简单用实现一下  1234// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数str.replace(reg,function(match,key)=&amp;gt;&amp;#123;&amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-11T03:29:44.051Z">
+<meta property="og:updated_time" content="2018-04-11T03:32:12.439Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模板字符串的替换">
-<meta name="twitter:description" content="看到 vue 模板里都是用包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了   es6 的字符串模板用起来实在是舒服，所以简单用实现一下  1234// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数str.replace(reg,function(match,key)=&amp;gt;&amp;#123;&amp;#125">
+<meta name="twitter:description" content="简单介绍 看到 vue 模板里都是用包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了   es6 的字符串模板用起来实在是舒服，所以简单用实现一下  1234// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数str.replace(reg,function(match,key)=&amp;gt;&amp;#123;&amp;">
 
 
 
@@ -334,19 +334,19 @@
       
 
       
-        <blockquote>
+        <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><blockquote>
 <p>看到 vue 模板里都是用<strong></strong>包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了</p>
 </blockquote>
 <ul>
 <li>es6 的字符串模板用起来实在是舒服，所以简单用<strong></strong>实现一下</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数</span></span><br><span class="line">str.replace(reg,<span class="function"><span class="keyword">function</span>(<span class="params">match,key</span>)=&gt;</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//正则匹配&#123;&#123;内容&#125;&#125;，应该是/\&#123;\&#123;(.*?)\&#125;\&#125;/，用\转义&#123;和&#125;</span></span><br><span class="line"><span class="comment">// /\&#123;\&#123;(.*?)\&#125;\&#125;/g;</span></span><br></pre></td></tr></table></figure>
-<ul>
+<h2 id="正则表达"><a href="#正则表达" class="headerlink" title="正则表达"></a>正则表达</h2><ul>
 <li><strong>.*?</strong>是正则的固定搭配用法，就是表示非贪婪模式，尽可能匹配少的意思</li>
 <li><strong>.*</strong>则表示贪婪模式</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 源字符串：aa&lt;div&gt;test1&lt;/div&gt;bb&lt;div&gt;test2&lt;/div&gt;cc</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正则表达式一：&lt;div&gt;.*&lt;/div&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配结果一：&lt;div&gt;test1&lt;/div&gt;bb&lt;div&gt;test2&lt;/div&gt;(从头部匹配到尾部，从第一个div到最后的那个&lt;/div&gt;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正则表达式二：&lt;div&gt;.*?&lt;/div&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配结果二：&lt;div&gt;test1&lt;/div&gt;（这里指的是一次匹配结果，不使用\/g，所以没包括&lt;div&gt;test2&lt;/div&gt;）</span></span><br></pre></td></tr></table></figure>
-<ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">源字符串：aa&lt;div&gt;test1&lt;<span class="regexp">/div&gt;bb&lt;div&gt;test2&lt;/</span>div&gt;cc</span><br><span class="line"></span><br><span class="line">正则表达式一：&lt;div&gt;.*&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">匹配结果一：&lt;div&gt;test1&lt;<span class="regexp">/div&gt;bb&lt;div&gt;test2&lt;/</span>div&gt;(从头部匹配到尾部，从第一个div到最后的那个&lt;<span class="regexp">/div&gt;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">正则表达式二：&lt;div&gt;.*?&lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line">匹配结果二：&lt;div&gt;test1&lt;<span class="regexp">/div&gt;（这里指的是一次匹配结果，不使用\/g，所以没包括&lt;div&gt;test2&lt;/</span>div&gt;）</span><br></pre></td></tr></table></figure>
+<h2 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h2><ul>
 <li>所以有上面的简单铺垫，可以简单写出</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">template, context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> template.replace(<span class="regexp">/\&#123;\&#123;(.*?)\&#125;\&#125;/g</span>, (match, key) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(match, key); <span class="comment">//match是&#123;&#123;name &#125;&#125;，key是name</span></span><br><span class="line">    <span class="keyword">return</span> context[key.trim()];</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//可以使用trim去掉前后空格</span></span><br><span class="line"><span class="keyword">const</span> template = <span class="string">"我是&#123;&#123;name   &#125;&#125;，现在&#123;&#123;age   &#125;&#125;岁"</span>;</span><br><span class="line"><span class="keyword">const</span> context = &#123; <span class="attr">name</span>: <span class="string">"yoki"</span>, <span class="attr">age</span>: <span class="string">"20"</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(render(template, context));</span><br></pre></td></tr></table></figure>
@@ -444,8 +444,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -500,6 +509,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达"><span class="nav-number">2.</span> <span class="nav-text">正则表达</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单实现"><span class="nav-number">3.</span> <span class="nav-text">简单实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
