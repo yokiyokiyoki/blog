@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ES6," />
+  <meta name="keywords" content="javascript," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="throw 用来抛出一个异常，throw expression   throw 12 //抛出数值12的异常 throw ‘err’ //抛出字符串’err’的异常 throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下throw new Error(‘123’)  也可以创建自定义">
-<meta name="keywords" content="ES6">
+<meta name="description" content="throw 用来抛出一个异常，throw expression   throw 12 //抛出数值 12 的异常 throw ‘err’ //抛出字符串’err’的异常 throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下 throw new Error(‘123’)  也可以创建">
+<meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js里的异常">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/05/18/use-CatchException/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="throw 用来抛出一个异常，throw expression   throw 12 //抛出数值12的异常 throw ‘err’ //抛出字符串’err’的异常 throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下throw new Error(‘123’)  也可以创建自定义">
+<meta property="og:description" content="throw 用来抛出一个异常，throw expression   throw 12 //抛出数值 12 的异常 throw ‘err’ //抛出字符串’err’的异常 throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下 throw new Error(‘123’)  也可以创建">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-26T12:48:00.704Z">
+<meta property="og:updated_time" content="2018-04-11T03:35:16.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js里的异常">
-<meta name="twitter:description" content="throw 用来抛出一个异常，throw expression   throw 12 //抛出数值12的异常 throw ‘err’ //抛出字符串’err’的异常 throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下throw new Error(‘123’)  也可以创建自定义">
+<meta name="twitter:description" content="throw 用来抛出一个异常，throw expression   throw 12 //抛出数值 12 的异常 throw ‘err’ //抛出字符串’err’的异常 throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下 throw new Error(‘123’)  也可以创建">
 
 
 
@@ -336,15 +336,17 @@
 <p>用来抛出一个异常，throw expression</p>
 </blockquote>
 <ul>
-<li>throw 12 //抛出数值12的异常</li>
+<li>throw 12 //抛出数值 12 的异常</li>
 <li>throw ‘err’ //抛出字符串’err’的异常</li>
-<li>throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下throw new Error(‘123’)</li>
+<li>throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下 throw new Error(‘123’)</li>
 </ul>
-<p>也可以创建自定义错误<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UserException</span>(<span class="params">message</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name=<span class="string">'UserException'</span>;</span><br><span class="line">    <span class="keyword">this</span>.message=message</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> UserException(<span class="string">'用户消息错误'</span>)</span><br></pre></td></tr></table></figure></p>
-<h3 id="try-catch大法"><a href="#try-catch大法" class="headerlink" title="try..catch大法"></a>try..catch大法</h3><blockquote>
-<p>配合throw能找出自己程序的异常</p>
+<p>也可以创建自定义错误</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UserException</span>(<span class="params">message</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">"UserException"</span>;</span><br><span class="line">  <span class="keyword">this</span>.message = message;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> UserException(<span class="string">"用户消息错误"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="try-catch-大法"><a href="#try-catch-大法" class="headerlink" title="try..catch 大法"></a>try..catch 大法</h3><blockquote>
+<p>配合 throw 能找出自己程序的异常</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printValue</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(value==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'值是1错误'</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    printValue(<span class="number">1</span>)</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e.message,e.name,e.stack)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printValue</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (value == <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"值是1错误"</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  printValue(<span class="number">1</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.message, e.name, e.stack);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -361,7 +363,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/ES6/" rel="tag"># ES6</a>
+            <a href="/blog/tags/javascript/" rel="tag"># javascript</a>
           
         </div>
       
@@ -463,7 +465,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -476,7 +478,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -509,7 +511,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#throw"><span class="nav-number">1.</span> <span class="nav-text">throw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch大法"><span class="nav-number">2.</span> <span class="nav-text">try..catch大法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#throw"><span class="nav-number">1.</span> <span class="nav-text">throw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-大法"><span class="nav-number">2.</span> <span class="nav-text">try..catch 大法</span></a></li></ol></div>
             
 
           </div>

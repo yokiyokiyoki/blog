@@ -445,6 +445,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/02/12/fe-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/02/12/fe-error/" itemprop="url">前端错误收集</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-12T11:27:51+08:00">
+                2018-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="为什么要进行前端的错误进行监控"><a href="#为什么要进行前端的错误进行监控" class="headerlink" title="为什么要进行前端的错误进行监控"></a>为什么要进行前端的错误进行监控</h2><ul>
+<li>现在网页的要求已经趋近于原生的应用，几乎都是有着大量交互的。面对各种用户，不同的浏览器等等出现的不同问题，有必要进行及时的监控，毕竟有些问题复现也是挺困难的。</li>
+</ul>
+<h2 id="捕获错误的方法"><a href="#捕获错误的方法" class="headerlink" title="捕获错误的方法"></a>捕获错误的方法</h2><ul>
+<li>try..catch 之前说过，但是它只能在 try 的块里运行才可以捕捉错误，无法捕捉全局的错误事件</li>
+<li>window.onerror 可以用来捕捉全局的错误,但是它无法捕捉异步错误，我们在 ajax 模块统一埋点</li>
+</ul>
+<h3 id="window-onerror"><a href="#window-onerror" class="headerlink" title="window.onerror"></a>window.onerror</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onerror=<span class="function"><span class="keyword">function</span>(<span class="params">message,url,linNo,columnNo,error</span>)</span></span><br><span class="line"><span class="function"><span class="title">message</span>:错误信息</span></span><br><span class="line"><span class="function"><span class="title">url</span>:发生错误对应的脚本路径，比如是<span class="title">bundle</span>.<span class="title">js</span></span></span><br><span class="line"><span class="function"><span class="title">lineNo</span>:错误发生的行号</span></span><br><span class="line"><span class="function"><span class="title">colunmnNo</span>:错误发生的列号</span></span><br><span class="line"><span class="function"><span class="title">error</span>：具体的<span class="title">error</span>对象，包含更加详细的错误调用堆栈信息</span></span><br></pre></td></tr></table></figure>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="Script-Error"><a href="#Script-Error" class="headerlink" title="Script Error"></a>Script Error</h3><blockquote>
+<p>现在我们一般都把资源放在 cdn 上，其他资源在本页面相当于跨域为什么会有这种设置，这是避免数据泄露到不安全的域中。如果我是银行页面，随便引入一个 js 资源，读取了账户密码，那可如何是好。</p>
+</blockquote>
+<h4 id="解决手段"><a href="#解决手段" class="headerlink" title="解决手段"></a>解决手段</h4><p>添加信任的域</p>
+<ul>
+<li>客户端的 script 添加 crossorigin，他的作用就是告诉浏览器，要加载一个其他域的资源，并且信任他</li>
+<li>服务端设置<strong>Acess-Control-Allow-Origin</strong>的响应头，可以直接设置为*，信任全部资源。cdn 资源应该全部加上 CORS 响应头。<blockquote>
+<p>如果我们使用 nginx 的话，可以像下面那样简单配置</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">     root /Users<span class="comment">/**;</span></span><br><span class="line"><span class="comment">     index  index.html index.htm;</span></span><br><span class="line"><span class="comment">     add_header "Access-Control-Allow-Origin" "*";</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="代码压缩"><a href="#代码压缩" class="headerlink" title="代码压缩"></a>代码压缩</h3><blockquote>
+<p>现代 web 工程都会直接压缩 js 代码，所以线上一般都是只有几行代码但是我们有 sourcemap，可以定位到源代码的位置。但是线上是没有这个东西，我们可以通过<a href="https://github.com/mozilla/source-map/" target="_blank" rel="noopener">sourcemap</a>这个工具来将压缩后的代码生成 sourcemap</p>
+</blockquote>
+<ul>
+<li>这里简单介绍一下生成 sourcemap 文件的方式</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uglifyjs --source-map 最终生成的map名称 --output 压缩文件名称 原文件名称</span><br></pre></td></tr></table></figure>
+<ul>
+<li>简单通过 soucemap 定位到源文件的真正行数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sourceMap = <span class="built_in">require</span>(<span class="string">"source-map"</span>);</span><br><span class="line"><span class="keyword">let</span> mapData = <span class="built_in">require</span>(<span class="string">"./test.json"</span>);</span><br><span class="line"><span class="keyword">let</span> consumer = <span class="keyword">new</span> sourceMap.SourceMapConsumer(mapData);</span><br><span class="line"><span class="keyword">let</span> info = consumer.originalPositionFor(&#123; <span class="attr">line</span>: <span class="number">1</span>, <span class="attr">column</span>: <span class="number">102</span> &#125;);</span><br><span class="line"><span class="built_in">console</span>.log(info); <span class="comment">//&#123; source: "test.js", line: 11, column: 6, name: "yoki" &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="推荐工具"><a href="#推荐工具" class="headerlink" title="推荐工具"></a>推荐工具</h2><blockquote>
+<p>由以上可以简单知道前端收集的原理了，但真正到线上肯定是不够的，这里有一些成熟的工具</p>
+</blockquote>
+<ul>
+<li><a href="https://sentry.io" target="_blank" rel="noopener">sentry</a></li>
+<li><a href="https://www.fundebug.com/" target="_blank" rel="noopener">fundebug</a></li>
+</ul>
+<p>###</p>
+<blockquote>
+<p>分享一篇<a href="http://web.jobbole.com/90033/" target="_blank" rel="noopener">如何设计一个前端监控系统</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/01/10/study-render/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1491,29 +1652,29 @@
       
         
           
-            <h3 id="Generator函数"><a href="#Generator函数" class="headerlink" title="Generator函数"></a>Generator函数</h3><blockquote>
-<p>generator是生成器。generator可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。</p>
+            <h3 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h3><blockquote>
+<p>generator 是生成器。generator 可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。</p>
 </blockquote>
-<h5 id="generator函数的创建"><a href="#generator函数的创建" class="headerlink" title="generator函数的创建"></a>generator函数的创建</h5><ul>
-<li>ES6中用<code>function*</code>来创建生成器函数</li>
-<li><p>当想要generator产生一个值之后暂停执行，需要使用到<code>yield</code>（生成）关键字，有点类似于return关键字（都可以返回一个值），只是yield返回值之后generator函数会暂停运行</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerate</span>(<span class="params"></span>)</span>&#123; <span class="comment">//创建一个取号机</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>yield*</code>是委派至另一个生成器函数 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">anotherGenerator</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">generator</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i;</span><br><span class="line">  <span class="keyword">yield</span>* anotherGenerator(i);</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = generator(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 11</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 13</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
-</li>
+<h5 id="generator-函数的创建"><a href="#generator-函数的创建" class="headerlink" title="generator 函数的创建"></a>generator 函数的创建</h5><ul>
+<li>ES6 中用<code>function*</code>来创建生成器函数</li>
+<li>当想要 generator 产生一个值之后暂停执行，需要使用到<code>yield</code>（生成）关键字，有点类似于 return 关键字（都可以返回一个值），只是 yield 返回值之后 generator 函数会暂停运行</li>
 </ul>
-<h5 id="generator函数的使用"><a href="#generator函数的使用" class="headerlink" title="generator函数的使用"></a>generator函数的使用</h5><ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//创建一个取号机</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>yield*</code>是委派至另一个生成器函数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">anotherGenerator</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">generator</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i;</span><br><span class="line">  <span class="keyword">yield</span>* anotherGenerator(i);</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = generator(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 11</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 13</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+<h5 id="generator-函数的使用"><a href="#generator-函数的使用" class="headerlink" title="generator 函数的使用"></a>generator 函数的使用</h5><ul>
 <li><code>ticketGenerate()</code>不会马上执行它的主体，而是会返回一个这个生成器函数的迭代器对象</li>
-<li>当这个迭代器对象的next方法被调用时候，生成器函数的主体会执行到第一个yield表达式，该表达式定义了迭代器对象返回的值。</li>
-<li>next()返回一个对象：{value:1,done:false}，value属性是产出的值，done属性是表示生成器是否已经产出了它最后的值。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ticket=ticketGenerate() <span class="comment">//返回一个生成器对象</span></span><br><span class="line">ticket.next() <span class="comment">//&#123;value: 1, done: false&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>当这个迭代器对象的 next 方法被调用时候，生成器函数的主体会执行到第一个 yield 表达式，该表达式定义了迭代器对象返回的值。</li>
+<li>next()返回一个对象：{value:1,done:false}，value 属性是产出的值，done 属性是表示生成器是否已经产出了它最后的值。</li>
 </ul>
-<h5 id="影响generator的状态"><a href="#影响generator的状态" class="headerlink" title="影响generator的状态"></a>影响generator的状态</h5><ul>
-<li>next()的另一个妙用是可以给它传递值，它会被视为generator中的yield语句的结果对待。</li>
-<li>因此next是在generator运行过程中向其传递信息的方式。我们可以借此来重置取号机，将号码变为0。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerator</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;<span class="literal">true</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> reset=<span class="keyword">yield</span> i;</span><br><span class="line">        <span class="keyword">if</span>(reset) &#123;i=<span class="number">-1</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> takeANumber = ticketGenerator(); </span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//0  </span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1 </span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//2 </span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next(<span class="literal">true</span>).value); <span class="comment">//0 </span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ticket = ticketGenerate(); <span class="comment">//返回一个生成器对象</span></span><br><span class="line">ticket.next(); <span class="comment">//&#123;value: 1, done: false&#125;</span></span><br></pre></td></tr></table></figure>
+<h5 id="影响-generator-的状态"><a href="#影响-generator-的状态" class="headerlink" title="影响 generator 的状态"></a>影响 generator 的状态</h5><ul>
+<li>next()的另一个妙用是可以给它传递值，它会被视为 generator 中的 yield 语句的结果对待。</li>
+<li>因此 next 是在 generator 运行过程中向其传递信息的方式。我们可以借此来重置取号机，将号码变为 0。</li>
 </ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerator</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; <span class="literal">true</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> reset = <span class="keyword">yield</span> i;</span><br><span class="line">    <span class="keyword">if</span> (reset) &#123;</span><br><span class="line">      i = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> takeANumber = ticketGenerator();</span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//2</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next(<span class="literal">true</span>).value); <span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
 
           
         
@@ -1635,165 +1796,16 @@
 <p>用来抛出一个异常，throw expression</p>
 </blockquote>
 <ul>
-<li>throw 12 //抛出数值12的异常</li>
+<li>throw 12 //抛出数值 12 的异常</li>
 <li>throw ‘err’ //抛出字符串’err’的异常</li>
-<li>throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下throw new Error(‘123’)</li>
+<li>throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下 throw new Error(‘123’)</li>
 </ul>
-<p>也可以创建自定义错误<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UserException</span>(<span class="params">message</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name=<span class="string">'UserException'</span>;</span><br><span class="line">    <span class="keyword">this</span>.message=message</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> UserException(<span class="string">'用户消息错误'</span>)</span><br></pre></td></tr></table></figure></p>
-<h3 id="try-catch大法"><a href="#try-catch大法" class="headerlink" title="try..catch大法"></a>try..catch大法</h3><blockquote>
-<p>配合throw能找出自己程序的异常</p>
+<p>也可以创建自定义错误</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UserException</span>(<span class="params">message</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">"UserException"</span>;</span><br><span class="line">  <span class="keyword">this</span>.message = message;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> UserException(<span class="string">"用户消息错误"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="try-catch-大法"><a href="#try-catch-大法" class="headerlink" title="try..catch 大法"></a>try..catch 大法</h3><blockquote>
+<p>配合 throw 能找出自己程序的异常</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printValue</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(value==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'值是1错误'</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    printValue(<span class="number">1</span>)</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e.message,e.name,e.stack)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/05/17/use-promise/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/05/17/use-promise/" itemprop="url">使用promise</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:16:13+08:00">
-                2017-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><blockquote>
-<p>Promise作为ES6的特性，可以很好地创建异步工作流</p>
-</blockquote>
-<ul>
-<li>Promise是构造函数</li>
-<li>Promise只有三种状态（pending，resolve，reject），pending是刚创建Promise实例的状态，然后一旦转为resolve或者reject，就不可变更</li>
-</ul>
-<h4 id="创建Promise"><a href="#创建Promise" class="headerlink" title="创建Promise"></a>创建Promise</h4><blockquote>
-<p>以封装xhr为例子</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getURL</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123; <span class="comment">//Promise构造函数接受一个函数，这个函数接受两个参数</span></span><br><span class="line">        <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">        xhr.open(<span class="string">'GET'</span>,url,<span class="literal">true</span>) </span><br><span class="line">        xhr.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(xhr.status==<span class="number">200</span>)&#123;</span><br><span class="line">                resolve(<span class="built_in">JSON</span>.parse(xhr.responseText)) <span class="comment">//如果成功响应，那么把这个值填充到resolve</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                reject(<span class="keyword">new</span> <span class="built_in">Error</span>(xhr.statusText)) <span class="comment">//把该错误对象填充到reject里面</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        xhr.onError=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            reject(<span class="keyword">new</span> <span class="built_in">Error</span>(xhr.statusText)) <span class="comment">//把该错误对象填充到reject里面</span></span><br><span class="line">        &#125;</span><br><span class="line">        xhr.send(<span class="literal">null</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>reject必须是接受一个错误对象实例，比如<code>new Error(&#39;12&#39;)</code>里面是什么类型的都可以</li>
-</ul>
-<h4 id="使用Promise"><a href="#使用Promise" class="headerlink" title="使用Promise"></a>使用Promise</h4><blockquote>
-<p>使用上面封装xhr的getURL的函数，该函数返回一个Promise实例</p>
-</blockquote>
-<ul>
-<li>Promise的实例方法有两个：then和catch，这个两个方法都返回新的Promise对象</li>
-<li>then有两个参数。then(onfilled,onrejected)，第一个是参数值resolve来填充，第二个是reject来填充</li>
-<li>catch实则是then(undefined,onrejected)的别名，但是一般情况下都是用这个</li>
-<li>then检测不了自身Promise对象onfilled出了异常，而catch是基于对上次的then产生的promise对象</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url1=<span class="string">'http://azu.github.io/promises-book/json/comment.json'</span>,</span><br><span class="line">    url2=<span class="string">'http://azu.github.io/promises-book/json/people.json'</span></span><br><span class="line">getURL(url1).then(<span class="function">(<span class="params">val</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(val)  <span class="comment">//这里是onfilled填充</span></span><br><span class="line">&#125;).catch(<span class="function"><span class="params">error</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error) <span class="comment">//这里是onrejected填充</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h5 id="Promise-chain获取上次promise的返回值"><a href="#Promise-chain获取上次promise的返回值" class="headerlink" title="Promise chain获取上次promise的返回值"></a>Promise chain获取上次promise的返回值</h5><blockquote>
-<p>由于Promise 链式调用的时候，每个Promise都是独立的。但是可以通过return值来传给下一个Promise，因为return了值是填充了当前Promise对象的resolve<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise.then(<span class="function"><span class="params">val</span>=&gt;</span>&#123;<span class="keyword">return</span> val&#125;).then(<span class="function"><span class="params">val</span>=&gt;</span>&#123;<span class="built_in">console</span>.log(val)&#125;)</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<h5 id="Promise静态方法"><a href="#Promise静态方法" class="headerlink" title="Promise静态方法"></a>Promise静态方法</h5><ul>
-<li>Promise.resolve(42) === new Promise((resolve,reject)=&gt;resolve(42)) ,是它的语法糖</li>
-<li>Promise.reject(new Error(42)) === new Promise((resolve,reject)=&gt;reject(new Error(42))) 是它的语法糖</li>
-<li>如果有多个Promise同时需要判断才能进行下一步，可以用Promise.all([promise1,promise2])。这个then方法返回的参数也是一个数组，跟promise1和promise2的顺序一样。需要注意的是，all是并行执行的。</li>
-<li>Promise.race([promise1,promise2]) 则和数组的some方法很像，只要有一个promise对象进入 FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">promise.all([getURL(url1),getURL(url2)]).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(result)  <span class="comment">//[getURL(url1)的结果，getURL(url2)的结果]</span></span><br><span class="line">&#125;)</span><br><span class="line">promise.race([getURL(url1),getURL(url2)]).then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value)  <span class="comment">//一旦这两个promise对象有一个完成了onfilled或onrejected状态，那么就会进行后续的then，所以这里then的参数只有一个value。但不并不会影响其他promise对象的进行，只是它们的结果值不会出现在then的里面</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printValue</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (value == <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"值是1错误"</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  printValue(<span class="number">1</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.message, e.name, e.stack);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1883,7 +1895,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1896,7 +1908,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
