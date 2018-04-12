@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ES6," />
+  <meta name="keywords" content="javascript," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Generator函数 generator是生成器。generator可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。  generator函数的创建 ES6中用function*来创建生成器函数 当想要generator产生一个值之后暂停执行，需要使用到yield（">
-<meta name="keywords" content="ES6">
+<meta name="description" content="Generator 函数 generator 是生成器。generator 可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。  generator 函数的创建 ES6 中用function*来创建生成器函数 当想要 generator 产生一个值之后暂停执行，需要使用">
+<meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Generator函数">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/05/23/use-generator/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="Generator函数 generator是生成器。generator可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。  generator函数的创建 ES6中用function*来创建生成器函数 当想要generator产生一个值之后暂停执行，需要使用到yield（">
+<meta property="og:description" content="Generator 函数 generator 是生成器。generator 可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。  generator 函数的创建 ES6 中用function*来创建生成器函数 当想要 generator 产生一个值之后暂停执行，需要使用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-26T02:53:49.777Z">
+<meta property="og:updated_time" content="2018-04-11T03:35:08.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Generator函数">
-<meta name="twitter:description" content="Generator函数 generator是生成器。generator可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。  generator函数的创建 ES6中用function*来创建生成器函数 当想要generator产生一个值之后暂停执行，需要使用到yield（">
+<meta name="twitter:description" content="Generator 函数 generator 是生成器。generator 可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。  generator 函数的创建 ES6 中用function*来创建生成器函数 当想要 generator 产生一个值之后暂停执行，需要使用">
 
 
 
@@ -332,29 +332,29 @@
       
 
       
-        <h3 id="Generator函数"><a href="#Generator函数" class="headerlink" title="Generator函数"></a>Generator函数</h3><blockquote>
-<p>generator是生成器。generator可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。</p>
+        <h3 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h3><blockquote>
+<p>generator 是生成器。generator 可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。</p>
 </blockquote>
-<h5 id="generator函数的创建"><a href="#generator函数的创建" class="headerlink" title="generator函数的创建"></a>generator函数的创建</h5><ul>
-<li>ES6中用<code>function*</code>来创建生成器函数</li>
-<li><p>当想要generator产生一个值之后暂停执行，需要使用到<code>yield</code>（生成）关键字，有点类似于return关键字（都可以返回一个值），只是yield返回值之后generator函数会暂停运行</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerate</span>(<span class="params"></span>)</span>&#123; <span class="comment">//创建一个取号机</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>yield*</code>是委派至另一个生成器函数 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">anotherGenerator</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">generator</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i;</span><br><span class="line">  <span class="keyword">yield</span>* anotherGenerator(i);</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = generator(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 11</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 13</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
-</li>
+<h5 id="generator-函数的创建"><a href="#generator-函数的创建" class="headerlink" title="generator 函数的创建"></a>generator 函数的创建</h5><ul>
+<li>ES6 中用<code>function*</code>来创建生成器函数</li>
+<li>当想要 generator 产生一个值之后暂停执行，需要使用到<code>yield</code>（生成）关键字，有点类似于 return 关键字（都可以返回一个值），只是 yield 返回值之后 generator 函数会暂停运行</li>
 </ul>
-<h5 id="generator函数的使用"><a href="#generator函数的使用" class="headerlink" title="generator函数的使用"></a>generator函数的使用</h5><ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//创建一个取号机</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>yield*</code>是委派至另一个生成器函数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">anotherGenerator</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">generator</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i;</span><br><span class="line">  <span class="keyword">yield</span>* anotherGenerator(i);</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = generator(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 11</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 13</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+<h5 id="generator-函数的使用"><a href="#generator-函数的使用" class="headerlink" title="generator 函数的使用"></a>generator 函数的使用</h5><ul>
 <li><code>ticketGenerate()</code>不会马上执行它的主体，而是会返回一个这个生成器函数的迭代器对象</li>
-<li>当这个迭代器对象的next方法被调用时候，生成器函数的主体会执行到第一个yield表达式，该表达式定义了迭代器对象返回的值。</li>
-<li>next()返回一个对象：{value:1,done:false}，value属性是产出的值，done属性是表示生成器是否已经产出了它最后的值。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ticket=ticketGenerate() <span class="comment">//返回一个生成器对象</span></span><br><span class="line">ticket.next() <span class="comment">//&#123;value: 1, done: false&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>当这个迭代器对象的 next 方法被调用时候，生成器函数的主体会执行到第一个 yield 表达式，该表达式定义了迭代器对象返回的值。</li>
+<li>next()返回一个对象：{value:1,done:false}，value 属性是产出的值，done 属性是表示生成器是否已经产出了它最后的值。</li>
 </ul>
-<h5 id="影响generator的状态"><a href="#影响generator的状态" class="headerlink" title="影响generator的状态"></a>影响generator的状态</h5><ul>
-<li>next()的另一个妙用是可以给它传递值，它会被视为generator中的yield语句的结果对待。</li>
-<li>因此next是在generator运行过程中向其传递信息的方式。我们可以借此来重置取号机，将号码变为0。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerator</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;<span class="literal">true</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> reset=<span class="keyword">yield</span> i;</span><br><span class="line">        <span class="keyword">if</span>(reset) &#123;i=<span class="number">-1</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> takeANumber = ticketGenerator(); </span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//0  </span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1 </span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//2 </span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next(<span class="literal">true</span>).value); <span class="comment">//0 </span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ticket = ticketGenerate(); <span class="comment">//返回一个生成器对象</span></span><br><span class="line">ticket.next(); <span class="comment">//&#123;value: 1, done: false&#125;</span></span><br></pre></td></tr></table></figure>
+<h5 id="影响-generator-的状态"><a href="#影响-generator-的状态" class="headerlink" title="影响 generator 的状态"></a>影响 generator 的状态</h5><ul>
+<li>next()的另一个妙用是可以给它传递值，它会被视为 generator 中的 yield 语句的结果对待。</li>
+<li>因此 next 是在 generator 运行过程中向其传递信息的方式。我们可以借此来重置取号机，将号码变为 0。</li>
 </ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerator</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; <span class="literal">true</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> reset = <span class="keyword">yield</span> i;</span><br><span class="line">    <span class="keyword">if</span> (reset) &#123;</span><br><span class="line">      i = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> takeANumber = ticketGenerator();</span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//2</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next(<span class="literal">true</span>).value); <span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -372,7 +372,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/ES6/" rel="tag"># ES6</a>
+            <a href="/blog/tags/javascript/" rel="tag"># javascript</a>
           
         </div>
       
@@ -474,7 +474,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -487,7 +487,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -520,7 +520,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator函数"><span class="nav-number">1.</span> <span class="nav-text">Generator函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#generator函数的创建"><span class="nav-number">1.0.1.</span> <span class="nav-text">generator函数的创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#generator函数的使用"><span class="nav-number">1.0.2.</span> <span class="nav-text">generator函数的使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#影响generator的状态"><span class="nav-number">1.0.3.</span> <span class="nav-text">影响generator的状态</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator-函数"><span class="nav-number">1.</span> <span class="nav-text">Generator 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#generator-函数的创建"><span class="nav-number">1.0.1.</span> <span class="nav-text">generator 函数的创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#generator-函数的使用"><span class="nav-number">1.0.2.</span> <span class="nav-text">generator 函数的使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#影响-generator-的状态"><span class="nav-number">1.0.3.</span> <span class="nav-text">影响 generator 的状态</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
