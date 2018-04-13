@@ -75,4 +75,4 @@ console.log(info); //{ source: "test.js", line: 11, column: 6, name: "yoki" }
 
 ---
 
-> 分享一篇[如何设计一个前端监控系统](http://web.jobbole.com/90033/)
+> 分享一篇干货[如何设计一个前端监控系统](http://web.jobbole.com/90033/)
