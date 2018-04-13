@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="计算机," />
+  <meta name="keywords" content="git," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="进程(process)和线程（thread）   进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。 进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。 线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂">
-<meta name="keywords" content="计算机">
+<meta name="description" content="基础命令 git clone 克隆仓库  git checkout 切换分支  git add 添加文件  git commit 提交改动  git push 推送本地分支到远端  git merge 把某个分支的代码合并到当前分支  git pull = git fetch + git merge 把远端分支更新到本地  git status 当前分支状态    我一般习惯配置别名 alias，">
+<meta name="keywords" content="git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="进程和线程">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/11/09/study-processAndthread/index.html">
+<meta property="og:title" content="工作中常用git命令">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/02/13/study-git/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="进程(process)和线程（thread）   进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。 进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。 线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂">
+<meta property="og:description" content="基础命令 git clone 克隆仓库  git checkout 切换分支  git add 添加文件  git commit 提交改动  git push 推送本地分支到远端  git merge 把某个分支的代码合并到当前分支  git pull = git fetch + git merge 把远端分支更新到本地  git status 当前分支状态    我一般习惯配置别名 alias，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T06:16:23.541Z">
+<meta property="og:updated_time" content="2018-04-13T07:44:09.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="进程和线程">
-<meta name="twitter:description" content="进程(process)和线程（thread）   进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。 进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。 线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂">
+<meta name="twitter:title" content="工作中常用git命令">
+<meta name="twitter:description" content="基础命令 git clone 克隆仓库  git checkout 切换分支  git add 添加文件  git commit 提交改动  git push 推送本地分支到远端  git merge 把某个分支的代码合并到当前分支  git pull = git fetch + git merge 把远端分支更新到本地  git status 当前分支状态    我一般习惯配置别名 alias，">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2017/11/09/study-processAndthread/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2017/02/13/study-git/"/>
 
 
 
 
 
-  <title>进程和线程 | Blog</title>
+  <title>工作中常用git命令 | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/11/09/study-processAndthread/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/02/13/study-git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">进程和线程</h1>
+          <h1 class="post-title" itemprop="name headline">工作中常用git命令</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T11:56:29+08:00">
-                2017-11-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-13T15:35:34+08:00">
+                2017-02-13
               </time>
             
 
@@ -334,38 +334,46 @@
       
 
       
-        <blockquote>
-<p>进程(process)和线程（thread）</p>
-</blockquote>
-<ul>
-<li>进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。</li>
-<li>进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。</li>
-<li>线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈。</li>
+        <h2 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h2><ul>
+<li><p>git clone 克隆仓库</p>
+</li>
+<li><p>git checkout 切换分支</p>
+</li>
+<li><p>git add 添加文件</p>
+</li>
+<li><p>git commit 提交改动</p>
+</li>
+<li><p>git push 推送本地分支到远端</p>
+</li>
+<li><p>git merge 把某个分支的代码合并到当前分支</p>
+</li>
+<li><p>git pull = git fetch + git merge 把远端分支更新到本地</p>
+</li>
+<li><p>git status 当前分支状态</p>
+</li>
 </ul>
 <blockquote>
-<p>他们之间的关系是</p>
+<p>我一般习惯配置别名 alias，比如 merge 变成 mg，这样少打几个字母</p>
+</blockquote>
+<h2 id="常用命令组合"><a href="#常用命令组合" class="headerlink" title="常用命令组合"></a>常用命令组合</h2><p>1.丢掉本地未提交改动</p>
+<p>git checkout -f</p>
+<p>2.丢掉本地已提交但未推送到远端的提交</p>
+<p>git reset –hard origin/xxx</p>
+<h2 id="测试和发布"><a href="#测试和发布" class="headerlink" title="测试和发布"></a>测试和发布</h2><blockquote>
+<p>内部使用 gitlab</p>
 </blockquote>
 <ul>
-<li>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（就是通常说的主线程）</li>
-<li>资源分配给进程，同一进程的所有线程共享该进程的所有资源</li>
-<li>线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的方法实现同步。</li>
-<li>处理机分给线程，即真正在处理机上运行得是线程</li>
-<li>线程是指进程内的一个执行单元，也是进程内的可调度实体</li>
+<li>master 主分支：用于外网线上发布，永远保持跟线上一致</li>
+<li>develop 分支：用于发布测试环境</li>
 </ul>
-<blockquote>
-<p>他们之间的区别</p>
+<h3 id="日常开发说明"><a href="#日常开发说明" class="headerlink" title="日常开发说明"></a>日常开发说明</h3><blockquote>
+<p>详情参见<a href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html" target="_blank" rel="noopener">git flow</a></p>
 </blockquote>
 <ul>
-<li>调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位</li>
-<li>并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。</li>
-<li>拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但也可以访问隶属于进程的资源。</li>
-</ul>
-<blockquote>
-<p>生动形象</p>
-</blockquote>
-<ul>
-<li>书面上，进程和线程基本是一个东西，只是进程可以包含若干个线程。此外就是在操作系统中的层级上，也就是粒度不同外，没有其他大的区别。在一般使用中，需要就多开几个线程。</li>
-<li>形象的说，进程就是一个项目组，每个程序员就是里面的线程，当然一个程序员也可以是一个项目组，对应的一个进程只有一个线程，而且还是主线程。公司里面的任务是分配给项目组级别的，也就是说系统资源是分配给进程的，但是干活的是程序员（线程）。</li>
+<li>日常开发从 master 拉一个分支 feature-xxx 分支到本地</li>
+<li>要发布测试环境，直接 mg 到 develop，然后发布</li>
+<li>要发布线上，直接 mg 到 master，然后发布</li>
+<li>日常紧急 bug 修复，可拉一个 hotfix 分支</li>
 </ul>
 
       
@@ -384,7 +392,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/计算机/" rel="tag"># 计算机</a>
+            <a href="/blog/tags/git/" rel="tag"># git</a>
           
         </div>
       
@@ -397,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2017/09/24/think/" rel="next" title="杂乱无章">
-                <i class="fa fa-chevron-left"></i> 杂乱无章
+              <a href="/blog/2017/01/15/helloWorld/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
               </a>
             
           </div>
@@ -407,8 +415,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2017/11/23/study-animate/" rel="prev" title="动画了解一下">
-                动画了解一下 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2017/03/10/use-nvm/" rel="prev" title="使用nvm">
+                使用nvm <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -461,8 +469,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -517,6 +534,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础命令"><span class="nav-number">1.</span> <span class="nav-text">基础命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令组合"><span class="nav-number">2.</span> <span class="nav-text">常用命令组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试和发布"><span class="nav-number">3.</span> <span class="nav-text">测试和发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#日常开发说明"><span class="nav-number">3.1.</span> <span class="nav-text">日常开发说明</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

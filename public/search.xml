@@ -115,8 +115,16 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[工作中常用git命令]]></title>
+    <url>%2Fblog%2F2017%2F02%2F13%2Fstudy-git%2F</url>
+    <content type="text"><![CDATA[基础命令 git clone 克隆仓库 git checkout 切换分支 git add 添加文件 git commit 提交改动 git push 推送本地分支到远端 git merge 把某个分支的代码合并到当前分支 git pull = git fetch + git merge 把远端分支更新到本地 git status 当前分支状态 我一般习惯配置别名 alias，比如 merge 变成 mg，这样少打几个字母 常用命令组合1.丢掉本地未提交改动 git checkout -f 2.丢掉本地已提交但未推送到远端的提交 git reset –hard origin/xxx 测试和发布 内部使用 gitlab master 主分支：用于外网线上发布，永远保持跟线上一致 develop 分支：用于发布测试环境 日常开发说明 详情参见git flow 日常开发从 master 拉一个分支 feature-xxx 分支到本地 要发布测试环境，直接 mg 到 develop，然后发布 要发布线上，直接 mg 到 master，然后发布 日常紧急 bug 修复，可拉一个 hotfix 分支]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hello World]]></title>
-    <url>%2Fblog%2F2017%2F02%2F15%2FhelloWorld%2F</url>
+    <url>%2Fblog%2F2017%2F01%2F15%2FhelloWorld%2F</url>
     <content type="text"><![CDATA[在程序的世界里，开始的话就循例来一个 hello world 一级标题 在文字前面加上#表示标题 标题一共有六级（6 个#号）在#后面加上空格，才是标准的 md 语法 列表 在文字前面加上- 列表 1 列表 2 引用 在文字前面加上&gt; 图片与链接 插入链接与图片的语法的区别在于一个!号; 12&gt; 图片为：![](relative address);&gt; 链接为：[](); 粗体 两个**包含一段文本就是粗体 粗体 表格12345| Tables | Are | Cool || ------------- |:-------------:| -----:|| col 3 is | right-aligned | $1600 || col 2 is | centered | $12 || zebra stripes | are neat | $1 | Tables Are Cool col 3 is right-aligned $1600 col 2 is centered $12 zebra stripes are neat $1 代码框 用三个` 把中间的代码包裹,在第一段点之后加语言名可以显示代码高亮 1console.log(12); 分割线 分割线的语法为三个-]]></content>
       <tags>
         <tag>markdown</tag>
