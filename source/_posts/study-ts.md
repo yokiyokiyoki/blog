@@ -100,6 +100,11 @@ interface Person{
 
 ### 类
 
+> * public 修饰的属性或者方法都是公有的，可以在任何地方被访问到，默认所有的属性或方法都是 public
+
+> * private 修饰的属性或者方法都是私有的，不能在声明它的类的外部访问
+> * protected 修饰的属性或者方法都是受保护的，它与 pravate 类似，区别是它在子类是允许访问的
+
 ```javascript
 class Animal{
     publick name;
@@ -117,6 +122,17 @@ class Animal2{
     }
 }
 let b=new Animal('rabbit')
-b.name//rabbit
 b.name='tom'//报错
+class Animal3{
+    protected name;
+    public constructor(name){
+        this.name=name
+    }
+}
+class Cat extends Animal{
+    constructor(name){
+        super(name)
+        console.log(this.name)//可以的
+    }
+}
 ```
