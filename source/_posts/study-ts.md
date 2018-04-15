@@ -136,3 +136,18 @@ class Cat extends Animal{
     }
 }
 ```
+
+### 泛型
+
+是指在定义函数/接口或者类的时候，不预先指定具体的类型，而在使用的时候再指定类型
+
+```javascript
+//T是运行时候的类型
+function createArray<T>(value: T, len: number): Array<T> {
+  return Array(len).fill(value);
+}
+//多个类型
+function swap<T1,T2>(tuple:[T1,T2]):[T1,T2]「
+return [tuple[1],tuple[0]]
+swap([7,'six'])//['six',7]
+```
