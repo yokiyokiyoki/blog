@@ -41,3 +41,14 @@ function say(): void {
 const u: undefined = undefined;
 const n: null = null;
 ```
+
+### 数组
+
+```javascript
+//全是数字的数组
+const numArr: number[] = [1, 2, 3];
+//数字和字符串都有的数组
+const tmp: (number | string)[] = [1, "2", 3];
+//一个可能什么都有类型都有的数组
+const anyArr: any[] = [1, "1", true];
+```
