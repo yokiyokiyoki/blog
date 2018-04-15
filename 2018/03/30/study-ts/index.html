@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="javascript," />
+  <meta name="keywords" content="Typescript," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1.javascript 代码错误处理方式  12345try &amp;#123;  something;&amp;#125; catch (e) &amp;#123;  window.location.href = &quot;http://stackoverflow.com/search?q=[js]+&quot; + e.message;&amp;#125;  2.如何优雅的取随机字符串  123456Math.random()  .to">
-<meta name="keywords" content="javascript">
+<meta name="description" content="简单介绍 以下来自维基百科   TypeScript 是一种由微软开发的自由和开源的编程语言。它是 JavaScript 的一个严格超集，并添加了可选的静态类型和基于类的面向对象编程。C#的首席架构师以及 Delphi 和 Turbo Pascal 的创始人安德斯·海尔斯伯格参与了 TypeScript 的开发。  TypeScript 设计目标是开发大型应用，然后转译成 JavaScript。[">
+<meta name="keywords" content="Typescript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript装逼指南">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/12/03/write-nbjs/index.html">
+<meta property="og:title" content="简单介绍Typescript">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/03/30/study-ts/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="1.javascript 代码错误处理方式  12345try &amp;#123;  something;&amp;#125; catch (e) &amp;#123;  window.location.href = &quot;http://stackoverflow.com/search?q=[js]+&quot; + e.message;&amp;#125;  2.如何优雅的取随机字符串  123456Math.random()  .to">
+<meta property="og:description" content="简单介绍 以下来自维基百科   TypeScript 是一种由微软开发的自由和开源的编程语言。它是 JavaScript 的一个严格超集，并添加了可选的静态类型和基于类的面向对象编程。C#的首席架构师以及 Delphi 和 Turbo Pascal 的创始人安德斯·海尔斯伯格参与了 TypeScript 的开发。  TypeScript 设计目标是开发大型应用，然后转译成 JavaScript。[">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T11:58:32.145Z">
+<meta property="og:updated_time" content="2018-04-15T09:18:42.068Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript装逼指南">
-<meta name="twitter:description" content="1.javascript 代码错误处理方式  12345try &amp;#123;  something;&amp;#125; catch (e) &amp;#123;  window.location.href = &quot;http://stackoverflow.com/search?q=[js]+&quot; + e.message;&amp;#125;  2.如何优雅的取随机字符串  123456Math.random()  .to">
+<meta name="twitter:title" content="简单介绍Typescript">
+<meta name="twitter:description" content="简单介绍 以下来自维基百科   TypeScript 是一种由微软开发的自由和开源的编程语言。它是 JavaScript 的一个严格超集，并添加了可选的静态类型和基于类的面向对象编程。C#的首席架构师以及 Delphi 和 Turbo Pascal 的创始人安德斯·海尔斯伯格参与了 TypeScript 的开发。  TypeScript 设计目标是开发大型应用，然后转译成 JavaScript。[">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2017/12/03/write-nbjs/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/03/30/study-ts/"/>
 
 
 
 
 
-  <title>javascript装逼指南 | Blog</title>
+  <title>简单介绍Typescript | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/12/03/write-nbjs/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/03/30/study-ts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">javascript装逼指南</h1>
+          <h1 class="post-title" itemprop="name headline">简单介绍Typescript</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-03T18:53:56+08:00">
-                2017-12-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T15:28:20+08:00">
+                2018-03-30
               </time>
             
 
@@ -334,38 +334,48 @@
       
 
       
-        <blockquote>
-<p>1.javascript 代码错误处理方式</p>
+        <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><blockquote>
+<p>以下来自维基百科</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  something;</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">window</span>.location.href = <span class="string">"http://stackoverflow.com/search?q=[js]+"</span> + e.message;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>TypeScript 是一种由微软开发的自由和开源的编程语言。它是 JavaScript 的一个严格超集，并添加了可选的静态类型和基于类的面向对象编程。C#的首席架构师以及 Delphi 和 Turbo Pascal 的创始人安德斯·海尔斯伯格参与了 TypeScript 的开发。</p>
+</li>
+<li><p>TypeScript 设计目标是开发大型应用，然后转译成 JavaScript。[7]由于 TypeScript 是 JavaScript 的严格超集，任何现有的 JavaScript 程序都是合法的 TypeScript 程序。</p>
+</li>
+</ul>
+<h2 id="为什么需要-ts"><a href="#为什么需要-ts" class="headerlink" title="为什么需要 ts"></a>为什么需要 ts</h2><blockquote>
+<p>普通的 js：假设我一个函数里面只能对字符串进行操作，要是我传了数字，直接就报错了，由此可见</p>
+</blockquote>
+<ul>
+<li>增加了代码的可读性和可维护性</li>
+<li>在编译阶段就能发现错误</li>
+<li>类型推论</li>
+</ul>
+<p>同时与 JavaScript 兼容良好，把.js 改为.ts 就能用</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//布尔值</span></span><br><span class="line"><span class="keyword">const</span> isDone = (boolean = <span class="literal">false</span>);</span><br><span class="line"><span class="comment">// 数值</span></span><br><span class="line"><span class="keyword">const</span> num: number = <span class="number">6</span>;</span><br><span class="line"><span class="comment">//字符串</span></span><br><span class="line"><span class="keyword">const</span> str: string = <span class="string">"yoki"</span>;</span><br><span class="line"><span class="comment">//空值返回</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"hi"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//null，undefined</span></span><br><span class="line"><span class="keyword">const</span> u: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">const</span> n: <span class="literal">null</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//全是数字的数组</span></span><br><span class="line"><span class="keyword">const</span> numArr: number[] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="comment">//数字和字符串都有的数组</span></span><br><span class="line"><span class="keyword">const</span> tmp: (number | string)[] = [<span class="number">1</span>, <span class="string">"2"</span>, <span class="number">3</span>];</span><br><span class="line"><span class="comment">//一个可能什么都有类型都有的数组</span></span><br><span class="line"><span class="keyword">const</span> anyArr: any[] = [<span class="number">1</span>, <span class="string">"1"</span>, <span class="literal">true</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//传入参数是数字，返回的也是数字</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">x: number, y: number</span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//可选型，用?,sum2(1)可以，sum（1，2）也可以</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum2</span>(<span class="params">x:number,y?:number</span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> y?:x+y:x</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//参数默认值,sum3(1,'5')，y会被自动推导为number</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum3</span>(<span class="params">x?:number,y=<span class="number">0</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//剩余参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">concat</span>(<span class="params">arr:any[],...items:any[]</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr.concat(items)</span><br><span class="line">&#125;</span><br><span class="line">concat([],<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><ul>
+<li><p>在面向对象，接口是一个很重要的概念，他是对行为的抽象，而具体如何行动需要由 class 去实现</p>
+</li>
+<li><p>ts 的接口是非常灵活的，既可以对类的一部分行为进行抽象，也可以用于对对象的形状进行描述</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对对象形状的描述</span></span><br><span class="line">interface Person&#123;</span><br><span class="line">    name:string</span><br><span class="line">    age?:number,</span><br><span class="line">    say?:<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">void</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> yoki:Person=&#123;</span><br><span class="line">    name:<span class="string">'yoki'</span>,</span><br><span class="line">    age:<span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//只读属性，不可修改</span></span><br><span class="line">interface Person&#123;</span><br><span class="line">    readonly id:number</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><blockquote>
+<ul>
+<li>public 修饰的属性或者方法都是公有的，可以在任何地方被访问到，默认所有的属性或方法都是 public</li>
+</ul>
+</blockquote>
 <blockquote>
-<p>2.如何优雅的取随机字符串</p>
+<ul>
+<li>private 修饰的属性或者方法都是私有的，不能在声明它的类的外部访问</li>
+<li>protected 修饰的属性或者方法都是受保护的，它与 pravate 类似，区别是它在子类是允许访问的</li>
+</ul>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.random()</span><br><span class="line">  .toString(<span class="number">16</span>)</span><br><span class="line">  .substring(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">Math</span>.random()</span><br><span class="line">  .toString(<span class="number">36</span>)</span><br><span class="line">  .substring(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>3.如何优雅的取整</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = ~~<span class="number">2.33</span>; <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2.33</span> | <span class="number">0</span>; <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = <span class="number">2.33</span> &gt;&gt; <span class="number">0</span>; <span class="comment">//2</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>4.金钱数字取千分位的非正则优雅实现</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用reduce</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatCash</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> str</span><br><span class="line">    .split(<span class="string">""</span>)</span><br><span class="line">    .reverse()</span><br><span class="line">    .reduce(<span class="function">(<span class="params">prev, next, index</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> (index % <span class="number">3</span> ? next : next + <span class="string">","</span>) + prev;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(formatCash(<span class="string">"1234567890"</span>)); <span class="comment">// 1,234,567,890</span></span><br><span class="line"><span class="comment">//toLocaleString</span></span><br><span class="line">(<span class="number">23333333</span>).toLocaleString(<span class="string">"en-US"</span>);</span><br><span class="line">(<span class="string">"23,333,333"</span>);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>5.最短代码实现数组去重</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[...new <span class="built_in">Set</span>([<span class="number">1</span>, <span class="string">"1"</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>])];</span><br><span class="line"><span class="comment">//[1,'1',2,3]</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>6.最短代码实现一个长度为 m(6)且值都为 n（8）的数组</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>(<span class="number">6</span>).fill(<span class="number">8</span>);</span><br><span class="line"><span class="comment">//[8,8,8,8,8,8]</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>7.短路表达式</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = b &amp;&amp; <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line"><span class="keyword">if</span> (b) &#123;</span><br><span class="line">  a = <span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  a = b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = b || <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line"><span class="keyword">if</span> (b) &#123;</span><br><span class="line">  a = b;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  a = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>8.颜色 rgb 和 hex 的相互转换</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rgbToHex</span>(<span class="params">r, g, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"#"</span> + ((<span class="number">1</span> &lt;&lt; <span class="number">24</span>) + (r &lt;&lt; <span class="number">16</span>) + (g &lt;&lt; <span class="number">8</span>) + b).toString(<span class="number">16</span>).slice(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hexToRgb</span>(<span class="params">hex</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> result = <span class="regexp">/^#?([a-f\d]&#123;2&#125;)([a-f\d]&#123;2&#125;)([a-f\d]&#123;2&#125;)$/i</span>.exec(hex);</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">    ? &#123;</span><br><span class="line">        r: <span class="built_in">parseInt</span>(result[<span class="number">1</span>], <span class="number">16</span>),</span><br><span class="line">        g: <span class="built_in">parseInt</span>(result[<span class="number">2</span>], <span class="number">16</span>),</span><br><span class="line">        b: <span class="built_in">parseInt</span>(result[<span class="number">3</span>], <span class="number">16</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    : <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">alert(hexToRgb(<span class="string">"#0033ff"</span>).g); <span class="comment">// "51";</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line">    publick name;</span><br><span class="line">    public <span class="keyword">constructor</span>(name)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> a=<span class="keyword">new</span> Animal(<span class="string">'rabbit'</span>)</span><br><span class="line">a.name<span class="comment">//rabbit</span></span><br><span class="line">a.name=<span class="string">'tom'</span><span class="comment">//tom</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal2</span></span>&#123;</span><br><span class="line">    private name;</span><br><span class="line">    public <span class="keyword">constructor</span>(name)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b=<span class="keyword">new</span> Animal(<span class="string">'rabbit'</span>)</span><br><span class="line">b.name=<span class="string">'tom'</span><span class="comment">//报错</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal3</span></span>&#123;</span><br><span class="line">    protected name;</span><br><span class="line">    public <span class="keyword">constructor</span>(name)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">extends</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(name)&#123;</span><br><span class="line">        <span class="keyword">super</span>(name)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)<span class="comment">//可以的</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><p>是指在定义函数/接口或者类的时候，不预先指定具体的类型，而在使用的时候再指定类型</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//T是运行时候的类型</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createArray</span>&lt;<span class="title">T</span>&gt;(<span class="params">value: T, len: number</span>): <span class="title">Array</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Array</span>(len).fill(value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//多个类型</span></span><br><span class="line">function swap&lt;T1,T2&gt;(tuple:[T1,T2]):[T1,T2]「</span><br><span class="line"><span class="keyword">return</span> [tuple[<span class="number">1</span>],tuple[<span class="number">0</span>]]</span><br><span class="line">swap([<span class="number">7</span>,<span class="string">'six'</span>])<span class="comment">//['six',7]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//泛型约束</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getlen</span>&lt;<span class="title">T</span>&gt;(<span class="params">a:T</span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.length</span><br><span class="line">&#125;<span class="comment">// length属性不存在type‘T’的里面，error</span></span><br><span class="line"></span><br><span class="line">interface lengthwise&#123;</span><br><span class="line">    length:number</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getlen2</span>&lt;<span class="title">T</span> <span class="title">extends</span> <span class="title">lengthwise</span>&gt;(<span class="params">a:T</span>):<span class="title">number</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.length</span><br><span class="line">&#125;</span><br><span class="line">getlen2([])<span class="comment">//ok</span></span><br><span class="line">getlen2(<span class="number">123</span>)<span class="comment">//error</span></span><br><span class="line"><span class="comment">//泛型类</span></span><br><span class="line">interface Props&#123;<span class="attr">size</span>:<span class="string">'big'</span>|<span class="string">'small'</span>&#125;</span><br><span class="line">interface State&#123;<span class="attr">visibily</span>:boolean&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span>&lt;<span class="title">Props</span>,<span class="title">State</span>&gt;</span>&#123;</span><br><span class="line">    state=&#123;<span class="attr">visibily</span>:<span class="literal">true</span>&#125;</span><br><span class="line">    <span class="keyword">constructor</span>(props,context)&#123;</span><br><span class="line">        <span class="keyword">super</span>(props,context)</span><br><span class="line">    &#125;</span><br><span class="line">    handleClick=<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">show</span>:<span class="literal">false</span>&#125;)</span><br><span class="line">    <span class="comment">//'error',show不在state接口</span></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.state.visibily&amp;&amp; &lt;button&gt; type=&#123;this.props.size&#125; onClick=&#123;this.handleClick&#125; /&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ReactDom.render(&lt;App size='middle' /&gt;,document.body)</span><br><span class="line">// error,middle不在props的size里</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -383,7 +393,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/javascript/" rel="tag"># javascript</a>
+            <a href="/blog/tags/Typescript/" rel="tag"># Typescript</a>
           
         </div>
       
@@ -396,8 +406,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2017/11/29/study-vps/" rel="next" title="初识vps">
-                <i class="fa fa-chevron-left"></i> 初识vps
+              <a href="/blog/2018/03/13/fe-progress/" rel="next" title="我理解的前端进阶">
+                <i class="fa fa-chevron-left"></i> 我理解的前端进阶
               </a>
             
           </div>
@@ -405,10 +415,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2018/01/10/study-render/" rel="prev" title="浏览器怎么渲染">
-                浏览器怎么渲染 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -460,8 +466,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -516,6 +531,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要-ts"><span class="nav-number">2.</span> <span class="nav-text">为什么需要 ts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">3.</span> <span class="nav-text">基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础类型"><span class="nav-number">3.1.</span> <span class="nav-text">基础类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">3.2.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">3.3.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">3.4.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类"><span class="nav-number">3.5.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型"><span class="nav-number">3.6.</span> <span class="nav-text">泛型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
