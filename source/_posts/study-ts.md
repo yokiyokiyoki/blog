@@ -64,4 +64,12 @@ function sum(x: number, y: number): number {
 function sum2(x:number,y?:number):number{
     return y?:x+y:x
 }
+//参数默认值,sum3(1,'5')，y会被自动推导为number
+function sum3(x?:number,y=0){
+    return x+y
+}
+//剩余参数
+function concat(arr:any[],...items:any[]){
+    return arr.concat(items)
+}
 ```
