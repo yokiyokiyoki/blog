@@ -80,3 +80,20 @@ concat([],1,2,3)=[1,2,3]
 * 在面向对象，接口是一个很重要的概念，他是对行为的抽象，而具体如何行动需要由 class 去实现
 
 * ts 的接口是非常灵活的，既可以对类的一部分行为进行抽象，也可以用于对对象的形状进行描述
+
+```javascript
+//对对象形状的描述
+interface Person{
+    name:string
+    age?:number,
+    say?:()=>void
+}
+const yoki:Person={
+    name:'yoki',
+    age:18
+}
+//只读属性，不可修改
+interface Person{
+    readonly id:number
+}
+```
