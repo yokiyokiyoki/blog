@@ -97,3 +97,26 @@ interface Person{
     readonly id:number
 }
 ```
+
+### 类
+
+```javascript
+class Animal{
+    publick name;
+    public constructor(name){
+        this.name=name
+    }
+}
+let a=new Animal('rabbit')
+a.name//rabbit
+a.name='tom'//tom
+class Animal2{
+    private name;
+    public constructor(name){
+        this.name=name
+    }
+}
+let b=new Animal('rabbit')
+b.name//rabbit
+b.name='tom'//报错
+```
