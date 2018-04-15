@@ -52,3 +52,16 @@ const tmp: (number | string)[] = [1, "2", 3];
 //一个可能什么都有类型都有的数组
 const anyArr: any[] = [1, "1", true];
 ```
+
+### 函数
+
+```javascript
+//传入参数是数字，返回的也是数字
+function sum(x: number, y: number): number {
+  return x + y;
+}
+//可选型，用?,sum2(1)可以，sum（1，2）也可以
+function sum2(x:number,y?:number):number{
+    return y?:x+y:x
+}
+```
