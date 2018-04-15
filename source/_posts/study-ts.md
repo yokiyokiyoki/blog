@@ -150,4 +150,34 @@ function createArray<T>(value: T, len: number): Array<T> {
 function swap<T1,T2>(tuple:[T1,T2]):[T1,T2]「
 return [tuple[1],tuple[0]]
 swap([7,'six'])//['six',7]
+
+//泛型约束
+function getlen<T>(a:T):number{
+    return a.length
+}// length属性不存在type‘T’的里面，error
+
+interface lengthwise{
+    length:number
+}
+function getlen2<T extends lengthwise>(a:T):number{
+    return a.length
+}
+getlen2([])//ok
+getlen2(123)//error
+//泛型类
+interface Props{size:'big'|'small'}
+interface State{visibily:boolean}
+class App extends React.Component<Props,State>{
+    state={visibily:true}
+    constructor(props,context){
+        super(props,context)
+    }
+    handleClick=()=>this.setState({show:false})
+    //'error',show不在state接口
+    render(){
+        return this.state.visibily&& <button> type={this.props.size} onClick={this.handleClick} />
+    }
+}
+ReactDom.render(<App size='middle' />,document.body)
+// error,middle不在props的size里
 ```
