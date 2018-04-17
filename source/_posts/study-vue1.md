@@ -73,3 +73,8 @@ proxyTable: {
 * npm 上包那么多，说不定什么时候就会更新，根据 package.json 里的^(会更新到 major 版本号最新的),~（会更新到 minor 版本最新的）
 * 有些包甚至不遵循发包规范
 * 所以我们需要统一版本号，这样不同的电脑在不同的时间就会下载到一样的包了
+
+## npm i -S 和-D 的区别
+
+* -S 会放到 dependencies 里面，存放到线上能访问到的代码，比如 vue，vue-router
+* -D 会放到 devDependcies：处于开发模式所依赖的模块，不产生额外代码到生产环境，比如 babel-core
