@@ -35,6 +35,7 @@ tags: Vue
 ## axios 的请求后台不接受
 
 * axios 默认是 json 格式提交，如果后台只支持表单序列化，就要自己转义
+* axios 有个 qs 模块可以试试
 
 ## css 的 scoped 有什么功能
 
