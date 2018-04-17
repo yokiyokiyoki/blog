@@ -47,3 +47,9 @@ tags: Vue
 // 编译过后,加上了 hash
 .a[data-v-1ec35ffc]{}
 ```
+
+## 小图片渲染出来 base64
+
+* webpack 的 url-loader 处理，对于小于多少 k 一下的图片转成 base64 内联到 html
+* 减少 http 请求降低服务器负担
+* 网络不好的时候，内联的内容先加载，优化体验
