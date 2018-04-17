@@ -15,3 +15,9 @@ tags: Vue
 npm config : npm config set registry https://registry.npm.taobao.org
 yarn config : yarn config set registry https://registry.npm.taobao.org
 ```
+
+## data functions should return an object
+
+这是因为你肯定在书写单组件，而单组件的 data 必须返回一个单例，可以参见[data 必须是函数](https://cn.vuejs.org/v2/guide/components.html#data-%E5%BF%85%E9%A1%BB%E6%98%AF%E5%87%BD%E6%95%B0)
+
+* 这里简单解释下，如果一个组件 data 引用的是一个同一个对象指针，那么当你在另外一个组件应用这个组件，v-for 他的时候，比如三个，那么你修改其中一个组件，另外两个这个组件的状态也会改变，但是我们的原则是组件间相互隔离，互不影响。
