@@ -54,3 +54,11 @@ tags: Vue
 * webpack 的 url-loader 处理，对于小于多少 k 一下的图片转成 base64 内联到 html
 * 减少 http 请求降低服务器负担
 * 网络不好的时候，内联的内容先加载，优化体验
+
+## ERROR in static/js/xxxxxxx.js from UglifyJs
+
+* 引入压缩后的 js，webpack 又开启了 uglifyjs 压缩，报错
+
+## keep-alive 缓存组件后很慢
+
+* 因为都是保存在内存里面的，一旦大量组件缓存性能肯定不会好
