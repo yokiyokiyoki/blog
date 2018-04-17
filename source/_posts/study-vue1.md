@@ -1,5 +1,5 @@
 ---
-title: vue的一些坑（一）
+title: vue的一些问题集合（一）
 date: 2018-04-02 11:25:32
 tags: Vue
 ---
