@@ -83,3 +83,12 @@ proxyTable: {
 
 * spa 的页面由 javascript 根据 API 发回的数据在用户的浏览器里自动生成的，Baidu 不会看 Javascript，那么页面对于它来说就是一个空洞洞的 html 和很多 scirpt 元素
 * 解决方案：服务端渲染(SSR)可以,请求回来是一个处理好的 html，vue 的服务端渲染方案[nuxt](https://zh.nuxtjs.org/)
+
+## 为什么首屏加载这么慢
+
+> 打包文件文件很大
+
+* 减少 jq 这种库的引入，现在都是数据驱动
+* webpack 压缩 js，css
+* 路由懒加载，代码分割
+* 采用服务端渲染，可以避免浏览器去解析模板和指令
