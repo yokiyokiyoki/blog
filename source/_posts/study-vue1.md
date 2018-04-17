@@ -28,4 +28,32 @@ yarn config : yarn config set registry https://registry.npm.taobao.org
 
 * promise 的回调
 * setInterval
-  比较好的解决方案就是使用箭头函数，绑定当前对象为 this 的上下文
+
+比较好的解决方案就是使用箭头函数，绑定当前对象为 this 的上下文
+
+## Component template shold contain exactly one root element.If you are useing v-if on multiple elements
+
+* 单组件文件里必须要有个根元素，一个大 div
+
+## No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+> 跨域问题
+
+* CORS 前后端配置
+* nginx 反向代理，一般线上使用
+* 本地开发，脚手架 vue-cli 里有 proxyTable
+
+```javascript
+// target : 就是 api 的代理的实际路径
+// changeOrigin: 必须是变源
+// pathRewrite : 路径重定向
+proxyTable: {
+  "/api": {
+    target: "http://yoki.com",
+    changeOrigin: true,
+    // pathRewrite: {
+    //   "^/api": "/"
+    // }
+  }
+}
+```
