@@ -35,3 +35,15 @@ tags: Vue
 ## axios 的请求后台不接受
 
 * axios 默认是 json 格式提交，如果后台只支持表单序列化，就要自己转义
+
+## css 的 scoped 有什么功能
+
+* 给每个类或者 id 自动添加 hash，只能给该组件用，不同组件不能进行继承
+
+```javascript
+/ 写的时候是这个
+.a{}
+
+// 编译过后,加上了 hash
+.a[data-v-1ec35ffc]{}
+```
