@@ -1,6 +1,6 @@
 ---
 title: vue的一些问题集合（二）
-date: 2018-04-17 14:19:46
+date: 2018-04-05 14:19:46
 tags: Vue
 ---
 
@@ -20,3 +20,14 @@ tags: Vue
 ## nginx 怎么配置
 
 [一大波不靠谱的 nginx 配置](https://juejin.im/post/58bfc412da2f60124db5999a)
+
+## v-if 和 v-show
+
+> v-if 是 dom 没有插入到文档里面，等条件成立，才 append 到 document 里面。
+
+* 等拿到值才可以处理组件内部的逻辑的，不然会报错
+* 有些 v-for 但是还没有拿到值的
+
+> v-show 只是简单通过 css 隐藏了
+
+* 不会导致页面重绘，改善用户体验
