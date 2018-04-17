@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="markdown," />
+  <meta name="keywords" content="Vue," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在程序的世界里，开始的话就循例来一个 hello world  一级标题 在文字前面加上#表示标题  标题一共有六级（6 个#号）在#后面加上空格，才是标准的 md 语法 列表 在文字前面加上-   列表 1 列表 2  引用 在文字前面加上&amp;gt;  图片与链接 插入链接与图片的语法的区别在于一个!号;  12&amp;gt; 图片为：![](relative address);&amp;gt; 链接为：[]">
-<meta name="keywords" content="markdown">
+<meta name="description" content="在公司一直用 vue 开发，有时候被一些小伙伴经常问到的问题，这里收集一下勉强再挖个坑  npm install 安装超时 cnpm:npm i cnpm -g yarn 和 npm 改成淘宝源  12npm config : npm config set registry https://registry.npm.taobao.orgyarn config : yarn config set">
+<meta name="keywords" content="Vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/01/15/helloWorld/index.html">
+<meta property="og:title" content="vue的一些问题集合（一）">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/04/02/study-vue1/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="在程序的世界里，开始的话就循例来一个 hello world  一级标题 在文字前面加上#表示标题  标题一共有六级（6 个#号）在#后面加上空格，才是标准的 md 语法 列表 在文字前面加上-   列表 1 列表 2  引用 在文字前面加上&amp;gt;  图片与链接 插入链接与图片的语法的区别在于一个!号;  12&amp;gt; 图片为：![](relative address);&amp;gt; 链接为：[]">
+<meta property="og:description" content="在公司一直用 vue 开发，有时候被一些小伙伴经常问到的问题，这里收集一下勉强再挖个坑  npm install 安装超时 cnpm:npm i cnpm -g yarn 和 npm 改成淘宝源  12npm config : npm config set registry https://registry.npm.taobao.orgyarn config : yarn config set">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-13T07:36:46.047Z">
+<meta property="og:updated_time" content="2018-04-17T06:20:24.416Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="在程序的世界里，开始的话就循例来一个 hello world  一级标题 在文字前面加上#表示标题  标题一共有六级（6 个#号）在#后面加上空格，才是标准的 md 语法 列表 在文字前面加上-   列表 1 列表 2  引用 在文字前面加上&amp;gt;  图片与链接 插入链接与图片的语法的区别在于一个!号;  12&amp;gt; 图片为：![](relative address);&amp;gt; 链接为：[]">
+<meta name="twitter:title" content="vue的一些问题集合（一）">
+<meta name="twitter:description" content="在公司一直用 vue 开发，有时候被一些小伙伴经常问到的问题，这里收集一下勉强再挖个坑  npm install 安装超时 cnpm:npm i cnpm -g yarn 和 npm 改成淘宝源  12npm config : npm config set registry https://registry.npm.taobao.orgyarn config : yarn config set">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2017/01/15/helloWorld/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/04/02/study-vue1/"/>
 
 
 
 
 
-  <title>Hello World | Blog</title>
+  <title>vue的一些问题集合（一） | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/01/15/helloWorld/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/02/study-vue1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">vue的一些问题集合（一）</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T17:17:08+08:00">
-                2017-01-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T11:25:32+08:00">
+                2018-04-02
               </time>
             
 
@@ -335,65 +335,70 @@
 
       
         <blockquote>
-<p>在程序的世界里，开始的话就循例来一个 hello world</p>
+<p>在公司一直用 vue 开发，有时候被一些小伙伴经常问到的问题，这里收集一下勉强再挖个坑</p>
 </blockquote>
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><blockquote>
-<p>在文字前面加上<strong>#</strong>表示标题</p>
-</blockquote>
-<h5 id="标题一共有六级（6-个-号）"><a href="#标题一共有六级（6-个-号）" class="headerlink" title="标题一共有六级（6 个#号）"></a>标题一共有六级（6 个#号）</h5><p>在<strong>#</strong>后面加上空格，才是标准的 md 语法</p>
-<h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><blockquote>
-<p>在文字前面加上-</p>
+<h2 id="npm-install-安装超时"><a href="#npm-install-安装超时" class="headerlink" title="npm install 安装超时"></a>npm install 安装超时</h2><ul>
+<li>cnpm:npm i cnpm -g</li>
+<li>yarn 和 npm 改成淘宝源</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config : npm config set registry https:<span class="comment">//registry.npm.taobao.org</span></span><br><span class="line">yarn config : yarn config set registry https:<span class="comment">//registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
+<h2 id="data-functions-should-return-an-object"><a href="#data-functions-should-return-an-object" class="headerlink" title="data functions should return an object"></a>data functions should return an object</h2><p>这是因为你肯定在书写单组件，而单组件的 data 必须返回一个单例，可以参见<a href="https://cn.vuejs.org/v2/guide/components.html#data-%E5%BF%85%E9%A1%BB%E6%98%AF%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">data 必须是函数</a></p>
+<ul>
+<li>这里简单解释下，如果一个组件 data 引用的是一个同一个对象指针，那么当你在另外一个组件应用这个组件，v-for 他的时候，比如三个，那么你修改其中一个组件，另外两个这个组件的状态也会改变，但是我们的原则是组件间相互隔离，互不影响。</li>
+</ul>
+<h2 id="在函数内写了-this-name（data-里存在-name），却报错-Cannot-set-property-‘xxx’-of-undefined"><a href="#在函数内写了-this-name（data-里存在-name），却报错-Cannot-set-property-‘xxx’-of-undefined" class="headerlink" title="在函数内写了 this.name（data 里存在 name），却报错 Cannot set property ‘xxx’ of undefined"></a>在函数内写了 this.name（data 里存在 name），却报错 Cannot set property ‘xxx’ of undefined</h2><blockquote>
+<p>你期待 this 指向 vue 实例，实际上它指的是 window，this 和当前上下文有关</p>
 </blockquote>
 <ul>
-<li>列表 1</li>
-<li>列表 2</li>
+<li>promise 的回调</li>
+<li>setInterval</li>
 </ul>
-<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><blockquote>
-<p>在文字前面加上<em>&gt;</em></p>
+<p>比较好的解决方案就是使用箭头函数，绑定当前对象为 this 的上下文</p>
+<h2 id="Component-template-shold-contain-exactly-one-root-element-If-you-are-useing-v-if-on-multiple-elements"><a href="#Component-template-shold-contain-exactly-one-root-element-If-you-are-useing-v-if-on-multiple-elements" class="headerlink" title="Component template shold contain exactly one root element.If you are useing v-if on multiple elements"></a>Component template shold contain exactly one root element.If you are useing v-if on multiple elements</h2><ul>
+<li>单组件文件里必须要有个根元素，一个大 div</li>
+</ul>
+<h2 id="No-‘Access-Control-Allow-Origin’-header-is-present-on-the-requested-resource"><a href="#No-‘Access-Control-Allow-Origin’-header-is-present-on-the-requested-resource" class="headerlink" title="No ‘Access-Control-Allow-Origin’ header is present on the requested resource."></a>No ‘Access-Control-Allow-Origin’ header is present on the requested resource.</h2><blockquote>
+<p>跨域问题</p>
 </blockquote>
-<h1 id="图片与链接"><a href="#图片与链接" class="headerlink" title="图片与链接"></a>图片与链接</h1><blockquote>
-<p>插入链接与图片的语法的区别在于一个!号;</p>
+<ul>
+<li>CORS 前后端配置</li>
+<li>nginx 反向代理，一般线上使用</li>
+<li>本地开发，脚手架 vue-cli 里有 proxyTable</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// target : 就是 api 的代理的实际路径</span></span><br><span class="line"><span class="comment">// changeOrigin: 必须是变源</span></span><br><span class="line"><span class="comment">// pathRewrite : 路径重定向</span></span><br><span class="line">proxyTable: &#123;</span><br><span class="line">  <span class="string">"/api"</span>: &#123;</span><br><span class="line">    target: <span class="string">"http://yoki.com"</span>,</span><br><span class="line">    changeOrigin: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// pathRewrite: &#123;</span></span><br><span class="line">    <span class="comment">//   "^/api": "/"</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组里的值手动更新了，为什么视图不更新"><a href="#数组里的值手动更新了，为什么视图不更新" class="headerlink" title="数组里的值手动更新了，为什么视图不更新"></a>数组里的值手动更新了，为什么视图不更新</h2><blockquote>
+<p>this.arr[0]=1,但是视图没更新</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; 图片为：![](relative address);</span><br><span class="line">&gt; 链接为：[]();</span><br></pre></td></tr></table></figure>
-<h1 id="粗体"><a href="#粗体" class="headerlink" title="粗体"></a>粗体</h1><blockquote>
-<p>两个**包含一段文本就是粗体</p>
+<ul>
+<li>这是因为 vue 重写了数组的原生方法，使用了数组方法 push，pop 等，会对其观察，并响应到视图。究其原因是 js 无法检测到到数组的变化</li>
+<li>可以使用 this.$set</li>
+<li>可以数组的方法更改</li>
+</ul>
+<h2 id="为什么根目录下会有-lock-文件"><a href="#为什么根目录下会有-lock-文件" class="headerlink" title="为什么根目录下会有 lock 文件"></a>为什么根目录下会有 lock 文件</h2><blockquote>
+<p>先简单介绍一下 A.B.C：A 是 major 版本表示和上个版本不兼容的大更改，B 是 minor 版本增加了新功能，可以向后兼容，C 是 patch 版本修复了 bug 向后兼容</p>
 </blockquote>
-<p><strong>粗体</strong></p>
-<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">| Tables        | Are           | Cool  |</span><br><span class="line">| ------------- |:-------------:| -----:|</span><br><span class="line">| col <span class="number">3</span> is      | right-aligned | $<span class="number">1600</span> |</span><br><span class="line">| col <span class="number">2</span> is      | centered      |   $<span class="number">12</span> |</span><br><span class="line">| zebra stripes | are neat      |    $<span class="number">1</span> |</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>Tables</th>
-<th style="text-align:center">Are</th>
-<th style="text-align:right">Cool</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>col 3 is</td>
-<td style="text-align:center">right-aligned</td>
-<td style="text-align:right">$1600</td>
-</tr>
-<tr>
-<td>col 2 is</td>
-<td style="text-align:center">centered</td>
-<td style="text-align:right">$12</td>
-</tr>
-<tr>
-<td>zebra stripes</td>
-<td style="text-align:center">are neat</td>
-<td style="text-align:right">$1</td>
-</tr>
-</tbody>
-</table>
-<h1 id="代码框"><a href="#代码框" class="headerlink" title="代码框"></a>代码框</h1><blockquote>
-<p>用三个` 把中间的代码包裹,在第一段点之后加语言名可以显示代码高亮</p>
+<ul>
+<li>npm 上包那么多，说不定什么时候就会更新，根据 package.json 里的^(会更新到 major 版本号最新的),~（会更新到 minor 版本最新的）</li>
+<li>有些包甚至不遵循发包规范</li>
+<li>所以我们需要统一版本号，这样不同的电脑在不同的时间就会下载到一样的包了</li>
+</ul>
+<h2 id="npm-i-S-和-D-的区别"><a href="#npm-i-S-和-D-的区别" class="headerlink" title="npm i -S 和-D 的区别"></a>npm i -S 和-D 的区别</h2><ul>
+<li>-S 会放到 dependencies 里面，存放到线上能访问到的代码，比如 vue，vue-router</li>
+<li>-D 会放到 devDependcies：处于开发模式所依赖的模块，不产生额外代码到生产环境，比如 babel-core</li>
+</ul>
+<h2 id="单页应用没办法做-seo-吗"><a href="#单页应用没办法做-seo-吗" class="headerlink" title="单页应用没办法做 seo 吗"></a>单页应用没办法做 seo 吗</h2><ul>
+<li>spa 的页面由 javascript 根据 API 发回的数据在用户的浏览器里自动生成的，Baidu 不会看 Javascript，那么页面对于它来说就是一个空洞洞的 html 和很多 scirpt 元素</li>
+<li>解决方案：服务端渲染(SSR)可以,请求回来是一个处理好的 html，vue 的服务端渲染方案<a href="https://zh.nuxtjs.org/" target="_blank" rel="noopener">nuxt</a></li>
+</ul>
+<h2 id="为什么首屏加载这么慢"><a href="#为什么首屏加载这么慢" class="headerlink" title="为什么首屏加载这么慢"></a>为什么首屏加载这么慢</h2><blockquote>
+<p>打包文件文件很大</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">12</span>);</span><br></pre></td></tr></table></figure>
-<h1 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h1><blockquote>
-<p>分割线的语法为三个-</p>
-</blockquote>
-<hr>
+<ul>
+<li>减少 jq 这种库的引入，现在都是数据驱动</li>
+<li>webpack 压缩 js，css</li>
+<li>路由懒加载，代码分割</li>
+<li>采用服务端渲染，可以避免浏览器去解析模板和指令</li>
+</ul>
 
       
     </div>
@@ -411,7 +416,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/markdown/" rel="tag"># markdown</a>
+            <a href="/blog/tags/Vue/" rel="tag"># Vue</a>
           
         </div>
       
@@ -424,14 +429,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/blog/2018/03/30/study-ts/" rel="next" title="简单介绍Typescript">
+                <i class="fa fa-chevron-left"></i> 简单介绍Typescript
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2017/02/08/add/" rel="prev" title="add(1)(2)(3)解题思路">
-                add(1)(2)(3)解题思路 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2018/04/05/study-vue2/" rel="prev" title="vue的一些问题集合（二）">
+                vue的一些问题集合（二） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -559,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题"><span class="nav-number">1.</span> <span class="nav-text">一级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#标题一共有六级（6-个-号）"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">标题一共有六级（6 个#号）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表"><span class="nav-number">2.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用"><span class="nav-number">3.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图片与链接"><span class="nav-number">4.</span> <span class="nav-text">图片与链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#粗体"><span class="nav-number">5.</span> <span class="nav-text">粗体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表格"><span class="nav-number">6.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码框"><span class="nav-number">7.</span> <span class="nav-text">代码框</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分割线"><span class="nav-number">8.</span> <span class="nav-text">分割线</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-install-安装超时"><span class="nav-number">1.</span> <span class="nav-text">npm install 安装超时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-functions-should-return-an-object"><span class="nav-number">2.</span> <span class="nav-text">data functions should return an object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在函数内写了-this-name（data-里存在-name），却报错-Cannot-set-property-‘xxx’-of-undefined"><span class="nav-number">3.</span> <span class="nav-text">在函数内写了 this.name（data 里存在 name），却报错 Cannot set property ‘xxx’ of undefined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Component-template-shold-contain-exactly-one-root-element-If-you-are-useing-v-if-on-multiple-elements"><span class="nav-number">4.</span> <span class="nav-text">Component template shold contain exactly one root element.If you are useing v-if on multiple elements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#No-‘Access-Control-Allow-Origin’-header-is-present-on-the-requested-resource"><span class="nav-number">5.</span> <span class="nav-text">No ‘Access-Control-Allow-Origin’ header is present on the requested resource.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组里的值手动更新了，为什么视图不更新"><span class="nav-number">6.</span> <span class="nav-text">数组里的值手动更新了，为什么视图不更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么根目录下会有-lock-文件"><span class="nav-number">7.</span> <span class="nav-text">为什么根目录下会有 lock 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-i-S-和-D-的区别"><span class="nav-number">8.</span> <span class="nav-text">npm i -S 和-D 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单页应用没办法做-seo-吗"><span class="nav-number">9.</span> <span class="nav-text">单页应用没办法做 seo 吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么首屏加载这么慢"><span class="nav-number">10.</span> <span class="nav-text">为什么首屏加载这么慢</span></a></li></ol></div>
             
 
           </div>
