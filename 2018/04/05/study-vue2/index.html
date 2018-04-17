@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="markdown," />
+  <meta name="keywords" content="Vue," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在程序的世界里，开始的话就循例来一个 hello world  一级标题 在文字前面加上#表示标题  标题一共有六级（6 个#号）在#后面加上空格，才是标准的 md 语法 列表 在文字前面加上-   列表 1 列表 2  引用 在文字前面加上&amp;gt;  图片与链接 插入链接与图片的语法的区别在于一个!号;  12&amp;gt; 图片为：![](relative address);&amp;gt; 链接为：[]">
-<meta name="keywords" content="markdown">
+<meta name="description" content="‘@/components/‘的@ webpack 可以配置 alias 配置别名，这个@一般是 src 目录的别名  npm run dev 报端口已经在运行 可能你在运行其他项目，去修改一下默认端口  父组件怎么调用子组件的方法 this.$refs 里面找到该实例,前提是先设置了 ref this.$children 里面找到该实例  nginx 怎么配置一大波不靠谱的 nginx 配置 v">
+<meta name="keywords" content="Vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/01/15/helloWorld/index.html">
+<meta property="og:title" content="vue的一些问题集合（二）">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/04/05/study-vue2/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="在程序的世界里，开始的话就循例来一个 hello world  一级标题 在文字前面加上#表示标题  标题一共有六级（6 个#号）在#后面加上空格，才是标准的 md 语法 列表 在文字前面加上-   列表 1 列表 2  引用 在文字前面加上&amp;gt;  图片与链接 插入链接与图片的语法的区别在于一个!号;  12&amp;gt; 图片为：![](relative address);&amp;gt; 链接为：[]">
+<meta property="og:description" content="‘@/components/‘的@ webpack 可以配置 alias 配置别名，这个@一般是 src 目录的别名  npm run dev 报端口已经在运行 可能你在运行其他项目，去修改一下默认端口  父组件怎么调用子组件的方法 this.$refs 里面找到该实例,前提是先设置了 ref this.$children 里面找到该实例  nginx 怎么配置一大波不靠谱的 nginx 配置 v">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-13T07:36:46.047Z">
+<meta property="og:updated_time" content="2018-04-17T06:54:19.078Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="在程序的世界里，开始的话就循例来一个 hello world  一级标题 在文字前面加上#表示标题  标题一共有六级（6 个#号）在#后面加上空格，才是标准的 md 语法 列表 在文字前面加上-   列表 1 列表 2  引用 在文字前面加上&amp;gt;  图片与链接 插入链接与图片的语法的区别在于一个!号;  12&amp;gt; 图片为：![](relative address);&amp;gt; 链接为：[]">
+<meta name="twitter:title" content="vue的一些问题集合（二）">
+<meta name="twitter:description" content="‘@/components/‘的@ webpack 可以配置 alias 配置别名，这个@一般是 src 目录的别名  npm run dev 报端口已经在运行 可能你在运行其他项目，去修改一下默认端口  父组件怎么调用子组件的方法 this.$refs 里面找到该实例,前提是先设置了 ref this.$children 里面找到该实例  nginx 怎么配置一大波不靠谱的 nginx 配置 v">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2017/01/15/helloWorld/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/04/05/study-vue2/"/>
 
 
 
 
 
-  <title>Hello World | Blog</title>
+  <title>vue的一些问题集合（二） | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/01/15/helloWorld/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/05/study-vue2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">vue的一些问题集合（二）</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T17:17:08+08:00">
-                2017-01-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T14:19:46+08:00">
+                2018-04-05
               </time>
             
 
@@ -334,66 +334,49 @@
       
 
       
-        <blockquote>
-<p>在程序的世界里，开始的话就循例来一个 hello world</p>
-</blockquote>
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><blockquote>
-<p>在文字前面加上<strong>#</strong>表示标题</p>
-</blockquote>
-<h5 id="标题一共有六级（6-个-号）"><a href="#标题一共有六级（6-个-号）" class="headerlink" title="标题一共有六级（6 个#号）"></a>标题一共有六级（6 个#号）</h5><p>在<strong>#</strong>后面加上空格，才是标准的 md 语法</p>
-<h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><blockquote>
-<p>在文字前面加上-</p>
+        <h2 id="‘-components-‘的"><a href="#‘-components-‘的" class="headerlink" title="‘@/components/‘的@"></a>‘@/components/‘的@</h2><ul>
+<li>webpack 可以配置 alias 配置别名，这个@一般是 src 目录的别名</li>
+</ul>
+<h2 id="npm-run-dev-报端口已经在运行"><a href="#npm-run-dev-报端口已经在运行" class="headerlink" title="npm run dev 报端口已经在运行"></a>npm run dev 报端口已经在运行</h2><ul>
+<li>可能你在运行其他项目，去修改一下默认端口</li>
+</ul>
+<h2 id="父组件怎么调用子组件的方法"><a href="#父组件怎么调用子组件的方法" class="headerlink" title="父组件怎么调用子组件的方法"></a>父组件怎么调用子组件的方法</h2><ul>
+<li>this.$refs 里面找到该实例,前提是先设置了 ref</li>
+<li>this.$children 里面找到该实例</li>
+</ul>
+<h2 id="nginx-怎么配置"><a href="#nginx-怎么配置" class="headerlink" title="nginx 怎么配置"></a>nginx 怎么配置</h2><p><a href="https://juejin.im/post/58bfc412da2f60124db5999a" target="_blank" rel="noopener">一大波不靠谱的 nginx 配置</a></p>
+<h2 id="v-if-和-v-show"><a href="#v-if-和-v-show" class="headerlink" title="v-if 和 v-show"></a>v-if 和 v-show</h2><blockquote>
+<p>v-if 是 dom 没有插入到文档里面，等条件成立，才 append 到 document 里面。</p>
 </blockquote>
 <ul>
-<li>列表 1</li>
-<li>列表 2</li>
+<li>等拿到值才可以处理组件内部的逻辑的，不然会报错</li>
+<li>有些 v-for 但是还没有拿到值的</li>
 </ul>
-<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><blockquote>
-<p>在文字前面加上<em>&gt;</em></p>
+<blockquote>
+<p>v-show 只是简单通过 css 隐藏了</p>
 </blockquote>
-<h1 id="图片与链接"><a href="#图片与链接" class="headerlink" title="图片与链接"></a>图片与链接</h1><blockquote>
-<p>插入链接与图片的语法的区别在于一个!号;</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; 图片为：![](relative address);</span><br><span class="line">&gt; 链接为：[]();</span><br></pre></td></tr></table></figure>
-<h1 id="粗体"><a href="#粗体" class="headerlink" title="粗体"></a>粗体</h1><blockquote>
-<p>两个**包含一段文本就是粗体</p>
-</blockquote>
-<p><strong>粗体</strong></p>
-<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">| Tables        | Are           | Cool  |</span><br><span class="line">| ------------- |:-------------:| -----:|</span><br><span class="line">| col <span class="number">3</span> is      | right-aligned | $<span class="number">1600</span> |</span><br><span class="line">| col <span class="number">2</span> is      | centered      |   $<span class="number">12</span> |</span><br><span class="line">| zebra stripes | are neat      |    $<span class="number">1</span> |</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>Tables</th>
-<th style="text-align:center">Are</th>
-<th style="text-align:right">Cool</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>col 3 is</td>
-<td style="text-align:center">right-aligned</td>
-<td style="text-align:right">$1600</td>
-</tr>
-<tr>
-<td>col 2 is</td>
-<td style="text-align:center">centered</td>
-<td style="text-align:right">$12</td>
-</tr>
-<tr>
-<td>zebra stripes</td>
-<td style="text-align:center">are neat</td>
-<td style="text-align:right">$1</td>
-</tr>
-</tbody>
-</table>
-<h1 id="代码框"><a href="#代码框" class="headerlink" title="代码框"></a>代码框</h1><blockquote>
-<p>用三个` 把中间的代码包裹,在第一段点之后加语言名可以显示代码高亮</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">12</span>);</span><br></pre></td></tr></table></figure>
-<h1 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h1><blockquote>
-<p>分割线的语法为三个-</p>
-</blockquote>
-<hr>
+<ul>
+<li>不会导致页面重绘，改善用户体验</li>
+</ul>
+<h2 id="axios-的请求后台不接受"><a href="#axios-的请求后台不接受" class="headerlink" title="axios 的请求后台不接受"></a>axios 的请求后台不接受</h2><ul>
+<li>axios 默认是 json 格式提交，如果后台只支持表单序列化，就要自己转义</li>
+<li>axios 有个 qs 模块可以试试</li>
+</ul>
+<h2 id="css-的-scoped-有什么功能"><a href="#css-的-scoped-有什么功能" class="headerlink" title="css 的 scoped 有什么功能"></a>css 的 scoped 有什么功能</h2><ul>
+<li>给每个类或者 id 自动添加 hash，只能给该组件用，不同组件不能进行继承</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/ 写的时候是这个</span><br><span class="line">.a&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译过后,加上了 hash</span></span><br><span class="line">.a[data-v<span class="number">-1</span>ec35ffc]&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="小图片渲染出来-base64"><a href="#小图片渲染出来-base64" class="headerlink" title="小图片渲染出来 base64"></a>小图片渲染出来 base64</h2><ul>
+<li>webpack 的 url-loader 处理，对于小于多少 k 一下的图片转成 base64 内联到 html</li>
+<li>减少 http 请求降低服务器负担</li>
+<li>网络不好的时候，内联的内容先加载，优化体验</li>
+</ul>
+<h2 id="ERROR-in-static-js-xxxxxxx-js-from-UglifyJs"><a href="#ERROR-in-static-js-xxxxxxx-js-from-UglifyJs" class="headerlink" title="ERROR in static/js/xxxxxxx.js from UglifyJs"></a>ERROR in static/js/xxxxxxx.js from UglifyJs</h2><ul>
+<li>引入压缩后的 js，webpack 又开启了 uglifyjs 压缩，报错</li>
+</ul>
+<h2 id="keep-alive-缓存组件后很慢"><a href="#keep-alive-缓存组件后很慢" class="headerlink" title="keep-alive 缓存组件后很慢"></a>keep-alive 缓存组件后很慢</h2><ul>
+<li>因为都是保存在内存里面的，一旦大量组件缓存性能肯定不会好</li>
+</ul>
 
       
     </div>
@@ -411,7 +394,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/markdown/" rel="tag"># markdown</a>
+            <a href="/blog/tags/Vue/" rel="tag"># Vue</a>
           
         </div>
       
@@ -424,15 +407,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/blog/2018/04/02/study-vue1/" rel="next" title="vue的一些问题集合（一）">
+                <i class="fa fa-chevron-left"></i> vue的一些问题集合（一）
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2017/02/08/add/" rel="prev" title="add(1)(2)(3)解题思路">
-                add(1)(2)(3)解题思路 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -559,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题"><span class="nav-number">1.</span> <span class="nav-text">一级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#标题一共有六级（6-个-号）"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">标题一共有六级（6 个#号）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表"><span class="nav-number">2.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用"><span class="nav-number">3.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图片与链接"><span class="nav-number">4.</span> <span class="nav-text">图片与链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#粗体"><span class="nav-number">5.</span> <span class="nav-text">粗体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表格"><span class="nav-number">6.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码框"><span class="nav-number">7.</span> <span class="nav-text">代码框</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分割线"><span class="nav-number">8.</span> <span class="nav-text">分割线</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#‘-components-‘的"><span class="nav-number">1.</span> <span class="nav-text">‘@/components/‘的@</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-run-dev-报端口已经在运行"><span class="nav-number">2.</span> <span class="nav-text">npm run dev 报端口已经在运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#父组件怎么调用子组件的方法"><span class="nav-number">3.</span> <span class="nav-text">父组件怎么调用子组件的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-怎么配置"><span class="nav-number">4.</span> <span class="nav-text">nginx 怎么配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if-和-v-show"><span class="nav-number">5.</span> <span class="nav-text">v-if 和 v-show</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#axios-的请求后台不接受"><span class="nav-number">6.</span> <span class="nav-text">axios 的请求后台不接受</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css-的-scoped-有什么功能"><span class="nav-number">7.</span> <span class="nav-text">css 的 scoped 有什么功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小图片渲染出来-base64"><span class="nav-number">8.</span> <span class="nav-text">小图片渲染出来 base64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ERROR-in-static-js-xxxxxxx-js-from-UglifyJs"><span class="nav-number">9.</span> <span class="nav-text">ERROR in static/js/xxxxxxx.js from UglifyJs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keep-alive-缓存组件后很慢"><span class="nav-number">10.</span> <span class="nav-text">keep-alive 缓存组件后很慢</span></a></li></ol></div>
             
 
           </div>
