@@ -4,6 +4,8 @@ date: 2018-04-05 14:19:46
 tags: Vue
 ---
 
+> 再写一波
+
 ## '@/components/'的@
 
 * webpack 可以配置 alias 配置别名，这个@一般是 src 目录的别名
