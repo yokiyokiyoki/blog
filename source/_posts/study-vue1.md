@@ -78,3 +78,8 @@ proxyTable: {
 
 * -S 会放到 dependencies 里面，存放到线上能访问到的代码，比如 vue，vue-router
 * -D 会放到 devDependcies：处于开发模式所依赖的模块，不产生额外代码到生产环境，比如 babel-core
+
+## 单页应用没办法做 seo 吗
+
+* spa 的页面由 javascript 根据 API 发回的数据在用户的浏览器里自动生成的，Baidu 不会看 Javascript，那么页面对于它来说就是一个空洞洞的 html 和很多 scirpt 元素
+* 解决方案：服务端渲染(SSR)可以,请求回来是一个处理好的 html，vue 的服务端渲染方案[nuxt](https://zh.nuxtjs.org/)
