@@ -16,3 +16,7 @@ tags: Vue
 
 * this.$refs 里面找到该实例,前提是先设置了 ref
 * this.$children 里面找到该实例
+
+## nginx 怎么配置
+
+[一大波不靠谱的 nginx 配置](https://juejin.im/post/58bfc412da2f60124db5999a)
