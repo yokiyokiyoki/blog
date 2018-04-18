@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="fps 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面    网页性能管理详解">
+<meta name="description" content="fps fps 是 frame per second，一秒能够重新渲染多少个画面 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面。 我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的 现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率">
 <meta name="keywords" content="css 动画">
 <meta property="og:type" content="article">
 <meta property="og:title" content="动画了解一下（二）">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/12/13/fps/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="fps 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面    网页性能管理详解">
+<meta property="og:description" content="fps fps 是 frame per second，一秒能够重新渲染多少个画面 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面。 我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的 现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-18T03:34:52.189Z">
+<meta property="og:updated_time" content="2018-04-18T09:06:37.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动画了解一下（二）">
-<meta name="twitter:description" content="fps 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面    网页性能管理详解">
+<meta name="twitter:description" content="fps fps 是 frame per second，一秒能够重新渲染多少个画面 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面。 我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的 现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率">
 
 
 
@@ -335,7 +335,35 @@
 
       
         <h2 id="fps"><a href="#fps" class="headerlink" title="fps"></a>fps</h2><ul>
-<li>网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面</li>
+<li>fps 是 frame per second，一秒能够重新渲染多少个画面</li>
+<li>网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面。</li>
+<li>我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的</li>
+<li>现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率，刷新动画。</li>
+<li>所以网页动画能够做到每秒 60 帧，就可以和显示器同步刷新，视觉效果达到最佳。</li>
+<li>一秒之内进行 60 次渲染，每秒不能超过 16.66 毫秒</li>
+</ul>
+<blockquote>
+<p>如果想要到 60 帧的刷新率，那么 js 线程每个任务的耗时，必须少于 16ms。一个解决办法是用 web worker，主线程只用于 ui 渲染，其他和 ui 渲染不想干的任务，都放在 worker 线程。</p>
+</blockquote>
+<h2 id="调节渲染"><a href="#调节渲染" class="headerlink" title="调节渲染"></a>调节渲染</h2><blockquote>
+<p>有一些 js 方法可以调节重新渲染，大幅度提高网页性能</p>
+</blockquote>
+<h3 id="requestAnimationFrame"><a href="#requestAnimationFrame" class="headerlink" title="requestAnimationFrame"></a>requestAnimationFrame</h3><ul>
+<li>他可以将代码放到下次重新渲染执行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doubleHeight</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> currentHeight = element.clientHeight;</span><br><span class="line">  element.style.height = currentHeight * <span class="number">2</span> + <span class="string">"px"</span>;</span><br><span class="line">&#125;</span><br><span class="line">elements.forEach(doubleHeight);</span><br><span class="line"><span class="comment">//读了马上又去写，这就会马上重排，导致重新渲染，这就对网页性能很不利</span></span><br><span class="line"><span class="comment">//可以使用window.requestAnimation把读写操作分离，把所有写操作放到下一次浏览器正常的重新渲染</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doubleHeight</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> currentHeight = element.clientHeight;</span><br><span class="line">  <span class="built_in">window</span>.requestAnimationFrame(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    element.style.height = currentHeight * <span class="number">2</span> + <span class="string">"px"</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">elements.forEach(doubleHeight);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>适用于页面滚动事件，推迟到下一次重新渲染</li>
+<li>适用于网页动画，比如</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//元素一帧旋转一度</span></span><br><span class="line"><span class="keyword">var</span> rAF = <span class="built_in">window</span>.requestAnimationFrame;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> degrees = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  div.style.transform = <span class="string">"rotate("</span> + degrees + <span class="string">"deg)"</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"updated to degrees "</span> + degrees);</span><br><span class="line">  degrees = degrees + <span class="number">1</span>;</span><br><span class="line">  rAF(update);</span><br><span class="line">&#125;</span><br><span class="line">rAF(update);</span><br></pre></td></tr></table></figure>
+<h3 id="requestIdleCallback"><a href="#requestIdleCallback" class="headerlink" title="requestIdleCallback"></a>requestIdleCallback</h3><blockquote>
+<p>只有当一帧的末尾有空闲时间，才会执行回调</p>
+</blockquote>
+<ul>
+<li>requestIdleCallback(fn)</li>
+<li>因为一秒 60 帧，一帧就 16.66ms，只有当前帧的运行时间小于 16.66ms 的时候，fn 才会执行。如果当前没有空闲时间，就推迟到下一帧，直到有空闲时间为止。</li>
+<li>requestIdleCallback(fn，5000)可以制定第二个参数，表示指定的 ms，表示这段时间内，如果每一帧都没有空间时间，fn 将强制执行</li>
 </ul>
 <hr>
 <blockquote>
@@ -510,7 +538,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fps"><span class="nav-number">1.</span> <span class="nav-text">fps</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fps"><span class="nav-number">1.</span> <span class="nav-text">fps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调节渲染"><span class="nav-number">2.</span> <span class="nav-text">调节渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#requestAnimationFrame"><span class="nav-number">2.1.</span> <span class="nav-text">requestAnimationFrame</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#requestIdleCallback"><span class="nav-number">2.2.</span> <span class="nav-text">requestIdleCallback</span></a></li></ol></li></ol></div>
             
 
           </div>
