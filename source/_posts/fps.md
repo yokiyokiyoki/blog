@@ -13,6 +13,8 @@ tags: css 动画
 * 所以网页动画能够做到每秒 60 帧，就可以和显示器同步刷新，视觉效果达到最佳。
 * 一秒之内进行 60 次渲染，每秒不能超过 16.66 毫秒
 
+> 如果想要到 60 帧的刷新率，那么 js 线程每个任务的耗时，必须少于 16ms。一个解决办法是用 web worker，主线程只用于 ui 渲染，其他和 ui 渲染不想干的任务，都放在 worker 线程。
+
 ---
 
 > [网页性能管理详解](http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html)
