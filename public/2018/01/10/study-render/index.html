@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="为什么要知道浏览器是怎么渲染的 作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js">
+<meta name="description" content="作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染">
 <meta name="keywords" content="浏览器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浏览器怎么渲染">
+<meta property="og:title" content="浅谈浏览器渲染">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/01/10/study-render/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="为什么要知道浏览器是怎么渲染的 作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js">
+<meta property="og:description" content="作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-10T03:37:54.120Z">
+<meta property="og:updated_time" content="2018-04-17T14:02:08.996Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浏览器怎么渲染">
-<meta name="twitter:description" content="为什么要知道浏览器是怎么渲染的 作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js">
+<meta name="twitter:title" content="浅谈浏览器渲染">
+<meta name="twitter:description" content="作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。  关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>浏览器怎么渲染 | Blog</title>
+  <title>浅谈浏览器渲染 | Blog</title>
   
 
 
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">浏览器怎么渲染</h1>
+          <h1 class="post-title" itemprop="name headline">浅谈浏览器渲染</h1>
         
 
         <div class="post-meta">
@@ -334,7 +334,7 @@
       
 
       
-        <h2 id="为什么要知道浏览器是怎么渲染的"><a href="#为什么要知道浏览器是怎么渲染的" class="headerlink" title="为什么要知道浏览器是怎么渲染的"></a>为什么要知道浏览器是怎么渲染的</h2><ul>
+        <ul>
 <li>作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。</li>
 <li>现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。</li>
 </ul>
@@ -435,8 +435,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2017/12/03/write-nbjs/" rel="next" title="javascript装逼指南">
-                <i class="fa fa-chevron-left"></i> javascript装逼指南
+              <a href="/blog/2017/12/13/fps/" rel="next" title="动画了解一下（二）">
+                <i class="fa fa-chevron-left"></i> 动画了解一下（二）
               </a>
             
           </div>
@@ -528,7 +528,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -574,7 +574,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要知道浏览器是怎么渲染的"><span class="nav-number">1.</span> <span class="nav-text">为什么要知道浏览器是怎么渲染的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键渲染路径"><span class="nav-number">1.1.</span> <span class="nav-text">关键渲染路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器渲染页面过程"><span class="nav-number">2.</span> <span class="nav-text">浏览器渲染页面过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端渲染"><span class="nav-number">2.1.</span> <span class="nav-text">客户端渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞渲染"><span class="nav-number">3.</span> <span class="nav-text">阻塞渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS"><span class="nav-number">3.1.</span> <span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-number">3.2.</span> <span class="nav-text">JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defer"><span class="nav-number">3.2.1.</span> <span class="nav-text">defer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#async"><span class="nav-number">3.2.2.</span> <span class="nav-text">async</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键渲染路径"><span class="nav-number">1.</span> <span class="nav-text">关键渲染路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器渲染页面过程"><span class="nav-number"></span> <span class="nav-text">浏览器渲染页面过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端渲染"><span class="nav-number">1.</span> <span class="nav-text">客户端渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞渲染"><span class="nav-number"></span> <span class="nav-text">阻塞渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS"><span class="nav-number">1.</span> <span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-number">2.</span> <span class="nav-text">JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defer"><span class="nav-number">2.1.</span> <span class="nav-text">defer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#async"><span class="nav-number">2.2.</span> <span class="nav-text">async</span></a></li></ol></li></ol></div>
             
 
           </div>
