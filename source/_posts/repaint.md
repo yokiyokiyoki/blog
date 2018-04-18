@@ -90,3 +90,5 @@ old.parentNode.replaceChild(clone, old);
 
 * 可以将要多次重排的元素，position 可以设置 abs 和 fixed，这样就脱离文档流，不会影响其他元素。
 * 有动画效果的可以设置为绝对定位
+
+### 使用 window.requestAnimationFrame()、window.requestIdleCallback() 重新渲染
