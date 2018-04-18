@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="css," />
+  <meta name="keywords" content="css 动画," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="基本概念 帧：在动画过程中，每一幅静止画面即为一“帧” 帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz) 帧时长：即每一幅静止画面的停留时间，单位一般是毫秒 丢帧：在帧率固定的动画中，某一帧的时长远高于平均帧时长，导致其后续帧被挤压而丢失的现象   我们在显示器上看到的动画，每一帧变化都是系统绘制出来的（GPU 或者 CPU）。它的最高绘制频率受限">
-<meta name="keywords" content="css">
+<meta name="description" content="笼统的过一下动画的一些基本概念  基本概念 帧：在动画过程中，每一幅静止画面即为一“帧” 帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz) 帧时长：即每一幅静止画面的停留时间，单位一般是毫秒 丢帧：在帧率固定的动画中，某一帧的时长远高于平均帧时长，导致其后续帧被挤压而丢失的现象   我们在显示器上看到的动画，每一帧变化都是系统绘制出来的（GPU">
+<meta name="keywords" content="css 动画">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动画了解一下">
+<meta property="og:title" content="动画了解一下(一)">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/11/23/study-animate/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="基本概念 帧：在动画过程中，每一幅静止画面即为一“帧” 帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz) 帧时长：即每一幅静止画面的停留时间，单位一般是毫秒 丢帧：在帧率固定的动画中，某一帧的时长远高于平均帧时长，导致其后续帧被挤压而丢失的现象   我们在显示器上看到的动画，每一帧变化都是系统绘制出来的（GPU 或者 CPU）。它的最高绘制频率受限">
+<meta property="og:description" content="笼统的过一下动画的一些基本概念  基本概念 帧：在动画过程中，每一幅静止画面即为一“帧” 帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz) 帧时长：即每一幅静止画面的停留时间，单位一般是毫秒 丢帧：在帧率固定的动画中，某一帧的时长远高于平均帧时长，导致其后续帧被挤压而丢失的现象   我们在显示器上看到的动画，每一帧变化都是系统绘制出来的（GPU">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T09:04:10.000Z">
+<meta property="og:updated_time" content="2018-04-18T03:26:07.464Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动画了解一下">
-<meta name="twitter:description" content="基本概念 帧：在动画过程中，每一幅静止画面即为一“帧” 帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz) 帧时长：即每一幅静止画面的停留时间，单位一般是毫秒 丢帧：在帧率固定的动画中，某一帧的时长远高于平均帧时长，导致其后续帧被挤压而丢失的现象   我们在显示器上看到的动画，每一帧变化都是系统绘制出来的（GPU 或者 CPU）。它的最高绘制频率受限">
+<meta name="twitter:title" content="动画了解一下(一)">
+<meta name="twitter:description" content="笼统的过一下动画的一些基本概念  基本概念 帧：在动画过程中，每一幅静止画面即为一“帧” 帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz) 帧时长：即每一幅静止画面的停留时间，单位一般是毫秒 丢帧：在帧率固定的动画中，某一帧的时长远高于平均帧时长，导致其后续帧被挤压而丢失的现象   我们在显示器上看到的动画，每一帧变化都是系统绘制出来的（GPU">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>动画了解一下 | Blog</title>
+  <title>动画了解一下(一) | Blog</title>
   
 
 
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">动画了解一下</h1>
+          <h1 class="post-title" itemprop="name headline">动画了解一下(一)</h1>
         
 
         <div class="post-meta">
@@ -334,7 +334,10 @@
       
 
       
-        <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+        <blockquote>
+<p>笼统的过一下动画的一些基本概念</p>
+</blockquote>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
 <li>帧：在动画过程中，每一幅静止画面即为一“帧”</li>
 <li>帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz)</li>
 <li>帧时长：即每一幅静止画面的停留时间，单位一般是毫秒</li>
@@ -452,7 +455,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/css/" rel="tag"># css</a>
+            <a href="/blog/tags/css-动画/" rel="tag"># css 动画</a>
           
         </div>
       
@@ -558,7 +561,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
