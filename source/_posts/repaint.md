@@ -81,3 +81,12 @@ let clone = old.cloneNode(true);
 appendDataToElement(clone, data);
 old.parentNode.replaceChild(clone, old);
 ```
+
+### 缓存读过的样式结果
+
+* div.style.top 读取可能会重排，这样最好这个缓存到变量里面，下次要用到这个就不用再读 div 的信息了
+
+### 定位脱离文档流
+
+* 可以将要多次重排的元素，position 可以设置 abs 和 fixed，这样就脱离文档流，不会影响其他元素。
+* 有动画效果的可以设置为绝对定位
