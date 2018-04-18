@@ -72,4 +72,12 @@ div.style.top = top + 10 + "px";
 #### 如何脱离文档流
 
 * 隐藏元素：display:none，然后一系列操作后，再显示
-*
+* 推荐：使用 document fragment，就是传说中的文档碎片了，document.createDocumentFragment()，另外的 dom 子树，操作完后，再拷贝回来文档中，div.appendChild（fragment）
+* 将原始元素拷贝到一个脱离文档的节点中，cloneNode,修改这个副本，然后再通过这个元素的父元素的 replaceChild 替换他
+
+```javascript
+let old = document.getElementById("mylist");
+let clone = old.cloneNode(true);
+appendDataToElement(clone, data);
+old.parentNode.replaceChild(clone, old);
+```
