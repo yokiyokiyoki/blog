@@ -266,6 +266,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/15/study-performance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/04/15/study-performance/" itemprop="url">js性能填坑之路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T13:48:30+08:00">
+                2018-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><ul>
+<li>javascript 是解释性语言，性能很慢，随着 web 在生活中的普及，这点性能显然不够用。你能想象双十一的一个按钮点半天才有反应嘛？所幸很多大神，都在不断的改进这个性能问题</li>
+</ul>
+<h2 id="漫漫填坑路"><a href="#漫漫填坑路" class="headerlink" title="漫漫填坑路"></a>漫漫填坑路</h2><h3 id="JIT"><a href="#JIT" class="headerlink" title="JIT"></a>JIT</h3><blockquote>
+<p>google 在 09 年 v8 引擎里引入 just in time compiling（即时编译），跟之前 ajax 出现引起的轰动是一样的，性能瞬间就上升了 20-40 倍的速度。</p>
+</blockquote>
+<ul>
+<li>从此网页进入了网页应用的时代</li>
+</ul>
+<h4 id="解释器和编译器"><a href="#解释器和编译器" class="headerlink" title="解释器和编译器"></a>解释器和编译器</h4><ul>
+<li>解释器是一行行解释代码，性能会下降。编译器是把源代码编译成目标代码。</li>
+<li>解释器是叫他干什么立刻就去干什么，比如买菜，马上去市场回来，再去买油又马上市场</li>
+<li>编译器是叫他干什么直到说完才去干什么，去买菜，买油统一去市场</li>
+</ul>
+<ul>
+<li>但是 jit 是基于运行期编译，js 是一个没有类型的语言，所以 jit 大多数时候都在猜测 js 的类型。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">//这时候jit就把a和b确认为int类型</span></span><br><span class="line"><span class="comment">//然后你这样做</span></span><br><span class="line">add(<span class="string">"hi"</span>, <span class="string">"yoki"</span>); <span class="comment">//已经编译成机器码了，但是又变成字符串类型，只能推倒重来，有时候jit的性能提升，还没有这个重编的开销大</span></span><br></pre></td></tr></table></figure>
+<h3 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h3><ul>
+<li>既然 jit 大多数时候在猜测类型，那索性搞个强类型语言，再编译成 js 就行了</li>
+</ul>
+<h3 id="asm-js"><a href="#asm-js" class="headerlink" title="asm.js"></a>asm.js</h3><ul>
+<li>ts 是 js 的超集，这个是语法兼容 js 的汇编语言，是 js 的子集</li>
+<li>通过标注声明类型，而且不得改变，这样就节省了类型判断的时间</li>
+</ul>
+<h3 id="WebAssembly"><a href="#WebAssembly" class="headerlink" title="WebAssembly"></a>WebAssembly</h3><ul>
+<li>一种二进制码的规范，是比 asm.js 更为激进的东西</li>
+<li>理论上所有语言都可以编译成这个，然后泡在浏览器上</li>
+<li>但是目前还摸不了 dom</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/10/repaint/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1757,196 +1906,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/01/10/study-render/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/01/10/study-render/" itemprop="url">浅谈浏览器渲染</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-10T10:26:50+08:00">
-                2018-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。</li>
-<li>现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。</li>
-</ul>
-<h3 id="关键渲染路径"><a href="#关键渲染路径" class="headerlink" title="关键渲染路径"></a>关键渲染路径</h3><ul>
-<li>关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容</li>
-<li>比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染出页面</li>
-<li>了解浏览器渲染的过程与原理，很大程度上是为了优化关键渲染路径</li>
-<li>为了保障首屏内容的最快速显示，通常会提到渐进式页面渲染，但是为了渐进式页面渲染，就要做资源的拆分，怎么拆分，这是按场景考虑的</li>
-</ul>
-<h2 id="浏览器渲染页面过程"><a href="#浏览器渲染页面过程" class="headerlink" title="浏览器渲染页面过程"></a>浏览器渲染页面过程</h2><ul>
-<li>1.dns 查询</li>
-<li>2.tcp 连接</li>
-<li>3.http 请求即响应</li>
-<li>4.服务端响应</li>
-<li>5.客户端渲染</li>
-</ul>
-<h3 id="客户端渲染"><a href="#客户端渲染" class="headerlink" title="客户端渲染"></a>客户端渲染</h3><blockquote>
-<p>以下步骤不一定一次性顺序完成，如果 dom 或者 cssom 被修改，则以下过程需要重复执行，这样才能计算哪些像素在屏幕上需要重新渲染</p>
-</blockquote>
-<ul>
-<li>1.处理 html 标记并构建 dom 树</li>
-<li>2.处理 css 并构建 cssom 树</li>
-<li>3.将 dom 树和 cssom 树合并成一个渲染树</li>
-<li>4.根据渲染树来布局，以计算每个节点的几何信息</li>
-<li>5.将各个节点绘制到屏幕上</li>
-</ul>
-<h2 id="阻塞渲染"><a href="#阻塞渲染" class="headerlink" title="阻塞渲染"></a>阻塞渲染</h2><blockquote>
-<p>现代浏览器是并行加载资源的。当 HTML 解析器(html parser)被脚本阻塞的时候，解析器虽然会停止构建 dom，但仍然会识别该脚本后面的资源，并进行预加载。</p>
-</blockquote>
-<ul>
-<li>默认情况下，css 被视为阻塞渲染的资源，这意味着浏览器将不会渲染任何已处理的内容，直到 cssdom 构建完毕</li>
-<li>js 不仅可以读取和修改 dom 属性，还可以读取和修改 cssom 属性</li>
-</ul>
-<blockquote>
-<p>存在阻塞的 css 资源的时候，浏览器就会延迟 js 的执行和 dom 构建</p>
-</blockquote>
-<ul>
-<li>当浏览器遇到一个 script 标记的时候，dom 构建将暂停，直到脚本完成执行</li>
-<li>cssom 构建的时候，js 执行将暂停，直到 cssdom 就绪</li>
-</ul>
-<blockquote>
-<p>所以 script 标签的位置很重要，实际使用的时候，可以遵循下面两个原则</p>
-</blockquote>
-<ul>
-<li>css 优先：引入顺序上，css 资源先于 js 资源</li>
-<li>js 应该尽量少影响 dom 的构建</li>
-</ul>
-<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><blockquote>
-<p>渲染树(Render-Tree)的关键渲染路径中，要求同时具有 dom 和 cssom，之后才会构建渲染树。所以 html 和 css 都是被阻塞的资源。html 一定是需要的，那么可以从 css 上想办法。</p>
-</blockquote>
-<ul>
-<li>精简 css 并尽快提供它，例如将多个 css 合并成一个，并进行压缩</li>
-</ul>
-<h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><ul>
-<li>实际工程，常常将 js 资源放到文档底部</li>
-<li>defer 和 async 可以改变阻塞模式</li>
-</ul>
-<h4 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h4><ul>
-<li>defer 属性表示延迟执行引入的 js，这段 js 加载时候 html 也并未停止解析，这两个过程是并行的</li>
-<li>整个 document 解析完毕且 defer-script 也加载完成之后（这两件事情的顺序无关），会执行所有由 defer-script 加载的 JavaScript 代码，然后触发 DOMContentLoaded 事件。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"app1.js"</span> defer&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"app2.js"</span> defer&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"app3.js"</span> defer&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>defer 不会改变 script 中代码的执行顺序，示例代码会按照 1，2，3 的顺序执行。</li>
-</ul>
-<h4 id="async"><a href="#async" class="headerlink" title="async"></a>async</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"app.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"ad.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"statistics.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>async 属性表示异步执行引入的 JavaScript，与 defer 的区别在于，如果已经加载好，就会开始执行——无论此刻是 HTML 解析阶段还是 DOMContentLoaded 触发之后。需要注意的是，这种方式加载的 JavaScript 依然会阻塞 load 事件。换句话说，async-script 可能在 DOMContentLoaded 触发之前或之后执行，但一定在 load 触发之前执行。</li>
-<li>多个 async-script 的执行顺序是不确定的。所以 app.js 和 ad.js 和 statistics.js 不一定是顺序执行，谁先加载完谁先执行。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2001,7 +1960,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
