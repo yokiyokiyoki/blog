@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[浅谈Iterator接口]]></title>
+    <url>%2Fblog%2F2018%2F04%2F21%2Fstudy-iterator%2F</url>
+    <content type="text"><![CDATA[简单介绍 Iterator（遍历器） 为不同的数据结构提供统一的访问机制，只要数据结构有这种接口，就可以用 for..of 完成遍历 遍历过程12345let it = makeIterator(["a", "b"]);it.next(); // &#123; value: "a", done: false &#125;it.next(); // &#123; value: "b", done: false &#125;it.next(); // &#123; value: undefined, done: true &#125; 第一次调用 next 方法返回数据结构的第一个成员，第二次就第二个直到没有]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[浅谈TCP]]></title>
     <url>%2Fblog%2F2018%2F04%2F19%2Fstudy-http-tcp%2F</url>
     <content type="text"><![CDATA[TCP tcp 协议对应于传输层，而 HTTP 协议对应于应用层。 http 协议基于 tcp 协议 TCP/IP 协议分层模型 物理层将二进制的 0 和 1 和电压高低，光的闪灭和电波的强弱信号进行转换 链路层代表驱动 网络层 使用 IP 协议，IP 协议基于 IP 转发分包数据 ip 协议是个不可靠协议，不会重发 ip 协议发送失败会使用 icmp 协议通知失败 ARP 解析 ip 中的 mac 地址，mac 地址由网卡出厂提供 ip 还隐含链路层的功能，不管双方底层的链路层是啥，都能通信 传输层 通用的 tcp 和 udp 协议 tcp 协议面向有连接，能正确处理丢包，传输顺序错乱的问题，但是为了建立与断开链接，需要至少七次的发包收包，资源浪费 udp 面向无连接，不管对方有没有收到，如果要得到通知，需要通过应用层 会话层 tcp/ip 分层中，会话层，表示层，应用层集中在一起 网络管理通过 snmp 协议 TCP 三次握手，建立连接 客户端-发送带有 syn 标志的数据包——一次握手-服务端 服务端-发送带有 syn/ack 标志的数据包——二次握手-客户端 客户端-发送带有 ack 标志的数据包-三次握手-服务端 TCP 四次挥手，断开连接 客户端-发送一个 fin，用来关闭客户端到服务器的数据传送 服务器-收到这个 fin，发回一个 ack，确认序号为收到的序号为 1。和 syn 一样，一个 fin 将占用一个序号 服务器-关闭与客户端的连接，发送一个 fin 给客户端 客户端-发回 ack 报文确定，并将确认序号设置为收到序号加 1 TCP 和 UDP tcp 就好比在微信聊天，你说一句我说一句 udp 就好比我找你，直接就打电话，简单粗暴]]></content>
