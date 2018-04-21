@@ -266,6 +266,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/21/closures/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/04/21/closures/" itemprop="url">浅谈闭包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-21T22:12:34+08:00">
+                2018-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="闭包是什么"><a href="#闭包是什么" class="headerlink" title="闭包是什么"></a>闭包是什么</h2><h3 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h3><blockquote>
+<p>先要了解什么是词法作用域</p>
+</blockquote>
+<ul>
+<li>作用域是由书写代码时候函数的位置决定的</li>
+<li>可以想象函数里面嵌套函数，最里面函数可以方面函数的变量</li>
+<li>也就是说内部函数可以读取外部函数的变量</li>
+<li>但是我们外部怎么访问内部的局部变量，这就需要闭包</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果我们在外部想拿到n的变量，可以函数内部返回</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> n = <span class="number">999</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> f2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> n = f1()();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>函数可以记住并访问它所在的词法作用域，换言之，它记住了定义时候的位置</li>
+<li>然后它在其他作用域执行的时候，带上了它的词法作用域，这就是闭包</li>
+</ul>
+<h2 id="闭包可以干什么"><a href="#闭包可以干什么" class="headerlink" title="闭包可以干什么"></a>闭包可以干什么</h2><blockquote>
+<p>很多高级应用都需要用到闭包来实现，主要用处有两个</p>
+</blockquote>
+<ul>
+<li>上面提到的，可以访问内部函数变量</li>
+<li>保持内部变量在内存之中</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> n = <span class="number">999</span>;</span><br><span class="line"></span><br><span class="line">  nAdd = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    n += <span class="number">1</span>;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(n);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> f2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> result = f1();</span><br><span class="line"></span><br><span class="line">result(); <span class="comment">// 999</span></span><br><span class="line"></span><br><span class="line">nAdd();</span><br><span class="line"></span><br><span class="line">result(); <span class="comment">// 1000</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>因为 f1 是 f2 的父函数，f2 依赖于 f1 的存在，f2 被赋给了全局变量，所以垃圾回收机制不会回收</li>
+<li>因为 f2 不回收，所以 f1 也会存在于内存之中</li>
+<li>n 的变量就静静呆在内存之中</li>
+<li>比如 add(1)(2)(3)=6 就是这样解的</li>
+</ul>
+<h2 id="闭包的问题"><a href="#闭包的问题" class="headerlink" title="闭包的问题"></a>闭包的问题</h2><ul>
+<li>闭包会导致变量都保存在内存里面，所以大量闭包会导致性能问题。遇到可以不用的，设置为 null，通知垃圾回收机制回收。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/21/study-iterator/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1716,185 +1866,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/02/25/2018/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/02/25/2018/" itemprop="url">2017展望与2018总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T23:12:22+08:00">
-                2018-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="2017-总结"><a href="#2017-总结" class="headerlink" title="2017 总结"></a>2017 总结</h4><blockquote>
-<p>工作上</p>
-</blockquote>
-<ul>
-<li>官网方面：17 年 1 月进入到公司，当时正值官网重构，组长为了锻炼我，便让我参与到了官网的重构当中。</li>
-<li>产品方面：官网完成之后，雷达刚好升级 2.0，我去负责其中两个模块的迁移。之后一直负责雷达的开发，维护过立方，聚合，接触了很多公司的产品。</li>
-<li>项目方面：期间维护 MIG 系统，并且重构了整个 DBA，能更快地迁移类似的模块。后来参与研发 ipsos 雷达。</li>
-</ul>
-<blockquote>
-<p>学习上</p>
-</blockquote>
-<ul>
-<li>关于 vue：这一年，也算写了大量的 vue 代码，但 vue 封装了大量的 js 代码，屏蔽底层实现细节，所以我很清楚会写 vue 并不算什么，在前端框架日新月异的今天，只有深入地了解并掌握其中原理，才能以不变应万变。</li>
-<li>关于可视化方向：由于 echarts 底层封装实在是过于复杂，也没有仔细去研究，只能去应用它的 api，这是我所遗憾的地方。</li>
-<li>关于构建工具：先是接触了 gulp，但并不是了解得很清楚。而对于 webpack 这一块，配置得也算还可以，也大概知晓构建工具在前端方面的应用，但是我觉得不要满足于只做一个配置工程师，知道思想最为重要，要知道为什么会有压缩代码，合并请求等操作。</li>
-<li>关于读书：喜欢看人物传记，比如爱因斯坦。物理学和哲学上有趣的书也看了不少,极大的开阔了我的眼界。关于 JavaScript 的书，把《你不知道的 JavaScript》也翻了一遍，对于算法（图解算法）也大概翻了一下。</li>
-<li>关于印象笔记：只是自己选择的一种记录的工具，因为之前请教别人的时候发现，别人说了一遍方法，但是会很快忘记，所以这时候最好把它记录下来。笔记里记录了今年工作上遇到的问题，方便自己快速复查。</li>
-</ul>
-<blockquote>
-<p>总结</p>
-</blockquote>
-<ul>
-<li>总的来说，这一年，觉得自己是”开眼看世界”的一年，知道自己是热爱前端的，也知道一个好的前端工程师，他首先得是一个工程师，势必要了解算法，http 等基础知识。而纵向学习是提升学习深度的结果，而不是追求学习广度的结果。</li>
-</ul>
-<h4 id="2018-展望"><a href="#2018-展望" class="headerlink" title="2018 展望"></a>2018 展望</h4><blockquote>
-<p>工作上</p>
-</blockquote>
-<ul>
-<li>前端系统搭建:yoda 系统搭建。</li>
-<li>后端：学习一下 java，希望能接触组内一些后端的项目，简单写些接口。</li>
-<li>业务组件库：业务上建立一个属于自己乃至于公司的组件库，因为做产品发现，一个好用的业务组件能提升很多开发效率。</li>
-<li>数据分析：由于我们团队比较偏向分析，可以多向分析师取经。眼光应该放宽一点，学习数据方面的分析，才能对公司的产品和项目有更好的感知度。</li>
-</ul>
-<blockquote>
-<p>学习上</p>
-</blockquote>
-<ul>
-<li>MVVM 框架：希望能熟练使用 react 和 angular，最终目标希望能自己造一个小巧的 mvvm 框架，当然造轮子的意义是为了自己学习。</li>
-<li>Node 开发：能编写一个 express 或者 koa 的中间件。熟练掌握 CRUD 应用。</li>
-<li>构建工具：梳理前端构建工具，把常用的大概研究一遍。</li>
-<li>Typescript：学习 typescript，相信强类型一定会在将来被纳入 ECMAScript 的标准。</li>
-<li>关于笔记：希望能把每天要做的事，坚持写在 oneNote，养成良好习惯。而工作上要记下来的写在印象笔记。</li>
-<li>Java：能熟练进行 web 开发。</li>
-<li>关于可视化方向：学习 d3.js 和 three.js。</li>
-<li>关于读书：坚持读书，温故知新更为重要。</li>
-<li>关于英语：英语实在是太重要了，需要加强学习。</li>
-</ul>
-<blockquote>
-<p>生活习惯</p>
-</blockquote>
-<ul>
-<li>保持精力充沛的前提是要有足够的锻炼，如果每天实在是没有忙到要加班的情况，可以九点走，放好书包后出来跑半小时的步。</li>
-<li>坚持八点起床，注意自己的仪容仪表。</li>
-</ul>
-<blockquote>
-<p>总结</p>
-</blockquote>
-<ul>
-<li>多增加了一个维度，同时希望自己能真正对得起工程师这个 title。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1949,7 +1920,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

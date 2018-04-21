@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[浅谈闭包]]></title>
+    <url>%2Fblog%2F2018%2F04%2F21%2Fclosures%2F</url>
+    <content type="text"><![CDATA[闭包是什么词法作用域 先要了解什么是词法作用域 作用域是由书写代码时候函数的位置决定的 可以想象函数里面嵌套函数，最里面函数可以方面函数的变量 也就是说内部函数可以读取外部函数的变量 但是我们外部怎么访问内部的局部变量，这就需要闭包 12345678910//如果我们在外部想拿到n的变量，可以函数内部返回//function f1() &#123; let n = 999; function f2() &#123; return n; &#125; return f2;&#125;let n = f1()(); 函数可以记住并访问它所在的词法作用域，换言之，它记住了定义时候的位置 然后它在其他作用域执行的时候，带上了它的词法作用域，这就是闭包 闭包可以干什么 很多高级应用都需要用到闭包来实现，主要用处有两个 上面提到的，可以访问内部函数变量 保持内部变量在内存之中 123456789101112131415161718192021function f1() &#123; var n = 999; nAdd = function() &#123; n += 1; &#125;; function f2() &#123; alert(n); &#125; return f2;&#125;var result = f1();result(); // 999nAdd();result(); // 1000 因为 f1 是 f2 的父函数，f2 依赖于 f1 的存在，f2 被赋给了全局变量，所以垃圾回收机制不会回收 因为 f2 不回收，所以 f1 也会存在于内存之中 n 的变量就静静呆在内存之中 比如 add(1)(2)(3)=6 就是这样解的 闭包的问题 闭包会导致变量都保存在内存里面，所以大量闭包会导致性能问题。遇到可以不用的，设置为 null，通知垃圾回收机制回收。]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[浅谈Iterator接口]]></title>
     <url>%2Fblog%2F2018%2F04%2F21%2Fstudy-iterator%2F</url>
     <content type="text"><![CDATA[简单介绍 Iterator（遍历器） 为不同的数据结构提供统一的访问机制，只要数据结构有这种接口，就可以用 for..of 完成遍历 遍历过程12345let it = makeIterator(["a", "b"]);it.next(); // &#123; value: "a", done: false &#125;it.next(); // &#123; value: "b", done: false &#125;it.next(); // &#123; value: undefined, done: true &#125; 第一次调用 next 方法返回数据结构的第一个成员，第二次就第二个直到没有]]></content>
