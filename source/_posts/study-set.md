@@ -44,7 +44,18 @@ set.size; // 56
 
 ##### 操作方法
 
-* add(val)：添加某个值，返回 set 结构本身
+* add(val)：添加某个值，返回 该实例
 * delete(val):删除某个值，返回布尔值，表示是否成功
 * has(val)：返回布尔值，表示是否拥有
 * clear()：清空所有，返回值 void
+
+##### 遍历方法
+
+> set 结构是具有 itrator 接口的，可以直接 for..of 遍历，相当于下面的 values
+
+* keys：返回键名的遍历器对象
+* values：返回值的遍历器对象
+* entries:返回键值对的遍历器对象
+* forEach:使用回调函数遍历每个成员
+
+> 由于 set 没有键名，只有键值，或者说键名和键值一样，所以 keys===values
