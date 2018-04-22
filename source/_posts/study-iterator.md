@@ -19,3 +19,27 @@ it.next(); // { value: undefined, done: true }
 ```
 
 * 第一次调用 next 方法返回数据结构的第一个成员，第二次就第二个直到没有
+
+## 部署 Iterator 接口
+
+> 当使用 for..of 遍历某种数据结构，就会自动去寻找 Iterator 接口
+
+* es6 规定改接口默认部署在`Symbol.iterator`属性里面
+
+```javascript
+//当执行for..of，会自动执行Symbol.iterator这个函数
+const obj = {
+  [Symbol.iterator]: function() {
+    return {
+      next: function() {
+        return {
+          value: 1,
+          done: true
+        };
+      }
+    };
+  }
+};
+```
+
+* 有些数据结构，本身就具有该接口
