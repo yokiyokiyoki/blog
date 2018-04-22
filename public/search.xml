@@ -11,7 +11,7 @@
   <entry>
     <title><![CDATA[浅谈Iterator接口]]></title>
     <url>%2Fblog%2F2018%2F04%2F21%2Fstudy-iterator%2F</url>
-    <content type="text"><![CDATA[简单介绍 Iterator（遍历器） 为不同的数据结构提供统一的访问机制，只要数据结构有这种接口，就可以用 for..of 完成遍历 遍历过程12345let it = makeIterator(["a", "b"]);it.next(); // &#123; value: "a", done: false &#125;it.next(); // &#123; value: "b", done: false &#125;it.next(); // &#123; value: undefined, done: true &#125; 第一次调用 next 方法返回数据结构的第一个成员，第二次就第二个直到没有]]></content>
+    <content type="text"><![CDATA[简单介绍 Iterator（遍历器） 为不同的数据结构提供统一的访问机制，只要数据结构有这种接口，就可以用 for..of 完成遍历 遍历过程12345let it = makeIterator(["a", "b"]);it.next(); // &#123; value: "a", done: false &#125;it.next(); // &#123; value: "b", done: false &#125;it.next(); // &#123; value: undefined, done: true &#125; 第一次调用 next 方法返回数据结构的第一个成员，第二次就第二个直到没有 部署 Iterator 接口 当使用 for..of 遍历某种数据结构，就会自动去寻找 Iterator 接口 es6 规定改接口默认部署在Symbol.iterator属性里面 返回一个遍历器对象，该对象的本质特征就是具有 next 方法 每次调用 next 方法，都会返回一个当前成员的信息对象 12345678910111213//当执行for..of，会自动执行Symbol.iterator这个函数const obj = &#123; [Symbol.iterator]: function() &#123; return &#123; next: function() &#123; return &#123; value: 1, done: true &#125;; &#125; &#125;; &#125;&#125;; 有些数据结构，本身就具有该接口 Array Map Set String TypedArray 函数的 arguments 对象 NodeList 对象 对象没有部署该接口 无法确定哪个属性先后 如果实在要遍历，可以使用 map 结构]]></content>
       <tags>
         <tag>javascript</tag>
       </tags>
