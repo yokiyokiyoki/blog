@@ -53,3 +53,8 @@ const obj = {
 * TypedArray
 * 函数的 arguments 对象
 * NodeList 对象
+
+> 对象没有部署该接口
+
+* 无法确定哪个属性先后
+* 如果实在要遍历，可以使用 map 结构
