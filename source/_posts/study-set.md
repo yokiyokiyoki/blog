@@ -59,3 +59,39 @@ set.size; // 56
 * forEach:使用回调函数遍历每个成员
 
 > 由于 set 没有键名，只有键值，或者说键名和键值一样，所以 keys===values
+
+### 应用
+
+> 扩展运算符（...）内部使用 for..of，所以也可以应用在 set 结构。同时数组的 map 和 filter 方法也可以应用于 set。
+
+```javascript
+let arr = [3, 5, 2, 2, 5, 5];
+let unique = [...new Set(arr)];
+// [3, 5, 2]
+let set = new Set([1, 2, 3]);
+set = new Set([...set].map(x => x * 2));
+// 返回Set结构：{2, 4, 6}
+
+let set = new Set([1, 2, 3, 4, 5]);
+set = new Set([...set].filter(x => x % 2 == 0));
+// 返回Set结构：{2, 4}
+```
+
+* set 结构很容易实现交集，并集，差集
+
+```javascript
+let a = new Set([1, 2, 3]);
+let b = new Set([4, 3, 2]);
+
+// 并集
+let union = new Set([...a, ...b]);
+// Set {1, 2, 3, 4}
+
+// 交集
+let intersect = new Set([...a].filter(x => b.has(x)));
+// set {2, 3}
+
+// 差集
+let difference = new Set([...a].filter(x => !b.has(x)));
+// Set {1}
+```
