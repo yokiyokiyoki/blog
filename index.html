@@ -494,6 +494,34 @@
 <ul>
 <li>第一次调用 next 方法返回数据结构的第一个成员，第二次就第二个直到没有</li>
 </ul>
+<h2 id="部署-Iterator-接口"><a href="#部署-Iterator-接口" class="headerlink" title="部署 Iterator 接口"></a>部署 Iterator 接口</h2><blockquote>
+<p>当使用 for..of 遍历某种数据结构，就会自动去寻找 Iterator 接口</p>
+</blockquote>
+<ul>
+<li>es6 规定改接口默认部署在<code>Symbol.iterator</code>属性里面</li>
+<li>返回一个遍历器对象，该对象的本质特征就是具有 next 方法</li>
+<li>每次调用 next 方法，都会返回一个当前成员的信息对象</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当执行for..of，会自动执行Symbol.iterator这个函数</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  [<span class="built_in">Symbol</span>.iterator]: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          value: <span class="number">1</span>,</span><br><span class="line">          done: <span class="literal">true</span></span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>有些数据结构，本身就具有该接口</p>
+</blockquote>
+<ul>
+<li>Array</li>
+<li>Map</li>
+<li>Set</li>
+<li>String</li>
+<li>TypedArray</li>
+<li>函数的 arguments 对象</li>
+<li>NodeList 对象</li>
+</ul>
+<blockquote>
+<p>对象没有部署该接口</p>
+</blockquote>
+<ul>
+<li>无法确定哪个属性先后</li>
+<li>如果实在要遍历，可以使用 map 结构</li>
+</ul>
 
           
         
