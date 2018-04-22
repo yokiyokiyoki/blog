@@ -266,6 +266,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/22/study-set/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/04/22/study-set/" itemprop="url">使用set数据结构</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-22T14:19:12+08:00">
+                2018-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="使用-set-数据结构"><a href="#使用-set-数据结构" class="headerlink" title="使用 set 数据结构"></a>使用 set 数据结构</h2><blockquote>
+<p>set 是一个类似数组的数据结构，但是它没有重复值</p>
+</blockquote>
+<h3 id="如何生成-set-数据结构"><a href="#如何生成-set-数据结构" class="headerlink" title="如何生成 set 数据结构"></a>如何生成 set 数据结构</h3><ul>
+<li>直接 new Set()</li>
+<li>往 new Set()传入具有 iterator 接口的数据结构，比如数组</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例一</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>]);</span><br><span class="line">[...set];</span><br><span class="line"><span class="comment">// [1, 2, 3, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例二</span></span><br><span class="line"><span class="keyword">const</span> items = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>]);</span><br><span class="line">items.size; <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例三</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>(<span class="built_in">document</span>.querySelectorAll(<span class="string">"div"</span>));</span><br><span class="line">set.size; <span class="comment">// 56</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 类似于</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">"div"</span>).forEach(<span class="function"><span class="params">div</span> =&gt;</span> set.add(div));</span><br><span class="line">set.size; <span class="comment">// 56</span></span><br></pre></td></tr></table></figure>
+<h3 id="set-实例属性和方法"><a href="#set-实例属性和方法" class="headerlink" title="set 实例属性和方法"></a>set 实例属性和方法</h3><h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li>Set.prototype.constructor：构造函数，默认就是 Set 函数</li>
+<li>Set.prototype.size：返回实例的总数</li>
+</ul>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><h5 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h5><ul>
+<li>add(val)：添加某个值，返回 该实例</li>
+<li>delete(val):删除某个值，返回布尔值，表示是否成功</li>
+<li>has(val)：返回布尔值，表示是否拥有</li>
+<li>clear()：清空所有，返回值 void</li>
+</ul>
+<h5 id="遍历方法"><a href="#遍历方法" class="headerlink" title="遍历方法"></a>遍历方法</h5><blockquote>
+<p>set 结构是具有 itrator 接口的，可以直接 for..of 遍历，相当于下面的 values</p>
+</blockquote>
+<ul>
+<li>keys：返回键名的遍历器对象</li>
+<li>values：返回值的遍历器对象</li>
+<li>entries:返回键值对的遍历器对象</li>
+<li>forEach:使用回调函数遍历每个成员</li>
+</ul>
+<blockquote>
+<p>由于 set 没有键名，只有键值，或者说键名和键值一样，所以 keys===values</p>
+</blockquote>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><blockquote>
+<p>扩展运算符（…）内部使用 for..of，所以也可以应用在 set 结构。同时数组的 map 和 filter 方法也可以应用于 set。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">3</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> unique = [...new <span class="built_in">Set</span>(arr)];</span><br><span class="line"><span class="comment">// [3, 5, 2]</span></span><br><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line">set = <span class="keyword">new</span> <span class="built_in">Set</span>([...set].map(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>));</span><br><span class="line"><span class="comment">// 返回Set结构：&#123;2, 4, 6&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]);</span><br><span class="line">set = <span class="keyword">new</span> <span class="built_in">Set</span>([...set].filter(<span class="function"><span class="params">x</span> =&gt;</span> x % <span class="number">2</span> == <span class="number">0</span>));</span><br><span class="line"><span class="comment">// 返回Set结构：&#123;2, 4&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>set 结构很容易实现交集，并集，差集</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并集</span></span><br><span class="line"><span class="keyword">let</span> union = <span class="keyword">new</span> <span class="built_in">Set</span>([...a, ...b]);</span><br><span class="line"><span class="comment">// Set &#123;1, 2, 3, 4&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 交集</span></span><br><span class="line"><span class="keyword">let</span> intersect = <span class="keyword">new</span> <span class="built_in">Set</span>([...a].filter(<span class="function"><span class="params">x</span> =&gt;</span> b.has(x)));</span><br><span class="line"><span class="comment">// set &#123;2, 3&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 差集</span></span><br><span class="line"><span class="keyword">let</span> difference = <span class="keyword">new</span> <span class="built_in">Set</span>([...a].filter(<span class="function"><span class="params">x</span> =&gt;</span> !b.has(x)));</span><br><span class="line"><span class="comment">// Set &#123;1&#125;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/21/closures/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1717,188 +1874,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/03/13/fe-progress/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/03/13/fe-progress/" itemprop="url">我理解的前端进阶</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T11:13:26+08:00">
-                2018-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><ul>
-<li>前端是一个需要广度的职位，感觉如果多了解上下游各部门的相关技术会对工作有极大的帮助。单从比起技术来，眼界跟逻辑思维其实更重要。</li>
-<li>从技术上来说，走出前端那一亩三分地，多接触自己不熟悉的技术。当回头看前端的时候往往会有一种豁然开朗的感觉。</li>
-<li>现阶段感觉是要接触不同的技术，换种不一样的思维。因为之前也写过 php（用的是国人 tp 框架），初次接触了 mvc 的思想，后来为学校的公众号也写过后台，用的是 python（Django），然后公司现在用的 java 的 spring 那一套（在疯狂补 java 核心卷 I 中…），后端的路已经很成熟的，前端还在探索属于自己的方式。这样看来是豁然开朗了～</li>
-<li>萌新 -&gt; 页面重构 -&gt; 前端开发工程师 -&gt; 大前端 -&gt; 前端打杂 -&gt; 团队打杂</li>
-</ul>
-<h2 id="练级之路"><a href="#练级之路" class="headerlink" title="练级之路"></a>练级之路</h2><h3 id="可以写出方便维护的代码"><a href="#可以写出方便维护的代码" class="headerlink" title="可以写出方便维护的代码"></a>可以写出方便维护的代码</h3><ul>
-<li>commonjs/cmd/amd(node/sea.js/require.js)</li>
-<li>es6 module(babel)</li>
-<li>webpack</li>
-<li>mvvm 解决 jq 意大利面条</li>
-<li>使用 async/await，promise</li>
-</ul>
-<h3 id="可以写出不容易出错的代码"><a href="#可以写出不容易出错的代码" class="headerlink" title="可以写出不容易出错的代码"></a>可以写出不容易出错的代码</h3><ul>
-<li>类型检查，不能相信传进来的参数(当然现在有 ts)</li>
-<li>try-catch 捕获错误</li>
-<li>window.onerror</li>
-</ul>
-<h3 id="可以写出性能比较好的代码"><a href="#可以写出性能比较好的代码" class="headerlink" title="可以写出性能比较好的代码"></a>可以写出性能比较好的代码</h3><ul>
-<li>大量 dom 操作的时候可以批量读，批量写，会用缓存</li>
-<li>会使用递归分而治之，将大问题分解成相似的小问题</li>
-</ul>
-<h3 id="可以灵活使用工具"><a href="#可以灵活使用工具" class="headerlink" title="可以灵活使用工具"></a>可以灵活使用工具</h3><ul>
-<li>charles/whistle 替换本地文件，模拟数据，代理 host</li>
-<li>会用 ps 切图，markman 测量工具</li>
-<li>各种带语法提示的小插件</li>
-<li>sourcemap 定位代码</li>
-</ul>
-<h3 id="知道怎么定位到问题"><a href="#知道怎么定位到问题" class="headerlink" title="知道怎么定位到问题"></a>知道怎么定位到问题</h3><ul>
-<li>会有 chrome devtool 里面的 network/performance 等，断点调试</li>
-<li>网络不通，ping 一下百度</li>
-</ul>
-<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><h4 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h4><ul>
-<li>jsonp（get）</li>
-<li>服务器代理</li>
-</ul>
-<h4 id="安全问题"><a href="#安全问题" class="headerlink" title="安全问题"></a>安全问题</h4><ul>
-<li>xss（不能信任用户的输入，过滤一下输入，转义带有脚本的标签）</li>
-<li>csrf（所有请求都需要带有 token）</li>
-</ul>
-<h4 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h4><ul>
-<li>小文件，快展现</li>
-<li>图片资源无损压缩（webp 了解一下）</li>
-<li>服务端渲染</li>
-<li>预加载</li>
-<li>dns 预解析</li>
-<li>web workers 进行大计算</li>
-<li><a href="https://kb.cnblogs.com/page/129756/" target="_blank" rel="noopener">知道浏览器的内部工作原理</a></li>
-</ul>
-<h3 id="关注新技术，并能快速化为己用"><a href="#关注新技术，并能快速化为己用" class="headerlink" title="关注新技术，并能快速化为己用"></a>关注新技术，并能快速化为己用</h3><ul>
-<li>webaseembly 将 js 转为二进制的规范</li>
-<li>小程序</li>
-<li>pwa</li>
-</ul>
-<hr>
-<blockquote>
-<p>有感而发于公司内部分享 ppt</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1948,7 +1928,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

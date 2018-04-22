@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[使用set数据结构]]></title>
+    <url>%2Fblog%2F2018%2F04%2F22%2Fstudy-set%2F</url>
+    <content type="text"><![CDATA[使用 set 数据结构 set 是一个类似数组的数据结构，但是它没有重复值 如何生成 set 数据结构 直接 new Set() 往 new Set()传入具有 iterator 接口的数据结构，比如数组 1234567891011121314151617// 例一const set = new Set([1, 2, 3, 4, 4]);[...set];// [1, 2, 3, 4]// 例二const items = new Set([1, 2, 3, 4, 5, 5, 5, 5]);items.size; // 5// 例三const set = new Set(document.querySelectorAll("div"));set.size; // 56// 类似于const set = new Set();document.querySelectorAll("div").forEach(div =&gt; set.add(div));set.size; // 56 set 实例属性和方法属性 Set.prototype.constructor：构造函数，默认就是 Set 函数 Set.prototype.size：返回实例的总数 方法操作方法 add(val)：添加某个值，返回 该实例 delete(val):删除某个值，返回布尔值，表示是否成功 has(val)：返回布尔值，表示是否拥有 clear()：清空所有，返回值 void 遍历方法 set 结构是具有 itrator 接口的，可以直接 for..of 遍历，相当于下面的 values keys：返回键名的遍历器对象 values：返回值的遍历器对象 entries:返回键值对的遍历器对象 forEach:使用回调函数遍历每个成员 由于 set 没有键名，只有键值，或者说键名和键值一样，所以 keys===values 应用 扩展运算符（…）内部使用 for..of，所以也可以应用在 set 结构。同时数组的 map 和 filter 方法也可以应用于 set。 12345678910let arr = [3, 5, 2, 2, 5, 5];let unique = [...new Set(arr)];// [3, 5, 2]let set = new Set([1, 2, 3]);set = new Set([...set].map(x =&gt; x * 2));// 返回Set结构：&#123;2, 4, 6&#125;let set = new Set([1, 2, 3, 4, 5]);set = new Set([...set].filter(x =&gt; x % 2 == 0));// 返回Set结构：&#123;2, 4&#125; set 结构很容易实现交集，并集，差集 1234567891011121314let a = new Set([1, 2, 3]);let b = new Set([4, 3, 2]);// 并集let union = new Set([...a, ...b]);// Set &#123;1, 2, 3, 4&#125;// 交集let intersect = new Set([...a].filter(x =&gt; b.has(x)));// set &#123;2, 3&#125;// 差集let difference = new Set([...a].filter(x =&gt; !b.has(x)));// Set &#123;1&#125;]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[浅谈闭包]]></title>
     <url>%2Fblog%2F2018%2F04%2F21%2Fclosures%2F</url>
     <content type="text"><![CDATA[闭包是什么词法作用域 先要了解什么是词法作用域 作用域是由书写代码时候函数的位置决定的 可以想象函数里面嵌套函数，最里面函数可以方面函数的变量 也就是说内部函数可以读取外部函数的变量 但是我们外部怎么访问内部的局部变量，这就需要闭包 12345678910//如果我们在外部想拿到n的变量，可以函数内部返回//function f1() &#123; let n = 999; function f2() &#123; return n; &#125; return f2;&#125;let n = f1()(); 函数可以记住并访问它所在的词法作用域，换言之，它记住了定义时候的位置 然后它在其他作用域执行的时候，带上了它的词法作用域，这就是闭包 闭包可以干什么 很多高级应用都需要用到闭包来实现，主要用处有两个 上面提到的，可以访问内部函数变量 保持内部变量在内存之中 123456789101112131415161718192021function f1() &#123; var n = 999; nAdd = function() &#123; n += 1; &#125;; function f2() &#123; alert(n); &#125; return f2;&#125;var result = f1();result(); // 999nAdd();result(); // 1000 因为 f1 是 f2 的父函数，f2 依赖于 f1 的存在，f2 被赋给了全局变量，所以垃圾回收机制不会回收 因为 f2 不回收，所以 f1 也会存在于内存之中 n 的变量就静静呆在内存之中 比如 add(1)(2)(3)=6 就是这样解的 闭包的问题 闭包会导致变量都保存在内存里面，所以大量闭包会导致性能问题。遇到可以不用的，设置为 null，通知垃圾回收机制回收。]]></content>
