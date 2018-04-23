@@ -40,3 +40,12 @@ map.set(k1, 111).set(k2, 222);
 map.get(k1); // 111
 map.get(k2); // 222
 ```
+
+## 实例属性和方法
+
+* size：返回成员总数
+* set(key, value)：返回该实例，如果 key 有值会更新，没有就新生成
+* get(key)：找到就返回，没有就 undefined
+* has(key)：布尔值
+* delete(key)：删除成功返回 true，失败 false
+* clear：清除所有成员，没有返回值
