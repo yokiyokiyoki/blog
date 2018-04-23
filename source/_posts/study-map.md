@@ -23,3 +23,20 @@ data["[object HTMLDivElement]"]; // "metadata"
 
 * new Map()
 * 往 new Map()里面传入任何具有 iterator 接口的数据结构，包括数组等，甚至包括 map 本身
+
+> 需要注意的是，map 的 key 存的是内存地址，也就是说['a']和['a']不相等。基础值才相等
+
+```javascript
+const map = new Map();
+
+map.set(["a"], 555);
+map.get(["a"]); // undefined
+
+const k1 = ["a"];
+const k2 = ["a"];
+
+map.set(k1, 111).set(k2, 222);
+
+map.get(k1); // 111
+map.get(k2); // 222
+```
