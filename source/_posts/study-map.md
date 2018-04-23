@@ -69,4 +69,39 @@ for (let [key, value] of map) {
 // "T" "yes"
 ```
 
-## 与其他数据结构的互相转换
+## 应用
+
+### 与其他数据结构的互相转换
+
+* map 转为数组，使用...运算符
+
+```javascript
+const myMap = new Map().set(true, 7).set({ foo: 3 }, ["abc"]);
+[...myMap];
+// [ [ true, 7 ], [ { foo: 3 }, [ 'abc' ] ] ]
+```
+
+* 数组转为 map，观察数组结构
+
+```javascript
+new Map([[true, 7], [{ foo: 3 }, ["abc"]]]);
+// Map {
+//   true => 7,
+//   Object {foo: 3} => ['abc']
+// }
+```
+
+### 过滤和遍历，但是 map 本身没有 map 和 filter 方法,先转为数组，再塞回 map
+
+```javascript
+const map0 = new Map()
+  .set(1, "a")
+  .set(2, "b")
+  .set(3, "c");
+
+const map1 = new Map([...map0].filter(([k, v]) => k < 3));
+// 产生 Map 结构 {1 => 'a', 2 => 'b'}
+
+const map2 = new Map([...map0].map(([k, v]) => [k * 2, "_" + v]));
+// 产生 Map 结构 {2 => '_a', 4 => '_b', 6 => '_c'}
+```
