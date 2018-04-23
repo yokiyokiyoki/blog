@@ -49,3 +49,24 @@ map.get(k2); // 222
 * has(key)：布尔值
 * delete(key)：删除成功返回 true，失败 false
 * clear：清除所有成员，没有返回值
+
+> 遍历方法与 set 类似，但是没有 filter 和 map
+
+* 比较有意思的是，map 结构默认的 iterator 接口就是 entries 方法
+
+```javascript
+for (let [key, value] of map.entries()) {
+  console.log(key, value);
+}
+// "F" "no"
+// "T" "yes"
+
+// 等同于使用map.entries()
+for (let [key, value] of map) {
+  console.log(key, value);
+}
+// "F" "no"
+// "T" "yes"
+```
+
+## 与其他数据结构的互相转换
