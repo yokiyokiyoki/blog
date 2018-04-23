@@ -33,10 +33,11 @@ let n = f1()();
 
 ## 闭包可以干什么
 
-> 很多高级应用都需要用到闭包来实现，主要用处有两个
+> 很多高级应用都需要用到闭包来实现，主要用处有三个
 
 * 上面提到的，可以访问内部函数变量
 * 保持内部变量在内存之中
+* 私有变量和模块化
 
 ```javascript
 function f1() {
@@ -60,6 +61,15 @@ result(); // 999
 nAdd();
 
 result(); // 1000
+//私有变量和模块化
+var monitor = (function() {
+  var imgs = [];
+  return function(src) {
+    var img = new Image();
+    imgs.push(img);
+    img.src = src;
+  };
+})();
 ```
 
 * 因为 f1 是 f2 的父函数，f2 依赖于 f1 的存在，f2 被赋给了全局变量，所以垃圾回收机制不会回收
