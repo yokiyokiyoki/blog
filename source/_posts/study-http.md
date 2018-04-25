@@ -49,6 +49,7 @@ tags: Http
 
 * 500 internal sever error，表示服务器端在执行请求时发生了错误
 * 503 service unavailable，表明服务器暂时处于超负载或正在停机维护，无法处理请求
+* 504 gateway timeout 网关超时
 
 ## http 协议格式
 
