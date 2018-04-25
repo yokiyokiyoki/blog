@@ -18,6 +18,11 @@ tags: Http
 
 ## 状态码
 
+### 1xx 传达信息
+
+* 100 continue
+* 101 switching protocols
+
 ### 2xx 成功
 
 * 200 OK，表示从客户端发来的请求在服务器端被正确处理
