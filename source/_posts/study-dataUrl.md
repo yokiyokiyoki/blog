@@ -38,3 +38,18 @@ data:text/html;charset=UTF-8;base64,5L2g5aW9
 //内嵌base64图片
 background-image: url("data:image/gif;base64,R0lGODlhAwADAIAAAP///8zMzCH5BAAAAAAALAAAAAADAAMAAAIEBHIJBQA7");
 ```
+
+## Data URL 的优劣
+
+### 优点
+
+* img 的 src 说明这个是外部资源，浏览器会向服务器拉取一次资源请求，占用网络资源
+* 大多数浏览器都有一个并发请求数不能超过 4 个的限制。如果一个网页里嵌入了太多的外部资源，请求会使整个页面加载延迟。
+* 图片体积太小的时候，不值得占用一个 http 会话
+
+### 缺点
+
+* base64 编码的数据体积是原数据的体积 4/3，也就是说 data url 形式的图片会比二进制格式的图片体积大 1/3
+* data url 形式的图片不会被浏览器缓存，这意味着每次访问这样页面的时候都会被下载一次。如果这个图片被整个网站使用，就是一个使用效率问题（已被解决）
+
+  > 如何将 data url 数据放入浏览器缓存，通过 css 样式文件。所有浏览器都会积极缓存 css 文件来提高页面加载效率。
