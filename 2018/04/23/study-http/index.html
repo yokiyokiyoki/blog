@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="http（hypertext transfer protocol）超文本传输协议  http 传输流 发送端在层与层间传输，每经过一层都会被加上首部信息，接受端每经过一层都会删除一条   应用层：本来是 http 数据 经过传输层，加上 tcp 首部 经过网络层，加上 ip 首部 经过链路层，加上以太网首部 然后接收端依次经过链路层，网络层，传输层，应用层  状态码2xx 成功 200 OK，表">
+<meta name="description" content="http（hypertext transfer protocol）超文本传输协议  http 传输流 发送端在层与层间传输，每经过一层都会被加上首部信息，接受端每经过一层都会删除一条   应用层：本来是 http 数据 经过传输层，加上 tcp 首部 经过网络层，加上 ip 首部 经过链路层，加上以太网首部 然后接收端依次经过链路层，网络层，传输层，应用层  状态码1xx 传达信息 100 co">
 <meta name="keywords" content="Http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈http">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/04/23/study-http/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="http（hypertext transfer protocol）超文本传输协议  http 传输流 发送端在层与层间传输，每经过一层都会被加上首部信息，接受端每经过一层都会删除一条   应用层：本来是 http 数据 经过传输层，加上 tcp 首部 经过网络层，加上 ip 首部 经过链路层，加上以太网首部 然后接收端依次经过链路层，网络层，传输层，应用层  状态码2xx 成功 200 OK，表">
+<meta property="og:description" content="http（hypertext transfer protocol）超文本传输协议  http 传输流 发送端在层与层间传输，每经过一层都会被加上首部信息，接受端每经过一层都会删除一条   应用层：本来是 http 数据 经过传输层，加上 tcp 首部 经过网络层，加上 ip 首部 经过链路层，加上以太网首部 然后接收端依次经过链路层，网络层，传输层，应用层  状态码1xx 传达信息 100 co">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-24T03:53:42.168Z">
+<meta property="og:updated_time" content="2018-04-25T02:48:00.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈http">
-<meta name="twitter:description" content="http（hypertext transfer protocol）超文本传输协议  http 传输流 发送端在层与层间传输，每经过一层都会被加上首部信息，接受端每经过一层都会删除一条   应用层：本来是 http 数据 经过传输层，加上 tcp 首部 经过网络层，加上 ip 首部 经过链路层，加上以太网首部 然后接收端依次经过链路层，网络层，传输层，应用层  状态码2xx 成功 200 OK，表">
+<meta name="twitter:description" content="http（hypertext transfer protocol）超文本传输协议  http 传输流 发送端在层与层间传输，每经过一层都会被加上首部信息，接受端每经过一层都会删除一条   应用层：本来是 http 数据 经过传输层，加上 tcp 首部 经过网络层，加上 ip 首部 经过链路层，加上以太网首部 然后接收端依次经过链路层，网络层，传输层，应用层  状态码1xx 传达信息 100 co">
 
 
 
@@ -347,7 +347,11 @@
 <li>经过链路层，加上以太网首部</li>
 <li>然后接收端依次经过链路层，网络层，传输层，应用层</li>
 </ul>
-<h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><h3 id="2xx-成功"><a href="#2xx-成功" class="headerlink" title="2xx 成功"></a>2xx 成功</h3><ul>
+<h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><h3 id="1xx-传达信息"><a href="#1xx-传达信息" class="headerlink" title="1xx 传达信息"></a>1xx 传达信息</h3><ul>
+<li>100 continue</li>
+<li>101 switching protocols</li>
+</ul>
+<h3 id="2xx-成功"><a href="#2xx-成功" class="headerlink" title="2xx 成功"></a>2xx 成功</h3><ul>
 <li>200 OK，表示从客户端发来的请求在服务器端被正确处理</li>
 <li>204 No content，表示请求成功，但响应报文不含实体的主体部分</li>
 <li>206 Partial Content，进行范围请求</li>
@@ -369,6 +373,7 @@
 <h3 id="5xx-服务器错误"><a href="#5xx-服务器错误" class="headerlink" title="5xx 服务器错误"></a>5xx 服务器错误</h3><ul>
 <li>500 internal sever error，表示服务器端在执行请求时发生了错误</li>
 <li>503 service unavailable，表明服务器暂时处于超负载或正在停机维护，无法处理请求</li>
+<li>504 gateway timeout 网关超时</li>
 </ul>
 <h2 id="http-协议格式"><a href="#http-协议格式" class="headerlink" title="http 协议格式"></a>http 协议格式</h2><blockquote>
 <p>http 的请求和响应的消息协议是一样的，分为三个部分，起始行，消息头和消息体。这三个部分以 CRLF 作为分隔符，最后一个消息头有两个分隔符，表示消息头部结束。</p>
@@ -433,6 +438,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/05/01/study-dataUrl/" rel="prev" title="浅谈Data URL">
+                浅谈Data URL <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -513,7 +522,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -559,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#http-传输流"><span class="nav-number">1.</span> <span class="nav-text">http 传输流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#状态码"><span class="nav-number">2.</span> <span class="nav-text">状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2xx-成功"><span class="nav-number">2.1.</span> <span class="nav-text">2xx 成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3xx-重定向"><span class="nav-number">2.2.</span> <span class="nav-text">3xx 重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4XX-客户端错误"><span class="nav-number">2.3.</span> <span class="nav-text">4XX 客户端错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5xx-服务器错误"><span class="nav-number">2.4.</span> <span class="nav-text">5xx 服务器错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-协议格式"><span class="nav-number">3.</span> <span class="nav-text">http 协议格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-的无状态性"><span class="nav-number">4.</span> <span class="nav-text">http 的无状态性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入-url-到页面加载发生了什么"><span class="nav-number">5.</span> <span class="nav-text">输入 url 到页面加载发生了什么</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#http-传输流"><span class="nav-number">1.</span> <span class="nav-text">http 传输流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#状态码"><span class="nav-number">2.</span> <span class="nav-text">状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1xx-传达信息"><span class="nav-number">2.1.</span> <span class="nav-text">1xx 传达信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2xx-成功"><span class="nav-number">2.2.</span> <span class="nav-text">2xx 成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3xx-重定向"><span class="nav-number">2.3.</span> <span class="nav-text">3xx 重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4XX-客户端错误"><span class="nav-number">2.4.</span> <span class="nav-text">4XX 客户端错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5xx-服务器错误"><span class="nav-number">2.5.</span> <span class="nav-text">5xx 服务器错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-协议格式"><span class="nav-number">3.</span> <span class="nav-text">http 协议格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http-的无状态性"><span class="nav-number">4.</span> <span class="nav-text">http 的无状态性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入-url-到页面加载发生了什么"><span class="nav-number">5.</span> <span class="nav-text">输入 url 到页面加载发生了什么</span></a></li></ol></div>
             
 
           </div>
