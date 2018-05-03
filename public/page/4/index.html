@@ -266,6 +266,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/03/10/use-nvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/03/10/use-nvm/" itemprop="url">使用nvm</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T11:04:09+08:00">
+                2017-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Node-Version-Manager（node版本管理）"><a href="#Node-Version-Manager（node版本管理）" class="headerlink" title="Node Version Manager（node版本管理）"></a>Node Version Manager（node版本管理）</h1><h2 id="使用nvm安装和管理node"><a href="#使用nvm安装和管理node" class="headerlink" title="使用nvm安装和管理node"></a>使用nvm安装和管理node</h2><blockquote>
+<p>node版本更新很快，为了能在版本之间迅速切换，我们要使用nvm来安装和管理。<br><br>用nvm下载了相应的node也会下载相应的npm进行管理</p>
+</blockquote>
+<h4 id="安装nvm"><a href="#安装nvm" class="headerlink" title="安装nvm"></a>安装nvm</h4><p>我们可以从<a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener">Github</a>下载</p>
+<p>默认安装路径是<code>C:\Users\Administrator\AppData\Roaming\nvm</code>，存放我们下载的各个版本的node</p>
+<blockquote>
+<p>验证安装，打开控制台，输入<code>nvm</code>,看是否输出所有命令</p>
+</blockquote>
+<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><ul>
+<li>nvm list   #查看本地所有node版本</li>
+<li>nvm install 4.2.2   #安装 4.2.2 版本</li>
+<li>nvm use 4.2.2    #切换至 4.2.2 版本</li>
+<li>nvm uninstall 4.2.2    #卸载4.2.2 版本</li>
+</ul>
+<h4 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h4><blockquote>
+<p>nvm默认的下载地址是<code>http://nodejs.org/dist/</code>,这是国外的服务器，在国内下载速度很慢。</p>
+</blockquote>
+<ul>
+<li>需要把下列代码复制到你nvm的安装路径下的setting.txt<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node_mirror: https://npm.taobao.org/mirrors/node/</span><br><span class="line">npm_mirror: https://npm.taobao.org/mirrors/npm/</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/02/13/study-git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -776,7 +913,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
