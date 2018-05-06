@@ -266,6 +266,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/01/14/study-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/01/14/study-nginx/" itemprop="url">nginx官方文档译文</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-14T13:16:04+08:00">
+                2018-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>nginx 有一个 master 进程和几个 worker 进程。master 进程的主要作用是读取和操作配置文件，同时维护 worker 进程。而真正处理请求的是 worker 进程。nginx 采用基于事件模型和系统依赖的机制最终将请求分配给 worker 进程。worker 进程的数量被定义在配置文件中，或者有可能被自动调整为 CPU 的核心数。</p>
+<p>默认情况下，配置文件命名为 nginx.conf，放在/usr/local/nginx/conf，/etc/nginx，或者/usr/local/etc/nginx 目录下</p>
+<h2 id="启动，停止，reloading-配置"><a href="#启动，停止，reloading-配置" class="headerlink" title="启动，停止，reloading 配置"></a>启动，停止，reloading 配置</h2><p>运行可执行文件即可开启 nginx。一旦 nginx 开启之后，它可以使用可执行的-s 参数进行控制。下面是其语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s signal</span><br></pre></td></tr></table></figure>
+<p>信号(signal)可以是下面的其中一个：</p>
+<ul>
+<li>stop —— 快速关闭</li>
+<li>quit —— 优雅地关闭</li>
+<li>reload —— 重新加载配置文件</li>
+<li>reopen —— 重新打开日志文件</li>
+</ul>
+<p>比如，等待所有 worker 进程服务完当前请求，然后关闭 nginx 进程：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit<span class="comment">//这条命令，必须由开启nginx的同一个用户执行。</span></span><br></pre></td></tr></table></figure>
+<p>如果改变了配置文件，除非是 nginx 重启，否则可以执行下面的命令进行应用新的配置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+<p>一旦 master 进程收到信号重新加载配置文件，它会检查新的配置文件的语法，并尝试应用配置。如果成功，master 进程开启新的 worker 进程，并且给旧的 worker 进程发送信息，请求它们关闭。否则，master 进程将会回滚修改并继续使用旧配置。</p>
+<p>旧的 worker 进程，接受到命令关闭，将会停止接收新的请求，并继续服务完当前请求。自此之后，worker 进程将正式退出。</p>
+<p>信号可以通过 unix 工具发送给 nginx 进程，例如 kill 命令。这种情况下，信号会直接发送给指定 pid 的进程。默认情况下，nginx 的 master 进程 ID 被写在/usr/local/nginx/logs 或/var/run 目录下的 nginx.pid 文件中。</p>
+<p>比如，假如 master 进程的 ID 是 1628，那么发送 QUIT 信号给 nginx 会导致其优雅地退出：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -s QUIT <span class="number">1628</span></span><br></pre></td></tr></table></figure>
+<p>获取所有正在运行的 nginx 进程列表信息，可以执行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ax | grep nginx</span><br></pre></td></tr></table></figure>
+<h2 id="配置文件结构"><a href="#配置文件结构" class="headerlink" title="配置文件结构"></a>配置文件结构</h2><p>nginx 由模块组成。这些模块都被配置文件中的指令所控制。指令包括简单指令和指令块。一条简单的指令由名字和参数组成，参数由空格隔开，以分号（;）结束。一个指令块的结构和简单指令的一样，但是，它以额外的指令集合结束，指令集用大括弧（{和}）包围。</p>
+<p>如果一个指令块里面有其他的指令块，那么它被称为一个上下文（例如，events，http，server 和 location）。</p>
+<p>配置文件中，那些位于任何上下文之外的指令都认为是在 main 上下文中。events 和 http 指令位于 main 上下文，server 位于 http 上下文之中，location 位于 server 之中。</p>
+<p>一行位于#后面的被认为是注释。</p>
+<h2 id="静态内容"><a href="#静态内容" class="headerlink" title="静态内容"></a>静态内容</h2><p>web 服务器一个重要的任务就是提供静态资源服务（例如图片等）。我们会实现一个例子，这个例子会根据请求，从不同的本地目录提供静态文件：/data/www（包含 html 文件），/data/images（包含图片）。这时候我们需要在 http 指令块里面创建一个 server 指令块，里面又包含两个 location 指令块。</p>
+<p>首先，创建/data/www/index.html 文件，并放置一些图片于/data/images 目录下。</p>
+<p>打开配置文件，默认的配置文件已经包含几个实例 server 指令块，大部分都被注释了。我们取消注释，并且开始一个新的 server 指令块：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	server &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通常来说，配置文件会包含几个 server 指令块，它们由它们监听的端口号和服务器名称来区分。一旦 nginx 决定由哪一个 server 处理一个请求，它会把在请求 header 中的 URI 与在 location 指令块中定义的参数进行测试比较。</p>
+<p>向 server 指令块添加 location 指令块：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">	root /data/www;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>location 指令块指定了 URI”/”前缀。为了匹配请求，URI 将会被添加到 root 指令指定的路径，即是/data/www，实现了从路径到本地文件系统的转变。如果有多个匹配的 location 指令块，那么 nginx 将会选择那个拥有最长匹配前缀的。上面的 location 指令块提供了最短的前缀，所以如果其他所有 location 指令块都匹配失败，此指令块才生效。</p>
+<p>下一步，添加第二个 location 指令块：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /images/ &#123;</span><br><span class="line">	root /data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它会匹配以/images/开头的请求（虽然 location /也同时匹配此请求，但是却是更短的前缀匹配）。</p>
+<p>最后 server 指令块的配置应该是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	location / &#123;</span><br><span class="line">		root /data/www;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location /images/ &#123;</span><br><span class="line">		root /data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这已经是一个服务器的配置文件了，这个服务器将会在本地机器<a href="http://localhost/监听80端口，并且是可访问状态。服务器将从路径/data/images发送文件去响应URIs以/images/开头的请求。比如，客户请求http://localhost/images/example.png，nginx将发送/data/images/example.png文件。如果该文件不存在，nginx将返回包含404" target="_blank" rel="noopener">http://localhost/监听80端口，并且是可访问状态。服务器将从路径/data/images发送文件去响应URIs以/images/开头的请求。比如，客户请求http://localhost/images/example.png，nginx将发送/data/images/example.png文件。如果该文件不存在，nginx将返回包含404</a> error 的响应。URIs 不是以/images/开头的请求将会被影射到/data/www 路径。例如，请求<a href="http://localhost/some/example.html，nginx将会发送/data/www/some/example.html文件。" target="_blank" rel="noopener">http://localhost/some/example.html，nginx将会发送/data/www/some/example.html文件。</a></p>
+<p>为了应用新的配置文件，如果 nginx 还没有开启，开启即可；否则可以发送 reload 信号给 nginx 的 master 进程：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/01/10/study-render/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1658,158 +1819,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/05/17/use-promise/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/05/17/use-promise/" itemprop="url">使用promise</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:16:13+08:00">
-                2017-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><blockquote>
-<p>Promise 作为 ES6 的特性，可以很好地创建异步工作流</p>
-</blockquote>
-<ul>
-<li>Promise 是构造函数</li>
-<li>Promise 只有三种状态（pending，resolve，reject），pending 是刚创建 Promise 实例的状态，然后一旦转为 resolve 或者 reject，就不可变更</li>
-</ul>
-<h4 id="创建-Promise"><a href="#创建-Promise" class="headerlink" title="创建 Promise"></a>创建 Promise</h4><blockquote>
-<p>以封装 xhr 为例子</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getURL</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//Promise构造函数接受一个函数，这个函数接受两个参数</span></span><br><span class="line">    <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    xhr.open(<span class="string">"GET"</span>, url, <span class="literal">true</span>);</span><br><span class="line">    xhr.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (xhr.status == <span class="number">200</span>) &#123;</span><br><span class="line">        resolve(<span class="built_in">JSON</span>.parse(xhr.responseText)); <span class="comment">//如果成功响应，那么把这个值填充到resolve</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        reject(<span class="keyword">new</span> <span class="built_in">Error</span>(xhr.statusText)); <span class="comment">//把该错误对象填充到reject里面</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    xhr.onError = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      reject(<span class="keyword">new</span> <span class="built_in">Error</span>(xhr.statusText)); <span class="comment">//把该错误对象填充到reject里面</span></span><br><span class="line">    &#125;;</span><br><span class="line">    xhr.send(<span class="literal">null</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>reject 必须是接受一个错误对象实例，比如<code>new Error(&#39;12&#39;)</code>里面是什么类型的都可以</li>
-</ul>
-<h4 id="使用-Promise"><a href="#使用-Promise" class="headerlink" title="使用 Promise"></a>使用 Promise</h4><blockquote>
-<p>使用上面封装 xhr 的 getURL 的函数，该函数返回一个 Promise 实例</p>
-</blockquote>
-<ul>
-<li>Promise 的实例方法有两个：then 和 catch，这个两个方法都返回新的 Promise 对象</li>
-<li>then 有两个参数。then(onfilled,onrejected)，第一个是参数值 resolve 来填充，第二个是 reject 来填充</li>
-<li>catch 实则是 then(undefined,onrejected)的别名，但是一般情况下都是用这个</li>
-<li>then 检测不了自身 Promise 对象 onfilled 出了异常，而 catch 是基于对上次的 then 产生的 promise 对象</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url1 = <span class="string">"http://azu.github.io/promises-book/json/comment.json"</span>,</span><br><span class="line">  url2 = <span class="string">"http://azu.github.io/promises-book/json/people.json"</span>;</span><br><span class="line">getURL(url1)</span><br><span class="line">  .then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(val); <span class="comment">//这里是onfilled填充</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error); <span class="comment">//这里是onrejected填充</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h5 id="Promise-chain-获取上次-promise-的返回值"><a href="#Promise-chain-获取上次-promise-的返回值" class="headerlink" title="Promise chain 获取上次 promise 的返回值"></a>Promise chain 获取上次 promise 的返回值</h5><blockquote>
-<p>由于 Promise 链式调用的时候，每个 Promise 都是独立的。但是可以通过 return 值来传给下一个 Promise，因为 return 了值是填充了当前 Promise 对象的 resolve</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">promise</span><br><span class="line">  .then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(val);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h5 id="Promise-静态方法"><a href="#Promise-静态方法" class="headerlink" title="Promise 静态方法"></a>Promise 静态方法</h5><ul>
-<li>Promise.resolve(42) === new Promise((resolve,reject)=&gt;resolve(42)) ,是它的语法糖</li>
-<li>Promise.reject(new Error(42)) === new Promise((resolve,reject)=&gt;reject(new Error(42))) 是它的语法糖</li>
-<li>如果有多个 Promise 同时需要判断才能进行下一步，可以用 Promise.all([promise1,promise2])。这个 then 方法返回的参数也是一个数组，跟 promise1 和 promise2 的顺序一样。需要注意的是，all 是并行执行的。</li>
-<li>Promise.race([promise1,promise2]) 则和数组的 some 方法很像，只要有一个 promise 对象进入 FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">promise.all([getURL(url1), getURL(url2)]).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(result); <span class="comment">//[getURL(url1)的结果，getURL(url2)的结果]</span></span><br><span class="line">&#125;);</span><br><span class="line">promise.race([getURL(url1), getURL(url2)]).then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value); <span class="comment">//一旦这两个promise对象有一个完成了onfilled或onrejected状态，那么就会进行后续的then，所以这里then的参数只有一个value。但不并不会影响其他promise对象的进行，只是它们的结果值不会出现在then的里面</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1864,7 +1873,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1877,7 +1886,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

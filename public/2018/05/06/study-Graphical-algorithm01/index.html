@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="javascript," />
+  <meta name="keywords" content="图解算法," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="简单介绍 javascript 是解释性语言，性能很慢，随着 web 在生活中的普及，这点性能显然不够用。你能想象双十一的一个按钮点半天才有反应嘛？所幸很多大神，都在不断的改进这个性能问题  漫漫填坑路JIT google 在 09 年 v8 引擎里引入 just in time compiling（即时编译），跟之前 ajax 出现引起的轰动是一样的，性能瞬间就上升了 20-40 倍的速度。">
-<meta name="keywords" content="javascript">
+<meta name="description" content="场景电话本 假设从电话本里面找 yoki 的电话，最常见的不是从开头开始找，而是从中间开始查找 电话本是有序列表  1-100 猜想 以目标最少的次数猜到这个数字  简单查找 如果从 1 开始猜，这叫简单查找，换句话说就是傻找 如果是 99，那么得猜 99 次（临界点就是这个数）  二分查找 如果从中间值开始猜 那么临界点就是 99，最坏的情况下只用猜七次，50 错，75 错..这样猜  那么得出">
+<meta name="keywords" content="图解算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js性能填坑之路">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/04/15/study-performance/index.html">
+<meta property="og:title" content="读《图解算法》01-二分查找和大O表示法">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/05/06/study-Graphical-algorithm01/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="简单介绍 javascript 是解释性语言，性能很慢，随着 web 在生活中的普及，这点性能显然不够用。你能想象双十一的一个按钮点半天才有反应嘛？所幸很多大神，都在不断的改进这个性能问题  漫漫填坑路JIT google 在 09 年 v8 引擎里引入 just in time compiling（即时编译），跟之前 ajax 出现引起的轰动是一样的，性能瞬间就上升了 20-40 倍的速度。">
+<meta property="og:description" content="场景电话本 假设从电话本里面找 yoki 的电话，最常见的不是从开头开始找，而是从中间开始查找 电话本是有序列表  1-100 猜想 以目标最少的次数猜到这个数字  简单查找 如果从 1 开始猜，这叫简单查找，换句话说就是傻找 如果是 99，那么得猜 99 次（临界点就是这个数）  二分查找 如果从中间值开始猜 那么临界点就是 99，最坏的情况下只用猜七次，50 错，75 错..这样猜  那么得出">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-19T06:27:50.421Z">
+<meta property="og:updated_time" content="2018-05-06T08:39:03.301Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js性能填坑之路">
-<meta name="twitter:description" content="简单介绍 javascript 是解释性语言，性能很慢，随着 web 在生活中的普及，这点性能显然不够用。你能想象双十一的一个按钮点半天才有反应嘛？所幸很多大神，都在不断的改进这个性能问题  漫漫填坑路JIT google 在 09 年 v8 引擎里引入 just in time compiling（即时编译），跟之前 ajax 出现引起的轰动是一样的，性能瞬间就上升了 20-40 倍的速度。">
+<meta name="twitter:title" content="读《图解算法》01-二分查找和大O表示法">
+<meta name="twitter:description" content="场景电话本 假设从电话本里面找 yoki 的电话，最常见的不是从开头开始找，而是从中间开始查找 电话本是有序列表  1-100 猜想 以目标最少的次数猜到这个数字  简单查找 如果从 1 开始猜，这叫简单查找，换句话说就是傻找 如果是 99，那么得猜 99 次（临界点就是这个数）  二分查找 如果从中间值开始猜 那么临界点就是 99，最坏的情况下只用猜七次，50 错，75 错..这样猜  那么得出">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/04/15/study-performance/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/05/06/study-Graphical-algorithm01/"/>
 
 
 
 
 
-  <title>js性能填坑之路 | Blog</title>
+  <title>读《图解算法》01-二分查找和大O表示法 | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/15/study-performance/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-Graphical-algorithm01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">js性能填坑之路</h1>
+          <h1 class="post-title" itemprop="name headline">读《图解算法》01-二分查找和大O表示法</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T13:48:30+08:00">
-                2018-04-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T14:10:22+08:00">
+                2018-05-06
               </time>
             
 
@@ -334,35 +334,58 @@
       
 
       
-        <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><ul>
-<li>javascript 是解释性语言，性能很慢，随着 web 在生活中的普及，这点性能显然不够用。你能想象双十一的一个按钮点半天才有反应嘛？所幸很多大神，都在不断的改进这个性能问题</li>
+        <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><h3 id="电话本"><a href="#电话本" class="headerlink" title="电话本"></a>电话本</h3><ul>
+<li>假设从电话本里面找 yoki 的电话，最常见的不是从开头开始找，而是从中间开始查找</li>
+<li>电话本是有序列表</li>
 </ul>
-<h2 id="漫漫填坑路"><a href="#漫漫填坑路" class="headerlink" title="漫漫填坑路"></a>漫漫填坑路</h2><h3 id="JIT"><a href="#JIT" class="headerlink" title="JIT"></a>JIT</h3><blockquote>
-<p>google 在 09 年 v8 引擎里引入 just in time compiling（即时编译），跟之前 ajax 出现引起的轰动是一样的，性能瞬间就上升了 20-40 倍的速度。</p>
+<h3 id="1-100-猜想"><a href="#1-100-猜想" class="headerlink" title="1-100 猜想"></a>1-100 猜想</h3><blockquote>
+<p>以目标最少的次数猜到这个数字</p>
+</blockquote>
+<h4 id="简单查找"><a href="#简单查找" class="headerlink" title="简单查找"></a>简单查找</h4><ul>
+<li>如果从 1 开始猜，这叫简单查找，换句话说就是傻找</li>
+<li>如果是 99，那么得猜 99 次（临界点就是这个数）</li>
+</ul>
+<h4 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h4><ul>
+<li>如果从中间值开始猜</li>
+<li>那么临界点就是 99，最坏的情况下只用猜七次，50 错，75 错..这样猜</li>
+</ul>
+<p>那么得出结论，对于 n 个元素，用二分查找最多需要 log2 n 步，简单查找最多需要 n 步</p>
+<blockquote>
+<p>2^log2 n=n，log 叫对数运算，2^n 叫幂运算，他们互为逆运算</p>
+</blockquote>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><blockquote>
+<p>注意二分查找法必须是有序的</p>
+</blockquote>
+<h2 id="大-O-表示法"><a href="#大-O-表示法" class="headerlink" title="大 O 表示法"></a>大 O 表示法</h2><blockquote>
+<p>指出的是最糟情况下的运行时间，也可以说是操作数</p>
 </blockquote>
 <ul>
-<li>从此网页进入了网页应用的时代</li>
+<li>这里用大 O 表示法讨论运行时间，都是讨论的最糟糕的临界值，比如简单查找 100 个元素，就是要看每一个元素。二分查找也是查看最远的，那么就只用查看 log100 个元素约为 7</li>
+<li>log 时间这里的底数默认是 2，也就是默认是 log2</li>
+<li>其实我们是用幂运算的眼光来看，我们求的运行时其实就是指数</li>
 </ul>
-<h4 id="解释器和编译器"><a href="#解释器和编译器" class="headerlink" title="解释器和编译器"></a>解释器和编译器</h4><ul>
-<li>解释器是一行行解释代码，性能会下降。编译器是把源代码编译成目标代码。</li>
-<li>解释器是叫他干什么立刻就去干什么，比如买菜，马上去市场回来，再去买油又马上市场</li>
-<li>编译器是叫他干什么直到说完才去干什么，去买菜，买油统一去市场</li>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li>大 O 表示法指出了算法有多快。例如，假设列表包含 n 个元素，简单查找需要检查每个元素，因此需要执行 n 次查找,运行时间位 O（n）</li>
+<li>O(n),单位不是秒，大 O 表示法指的并不是以秒为单位的速度，而是能够比较操作数，它指出了算法运行时间的增数</li>
+<li>所以 n 是操作数的意思</li>
+<li>谈论算法的速度，是随着输入的增加，其运行事件将以怎么样的速度增加</li>
 </ul>
+<h3 id="常见的大-O-运行时间"><a href="#常见的大-O-运行时间" class="headerlink" title="常见的大 O 运行时间"></a>常见的大 O 运行时间</h3><blockquote>
+<p>由快到慢的经常遇到的五种，可以自己想象一下坐标系图</p>
+</blockquote>
 <ul>
-<li>但是 jit 是基于运行期编译，js 是一个没有类型的语言，所以 jit 大多数时候都在猜测 js 的类型。</li>
+<li>O（log n）,也叫对数时间，这样的算法包括二分查找</li>
+<li>O(n)，线性时间，包括简单查找</li>
+<li>O(n*log n)，包括快速排序（业界俗称快排），一种速度较快的快速排序</li>
+<li>O（n^ 2）,包括选择排序，一种速度较慢的排序算法</li>
+<li>O（n！），包括旅行商问题的解决方案，一种非常慢的算法</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">//这时候jit就把a和b确认为int类型</span></span><br><span class="line"><span class="comment">//然后你这样做</span></span><br><span class="line">add(<span class="string">"hi"</span>, <span class="string">"yoki"</span>); <span class="comment">//已经编译成机器码了，但是又变成字符串类型，只能推倒重来，有时候jit的性能提升，还没有这个重编的开销大</span></span><br></pre></td></tr></table></figure>
-<h3 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h3><ul>
-<li>既然 jit 大多数时候在猜测类型，那索性搞个强类型语言，再编译成 js 就行了</li>
-</ul>
-<h3 id="asm-js"><a href="#asm-js" class="headerlink" title="asm.js"></a>asm.js</h3><ul>
-<li>ts 是 js 的超集，这个是语法兼容 js 的汇编语言，是 js 的子集</li>
-<li>通过标注声明类型，而且不得改变，这样就节省了类型判断的时间</li>
-</ul>
-<h3 id="WebAssembly"><a href="#WebAssembly" class="headerlink" title="WebAssembly"></a>WebAssembly</h3><ul>
-<li>一种二进制码的规范，是比 asm.js 更为激进的东西</li>
-<li>理论上所有语言都可以编译成这个，然后泡在浏览器上</li>
-<li>但是目前还摸不了 dom</li>
+<h4 id="旅行商问题"><a href="#旅行商问题" class="headerlink" title="旅行商问题"></a>旅行商问题</h4><blockquote>
+<p>旅行商要前往 5 个城市，同时确保旅程最短，这样它要每个城市都去，然后计算总旅程，再挑选路线最短的</p>
+</blockquote>
+<ul>
+<li>5 个城市有 120 种不同的排列方式，因此需要 120 个操作</li>
+<li>这是一个非常非常慢的算法，但是这个问题也是计算机科学领域待解决的问题</li>
 </ul>
 
       
@@ -381,7 +404,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/javascript/" rel="tag"># javascript</a>
+            <a href="/blog/tags/图解算法/" rel="tag"># 图解算法</a>
           
         </div>
       
@@ -394,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/04/10/repaint/" rel="next" title="浅谈重排和重绘">
-                <i class="fa fa-chevron-left"></i> 浅谈重排和重绘
+              <a href="/blog/2018/05/06/study-number/" rel="next" title="js浮点数的坑">
+                <i class="fa fa-chevron-left"></i> js浮点数的坑
               </a>
             
           </div>
@@ -403,10 +426,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2018/04/17/study-data/" rel="prev" title="浅谈各种数据结构">
-                浅谈各种数据结构 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -533,7 +552,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漫漫填坑路"><span class="nav-number">2.</span> <span class="nav-text">漫漫填坑路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JIT"><span class="nav-number">2.1.</span> <span class="nav-text">JIT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解释器和编译器"><span class="nav-number">2.1.1.</span> <span class="nav-text">解释器和编译器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TypeScript"><span class="nav-number">2.2.</span> <span class="nav-text">TypeScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#asm-js"><span class="nav-number">2.3.</span> <span class="nav-text">asm.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebAssembly"><span class="nav-number">2.4.</span> <span class="nav-text">WebAssembly</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景"><span class="nav-number">1.</span> <span class="nav-text">场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电话本"><span class="nav-number">1.1.</span> <span class="nav-text">电话本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-100-猜想"><span class="nav-number">1.2.</span> <span class="nav-text">1-100 猜想</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单查找"><span class="nav-number">1.2.1.</span> <span class="nav-text">简单查找</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二分查找"><span class="nav-number">1.2.2.</span> <span class="nav-text">二分查找</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法实现"><span class="nav-number">2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大-O-表示法"><span class="nav-number">3.</span> <span class="nav-text">大 O 表示法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">3.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的大-O-运行时间"><span class="nav-number">3.2.</span> <span class="nav-text">常见的大 O 运行时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#旅行商问题"><span class="nav-number">3.2.1.</span> <span class="nav-text">旅行商问题</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
