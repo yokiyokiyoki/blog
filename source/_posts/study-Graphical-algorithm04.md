@@ -27,7 +27,10 @@ function sum(arr) {
   if (arr.length == 1) {
     return arr[0];
   } else {
+    //别忘了递归记录了状态
     return arr.shift() + sum(arr);
   }
 }
 ```
+
+## 快速排序
