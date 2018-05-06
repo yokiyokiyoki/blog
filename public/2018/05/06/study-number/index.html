@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="使用 set 数据结构 set 是一个类似数组的数据结构，但是它没有重复值  如何生成 set 数据结构 直接 new Set() 往 new Set()传入具有 iterator 接口的数据结构，比如数组  1234567891011121314151617// 例一const set = new Set([1, 2, 3, 4, 4]);[...set];// [1, 2, 3, 4]// 例">
+<meta name="description" content="浮点数在计算机中的表示 日常中，32767 这个数用科学计数法可以写成 3.2767*10^4，3.2767 称为尾数(Mantissa)，4 就是指数(exponent) 浮点数在计算机中基于科学技术法来表示的，上面是我们日常用十进制来表示，计算机则是二进制，它的基数是 2 不是 10  一种浮点数格式 假设共有 14bits，5bits 表指数，8bits 表尾数，1bit 表示符号   17">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用set数据结构">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/04/22/study-set/index.html">
+<meta property="og:title" content="js浮点数的坑">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/05/06/study-number/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="使用 set 数据结构 set 是一个类似数组的数据结构，但是它没有重复值  如何生成 set 数据结构 直接 new Set() 往 new Set()传入具有 iterator 接口的数据结构，比如数组  1234567891011121314151617// 例一const set = new Set([1, 2, 3, 4, 4]);[...set];// [1, 2, 3, 4]// 例">
+<meta property="og:description" content="浮点数在计算机中的表示 日常中，32767 这个数用科学计数法可以写成 3.2767*10^4，3.2767 称为尾数(Mantissa)，4 就是指数(exponent) 浮点数在计算机中基于科学技术法来表示的，上面是我们日常用十进制来表示，计算机则是二进制，它的基数是 2 不是 10  一种浮点数格式 假设共有 14bits，5bits 表指数，8bits 表尾数，1bit 表示符号   17">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-22T07:07:35.380Z">
+<meta property="og:updated_time" content="2018-05-06T06:04:33.555Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用set数据结构">
-<meta name="twitter:description" content="使用 set 数据结构 set 是一个类似数组的数据结构，但是它没有重复值  如何生成 set 数据结构 直接 new Set() 往 new Set()传入具有 iterator 接口的数据结构，比如数组  1234567891011121314151617// 例一const set = new Set([1, 2, 3, 4, 4]);[...set];// [1, 2, 3, 4]// 例">
+<meta name="twitter:title" content="js浮点数的坑">
+<meta name="twitter:description" content="浮点数在计算机中的表示 日常中，32767 这个数用科学计数法可以写成 3.2767*10^4，3.2767 称为尾数(Mantissa)，4 就是指数(exponent) 浮点数在计算机中基于科学技术法来表示的，上面是我们日常用十进制来表示，计算机则是二进制，它的基数是 2 不是 10  一种浮点数格式 假设共有 14bits，5bits 表指数，8bits 表尾数，1bit 表示符号   17">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/04/22/study-set/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/05/06/study-number/"/>
 
 
 
 
 
-  <title>使用set数据结构 | Blog</title>
+  <title>js浮点数的坑 | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/22/study-set/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-number/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">使用set数据结构</h1>
+          <h1 class="post-title" itemprop="name headline">js浮点数的坑</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-22T14:19:12+08:00">
-                2018-04-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T11:22:06+08:00">
+                2018-05-06
               </time>
             
 
@@ -334,44 +334,101 @@
       
 
       
-        <h2 id="使用-set-数据结构"><a href="#使用-set-数据结构" class="headerlink" title="使用 set 数据结构"></a>使用 set 数据结构</h2><blockquote>
-<p>set 是一个类似数组的数据结构，但是它没有重复值</p>
-</blockquote>
-<h3 id="如何生成-set-数据结构"><a href="#如何生成-set-数据结构" class="headerlink" title="如何生成 set 数据结构"></a>如何生成 set 数据结构</h3><ul>
-<li>直接 new Set()</li>
-<li>往 new Set()传入具有 iterator 接口的数据结构，比如数组</li>
+        <h2 id="浮点数在计算机中的表示"><a href="#浮点数在计算机中的表示" class="headerlink" title="浮点数在计算机中的表示"></a>浮点数在计算机中的表示</h2><ul>
+<li>日常中，32767 这个数用科学计数法可以写成 3.2767*10^4，3.2767 称为尾数(Mantissa)，4 就是指数(exponent)</li>
+<li>浮点数在计算机中基于科学技术法来表示的，上面是我们日常用十进制来表示，计算机则是二进制，它的基数是 2 不是 10</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例一</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>]);</span><br><span class="line">[...set];</span><br><span class="line"><span class="comment">// [1, 2, 3, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例二</span></span><br><span class="line"><span class="keyword">const</span> items = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>]);</span><br><span class="line">items.size; <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 例三</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>(<span class="built_in">document</span>.querySelectorAll(<span class="string">"div"</span>));</span><br><span class="line">set.size; <span class="comment">// 56</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 类似于</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">"div"</span>).forEach(<span class="function"><span class="params">div</span> =&gt;</span> set.add(div));</span><br><span class="line">set.size; <span class="comment">// 56</span></span><br></pre></td></tr></table></figure>
-<h3 id="set-实例属性和方法"><a href="#set-实例属性和方法" class="headerlink" title="set 实例属性和方法"></a>set 实例属性和方法</h3><h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
-<li>Set.prototype.constructor：构造函数，默认就是 Set 函数</li>
-<li>Set.prototype.size：返回实例的总数</li>
-</ul>
-<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><h5 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h5><ul>
-<li>add(val)：添加某个值，返回 该实例</li>
-<li>delete(val):删除某个值，返回布尔值，表示是否成功</li>
-<li>has(val)：返回布尔值，表示是否拥有</li>
-<li>clear()：清空所有，返回值 void</li>
-</ul>
-<h5 id="遍历方法"><a href="#遍历方法" class="headerlink" title="遍历方法"></a>遍历方法</h5><blockquote>
-<p>set 结构是具有 itrator 接口的，可以直接 for..of 遍历，相当于下面的 values</p>
+<h2 id="一种浮点数格式"><a href="#一种浮点数格式" class="headerlink" title="一种浮点数格式"></a>一种浮点数格式</h2><blockquote>
+<p>假设共有 14bits，5bits 表指数，8bits 表尾数，1bit 表示符号</p>
 </blockquote>
 <ul>
-<li>keys：返回键名的遍历器对象</li>
-<li>values：返回值的遍历器对象</li>
-<li>entries:返回键值对的遍历器对象</li>
-<li>forEach:使用回调函数遍历每个成员</li>
+<li>17=&gt;10001=1.0001<em>2^4 类比十进制的 1.7</em>10^5</li>
 </ul>
-<blockquote>
-<p>由于 set 没有键名，只有键值，或者说键名和键值一样，所以 keys===values</p>
+<h3 id="尾数部分"><a href="#尾数部分" class="headerlink" title="尾数部分"></a>尾数部分</h3><ul>
+<li>因为尾数在十进制里面 0&lt;尾数&lt;10，在二进制里面就是 0&lt;尾数&lt;2，那么规定最高位只能是 1</li>
+<li>因为尾数默认是 1，所以这个 1 就不用保存了，可以节省一位提高精度。所以尾数部分本来是 10001，这样就只用存储 0001，去掉了 1</li>
+<li>需要注意的是，这里我们尾数的有效位数是 8 位，而 128.25=&gt;10000000.01,需要 10 个有效位，而我们的模型中尾数部分是 8 位，算上隐含的最高位 1 也才 9 个有效位，所以 128.25 只能舍去末尾的 1，表示为 10000000.0，其实跟 128 相等。所以浮点数不能做精确比较就是这样的</li>
+</ul>
+<h3 id="指数部分"><a href="#指数部分" class="headerlink" title="指数部分"></a>指数部分</h3><ul>
+<li>但是指数部分是 4，换算成二进制也就是 100，如果以为是 100 就错了。</li>
+<li>因为 0.25=&gt;0.01=1*10^-2,但是这样我们无法用指数表示负数。第一个符号位表示的是整个数的正负</li>
+<li>现在广泛采用的是偏移的指数。规定一个偏移值，比如偏移值是 16，实际的指数要加上这个偏移值才可以，这样比 16 大的就是正指数，小的就是负指数。</li>
+<li>要表示 0.25，如果偏移值 16，那么指数部分是 14，要表示 17 的指数部分，是 16+5=21,换成二进制就是 10101</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>1bit</th>
+<th style="text-align:center">5bits</th>
+<th style="text-align:right">8bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sign bit</td>
+<td style="text-align:center">exponent</td>
+<td style="text-align:right">Mantissa</td>
+</tr>
+<tr>
+<td>符号位</td>
+<td style="text-align:center">指数</td>
+<td style="text-align:right">尾数</td>
+</tr>
+<tr>
+<td>0</td>
+<td style="text-align:center">10101</td>
+<td style="text-align:right">00010000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="js-的浮点数标准"><a href="#js-的浮点数标准" class="headerlink" title="js 的浮点数标准"></a>js 的浮点数标准</h2><blockquote>
+<p>js 的 number 遵循 IEEE 754 标准，使用 64 位固定长度表示，也就是 64 位 double 双精度浮点数（类似的有 float 32 位单精度标准）</p>
 </blockquote>
-<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><blockquote>
-<p>扩展运算符（…）内部使用 for..of，所以也可以应用在 set 结构。同时数组的 map 和 filter 方法也可以应用于 set。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">3</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> unique = [...new <span class="built_in">Set</span>(arr)];</span><br><span class="line"><span class="comment">// [3, 5, 2]</span></span><br><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line">set = <span class="keyword">new</span> <span class="built_in">Set</span>([...set].map(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>));</span><br><span class="line"><span class="comment">// 返回Set结构：&#123;2, 4, 6&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]);</span><br><span class="line">set = <span class="keyword">new</span> <span class="built_in">Set</span>([...set].filter(<span class="function"><span class="params">x</span> =&gt;</span> x % <span class="number">2</span> == <span class="number">0</span>));</span><br><span class="line"><span class="comment">// 返回Set结构：&#123;2, 4&#125;</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>set 结构很容易实现交集，并集，差集</li>
+<li>大多数语言的小数默认都是遵循这个标准，所以 js 有的问题他们也有，包括 java，ruby，python</li>
+<li>64bits 分为三部分<ul>
+<li>符号 S：1bit，0 表示正数，1 表示负数</li>
+<li>指数 E：中间的 11 位存储指数</li>
+<li>尾数 M：最后的 52 位是尾数</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并集</span></span><br><span class="line"><span class="keyword">let</span> union = <span class="keyword">new</span> <span class="built_in">Set</span>([...a, ...b]);</span><br><span class="line"><span class="comment">// Set &#123;1, 2, 3, 4&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 交集</span></span><br><span class="line"><span class="keyword">let</span> intersect = <span class="keyword">new</span> <span class="built_in">Set</span>([...a].filter(<span class="function"><span class="params">x</span> =&gt;</span> b.has(x)));</span><br><span class="line"><span class="comment">// set &#123;2, 3&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 差集</span></span><br><span class="line"><span class="keyword">let</span> difference = <span class="keyword">new</span> <span class="built_in">Set</span>([...a].filter(<span class="function"><span class="params">x</span> =&gt;</span> !b.has(x)));</span><br><span class="line"><span class="comment">// Set &#123;1&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>因为指数 E 有 11 位，取值范围是 2^11=2048，也就是[0,2047]，所以约定的偏移值是 1023，[0,1023]是负数</li>
+</ul>
+<h3 id="浮点误差"><a href="#浮点误差" class="headerlink" title="浮点误差"></a>浮点误差</h3><blockquote>
+<p>浮点数不是精确存储的</p>
+</blockquote>
+<h4 id="0-1-浮点误差（转成二进制无限循环）"><a href="#0-1-浮点误差（转成二进制无限循环）" class="headerlink" title="0.1 浮点误差（转成二进制无限循环）"></a>0.1 浮点误差（转成二进制无限循环）</h4><ul>
+<li>0.1 转成二进制==0.0001100110011001100(1100 循环)=1.100110011001100(1100 循环)x2^-4，因为尾数舍去首位的 1，存的是后面的数，但是最多也只能存 52 位，然后再把有误差的只有 52 位尾数的，转成十进制，就变成了 0.100000000000000005551115123126</li>
+<li>0.1+0.2=0.30000000000000004，那是因为把这两个转成二进制（这里就有误差了）后再运算，然后再转回十进制，正好是 0.30000000000000004</li>
+</ul>
+<h4 id="为什么-x-0-1-就能得到-0-1"><a href="#为什么-x-0-1-就能得到-0-1" class="headerlink" title="为什么 x=0.1 就能得到 0.1"></a>为什么 x=0.1 就能得到 0.1</h4><ul>
+<li>因为尾数的固定长度是 52 位，那么加上省略的一位，最多可以表示的数位 2^53=9007199254740992，对应科学计数尾数是 9.007199254740992,我们只用记住 2^53 就好了</li>
+<li>2^53 的长度是 16 位,这也是 js 最多能表示的精度</li>
+<li>所以可以近似用 toPrecision(16) 来做精度运算，超过的精度会自动凑整处理</li>
+<li>Precision 是精确的意思</li>
+<li>所以 0.1 转成二进制然后再成十进制是 0.100000000000000005551115123126.toPrecision(16)=0.1000000000000000，去掉末尾的 0 正好是 0.1</li>
+<li>所以我们看到的 0.1 并不是 0.1</li>
+<li>可以用更高的精度解释：0.1.toPrecision(21) = 0.100000000000000005551</li>
+</ul>
+<h4 id="toPrecision-vs-toFixed"><a href="#toPrecision-vs-toFixed" class="headerlink" title="toPrecision vs toFixed"></a>toPrecision vs toFixed</h4><blockquote>
+<p>两者都能对多余数字取整，但是，前者是处理精度，精度是从左到右第一个不为 0 的数开始计算。后者是小数点指定位数取整，从小数点开始数起来</p>
+</blockquote>
+<ul>
+<li>有些用 toFixed 用来四舍五入，但是其实是有 bug 的，</li>
+<li>1.005.toFixed(2)=1.00 而不是 1.01</li>
+<li>因为 1.005 实际上是 1.00499999999999989，4 是进不了 1 的</li>
+</ul>
+<h2 id="解决浮点数方案"><a href="#解决浮点数方案" class="headerlink" title="解决浮点数方案"></a>解决浮点数方案</h2><blockquote>
+<p>由于理论上用有限的空间来存储无限的小数是不可能保证精确的，但是我们可以处理一下得到我们精确的结果</p>
+</blockquote>
+<h3 id="数据展示类"><a href="#数据展示类" class="headerlink" title="数据展示类"></a>数据展示类</h3><ul>
+<li>1.4000000000000001 这样的数据要展示的话，建议使用 toPrecision 凑整并 parseFloat 转成数字后再显示</li>
+<li>parseFloat(1.4000000000000001.toPrecision(12)) === 1.4</li>
+<li>为什么选用 12 作为精度，因为这是一个经验之谈，大部分够用了</li>
+</ul>
+<h3 id="数据运算类"><a href="#数据运算类" class="headerlink" title="数据运算类"></a>数据运算类</h3><ul>
+<li>要把小数转成整数后再运算</li>
+</ul>
 
       
     </div>
@@ -402,8 +459,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/04/21/closures/" rel="next" title="浅谈闭包">
-                <i class="fa fa-chevron-left"></i> 浅谈闭包
+              <a href="/blog/2018/05/03/study-Conversion/" rel="next" title="了解二进制转换">
+                <i class="fa fa-chevron-left"></i> 了解二进制转换
               </a>
             
           </div>
@@ -411,10 +468,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2018/04/23/study-http/" rel="prev" title="浅谈http">
-                浅谈http <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -541,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-set-数据结构"><span class="nav-number">1.</span> <span class="nav-text">使用 set 数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何生成-set-数据结构"><span class="nav-number">1.1.</span> <span class="nav-text">如何生成 set 数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set-实例属性和方法"><span class="nav-number">1.2.</span> <span class="nav-text">set 实例属性和方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性"><span class="nav-number">1.2.1.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">1.2.2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#操作方法"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">操作方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#遍历方法"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">遍历方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用"><span class="nav-number">1.3.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数在计算机中的表示"><span class="nav-number">1.</span> <span class="nav-text">浮点数在计算机中的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一种浮点数格式"><span class="nav-number">2.</span> <span class="nav-text">一种浮点数格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#尾数部分"><span class="nav-number">2.1.</span> <span class="nav-text">尾数部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指数部分"><span class="nav-number">2.2.</span> <span class="nav-text">指数部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js-的浮点数标准"><span class="nav-number">3.</span> <span class="nav-text">js 的浮点数标准</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点误差"><span class="nav-number">3.1.</span> <span class="nav-text">浮点误差</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0-1-浮点误差（转成二进制无限循环）"><span class="nav-number">3.1.1.</span> <span class="nav-text">0.1 浮点误差（转成二进制无限循环）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么-x-0-1-就能得到-0-1"><span class="nav-number">3.1.2.</span> <span class="nav-text">为什么 x=0.1 就能得到 0.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toPrecision-vs-toFixed"><span class="nav-number">3.1.3.</span> <span class="nav-text">toPrecision vs toFixed</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决浮点数方案"><span class="nav-number">4.</span> <span class="nav-text">解决浮点数方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据展示类"><span class="nav-number">4.1.</span> <span class="nav-text">数据展示类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据运算类"><span class="nav-number">4.2.</span> <span class="nav-text">数据运算类</span></a></li></ol></li></ol></div>
             
 
           </div>
