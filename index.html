@@ -266,6 +266,149 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-Graphical-algorithm03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/06/study-Graphical-algorithm03/" itemprop="url">读《图解算法》03-递归和栈</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T19:07:56+08:00">
+                2018-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li>函数调用自己</li>
+<li>需要有基线条件和递归条件</li>
+</ul>
+<h3 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h3><blockquote>
+<p>每个递归函数都有两部分：基线条件和递归条件。</p>
+</blockquote>
+<ul>
+<li>递归条件是指函数调用自己</li>
+<li>基线条件是指函数不再调用自己，从而避免无限循环</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//倒计时</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">countdown</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">  <span class="keyword">if</span> (i &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">//基线条件</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    countdown(i - <span class="number">1</span>);</span><br><span class="line">    <span class="comment">//递归条件;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><ul>
+<li>一种类似堆叠的盘子的数据结构</li>
+</ul>
+<h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><ul>
+<li>函数里面调用函数，形成一个栈结构</li>
+<li>greet 里面调用 greet1 函数，计算机先为第一个函数调用分配一个内存块，再为第二个分配一个内存块（位于第一个上面），然后第二个从函数调用返回，此时栈顶的内存块被弹出，然后剩下第一个</li>
+</ul>
+<h4 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h4><ul>
+<li>特殊一点的调用栈，就是调用自己的</li>
+<li>栈中包含未完成的函数调用，这样栈就帮你跟踪了函数</li>
+<li>使用栈虽然方便，但也要付出代价，存储详尽的信息可能占用大量的内存。每个函数调用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-Graphical-algorithm02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1762,165 +1905,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/21/study-map/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/04/21/study-map/" itemprop="url">使用map数据结构</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-21T15:10:22+08:00">
-                2018-04-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="object-和-map"><a href="#object-和-map" class="headerlink" title="object 和 map"></a>object 和 map</h2><blockquote>
-<p>object 映照现实生活的物体，但是想使用 key-value 的遍历结构最好使用 map 数据结构</p>
-</blockquote>
-<ul>
-<li>object 结构实际上是字符串—值的结构</li>
-<li>map 具有 iterator 接口，并且是值-值对映射，也就是 key 可以是 function，obj 等</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = &#123;&#125;;</span><br><span class="line"><span class="keyword">const</span> element = <span class="built_in">document</span>.getElementById(<span class="string">"myDiv"</span>);</span><br><span class="line"><span class="comment">//由于对象只接受字符串为键名，所以element被自动转化字符串</span></span><br><span class="line">data[element] = <span class="string">"metadata"</span>;</span><br><span class="line">data[<span class="string">"[object HTMLDivElement]"</span>]; <span class="comment">// "metadata"</span></span><br></pre></td></tr></table></figure>
-<h2 id="生成-map-结构"><a href="#生成-map-结构" class="headerlink" title="生成 map 结构"></a>生成 map 结构</h2><ul>
-<li>new Map()</li>
-<li>往 new Map()里面传入任何具有 iterator 接口的数据结构，包括数组等，甚至包括 map 本身</li>
-</ul>
-<blockquote>
-<p>需要注意的是，map 的 key 存的是内存地址，也就是说[‘a’]和[‘a’]不相等。基础值才相等</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"></span><br><span class="line">map.set([<span class="string">"a"</span>], <span class="number">555</span>);</span><br><span class="line">map.get([<span class="string">"a"</span>]); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> k1 = [<span class="string">"a"</span>];</span><br><span class="line"><span class="keyword">const</span> k2 = [<span class="string">"a"</span>];</span><br><span class="line"></span><br><span class="line">map.set(k1, <span class="number">111</span>).set(k2, <span class="number">222</span>);</span><br><span class="line"></span><br><span class="line">map.get(k1); <span class="comment">// 111</span></span><br><span class="line">map.get(k2); <span class="comment">// 222</span></span><br></pre></td></tr></table></figure>
-<h2 id="实例属性和方法"><a href="#实例属性和方法" class="headerlink" title="实例属性和方法"></a>实例属性和方法</h2><ul>
-<li>size：返回成员总数</li>
-<li>set(key, value)：返回该实例，如果 key 有值会更新，没有就新生成</li>
-<li>get(key)：找到就返回，没有就 undefined</li>
-<li>has(key)：布尔值</li>
-<li>delete(key)：删除成功返回 true，失败 false</li>
-<li>clear：清除所有成员，没有返回值</li>
-</ul>
-<blockquote>
-<p>遍历方法与 set 类似，但是没有 filter 和 map</p>
-</blockquote>
-<ul>
-<li>比较有意思的是，map 结构默认的 iterator 接口就是 entries 方法</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key, value] <span class="keyword">of</span> map.entries()) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(key, value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// "F" "no"</span></span><br><span class="line"><span class="comment">// "T" "yes"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于使用map.entries()</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key, value] <span class="keyword">of</span> map) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(key, value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// "F" "no"</span></span><br><span class="line"><span class="comment">// "T" "yes"</span></span><br></pre></td></tr></table></figure>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="与其他数据结构的互相转换"><a href="#与其他数据结构的互相转换" class="headerlink" title="与其他数据结构的互相转换"></a>与其他数据结构的互相转换</h3><ul>
-<li>map 转为数组，使用…运算符</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myMap = <span class="keyword">new</span> <span class="built_in">Map</span>().set(<span class="literal">true</span>, <span class="number">7</span>).set(&#123; <span class="attr">foo</span>: <span class="number">3</span> &#125;, [<span class="string">"abc"</span>]);</span><br><span class="line">[...myMap];</span><br><span class="line"><span class="comment">// [ [ true, 7 ], [ &#123; foo: 3 &#125;, [ 'abc' ] ] ]</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>数组转为 map，观察数组结构</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="literal">true</span>, <span class="number">7</span>], [&#123; <span class="attr">foo</span>: <span class="number">3</span> &#125;, [<span class="string">"abc"</span>]]]);</span><br><span class="line"><span class="comment">// Map &#123;</span></span><br><span class="line"><span class="comment">//   true =&gt; 7,</span></span><br><span class="line"><span class="comment">//   Object &#123;foo: 3&#125; =&gt; ['abc']</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
-<h3 id="过滤和遍历，但是-map-本身没有-map-和-filter-方法-先转为数组，再塞回-map"><a href="#过滤和遍历，但是-map-本身没有-map-和-filter-方法-先转为数组，再塞回-map" class="headerlink" title="过滤和遍历，但是 map 本身没有 map 和 filter 方法,先转为数组，再塞回 map"></a>过滤和遍历，但是 map 本身没有 map 和 filter 方法,先转为数组，再塞回 map</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map0 = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  .set(<span class="number">1</span>, <span class="string">"a"</span>)</span><br><span class="line">  .set(<span class="number">2</span>, <span class="string">"b"</span>)</span><br><span class="line">  .set(<span class="number">3</span>, <span class="string">"c"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> map1 = <span class="keyword">new</span> <span class="built_in">Map</span>([...map0].filter(<span class="function">(<span class="params">[k, v]</span>) =&gt;</span> k &lt; <span class="number">3</span>));</span><br><span class="line"><span class="comment">// 产生 Map 结构 &#123;1 =&gt; 'a', 2 =&gt; 'b'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> map2 = <span class="keyword">new</span> <span class="built_in">Map</span>([...map0].map(<span class="function">(<span class="params">[k, v]</span>) =&gt;</span> [k * <span class="number">2</span>, <span class="string">"_"</span> + v]));</span><br><span class="line"><span class="comment">// 产生 Map 结构 &#123;2 =&gt; '_a', 4 =&gt; '_b', 6 =&gt; '_c'&#125;</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1975,7 +1959,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
