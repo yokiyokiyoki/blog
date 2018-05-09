@@ -364,6 +364,10 @@
 <h2 id="ss-local"><a href="#ss-local" class="headerlink" title="ss-local"></a>ss-local</h2><ul>
 <li>在本机启动和监听着一个服务，本地软件的网络请求都先发送到 ss-local，然后按照用户配置的加密方法和密码加密传输数据，再转发到墙外的 ss-server</li>
 </ul>
+<h3 id="PAC-代理模式和全局代理模式"><a href="#PAC-代理模式和全局代理模式" class="headerlink" title="PAC 代理模式和全局代理模式"></a>PAC 代理模式和全局代理模式</h3><ul>
+<li>pac 模式是访问网站先匹配 pac list，如果有在里面才会访问，否则直接连接访问网站</li>
+<li>节省 ss 流量，提高国内的访问速度</li>
+</ul>
 <h2 id="ss-server"><a href="#ss-server" class="headerlink" title="ss-server"></a>ss-server</h2><ul>
 <li>在墙外服务器启动和监听一个服务，监听 ss-local 的请求。</li>
 <li>收到 ss-local 转发过来的数据后，会先根据用户配置的加密方法和密码对数据进行对称揭秘，以获得加密后的数据的原内容。</li>
@@ -375,6 +379,9 @@
 <li>对数据加密后再传输的目的是为了混淆原数据，让途中的防火墙无法算出传输的原数据。</li>
 </ul>
 </li>
+</ul>
+<h1 id="chrome-下-SwitchyOmega-配合使用"><a href="#chrome-下-SwitchyOmega-配合使用" class="headerlink" title="chrome 下 SwitchyOmega 配合使用"></a>chrome 下 SwitchyOmega 配合使用</h1><ul>
+<li>下载 SwitchyOmega 插件，勾选系统代理，将流量全部转给 ss-local</li>
 </ul>
 <h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>本文节选自<a href="https://segmentfault.com/a/1190000011862912" target="_blank" rel="noopener">从零开始写一个 shadowsocks</a><br><a href="https://github.com/Austin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAss%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B" target="_blank" rel="noopener">自建 ss 服务教程</a></p>
 

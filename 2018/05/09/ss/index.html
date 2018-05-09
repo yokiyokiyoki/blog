@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="有时候需要科学上网，这个时候 ss 就大显身手了  初步认识 ss 是一个能骗过防火墙的网络代理工具。把要传输的原数据经过加密后再传输，网络中的防火墙由于得不出要传输的内容是啥，就只好放行了。 于是就完成了防火墙穿透，也就是所谓翻墙。  网络环境 自由的网络环境下 ，本机访问其他互联网服务建立连接传输数据的时候，直接 req 过去，res 回来 但是一般情况下，会有 GFW。req 过去的数据和">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-09T13:30:40.229Z">
+<meta property="og:updated_time" content="2018-05-09T13:57:13.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shadowsocks了解一下">
 <meta name="twitter:description" content="有时候需要科学上网，这个时候 ss 就大显身手了  初步认识 ss 是一个能骗过防火墙的网络代理工具。把要传输的原数据经过加密后再传输，网络中的防火墙由于得不出要传输的内容是啥，就只好放行了。 于是就完成了防火墙穿透，也就是所谓翻墙。  网络环境 自由的网络环境下 ，本机访问其他互联网服务建立连接传输数据的时候，直接 req 过去，res 回来 但是一般情况下，会有 GFW。req 过去的数据和">
@@ -361,6 +361,10 @@
 <h2 id="ss-local"><a href="#ss-local" class="headerlink" title="ss-local"></a>ss-local</h2><ul>
 <li>在本机启动和监听着一个服务，本地软件的网络请求都先发送到 ss-local，然后按照用户配置的加密方法和密码加密传输数据，再转发到墙外的 ss-server</li>
 </ul>
+<h3 id="PAC-代理模式和全局代理模式"><a href="#PAC-代理模式和全局代理模式" class="headerlink" title="PAC 代理模式和全局代理模式"></a>PAC 代理模式和全局代理模式</h3><ul>
+<li>pac 模式是访问网站先匹配 pac list，如果有在里面才会访问，否则直接连接访问网站</li>
+<li>节省 ss 流量，提高国内的访问速度</li>
+</ul>
 <h2 id="ss-server"><a href="#ss-server" class="headerlink" title="ss-server"></a>ss-server</h2><ul>
 <li>在墙外服务器启动和监听一个服务，监听 ss-local 的请求。</li>
 <li>收到 ss-local 转发过来的数据后，会先根据用户配置的加密方法和密码对数据进行对称揭秘，以获得加密后的数据的原内容。</li>
@@ -372,6 +376,9 @@
 <li>对数据加密后再传输的目的是为了混淆原数据，让途中的防火墙无法算出传输的原数据。</li>
 </ul>
 </li>
+</ul>
+<h1 id="chrome-下-SwitchyOmega-配合使用"><a href="#chrome-下-SwitchyOmega-配合使用" class="headerlink" title="chrome 下 SwitchyOmega 配合使用"></a>chrome 下 SwitchyOmega 配合使用</h1><ul>
+<li>下载 SwitchyOmega 插件，勾选系统代理，将流量全部转给 ss-local</li>
 </ul>
 <h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>本文节选自<a href="https://segmentfault.com/a/1190000011862912" target="_blank" rel="noopener">从零开始写一个 shadowsocks</a><br><a href="https://github.com/Austin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAss%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B" target="_blank" rel="noopener">自建 ss 服务教程</a></p>
 
@@ -539,7 +546,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#初步认识"><span class="nav-number">1.</span> <span class="nav-text">初步认识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络环境"><span class="nav-number">1.1.</span> <span class="nav-text">网络环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ss-做什么"><span class="nav-number">1.2.</span> <span class="nav-text">ss 做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ss-准备什么"><span class="nav-number">1.3.</span> <span class="nav-text">ss 准备什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ss-local"><span class="nav-number">2.1.</span> <span class="nav-text">ss-local</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ss-server"><span class="nav-number">2.2.</span> <span class="nav-text">ss-server</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">3.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#初步认识"><span class="nav-number">1.</span> <span class="nav-text">初步认识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络环境"><span class="nav-number">1.1.</span> <span class="nav-text">网络环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ss-做什么"><span class="nav-number">1.2.</span> <span class="nav-text">ss 做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ss-准备什么"><span class="nav-number">1.3.</span> <span class="nav-text">ss 准备什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ss-local"><span class="nav-number">2.1.</span> <span class="nav-text">ss-local</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PAC-代理模式和全局代理模式"><span class="nav-number">2.1.1.</span> <span class="nav-text">PAC 代理模式和全局代理模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ss-server"><span class="nav-number">2.2.</span> <span class="nav-text">ss-server</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chrome-下-SwitchyOmega-配合使用"><span class="nav-number">3.</span> <span class="nav-text">chrome 下 SwitchyOmega 配合使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">4.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
             
 
           </div>
