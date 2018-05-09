@@ -1,7 +1,7 @@
 ---
 title: 进程和线程
 date: 2017-11-09 11:56:29
-tags: 计算机
+tags: 计算机基础
 ---
 
 > 进程(process)和线程（thread）
