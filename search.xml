@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[shadowsocks了解一下]]></title>
+    <url>%2Fblog%2F2018%2F05%2F09%2Fss%2F</url>
+    <content type="text"><![CDATA[有时候需要科学上网，这个时候 ss 就大显身手了 初步认识 ss 是一个能骗过防火墙的网络代理工具。把要传输的原数据经过加密后再传输，网络中的防火墙由于得不出要传输的内容是啥，就只好放行了。 于是就完成了防火墙穿透，也就是所谓翻墙。 网络环境 自由的网络环境下 ，本机访问其他互联网服务建立连接传输数据的时候，直接 req 过去，res 回来 但是一般情况下，会有 GFW。req 过去的数据和 res 回来的数据都必须通过 GFW 的检查。 如果发现传输受限的内容，就会拦截本次传输，就会导致本机无法访问远程服务。 ss 做什么 ss 所做的就是把传输的数据加密，防火墙得到的数据是加密后的数据，如果想要破解加密数据可能经过大量运算，所以防火墙只好放弃。 放行这个请求，本机就可以访问到了远程服务 ss 准备什么 一台在 GFW 之外的服务器，ip 是国外的，比如（vultr 的 vps） 在本机安装 ss 客户端，用于加密传输数据 服务器需要安装 ss 服务端，用于解密加密的传输数据，然后再把揭秘后的原数据发送到目标服务器 原理 由两部分组成，运行在本地的 ss-local 和运行在 GFW 之外的服务器的 ss-server。 ss-local 在本机启动和监听着一个服务，本地软件的网络请求都先发送到 ss-local，然后按照用户配置的加密方法和密码加密传输数据，再转发到墙外的 ss-server ss-server 在墙外服务器启动和监听一个服务，监听 ss-local 的请求。 收到 ss-local 转发过来的数据后，会先根据用户配置的加密方法和密码对数据进行对称揭秘，以获得加密后的数据的原内容。 同时还会解析 socks5 协议，读出本次请求真正的目标服务地址（例如 facebook，google 服务器地址），再把解密后的数据发过去 当真正的目标服务返回了数据，比如谷歌返回了页面，ss-server 会把返回的数据加密返回给 ss-local。ss-local 收到数据后再解密，发给本机的软件。 这是一个对称相反的过程。 ss-local 和 ss-server 都需要用对称加密算法对数据进行加密和解密，因此这两端的加密方法和密码必须配置为一样。 ss 提供一系列的标准可靠的对称算法供用户选择。如 rc4,aes,does。 对数据加密后再传输的目的是为了混淆原数据，让途中的防火墙无法算出传输的原数据。 推荐阅读本文节选自从零开始写一个 shadowsocks自建 ss 服务教程]]></content>
+      <tags>
+        <tag>计算机基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[nginx初步使用（-）]]></title>
     <url>%2Fblog%2F2018%2F05%2F08%2Fstudy-nginx3%2F</url>
     <content type="text"><![CDATA[在本地用 brew install nginx 之后，迫不及待的想要使用一下 mac 下默认监听 8080 端口，输入 localhost:8080 就可以看到 nginx 的欢迎页 更改默认配置文件 默认安装在/usr/local/etc/nginx 下面 位置 nginx.conf 是其默认配置文件，nginx -s reload 读取的就是这个 如果想配置多个域名，可以在 nginx 目录下新建一个 sites-enabled 文件夹，然后再建一个以区分 http 和 https，在 nginx.conf 里include /usr/local/etc/nginx/sites-enabled/* 我看 centos 系统里新建的文件夹是 conf.d 域名配置文件一个最佳实践就是按照域名来写，比如 yoki.com.cn.conf 配置介绍123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263# user字段表明了Nginx服务是由哪个用户哪个群组来负责维护进程的，默认是nobody# 我这里用了liyoujie用户，staff组来启动并维护进程# 查看当前用户命令： whoami# 查看当前用户所属组命令： groups ，当前用户可能有多个所属组，选第一个即可user liyoujie staff;# worker_processes字段表示Nginx服务占用的内核数量# 为了充分利用服务器性能你可以直接写你本机最高内核# 查看本机最高内核数量命令： sysctl -n hw.ncpuworker_processes 4;# error_log字段表示Nginx错误日志记录的位置# 模式选择：debug/info/notice/warn/error/crit# 上面模式从左到右记录的信息从最详细到最少error_log /usr/local/var/logs/nginx/error.log debug;# Nginx执行的进程id,默认配置文件是注释了# 如果上面worker_processes的数量大于1那Nginx就会启动多个进程# 而发信号的时候需要知道要向哪个进程发信息，不同进程有不同的pid，所以写进文件发信号比较简单# 你只需要手动创建，比如我下面的位置： touch /usr/local/var/run/nginx.pidpid /usr/local/var/run/nginx.pid;events &#123; # 每一个worker进程能并发处理的最大连接数 # 当作为反向代理服务器，计算公式为： `worker_processes * worker_connections / 4` # 当作为HTTP服务器时，公式是除以2 worker_connections 2048;&#125;http &#123; # 关闭错误页面的nginx版本数字，提高安全性 server_tokens off; include mime.types; default_type application/octet-stream; # 日志记录格式，如果关闭了access_log可以注释掉这段 #log_format main '$remote_addr - $remote_user [$time_local] "$request" ' # '$status $body_bytes_sent "$http_referer" ' # '"$http_user_agent" "$http_x_forwarded_for"'; # 关闭access_log可以让读取磁盘IO操作更快 # 当然如果你在学习的过程中可以打开方便查看Nginx的访问日志 access_log off; sendfile on; # 在一个数据包里发送所有头文件，而不是一个接一个的发送 tcp_nopush on; # 不要缓存 tcp_nodelay on; keepalive_timeout 65; gzip on; client_max_body_size 10m; client_body_buffer_size 128k; # 引入其他文件，一个是http服务的，一个是https服务的 # 由这里include可以知道，那些被include的文件都是server上下文开始的（并不是http上下文） # default default-ssl include /usr/local/etc/nginx/sites-enabled/*;&#125;]]></content>
@@ -239,7 +247,7 @@
     <url>%2Fblog%2F2017%2F11%2F09%2Fstudy-processAndthread%2F</url>
     <content type="text"><![CDATA[进程(process)和线程（thread） 进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。 进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。 线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈。 他们之间的关系是 一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（就是通常说的主线程） 资源分配给进程，同一进程的所有线程共享该进程的所有资源 线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的方法实现同步。 处理机分给线程，即真正在处理机上运行得是线程 线程是指进程内的一个执行单元，也是进程内的可调度实体 他们之间的区别 调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位 并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。 拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但也可以访问隶属于进程的资源。 生动形象 书面上，进程和线程基本是一个东西，只是进程可以包含若干个线程。此外就是在操作系统中的层级上，也就是粒度不同外，没有其他大的区别。在一般使用中，需要就多开几个线程。 形象的说，进程就是一个项目组，每个程序员就是里面的线程，当然一个程序员也可以是一个项目组，对应的一个进程只有一个线程，而且还是主线程。公司里面的任务是分配给项目组级别的，也就是说系统资源是分配给进程的，但是干活的是程序员（线程）。]]></content>
       <tags>
-        <tag>计算机</tag>
+        <tag>计算机基础</tag>
       </tags>
   </entry>
   <entry>
