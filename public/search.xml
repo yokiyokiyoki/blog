@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[shadowsocks了解一下]]></title>
+    <url>%2Fblog%2F2018%2F05%2F09%2Fss%2F</url>
+    <content type="text"><![CDATA[有时候需要科学上网，这个时候 ss 就大显身手了 初步认识 ss 是一个能骗过防火墙的网络代理工具。把要传输的原数据经过加密后再传输，网络中的防火墙由于得不出要传输的内容是啥，就只好放行了。 于是就完成了防火墙穿透，也就是所谓翻墙。 网络环境 自由的网络环境下 ，本机访问其他互联网服务建立连接传输数据的时候，直接 req 过去，res 回来 但是一般情况下，会有 GFW。req 过去的数据和 res 回来的数据都必须通过 GFW 的检查。 如果发现传输受限的内容，就会拦截本次传输，就会导致本机无法访问远程服务。 ss 做什么 ss 所做的就是把传输的数据加密，防火墙得到的数据是加密后的数据，如果想要破解加密数据可能经过大量运算，所以防火墙只好放弃。 放行这个请求，本机就可以访问到了远程服务 ss 准备什么 一台在 GFW 之外的服务器，ip 是国外的，比如（vultr 的 vps） 在本机安装 ss 客户端，用于加密传输数据 服务器需要安装 ss 服务端，用于解密加密的传输数据，然后再把揭秘后的原数据发送到目标服务器 原理 由两部分组成，运行在本地的 ss-local 和运行在 GFW 之外的服务器的 ss-server。 ss-local 在本机启动和监听着一个服务，本地软件的网络请求都先发送到 ss-local，然后按照用户配置的加密方法和密码加密传输数据，再转发到墙外的 ss-server PAC 代理模式和全局代理模式 pac 模式是访问网站先匹配 pac list，如果有在里面才会访问，否则直接连接访问网站 节省 ss 流量，提高国内的访问速度 ss-server 在墙外服务器启动和监听一个服务，监听 ss-local 的请求。 收到 ss-local 转发过来的数据后，会先根据用户配置的加密方法和密码对数据进行对称揭秘，以获得加密后的数据的原内容。 同时还会解析 socks5 协议，读出本次请求真正的目标服务地址（例如 facebook，google 服务器地址），再把解密后的数据发过去 当真正的目标服务返回了数据，比如谷歌返回了页面，ss-server 会把返回的数据加密返回给 ss-local。ss-local 收到数据后再解密，发给本机的软件。 这是一个对称相反的过程。 ss-local 和 ss-server 都需要用对称加密算法对数据进行加密和解密，因此这两端的加密方法和密码必须配置为一样。 ss 提供一系列的标准可靠的对称算法供用户选择。如 rc4,aes,does。 对数据加密后再传输的目的是为了混淆原数据，让途中的防火墙无法算出传输的原数据。 chrome 下 SwitchyOmega 配合使用 下载 SwitchyOmega 插件，勾选系统代理，将流量全部转给 ss-local 推荐阅读本文节选自从零开始写一个 shadowsocks自建 ss 服务教程]]></content>
+      <tags>
+        <tag>计算机基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[nginx初步使用（-）]]></title>
+    <url>%2Fblog%2F2018%2F05%2F08%2Fstudy-nginx3%2F</url>
+    <content type="text"><![CDATA[在本地用 brew install nginx 之后，迫不及待的想要使用一下 mac 下默认监听 8080 端口，输入 localhost:8080 就可以看到 nginx 的欢迎页 更改默认配置文件 默认安装在/usr/local/etc/nginx 下面 位置 nginx.conf 是其默认配置文件，nginx -s reload 读取的就是这个 如果想配置多个域名，可以在 nginx 目录下新建一个 sites-enabled 文件夹，然后再建一个以区分 http 和 https，在 nginx.conf 里include /usr/local/etc/nginx/sites-enabled/* 我看 centos 系统里新建的文件夹是 conf.d 域名配置文件一个最佳实践就是按照域名来写，比如 yoki.com.cn.conf 配置介绍123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263# user字段表明了Nginx服务是由哪个用户哪个群组来负责维护进程的，默认是nobody# 我这里用了liyoujie用户，staff组来启动并维护进程# 查看当前用户命令： whoami# 查看当前用户所属组命令： groups ，当前用户可能有多个所属组，选第一个即可user liyoujie staff;# worker_processes字段表示Nginx服务占用的内核数量# 为了充分利用服务器性能你可以直接写你本机最高内核# 查看本机最高内核数量命令： sysctl -n hw.ncpuworker_processes 4;# error_log字段表示Nginx错误日志记录的位置# 模式选择：debug/info/notice/warn/error/crit# 上面模式从左到右记录的信息从最详细到最少error_log /usr/local/var/logs/nginx/error.log debug;# Nginx执行的进程id,默认配置文件是注释了# 如果上面worker_processes的数量大于1那Nginx就会启动多个进程# 而发信号的时候需要知道要向哪个进程发信息，不同进程有不同的pid，所以写进文件发信号比较简单# 你只需要手动创建，比如我下面的位置： touch /usr/local/var/run/nginx.pidpid /usr/local/var/run/nginx.pid;events &#123; # 每一个worker进程能并发处理的最大连接数 # 当作为反向代理服务器，计算公式为： `worker_processes * worker_connections / 4` # 当作为HTTP服务器时，公式是除以2 worker_connections 2048;&#125;http &#123; # 关闭错误页面的nginx版本数字，提高安全性 server_tokens off; include mime.types; default_type application/octet-stream; # 日志记录格式，如果关闭了access_log可以注释掉这段 #log_format main '$remote_addr - $remote_user [$time_local] "$request" ' # '$status $body_bytes_sent "$http_referer" ' # '"$http_user_agent" "$http_x_forwarded_for"'; # 关闭access_log可以让读取磁盘IO操作更快 # 当然如果你在学习的过程中可以打开方便查看Nginx的访问日志 access_log off; sendfile on; # 在一个数据包里发送所有头文件，而不是一个接一个的发送 tcp_nopush on; # 不要缓存 tcp_nodelay on; keepalive_timeout 65; gzip on; client_max_body_size 10m; client_body_buffer_size 128k; # 引入其他文件，一个是http服务的，一个是https服务的 # 由这里include可以知道，那些被include的文件都是server上下文开始的（并不是http上下文） # default default-ssl include /usr/local/etc/nginx/sites-enabled/*;&#125;]]></content>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[读《图解算法》03-快速排序]]></title>
+    <url>%2Fblog%2F2018%2F05%2F06%2Fstudy-Graphical-algorithm04%2F</url>
+    <content type="text"><![CDATA[分而治之（divide and conquer） 缩写就是 D&amp;C 一种著名的递归式问题解决办法 快速排序是一个重要的 D&amp;C 算法 步骤 找出基线条件，这种条件应该尽可能简单 不断将问题分解（或者说缩小规模），直到符合基线条件 场景 给定一个数组[2,4,6]，然后相加，并返回结果，不使用循环 第一步找到基线条件，最简单的数组是怎样的？如果数组不包含一个元素或者只有一个元素，那么计算总和就容易了，这就是基线条件 每次递归调用都必须离空数组更近 12345678function sum(arr) &#123; if (arr.length == 1) &#123; return arr[0]; &#125; else &#123; //别忘了递归记录了状态 return arr.shift() + sum(arr); &#125;&#125; 快速排序 使用快排对数组进行排序 对于排序算法来说，最简单的数组是怎么样的？没错，就是根本不需要排序的一个元素的数组或者空数组 原理 [33,15,10]  首先在数组中选择一个元素，这个元素被称为基准值（pivot），等等介绍如何选择合适的基准值，这里选择第一个元素 33 找出比基准值小的元素和比他大的元素，这叫分区 现在我有：一个由所有小于基准值的数字组成的子数组，基准值，一个由所有大于基准值的数字组成的子数组 然后再对子数组进行排序，然后合并结果就能得到有序数组：quicksort([15,10])+[33]+quicksort([]) 1234567891011121314151617181920function quicksort(arr) &#123; if (arr.length &lt; 2) &#123; //基线条件：为空或者包含一个元素的数组有序 return arr; &#125; else &#123; let pivot = arr[0]; //递归条件 let less = [], greater = []; //子数组 arr.forEach(item =&gt; &#123; if (item &lt; pivot) &#123; less.push(item); &#125; if (item &gt; pivot) &#123; greater.push(item); &#125; &#125;); return [...quicksort(less), pivot, ...quicksort(greater)]; &#125;&#125; 最糟情况和平均情况 平均情况下是 O（n*logn） 有一种算法叫合并排序也是这个，但是为什么不用这个呢，是因为大 O 表示法有个常量（也被叫做固定时间量）被省去了，如果两个算法的大 O 运行时间不一样，那么常量无关紧要，参考简单查找和二分查找。如果一样的话，那么常量的影响非常大。两个函数，后面那个我每读一个元素，睡一秒种，但是其实两个函数速度一样，但是前面所需的时间更少。同理可得，快排所需的时间更少，而且相对于遇上最糟情况，它遇上平均情况的可能性大得多。 最糟糕就是与选择排序一样慢，O（n^2） 场景 比如[1,2,3,4,5,6,7] 如果从第一个数作为基准值，数组没有被切成两半，这将导致调用栈很长，栈长 n 个，而且最上面那层都涉及 n 个元素，然后类推 n-1 个元素，最终得出 n*n*1/2 个操作，去掉常数，也就是 n^2 如果总是将中间的元素作为基准值，数组分成两半，最佳情况下,栈长为 logn 个,然后每次也是涉及 O（n）个元素（去掉常量），也就是 n*logn。而且最佳情况也是平均情况，只要每次随机地选择一个数组元素作为基准值，那么平均运行时间就是 O（nlogn） 123456789101112131415161718192021222324252627282930313233343536function quicksort(arr) &#123; if (arr.length &lt; 2) &#123; //基线条件：为空或者包含一个元素的数组有序 return arr; &#125; else &#123; //随机选择索引 let index = randomNum(0, arr.length - 1); let pivot = arr[index]; //递归条件 let less = [], greater = []; //子数组 arr.forEach(item =&gt; &#123; if (item &lt; pivot) &#123; less.push(item); &#125; if (item &gt; pivot) &#123; greater.push(item); &#125; &#125;); return [...quicksort(less), pivot, ...quicksort(greater)]; &#125;&#125;//随机数function randomNum(minNum, maxNum) &#123; switch (arguments.length) &#123; case 1: return parseInt(Math.random() * minNum + 1, 10); break; case 2: return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10); break; default: return 0; break; &#125;&#125; 说一下冒泡排序 想象一下一个个冒泡上来，第一次遍历，第一个跟接下来的比较，如果比他大就换位置，一圈完事后。到第二个，跟接下来的换位置。 运行时是 O（n^2） 12345678910111213function bubbleSort(arr) &#123; for (let i = 0; i &lt; arr.length; i++) &#123; for (let j = i + 1; j &lt; arr.length; j++) &#123; if (arr[i] &gt; arr[j]) &#123; let temp = arr[i]; arr[i] = arr[j]; arr[j] = temp; &#125; &#125; &#125; console.log(arr); return arr;&#125;]]></content>
+      <tags>
+        <tag>图解算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[读《图解算法》03-递归和栈]]></title>
+    <url>%2Fblog%2F2018%2F05%2F06%2Fstudy-Graphical-algorithm03%2F</url>
+    <content type="text"><![CDATA[递归概念 函数调用自己 需要有基线条件和递归条件 基线条件和递归条件 每个递归函数都有两部分：基线条件和递归条件。 递归条件是指函数调用自己 基线条件是指函数不再调用自己，从而避免无限循环 12345678910//倒计时function countdown(i) &#123; console.log(i); if (i &lt;= 0) &#123; return; //基线条件 &#125; else &#123; countdown(i - 1); //递归条件; &#125;&#125; 栈概念 一种类似堆叠的盘子的数据结构 调用栈 函数里面调用函数，形成一个栈结构 greet 里面调用 greet1 函数，计算机先为第一个函数调用分配一个内存块，再为第二个分配一个内存块（位于第一个上面），然后第二个从函数调用返回，此时栈顶的内存块被弹出，然后剩下第一个 递归调用栈 特殊一点的调用栈，就是调用自己的 栈中包含未完成的函数调用，这样栈就帮你跟踪了函数 使用栈虽然方便，但也要付出代价，存储详尽的信息可能占用大量的内存。每个函数调用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。]]></content>
+      <tags>
+        <tag>图解算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[读《图解算法》02-数组,链表和选择排序]]></title>
+    <url>%2Fblog%2F2018%2F05%2F06%2Fstudy-Graphical-algorithm02%2F</url>
+    <content type="text"><![CDATA[数组和链表 当需要将数据存储到内存的时候，我们请求计算机提供存储空间，计算机给我们一个存储地址。需要存储多项数据的时候，有两种基本方式——数组和链表。 数组想象画面 java 中一开始要确定数组的大小，不是没有道理的… 两个人去电影院看电影，找到地方就座后，又来了一个朋友，但是你们下一个位置是别人占用了，你们三个是好朋友，没理由分开，只得挪去其他有三个位置的地方。 所以来了新朋友是很麻烦的，但是有一种解决办法就是预先买了 10 个座位的，但是这样会浪费资源，要是超过 10 个还是转移（数组插入很麻烦） 但是我想知道另外一个朋友坐哪里，这是很简单的，挨在一起（数组查找快） 另一个朋友要走的话也很麻烦，因为剩下的朋友要往前来挨在一起坐，反正不管怎样大家是个整体，坐在一起就对了（数组删除很麻烦） 链表 链表和数组不一样，一定要顺序排着队这样。链表的元素可以存储再内存中的任何地方，当前元素存储存储着下一个元素的地址，从而使得一系列随机的内存地址串在了一起 想象画面 寻宝游戏：前往第一个地址，那有宝箱，打开后是下一个宝箱的地址。 但是我直接想要最后一个宝箱，是无法做到的，是要一个个查找直到倒数第二个才得到最后一个宝箱的位置（链表查找效率很低） 移走一个宝箱很容易，直接把上一个宝箱的地址指向下一个的地址就可以了（链表删除很快） 如果是五个人去看一部很火的电影，但是根本就无法坐一起，但是换做链表，就可以分开来做，所以这个来了新朋友一点也不麻烦（链表的优势就是插入） 运行时 这里是最差的情况，比如数组插入一个刚好就要移走（因为原来已经满了） 数组 链表 插入 O(n) O(1) 读取 O(1) O(n) 删除 O(n) O(1) O（n）是线性时间，O（1）是常量时间 选择排序场景 qq 音乐列表里面记录了每个音乐的播放次数，你要对它进行排序，从多到少 一种办法是遍历这个列表，然后找到播放次数最多的，然后添加到一个新列表 然后删除刚刚那个次数最多的，再继续这样找到第二多的 需要检查的就越来越少 算法复杂度（运行时） 第一次每个元素都查看一次，那就是执行 n 次 第二次执行 n-1 次 依次查看最后得出，要执行 n（n-1）（n-2）..2*1=n*1/2*n 但是大 O 表示法省略常数，所以最后是 O(n^2)]]></content>
+      <tags>
+        <tag>图解算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[读《图解算法》01-二分查找和大O表示法]]></title>
+    <url>%2Fblog%2F2018%2F05%2F06%2Fstudy-Graphical-algorithm01%2F</url>
+    <content type="text"><![CDATA[场景电话本 假设从电话本里面找 yoki 的电话，最常见的不是从开头开始找，而是从中间开始查找 电话本是有序列表 1-100 猜想 以目标最少的次数猜到这个数字 简单查找 如果从 1 开始猜，这叫简单查找，换句话说就是傻找 如果是 99，那么得猜 99 次（临界点就是这个数） 二分查找 如果从中间值开始猜 那么临界点就是 99，最坏的情况下只用猜七次，50 错，75 错..这样猜 那么得出结论，对于 n 个元素，用二分查找最多需要 log2 n 步，简单查找最多需要 n 步 2^log2 n=n，log 叫对数运算，2^n 叫幂运算，他们互为逆运算 算法实现 注意二分查找法必须是有序的 大 O 表示法 指出的是最糟情况下的运行时间，也可以说是操作数 这里用大 O 表示法讨论运行时间，都是讨论的最糟糕的临界值，比如简单查找 100 个元素，就是要看每一个元素。二分查找也是查看最远的，那么就只用查看 log100 个元素约为 7 log 时间这里的底数默认是 2，也就是默认是 log2 其实我们是用幂运算的眼光来看，我们求的运行时其实就是指数 概念 大 O 表示法指出了算法有多快。例如，假设列表包含 n 个元素，简单查找需要检查每个元素，因此需要执行 n 次查找,运行时间位 O（n） O(n),单位不是秒，大 O 表示法指的并不是以秒为单位的速度，而是能够比较操作数，它指出了算法运行时间的增数 所以 n 是操作数的意思 谈论算法的速度，是随着输入的增加，其运行事件将以怎么样的速度增加 常见的大 O 运行时间 由快到慢的经常遇到的五种，可以自己想象一下坐标系图 O（log n）,也叫对数时间，这样的算法包括二分查找 O(n)，线性时间，包括简单查找 O(n*log n)，包括快速排序（业界俗称快排），一种速度较快的快速排序 O（n^ 2）,包括选择排序，一种速度较慢的排序算法 O（n！），包括旅行商问题的解决方案，一种非常慢的算法 旅行商问题 旅行商要前往 5 个城市，同时确保旅程最短，这样它要每个城市都去，然后计算总旅程，再挑选路线最短的 5 个城市有 120 种不同的排列方式，因此需要 120 个操作 这是一个非常非常慢的算法，但是这个问题也是计算机科学领域待解决的问题]]></content>
+      <tags>
+        <tag>图解算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[js浮点数的坑]]></title>
+    <url>%2Fblog%2F2018%2F05%2F06%2Fstudy-number%2F</url>
+    <content type="text"><![CDATA[浮点数在计算机中的表示 日常中，32767 这个数用科学计数法可以写成 3.2767*10^4，3.2767 称为尾数(Mantissa)，4 就是指数(exponent) 浮点数在计算机中基于科学技术法来表示的，上面是我们日常用十进制来表示，计算机则是二进制，它的基数是 2 不是 10 一种浮点数格式 假设共有 14bits，5bits 表指数，8bits 表尾数，1bit 表示符号 17=&gt;10001=1.00012^4 类比十进制的 1.710^5 尾数部分 因为尾数在十进制里面 0&lt;尾数&lt;10，在二进制里面就是 0&lt;尾数&lt;2，那么规定最高位只能是 1 因为尾数默认是 1，所以这个 1 就不用保存了，可以节省一位提高精度。所以尾数部分本来是 10001，这样就只用存储 0001，去掉了 1 需要注意的是，这里我们尾数的有效位数是 8 位，而 128.25=&gt;10000000.01,需要 10 个有效位，而我们的模型中尾数部分是 8 位，算上隐含的最高位 1 也才 9 个有效位，所以 128.25 只能舍去末尾的 1，表示为 10000000.0，其实跟 128 相等。所以浮点数不能做精确比较就是这样的 指数部分 但是指数部分是 4，换算成二进制也就是 100，如果以为是 100 就错了。 因为 0.25=&gt;0.01=1*10^-2,但是这样我们无法用指数表示负数。第一个符号位表示的是整个数的正负 现在广泛采用的是偏移的指数。规定一个偏移值，比如偏移值是 16，实际的指数要加上这个偏移值才可以，这样比 16 大的就是正指数，小的就是负指数。 要表示 0.25，如果偏移值 16，那么指数部分是 14，要表示 17 的指数部分，是 16+5=21,换成二进制就是 10101 1bit 5bits 8bits sign bit exponent Mantissa 符号位 指数 尾数 0 10101 00010000 js 的浮点数标准 js 的 number 遵循 IEEE 754 标准，使用 64 位固定长度表示，也就是 64 位 double 双精度浮点数（类似的有 float 32 位单精度标准） 大多数语言的小数默认都是遵循这个标准，所以 js 有的问题他们也有，包括 java，ruby，python 64bits 分为三部分 符号 S：1bit，0 表示正数，1 表示负数 指数 E：中间的 11 位存储指数 尾数 M：最后的 52 位是尾数 因为指数 E 有 11 位，取值范围是 2^11=2048，也就是[0,2047]，所以约定的偏移值是 1023，[0,1023]是负数 浮点误差 浮点数不是精确存储的 0.1 浮点误差（转成二进制无限循环） 0.1 转成二进制==0.0001100110011001100(1100 循环)=1.100110011001100(1100 循环)x2^-4，因为尾数舍去首位的 1，存的是后面的数，但是最多也只能存 52 位，然后再把有误差的只有 52 位尾数的，转成十进制，就变成了 0.100000000000000005551115123126 0.1+0.2=0.30000000000000004，那是因为把这两个转成二进制（这里就有误差了）后再运算，然后再转回十进制，正好是 0.30000000000000004 为什么 x=0.1 就能得到 0.1 因为尾数的固定长度是 52 位，那么加上省略的一位，最多可以表示的数位 2^53=9007199254740992，对应科学计数尾数是 9.007199254740992,我们只用记住 2^53 就好了 2^53 的长度是 16 位,这也是 js 最多能表示的精度 所以可以近似用 toPrecision(16) 来做精度运算，超过的精度会自动凑整处理 Precision 是精确的意思 所以 0.1 转成二进制然后再成十进制是 0.100000000000000005551115123126.toPrecision(16)=0.1000000000000000，去掉末尾的 0 正好是 0.1 所以我们看到的 0.1 并不是 0.1 可以用更高的精度解释：0.1.toPrecision(21) = 0.100000000000000005551 toPrecision vs toFixed 两者都能对多余数字取整，但是，前者是处理精度，精度是从左到右第一个不为 0 的数开始计算。后者是小数点指定位数取整，从小数点开始数起来 有些用 toFixed 用来四舍五入，但是其实是有 bug 的， 1.005.toFixed(2)=1.00 而不是 1.01 因为 1.005 实际上是 1.00499999999999989，4 是进不了 1 的 解决浮点数方案 由于理论上用有限的空间来存储无限的小数是不可能保证精确的，但是我们可以处理一下得到我们精确的结果 数据展示类 1.4000000000000001 这样的数据要展示的话，建议使用 toPrecision 凑整并 parseFloat 转成数字后再显示 parseFloat(1.4000000000000001.toPrecision(12)) === 1.4 为什么选用 12 作为精度，因为这是一个经验之谈，大部分够用了 数据运算类 要把小数转成整数后再运算]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[了解二进制转换]]></title>
+    <url>%2Fblog%2F2018%2F05%2F03%2Fstudy-Conversion%2F</url>
+    <content type="text"><![CDATA[十进制是为了人们方便记忆使用的，而计算机的世界里只有 0 和 1，也就是只有二进制 二进制 想要了解计算机，首先要了解二进制 以下来自维基百科 二进制（binary）数是指用二进制记数系统，即以 2 为基数的记数系统表示的数字。这一系统中，通常用两个不同的符号 0（代表零）和 1（代表一）来表示。以 2 为基数代表系统是二进位制的。数字电子电路中，逻辑门的实现直接应用了二进制，因此现代的计算机和依赖计算机的设备里都用到二进制。每个数字称为一个位元（二进制位）或比特（Bit，Binary digit 的缩写） 二进制转换成十进制 以 2 为底数，指数是权重（换句话说是位数-1，权重从 0 开始） 例如：11=&gt;12^1+12^0=3 十进制转换成二进制 每一步除以进制数（2），直到商数为 0，然后取每一步的余数，再倒过来就是了 例如 10=&gt;10/2=5 余 0,5/2=2 余 1，2/2=1 余 0，1/2=0 余 1,然后再取倒就是 1010 如果是有小数的，比如 10.25,那么小数部分乘以 2，取它整数部分的结果，然后再用这个结果继续乘以 2 算，直到小数部分为 0 例如 10.25 的小数部分是，0.25*2=0.5(取整数就是 0),0.5*2=1.0(取 1，然后终止，因为小数部分是 0），答案是 1010.01]]></content>
+      <tags>
+        <tag>计算机基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈Data URL]]></title>
+    <url>%2Fblog%2F2018%2F05%2F01%2Fstudy-dataUrl%2F</url>
+    <content type="text"><![CDATA[Data URL 是什么是一种提供让外置资源直接内嵌在页面中的方案。格式如下： 格式1data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;base64],&lt;encoded data&gt; 第一部分是data：协议头，它标识这个内容为一个 dataurl 资源 第二部分是 MIME 类型，表示这串内容的展现方式，比如 text/plain，就是文本展示;image/jpeg,就是以 jpeg 图片形式展示，同样浏览器会根据这个 MIME 类型来解析数据。 第三部分是编码设置，默认编码是 charset=US-ASCII，可以在浏览器输入框分别输入下面内容： 12345678// output: &amp;auml;&amp;frac12; &amp;aring;&amp;yen;&amp;frac12; -&gt; 使用默认的编码展示，故乱码data:text/html,你好// output: 你好 -&gt; 使用 UTF-8 展示data:text/html;charset=UTF-8,你好// output: 浣犲ソ -&gt; 使用 gbk 展示（浏览器默认编码 UTF-8，故乱码）data:text/html;charset=gbk,你好// output: 你好 -&gt; UTF-8 编码，内容先使用 base64 解码，然后展示data:text/html;charset=UTF-8;base64,5L2g5aW9 第四部分是 base64 编码设定，可选 最后一部分是这个 dataurl 承载的内容，可以是纯文本，也可以是经过 base64 编码的内容 平时我们经常见到的是这样的： 12//内嵌base64图片background-image: url("data:image/gif;base64,R0lGODlhAwADAIAAAP///8zMzCH5BAAAAAAALAAAAAADAAMAAAIEBHIJBQA7"); Data URL 的优劣优点 img 的 src 说明这个是外部资源，浏览器会向服务器拉取一次资源请求，占用网络资源 大多数浏览器都有一个并发请求数不能超过 4 个的限制。如果一个网页里嵌入了太多的外部资源，请求会使整个页面加载延迟。 图片体积太小的时候，不值得占用一个 http 会话 缺点 base64 编码的数据体积是原数据的体积 4/3，也就是说 data url 形式的图片会比二进制格式的图片体积大 1/3 data url 形式的图片不会被浏览器缓存，这意味着每次访问这样页面的时候都会被下载一次。如果这个图片被整个网站使用，就是一个使用效率问题（已被解决） 如何将 data url 数据放入浏览器缓存，通过 css 样式文件。所有浏览器都会积极缓存 css 文件来提高页面加载效率]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈http]]></title>
+    <url>%2Fblog%2F2018%2F04%2F23%2Fstudy-http%2F</url>
+    <content type="text"><![CDATA[http（hypertext transfer protocol）超文本传输协议 http 传输流 发送端在层与层间传输，每经过一层都会被加上首部信息，接受端每经过一层都会删除一条 应用层：本来是 http 数据 经过传输层，加上 tcp 首部 经过网络层，加上 ip 首部 经过链路层，加上以太网首部 然后接收端依次经过链路层，网络层，传输层，应用层 状态码1xx 传达信息 100 continue 101 switching protocols 2xx 成功 200 OK，表示从客户端发来的请求在服务器端被正确处理 204 No content，表示请求成功，但响应报文不含实体的主体部分 206 Partial Content，进行范围请求 3xx 重定向 301 moved permanently，永久性重定向，表示资源已被分配了新的 URL 302 found，临时性重定向，表示资源临时被分配了新的 URL 303 see other，表示资源存在着另一个 URL，应使用 GET 方法获取资源 304 not modified，表示服务器允许访问资源，但因发生请求未满足条件的情况 307 temporary redirect，临时重定向，和 302 含义相同 4XX 客户端错误 400 bad request，请求报文存在语法错误 401 unauthorized，表示发送的请求需要有通过 HTTP 认证的认证信息 403 forbidden，表示对请求资源的访问被服务器拒绝 404 not found，表示在服务器上没有找到请求的资源 405 method not allowed 一般是 get 和 post 弄错了 5xx 服务器错误 500 internal sever error，表示服务器端在执行请求时发生了错误 503 service unavailable，表明服务器暂时处于超负载或正在停机维护，无法处理请求 504 gateway timeout 网关超时 http 协议格式 http 的请求和响应的消息协议是一样的，分为三个部分，起始行，消息头和消息体。这三个部分以 CRLF 作为分隔符，最后一个消息头有两个分隔符，表示消息头部结束。 起始行：如 GET /index.html HTTP/1.1 消息头部（http header）：多个键值对组成，如 Content-Encoding: gzip，多个键值对之间使用 CRLF 作为分隔符 消息体（http body）：实体部分，请求实体和响应实体 http 的无状态性 所谓 HTTP 协议的无状态性是指服务器的协议层无需为不同的请求之间建立任何相关关系，它特指的是协议层的无状态性。但是这并不代表建立在 HTTP 协议之上的应用程序就无法维持状态。应用层可以通过会话 Session 来跟踪用户请求之间的相关性，服务器会为每个会话对象绑定一个唯一的会话 ID，浏览器可以将会话 ID 记录在本地缓存 LocalStorage 或者 Cookie，在后续的请求都带上这个会话 ID，服务器就可以为每个请求找到相应的会话状态。 输入 url 到页面加载发生了什么 输入地址 浏览器查找域名的 IP 地址 这一步包括 DNS 具体的查找过程，包括：浏览器缓存-&gt;系统缓存-&gt;路由器缓存… 浏览器向 web 服务器发送一个 HTTP 请求 服务器的永久重定向响应（从 http://example.com 到 http://www.example.com） 浏览器跟踪重定向地址 服务器处理请求 服务器返回一个 HTTP 响应 浏览器显示 HTML 浏览器发送请求获取嵌入在 HTML 中的资源（如图片、音频、视频、CSS、JS 等等） 浏览器发送异步请求]]></content>
+      <tags>
+        <tag>Http</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用set数据结构]]></title>
+    <url>%2Fblog%2F2018%2F04%2F22%2Fstudy-set%2F</url>
+    <content type="text"><![CDATA[使用 set 数据结构 set 是一个类似数组的数据结构，但是它没有重复值 如何生成 set 数据结构 直接 new Set() 往 new Set()传入具有 iterator 接口的数据结构，比如数组 1234567891011121314151617// 例一const set = new Set([1, 2, 3, 4, 4]);[...set];// [1, 2, 3, 4]// 例二const items = new Set([1, 2, 3, 4, 5, 5, 5, 5]);items.size; // 5// 例三const set = new Set(document.querySelectorAll("div"));set.size; // 56// 类似于const set = new Set();document.querySelectorAll("div").forEach(div =&gt; set.add(div));set.size; // 56 set 实例属性和方法属性 Set.prototype.constructor：构造函数，默认就是 Set 函数 Set.prototype.size：返回实例的总数 方法操作方法 add(val)：添加某个值，返回 该实例 delete(val):删除某个值，返回布尔值，表示是否成功 has(val)：返回布尔值，表示是否拥有 clear()：清空所有，返回值 void 遍历方法 set 结构是具有 itrator 接口的，可以直接 for..of 遍历，相当于下面的 values keys：返回键名的遍历器对象 values：返回值的遍历器对象 entries:返回键值对的遍历器对象 forEach:使用回调函数遍历每个成员 由于 set 没有键名，只有键值，或者说键名和键值一样，所以 keys===values 应用 扩展运算符（…）内部使用 for..of，所以也可以应用在 set 结构。同时数组的 map 和 filter 方法也可以应用于 set。 12345678910let arr = [3, 5, 2, 2, 5, 5];let unique = [...new Set(arr)];// [3, 5, 2]let set = new Set([1, 2, 3]);set = new Set([...set].map(x =&gt; x * 2));// 返回Set结构：&#123;2, 4, 6&#125;let set = new Set([1, 2, 3, 4, 5]);set = new Set([...set].filter(x =&gt; x % 2 == 0));// 返回Set结构：&#123;2, 4&#125; set 结构很容易实现交集，并集，差集 1234567891011121314let a = new Set([1, 2, 3]);let b = new Set([4, 3, 2]);// 并集let union = new Set([...a, ...b]);// Set &#123;1, 2, 3, 4&#125;// 交集let intersect = new Set([...a].filter(x =&gt; b.has(x)));// set &#123;2, 3&#125;// 差集let difference = new Set([...a].filter(x =&gt; !b.has(x)));// Set &#123;1&#125;]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈闭包]]></title>
+    <url>%2Fblog%2F2018%2F04%2F21%2Fclosures%2F</url>
+    <content type="text"><![CDATA[闭包是什么词法作用域 先要了解什么是词法作用域 作用域是由书写代码时候函数的位置决定的 可以想象函数里面嵌套函数，最里面函数可以方面函数的变量 也就是说内部函数可以读取外部函数的变量 但是我们外部怎么访问内部的局部变量，这就需要闭包 12345678910//如果我们在外部想拿到n的变量，可以函数内部返回//function f1() &#123; let n = 999; function f2() &#123; return n; &#125; return f2;&#125;let n = f1()(); 函数可以记住并访问它所在的词法作用域，换言之，它记住了定义时候的位置 然后它在其他作用域执行的时候，带上了它的词法作用域，这就是闭包 闭包可以干什么 很多高级应用都需要用到闭包来实现，主要用处有三个 上面提到的，可以访问内部函数变量 保持内部变量在内存之中 私有变量和模块化 123456789101112131415161718192021222324252627282930function f1() &#123; var n = 999; nAdd = function() &#123; n += 1; &#125;; function f2() &#123; alert(n); &#125; return f2;&#125;var result = f1();result(); // 999nAdd();result(); // 1000//私有变量和模块化var monitor = (function() &#123; var imgs = []; return function(src) &#123; var img = new Image(); imgs.push(img); img.src = src; &#125;;&#125;)(); 因为 f1 是 f2 的父函数，f2 依赖于 f1 的存在，f2 被赋给了全局变量，所以垃圾回收机制不会回收 因为 f2 不回收，所以 f1 也会存在于内存之中 n 的变量就静静呆在内存之中 比如 add(1)(2)(3)=6 就是这样解的 闭包的问题 闭包会导致变量都保存在内存里面，所以大量闭包会导致性能问题。遇到可以不用的，设置为 null，通知垃圾回收机制回收。]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈Iterator接口]]></title>
+    <url>%2Fblog%2F2018%2F04%2F21%2Fstudy-iterator%2F</url>
+    <content type="text"><![CDATA[简单介绍 Iterator（遍历器） 为不同的数据结构提供统一的访问机制，只要数据结构有这种接口，就可以用 for..of 完成遍历 遍历过程12345let it = makeIterator(["a", "b"]);it.next(); // &#123; value: "a", done: false &#125;it.next(); // &#123; value: "b", done: false &#125;it.next(); // &#123; value: undefined, done: true &#125; 第一次调用 next 方法返回数据结构的第一个成员，第二次就第二个直到没有 部署 Iterator 接口 当使用 for..of 遍历某种数据结构，就会自动去寻找 Iterator 接口 es6 规定改接口默认部署在Symbol.iterator属性里面 返回一个遍历器对象，该对象的本质特征就是具有 next 方法 每次调用 next 方法，都会返回一个当前成员的信息对象 12345678910111213//当执行for..of，会自动执行Symbol.iterator这个函数const obj = &#123; [Symbol.iterator]: function() &#123; return &#123; next: function() &#123; return &#123; value: 1, done: true &#125;; &#125; &#125;; &#125;&#125;; 有些数据结构，本身就具有该接口 Array Map Set String TypedArray 函数的 arguments 对象 NodeList 对象 对象没有部署该接口 无法确定哪个属性先后 如果实在要遍历，可以使用 map 结构]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用map数据结构]]></title>
+    <url>%2Fblog%2F2018%2F04%2F21%2Fstudy-map%2F</url>
+    <content type="text"><![CDATA[object 和 map object 映照现实生活的物体，但是想使用 key-value 的遍历结构最好使用 map 数据结构 object 结构实际上是字符串—值的结构 map 具有 iterator 接口，并且是值-值对映射，也就是 key 可以是 function，obj 等 12345const data = &#123;&#125;;const element = document.getElementById("myDiv");//由于对象只接受字符串为键名，所以element被自动转化字符串data[element] = "metadata";data["[object HTMLDivElement]"]; // "metadata" 生成 map 结构 new Map() 往 new Map()里面传入任何具有 iterator 接口的数据结构，包括数组等，甚至包括 map 本身 需要注意的是，map 的 key 存的是内存地址，也就是说[‘a’]和[‘a’]不相等。基础值才相等 123456789101112const map = new Map();map.set(["a"], 555);map.get(["a"]); // undefinedconst k1 = ["a"];const k2 = ["a"];map.set(k1, 111).set(k2, 222);map.get(k1); // 111map.get(k2); // 222 实例属性和方法 size：返回成员总数 set(key, value)：返回该实例，如果 key 有值会更新，没有就新生成 get(key)：找到就返回，没有就 undefined has(key)：布尔值 delete(key)：删除成功返回 true，失败 false clear：清除所有成员，没有返回值 遍历方法与 set 类似，但是没有 filter 和 map 比较有意思的是，map 结构默认的 iterator 接口就是 entries 方法 123456789101112for (let [key, value] of map.entries()) &#123; console.log(key, value);&#125;// "F" "no"// "T" "yes"// 等同于使用map.entries()for (let [key, value] of map) &#123; console.log(key, value);&#125;// "F" "no"// "T" "yes" 应用与其他数据结构的互相转换 map 转为数组，使用…运算符 123const myMap = new Map().set(true, 7).set(&#123; foo: 3 &#125;, ["abc"]);[...myMap];// [ [ true, 7 ], [ &#123; foo: 3 &#125;, [ 'abc' ] ] ] 数组转为 map，观察数组结构 12345new Map([[true, 7], [&#123; foo: 3 &#125;, ["abc"]]]);// Map &#123;// true =&gt; 7,// Object &#123;foo: 3&#125; =&gt; ['abc']// &#125; 过滤和遍历，但是 map 本身没有 map 和 filter 方法,先转为数组，再塞回 map12345678910const map0 = new Map() .set(1, "a") .set(2, "b") .set(3, "c");const map1 = new Map([...map0].filter(([k, v]) =&gt; k &lt; 3));// 产生 Map 结构 &#123;1 =&gt; 'a', 2 =&gt; 'b'&#125;const map2 = new Map([...map0].map(([k, v]) =&gt; [k * 2, "_" + v]));// 产生 Map 结构 &#123;2 =&gt; '_a', 4 =&gt; '_b', 6 =&gt; '_c'&#125;]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈TCP]]></title>
+    <url>%2Fblog%2F2018%2F04%2F19%2Fstudy-http-tcp%2F</url>
+    <content type="text"><![CDATA[TCP tcp 协议对应于传输层，而 HTTP 协议对应于应用层。 http 协议基于 tcp 协议 TCP/IP 协议分层模型 物理层将二进制的 0 和 1 和电压高低，光的闪灭和电波的强弱信号进行转换 链路层代表驱动 网络层 使用 IP 协议，IP 协议基于 IP 转发分包数据 ip 协议是个不可靠协议，不会重发 ip 协议发送失败会使用 icmp 协议通知失败 ARP 解析 ip 中的 mac 地址，mac 地址由网卡出厂提供 ip 还隐含链路层的功能，不管双方底层的链路层是啥，都能通信 传输层 通用的 tcp 和 udp 协议 tcp 协议面向有连接，能正确处理丢包，传输顺序错乱的问题，但是为了建立与断开链接，需要至少七次的发包收包，资源浪费 udp 面向无连接，不管对方有没有收到，如果要得到通知，需要通过应用层 会话层 tcp/ip 分层中，会话层，表示层，应用层集中在一起 网络管理通过 snmp 协议 TCP 三次握手，建立连接 客户端-发送带有 syn 标志的数据包——一次握手-服务端 服务端-发送带有 syn/ack 标志的数据包——二次握手-客户端 客户端-发送带有 ack 标志的数据包-三次握手-服务端 TCP 四次挥手，断开连接 客户端-发送一个 fin，用来关闭客户端到服务器的数据传送 服务器-收到这个 fin，发回一个 ack，确认序号为收到的序号为 1。和 syn 一样，一个 fin 将占用一个序号 服务器-关闭与客户端的连接，发送一个 fin 给客户端 客户端-发回 ack 报文确定，并将确认序号设置为收到序号加 1 TCP 和 UDP tcp 就好比在微信聊天，你说一句我说一句 udp 就好比我找你，直接就打电话，简单粗暴]]></content>
+      <tags>
+        <tag>Http</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈各种数据结构]]></title>
+    <url>%2Fblog%2F2018%2F04%2F17%2Fstudy-data%2F</url>
+    <content type="text"><![CDATA[列表，栈，队列，链表，字典，散列，图，二叉查找树 列表 日常生活中：购物清单，待办事项列表等 数据结构较为简单 不需要在一个长序列中查找元素，或者对其进行排序 栈 栈是一种特殊的列表，只能通过列表的一端进行访问，这一端被称为栈顶 餐厅里的盘子叠在一起，从最上面取盘子，洗完也只能放在上面 所以他是先进后出，后入先出的高效数据结构，因为数据只能在栈顶添加或删除，所以操作很快 比如函数调用栈 队列 队列也是一种特殊的列表 只能在队尾添加元素（入队），只能在队头删除元素（出队） 我们在银行排队，排在最前面的人第一个办理业务，然后出去 链表 链表也是一种特殊的列表 每个节点存下个节点的指针 有双向链表，单向链表，循环链表 字典 键值对的存储结构 散列 （散列）哈希表是一种常用的数据结构，散列后的数据可以快速插入 在散列表上插入，删除都非常快，但是查找效率非常低 查找一组数组中的最大值和最小值，一般要求助于其他数据结构，比如二叉查找树 即使一个高效的散列函数，也可能将两个键映射为同一个值的可能，这种现象叫碰撞。常见碰撞的处理方法：开链法和线性探测法 图 图是由边的集合和顶点的集合组成 两个城镇由某种道路相连，每个城镇是一个顶点，道路就是边 顶点也有权重，也叫成本 如果一个图的顶点对是有序的：有向图==流程图 如果无序，就是无序图 搜索图的算法：深度优先搜素和广度优先搜索 二叉树和二叉查找树 树是一种非线性结构，以分层的方式存储数据。 二叉树每个节点的子节点不允许超过两个。 一个父节点的两个子节点分别称为左节点和右节点，通过将子节点的个数限定为 2 个，可以高效插入，查找，删除。 二叉查找树（BST）是一种特殊得二叉树，相对较小的值保存在左节点中，较大的值保存在右节点中。这一特性使得查找的效率很高。]]></content>
+      <tags>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[js性能填坑之路]]></title>
+    <url>%2Fblog%2F2018%2F04%2F15%2Fstudy-performance%2F</url>
+    <content type="text"><![CDATA[简单介绍 javascript 是解释性语言，性能很慢，随着 web 在生活中的普及，这点性能显然不够用。你能想象双十一的一个按钮点半天才有反应嘛？所幸很多大神，都在不断的改进这个性能问题 漫漫填坑路JIT google 在 09 年 v8 引擎里引入 just in time compiling（即时编译），跟之前 ajax 出现引起的轰动是一样的，性能瞬间就上升了 20-40 倍的速度。 从此网页进入了网页应用的时代 解释器和编译器 解释器是一行行解释代码，性能会下降。编译器是把源代码编译成目标代码。 解释器是叫他干什么立刻就去干什么，比如买菜，马上去市场回来，再去买油又马上市场 编译器是叫他干什么直到说完才去干什么，去买菜，买油统一去市场 但是 jit 是基于运行期编译，js 是一个没有类型的语言，所以 jit 大多数时候都在猜测 js 的类型。 123456function add(a, b) &#123; return a + b;&#125;add(1, 2); //这时候jit就把a和b确认为int类型//然后你这样做add("hi", "yoki"); //已经编译成机器码了，但是又变成字符串类型，只能推倒重来，有时候jit的性能提升，还没有这个重编的开销大 TypeScript 既然 jit 大多数时候在猜测类型，那索性搞个强类型语言，再编译成 js 就行了 asm.js ts 是 js 的超集，这个是语法兼容 js 的汇编语言，是 js 的子集 通过标注声明类型，而且不得改变，这样就节省了类型判断的时间 WebAssembly 一种二进制码的规范，是比 asm.js 更为激进的东西 理论上所有语言都可以编译成这个，然后泡在浏览器上 但是目前还摸不了 dom]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈重排和重绘]]></title>
+    <url>%2Fblog%2F2018%2F04%2F10%2Frepaint%2F</url>
+    <content type="text"><![CDATA[简单介绍 网页生成布局(重排 reflow)，页面绘制（重绘 repaint）一个个盒子元素 重排一定会引起重绘，重绘不一定引起重排 为什么这样说，如果我改变了布局，比如改变边框宽度或者给段落增加文字，浏览器需要重新计算元素的几何属性，就会重排，然后就会重新绘制 但是如果改变元素的背景色，就只会发生重绘，而不会影响布局 重绘和重排非常消耗资源，应该尽量避免 怎样优化批量读或者批量写 现代浏览器已经很智能，会把所有变动排在一起，然后一次性集中在一起，推入到一个队列然后再渲染，这样通过队列话修改然后批量执行可以优化重排过程。 123456789div.stryle.color = "red";div.style.marginTop = "30px";//这里不会是一次次变，而是只会触发一次重排和重绘//但是下面这样，就会触发两次重排和重绘div.style.color = "blue";var margin = parseInt(div.style.marginTop);div.style.marginTop = margin + 10 + "px";//第二行中，我们读取该div的元素位置，这个时候浏览器这个队列马上就要推出去渲染，才可以得知新的布局的位置，所以浏览器必须要重排 由上可知，如果我们在写操作之后，再读会立即渲染，有以下读操作 1234offsetTop / offsetLeft / offsetWidth / offsetHeight;scrollTop / scrollLeft / scrollWidth / scrollHeight;clientTop / clientLeft / clientWidth / clientHeight;getComputedStyle(); 所以我们要懂得批量读和批量写 123456789// baddiv.style.left = div.offsetLeft + 10 + "px";div.style.top = div.offsetTop + 10 + "px";// goodvar left = div.offsetLeft;var top = div.offsetTop;div.style.left = left + 10 + "px";div.style.top = top + 10 + "px"; 合并样式操作 尽管现代浏览器做了优化，但是旧的浏览器可能没有，所以我们应该尽可能合并对样式的修改 cssText：el.style.cssText=’border-left: 1px; border-right: 2px; padding: 5px;’ 修改 className：如果不是那么依赖计算，可以通过修改 className 修改 dom 元素的时候使其脱离文档流 当我们需要对 dom 元素频繁操作的时候，我们可以这样减少重排和重绘 让该 dom 元素脱离文档流（重排） 操作元素 完成后再添加到 document（重排） 如何脱离文档流 隐藏元素：display:none，然后一系列操作后，再显示 推荐：使用 document fragment，就是传说中的文档碎片了，document.createDocumentFragment()，另外的 dom 子树，操作完后，再拷贝回来文档中，div.appendChild（fragment） 将原始元素拷贝到一个脱离文档的节点中，cloneNode,修改这个副本，然后再通过这个元素的父元素的 replaceChild 替换他 1234let old = document.getElementById("mylist");let clone = old.cloneNode(true);appendDataToElement(clone, data);old.parentNode.replaceChild(clone, old); 缓存读过的样式结果 div.style.top 读取可能会重排，这样最好这个缓存到变量里面，下次要用到这个就不用再读 div 的信息了 定位脱离文档流 可以将要多次重排的元素，position 可以设置 abs 和 fixed，这样就脱离文档流，不会影响其他元素。 有动画效果的可以设置为绝对定位 使用 window.requestAnimationFrame()、window.requestIdleCallback() 重新渲染]]></content>
+      <tags>
+        <tag>浏览器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[vue的一些问题集合（二）]]></title>
+    <url>%2Fblog%2F2018%2F04%2F05%2Fstudy-vue2%2F</url>
+    <content type="text"><![CDATA[再写一波 ‘@/components/‘的@ webpack 可以配置 alias 配置别名，这个@一般是 src 目录的别名 npm run dev 报端口已经在运行 可能你在运行其他项目，去修改一下默认端口 父组件怎么调用子组件的方法 this.$refs 里面找到该实例,前提是先设置了 ref this.$children 里面找到该实例 nginx 怎么配置一大波不靠谱的 nginx 配置 v-if 和 v-show v-if 是 dom 没有插入到文档里面，等条件成立，才 append 到 document 里面。 等拿到值才可以处理组件内部的逻辑的，不然会报错 有些 v-for 但是还没有拿到值的 v-show 只是简单通过 css 隐藏了 不会导致页面重绘，改善用户体验 axios 的请求后台不接受 axios 默认是 json 格式提交，如果后台只支持表单序列化，就要自己转义 axios 有个 qs 模块可以试试 css 的 scoped 有什么功能 给每个类或者 id 自动添加 hash，只能给该组件用，不同组件不能进行继承 12345/ 写的时候是这个.a&#123;&#125;// 编译过后,加上了 hash.a[data-v-1ec35ffc]&#123;&#125; 小图片渲染出来 base64 webpack 的 url-loader 处理，对于小于多少 k 一下的图片转成 base64 内联到 html 减少 http 请求降低服务器负担 网络不好的时候，内联的内容先加载，优化体验 ERROR in static/js/xxxxxxx.js from UglifyJs 引入压缩后的 js，webpack 又开启了 uglifyjs 压缩，报错 keep-alive 缓存组件后很慢 因为都是保存在内存里面的，一旦大量组件缓存性能肯定不会好]]></content>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[vue的一些问题集合（一）]]></title>
+    <url>%2Fblog%2F2018%2F04%2F02%2Fstudy-vue1%2F</url>
+    <content type="text"><![CDATA[在公司一直用 vue 开发，有时候被一些小伙伴经常问到的问题，这里收集一下勉强再挖个坑 npm install 安装超时 cnpm:npm i cnpm -g yarn 和 npm 改成淘宝源 12npm config : npm config set registry https://registry.npm.taobao.orgyarn config : yarn config set registry https://registry.npm.taobao.org data functions should return an object这是因为你肯定在书写单组件，而单组件的 data 必须返回一个单例，可以参见data 必须是函数 这里简单解释下，如果一个组件 data 引用的是一个同一个对象指针，那么当你在另外一个组件应用这个组件，v-for 他的时候，比如三个，那么你修改其中一个组件，另外两个这个组件的状态也会改变，但是我们的原则是组件间相互隔离，互不影响。 在函数内写了 this.name（data 里存在 name），却报错 Cannot set property ‘xxx’ of undefined 你期待 this 指向 vue 实例，实际上它指的是 window，this 和当前上下文有关 promise 的回调 setInterval 比较好的解决方案就是使用箭头函数，绑定当前对象为 this 的上下文 Component template shold contain exactly one root element.If you are useing v-if on multiple elements 单组件文件里必须要有个根元素，一个大 div No ‘Access-Control-Allow-Origin’ header is present on the requested resource. 跨域问题 CORS 前后端配置 nginx 反向代理，一般线上使用 本地开发，脚手架 vue-cli 里有 proxyTable 123456789101112// target : 就是 api 的代理的实际路径// changeOrigin: 必须是变源// pathRewrite : 路径重定向proxyTable: &#123; "/api": &#123; target: "http://yoki.com", changeOrigin: true, // pathRewrite: &#123; // "^/api": "/" // &#125; &#125;&#125; 数组里的值手动更新了，为什么视图不更新 this.arr[0]=1,但是视图没更新 这是因为 vue 重写了数组的原生方法，使用了数组方法 push，pop 等，会对其观察，并响应到视图。究其原因是 js 无法检测到到数组的变化 可以使用 this.$set 可以数组的方法更改 为什么根目录下会有 lock 文件 先简单介绍一下 A.B.C：A 是 major 版本表示和上个版本不兼容的大更改，B 是 minor 版本增加了新功能，可以向后兼容，C 是 patch 版本修复了 bug 向后兼容 npm 上包那么多，说不定什么时候就会更新，根据 package.json 里的^(会更新到 major 版本号最新的),~（会更新到 minor 版本最新的） 有些包甚至不遵循发包规范 所以我们需要统一版本号，这样不同的电脑在不同的时间就会下载到一样的包了 npm i -S 和-D 的区别 -S 会放到 dependencies 里面，存放到线上能访问到的代码，比如 vue，vue-router -D 会放到 devDependcies：处于开发模式所依赖的模块，不产生额外代码到生产环境，比如 babel-core 单页应用没办法做 seo 吗 spa 的页面由 javascript 根据 API 发回的数据在用户的浏览器里自动生成的，Baidu 不会看 Javascript，那么页面对于它来说就是一个空洞洞的 html 和很多 scirpt 元素 解决方案：服务端渲染(SSR)可以,请求回来是一个处理好的 html，vue 的服务端渲染方案nuxt 为什么首屏加载这么慢 打包文件文件很大 减少 jq 这种库的引入，现在都是数据驱动 webpack 压缩 js，css 路由懒加载，代码分割 采用服务端渲染，可以避免浏览器去解析模板和指令]]></content>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[简单介绍Typescript]]></title>
+    <url>%2Fblog%2F2018%2F03%2F30%2Fstudy-ts%2F</url>
+    <content type="text"><![CDATA[简单介绍 以下来自维基百科 TypeScript 是一种由微软开发的自由和开源的编程语言。它是 JavaScript 的一个严格超集，并添加了可选的静态类型和基于类的面向对象编程。C#的首席架构师以及 Delphi 和 Turbo Pascal 的创始人安德斯·海尔斯伯格参与了 TypeScript 的开发。 TypeScript 设计目标是开发大型应用，然后转译成 JavaScript。[7]由于 TypeScript 是 JavaScript 的严格超集，任何现有的 JavaScript 程序都是合法的 TypeScript 程序。 为什么需要 ts 普通的 js：假设我一个函数里面只能对字符串进行操作，要是我传了数字，直接就报错了，由此可见 增加了代码的可读性和可维护性 在编译阶段就能发现错误 类型推论 同时与 JavaScript 兼容良好，把.js 改为.ts 就能用 基本使用基础类型12345678910111213//布尔值const isDone = (boolean = false);// 数值const num: number = 6;//字符串const str: string = "yoki";//空值返回function say(): void &#123; console.log("hi");&#125;//null，undefinedconst u: undefined = undefined;const n: null = null; 数组123456//全是数字的数组const numArr: number[] = [1, 2, 3];//数字和字符串都有的数组const tmp: (number | string)[] = [1, "2", 3];//一个可能什么都有类型都有的数组const anyArr: any[] = [1, "1", true]; 函数1234567891011121314151617//传入参数是数字，返回的也是数字function sum(x: number, y: number): number &#123; return x + y;&#125;//可选型，用?,sum2(1)可以，sum（1，2）也可以function sum2(x:number,y?:number):number&#123; return y?:x+y:x&#125;//参数默认值,sum3(1,'5')，y会被自动推导为numberfunction sum3(x?:number,y=0)&#123; return x+y&#125;//剩余参数function concat(arr:any[],...items:any[])&#123; return arr.concat(items)&#125;concat([],1,2,3)=[1,2,3] 接口 在面向对象，接口是一个很重要的概念，他是对行为的抽象，而具体如何行动需要由 class 去实现 ts 的接口是非常灵活的，既可以对类的一部分行为进行抽象，也可以用于对对象的形状进行描述 1234567891011121314//对对象形状的描述interface Person&#123; name:string age?:number, say?:()=&gt;void&#125;const yoki:Person=&#123; name:'yoki', age:18&#125;//只读属性，不可修改interface Person&#123; readonly id:number&#125; 类 public 修饰的属性或者方法都是公有的，可以在任何地方被访问到，默认所有的属性或方法都是 public private 修饰的属性或者方法都是私有的，不能在声明它的类的外部访问 protected 修饰的属性或者方法都是受保护的，它与 pravate 类似，区别是它在子类是允许访问的 1234567891011121314151617181920212223242526272829class Animal&#123; publick name; public constructor(name)&#123; this.name=name &#125;&#125;let a=new Animal('rabbit')a.name//rabbita.name='tom'//tomclass Animal2&#123; private name; public constructor(name)&#123; this.name=name &#125;&#125;let b=new Animal('rabbit')b.name='tom'//报错class Animal3&#123; protected name; public constructor(name)&#123; this.name=name &#125;&#125;class Cat extends Animal&#123; constructor(name)&#123; super(name) console.log(this.name)//可以的 &#125;&#125; 泛型是指在定义函数/接口或者类的时候，不预先指定具体的类型，而在使用的时候再指定类型 1234567891011121314151617181920212223242526272829303132333435363738//T是运行时候的类型function createArray&lt;T&gt;(value: T, len: number): Array&lt;T&gt; &#123; return Array(len).fill(value);&#125;//多个类型function swap&lt;T1,T2&gt;(tuple:[T1,T2]):[T1,T2]「return [tuple[1],tuple[0]]swap([7,'six'])//['six',7]//泛型约束function getlen&lt;T&gt;(a:T):number&#123; return a.length&#125;// length属性不存在type‘T’的里面，errorinterface lengthwise&#123; length:number&#125;function getlen2&lt;T extends lengthwise&gt;(a:T):number&#123; return a.length&#125;getlen2([])//okgetlen2(123)//error//泛型类interface Props&#123;size:'big'|'small'&#125;interface State&#123;visibily:boolean&#125;class App extends React.Component&lt;Props,State&gt;&#123; state=&#123;visibily:true&#125; constructor(props,context)&#123; super(props,context) &#125; handleClick=()=&gt;this.setState(&#123;show:false&#125;) //'error',show不在state接口 render()&#123; return this.state.visibily&amp;&amp; &lt;button&gt; type=&#123;this.props.size&#125; onClick=&#123;this.handleClick&#125; /&gt; &#125;&#125;ReactDom.render(&lt;App size='middle' /&gt;,document.body)// error,middle不在props的size里]]></content>
+      <tags>
+        <tag>Typescript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[我理解的前端进阶]]></title>
+    <url>%2Fblog%2F2018%2F03%2F13%2Ffe-progress%2F</url>
+    <content type="text"><![CDATA[简单介绍 前端是一个需要广度的职位，感觉如果多了解上下游各部门的相关技术会对工作有极大的帮助。单从比起技术来，眼界跟逻辑思维其实更重要。 从技术上来说，走出前端那一亩三分地，多接触自己不熟悉的技术。当回头看前端的时候往往会有一种豁然开朗的感觉。 现阶段感觉是要接触不同的技术，换种不一样的思维。因为之前也写过 php（用的是国人 tp 框架），初次接触了 mvc 的思想，后来为学校的公众号也写过后台，用的是 python（Django），然后公司现在用的 java 的 spring 那一套（在疯狂补 java 核心卷 I 中…），后端的路已经很成熟的，前端还在探索属于自己的方式。这样看来是豁然开朗了～ 萌新 -&gt; 页面重构 -&gt; 前端开发工程师 -&gt; 大前端 -&gt; 前端打杂 -&gt; 团队打杂 练级之路可以写出方便维护的代码 commonjs/cmd/amd(node/sea.js/require.js) es6 module(babel) webpack mvvm 解决 jq 意大利面条 使用 async/await，promise 可以写出不容易出错的代码 类型检查，不能相信传进来的参数(当然现在有 ts) try-catch 捕获错误 window.onerror 可以写出性能比较好的代码 大量 dom 操作的时候可以批量读，批量写，会用缓存 会使用递归分而治之，将大问题分解成相似的小问题 可以灵活使用工具 charles/whistle 替换本地文件，模拟数据，代理 host 会用 ps 切图，markman 测量工具 各种带语法提示的小插件 sourcemap 定位代码 知道怎么定位到问题 会有 chrome devtool 里面的 network/performance 等，断点调试 网络不通，ping 一下百度 常见问题跨域 jsonp（get） 服务器代理 安全问题 xss（不能信任用户的输入，过滤一下输入，转义带有脚本的标签） csrf（所有请求都需要带有 token） 性能问题 小文件，快展现 图片资源无损压缩（webp 了解一下） 服务端渲染 预加载 dns 预解析 web workers 进行大计算 知道浏览器的内部工作原理 关注新技术，并能快速化为己用 webaseembly 将 js 转为二进制的规范 小程序 pwa 有感而发于公司内部分享 ppt]]></content>
+      <tags>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[2017展望与2018总结]]></title>
+    <url>%2Fblog%2F2018%2F02%2F25%2F2018%2F</url>
+    <content type="text"><![CDATA[2017 总结 工作上 官网方面：17 年 1 月进入到公司，当时正值官网重构，组长为了锻炼我，便让我参与到了官网的重构当中。 产品方面：官网完成之后，雷达刚好升级 2.0，我去负责其中两个模块的迁移。之后一直负责雷达的开发，维护过立方，聚合，接触了很多公司的产品。 项目方面：期间维护 MIG 系统，并且重构了整个 DBA，能更快地迁移类似的模块。后来参与研发 ipsos 雷达。 学习上 关于 vue：这一年，也算写了大量的 vue 代码，但 vue 封装了大量的 js 代码，屏蔽底层实现细节，所以我很清楚会写 vue 并不算什么，在前端框架日新月异的今天，只有深入地了解并掌握其中原理，才能以不变应万变。 关于可视化方向：由于 echarts 底层封装实在是过于复杂，也没有仔细去研究，只能去应用它的 api，这是我所遗憾的地方。 关于构建工具：先是接触了 gulp，但并不是了解得很清楚。而对于 webpack 这一块，配置得也算还可以，也大概知晓构建工具在前端方面的应用，但是我觉得不要满足于只做一个配置工程师，知道思想最为重要，要知道为什么会有压缩代码，合并请求等操作。 关于读书：喜欢看人物传记，比如爱因斯坦。物理学和哲学上有趣的书也看了不少,极大的开阔了我的眼界。关于 JavaScript 的书，把《你不知道的 JavaScript》也翻了一遍，对于算法（图解算法）也大概翻了一下。 关于印象笔记：只是自己选择的一种记录的工具，因为之前请教别人的时候发现，别人说了一遍方法，但是会很快忘记，所以这时候最好把它记录下来。笔记里记录了今年工作上遇到的问题，方便自己快速复查。 总结 总的来说，这一年，觉得自己是”开眼看世界”的一年，知道自己是热爱前端的，也知道一个好的前端工程师，他首先得是一个工程师，势必要了解算法，http 等基础知识。而纵向学习是提升学习深度的结果，而不是追求学习广度的结果。 2018 展望 工作上 前端系统搭建:yoda 系统搭建。 后端：学习一下 java，希望能接触组内一些后端的项目，简单写些接口。 业务组件库：业务上建立一个属于自己乃至于公司的组件库，因为做产品发现，一个好用的业务组件能提升很多开发效率。 数据分析：由于我们团队比较偏向分析，可以多向分析师取经。眼光应该放宽一点，学习数据方面的分析，才能对公司的产品和项目有更好的感知度。 学习上 MVVM 框架：希望能熟练使用 react 和 angular，最终目标希望能自己造一个小巧的 mvvm 框架，当然造轮子的意义是为了自己学习。 Node 开发：能编写一个 express 或者 koa 的中间件。熟练掌握 CRUD 应用。 构建工具：梳理前端构建工具，把常用的大概研究一遍。 Typescript：学习 typescript，相信强类型一定会在将来被纳入 ECMAScript 的标准。 关于笔记：希望能把每天要做的事，坚持写在 oneNote，养成良好习惯。而工作上要记下来的写在印象笔记。 Java：能熟练进行 web 开发。 关于可视化方向：学习 d3.js 和 three.js。 关于读书：坚持读书，温故知新更为重要。 关于英语：英语实在是太重要了，需要加强学习。 生活习惯 保持精力充沛的前提是要有足够的锻炼，如果每天实在是没有忙到要加班的情况，可以九点走，放好书包后出来跑半小时的步。 坚持八点起床，注意自己的仪容仪表。 总结 多增加了一个维度，同时希望自己能真正对得起工程师这个 title。]]></content>
+      <tags>
+        <tag>生活随想</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[前端错误收集]]></title>
+    <url>%2Fblog%2F2018%2F02%2F12%2Ffe-error%2F</url>
+    <content type="text"><![CDATA[为什么要进行前端的错误进行监控 现在网页的要求已经趋近于原生的应用，几乎都是有着大量交互的。面对各种用户，不同的浏览器等等出现的不同问题，有必要进行及时的监控，毕竟有些问题复现也是挺困难的。 捕获错误的方法 try..catch 之前说过，但是它只能在 try 的块里运行才可以捕捉错误，无法捕捉全局的错误事件 window.onerror 可以用来捕捉全局的错误,但是它无法捕捉异步错误，我们在 ajax 模块统一埋点 window.onerror123456window.onerror=function(message,url,linNo,columnNo,error)message:错误信息url:发生错误对应的脚本路径，比如是bundle.jslineNo:错误发生的行号colunmnNo:错误发生的列号error：具体的error对象，包含更加详细的错误调用堆栈信息 常见问题Script Error 现在我们一般都把资源放在 cdn 上，其他资源在本页面相当于跨域为什么会有这种设置，这是避免数据泄露到不安全的域中。如果我是银行页面，随便引入一个 js 资源，读取了账户密码，那可如何是好。 解决手段添加信任的域 客户端的 script 添加 crossorigin，他的作用就是告诉浏览器，要加载一个其他域的资源，并且信任他 服务端设置Acess-Control-Allow-Origin的响应头，可以直接设置为*，信任全部资源。cdn 资源应该全部加上 CORS 响应头。 如果我们使用 nginx 的话，可以像下面那样简单配置 12345location / &#123; root /Users/**; index index.html index.htm; add_header "Access-Control-Allow-Origin" "*";&#125; 代码压缩 现代 web 工程都会直接压缩 js 代码，所以线上一般都是只有几行代码但是我们有 sourcemap，可以定位到源代码的位置。但是线上是没有这个东西，我们可以通过sourcemap这个工具来将压缩后的代码生成 sourcemap 这里简单介绍一下生成 sourcemap 文件的方式 1uglifyjs --source-map 最终生成的map名称 --output 压缩文件名称 原文件名称 简单通过 soucemap 定位到源文件的真正行数 12345let sourceMap = require("source-map");let mapData = require("./test.json");let consumer = new sourceMap.SourceMapConsumer(mapData);let info = consumer.originalPositionFor(&#123; line: 1, column: 102 &#125;);console.log(info); //&#123; source: "test.js", line: 11, column: 6, name: "yoki" &#125; 推荐工具 由以上可以简单知道前端收集的原理了，但真正到线上肯定是不够的，这里有一些成熟的工具 sentry fundebug 分享一篇干货如何设计一个前端监控系统]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[nginx简单使用]]></title>
+    <url>%2Fblog%2F2018%2F01%2F20%2Fstudy-nginx2%2F</url>
+    <content type="text"><![CDATA[前情提要：由于公司也是使用 nignx 解决前后端分离跨域问题，这里简单学习一下 设置简单的代理服务器设置一个代理服务器，它即是一个用来接收请求，并传递它们到代理服务器，取回响应并发送响应给客户端的服务器。 我们将会配置一个简单的代理服务器，它将用本地文件来提供图片请求，而把其他请求转发到代理服务器。这个例子中，这两个服务器都将被定义在一个 nginx 实例中。 首先，在上面配置的基础上再添加一个 server 指令块到 nginx 的配置文件中： 12345678server &#123; listen 8080; root /data/upl; location / &#123; &#125;&#125; 这是一个监听在 8080 端口（location 指令没有指定，默认会使用 80 端口），并且会映射所有请求到本地路径/data/upl 的简单服务器。创建此路径并在里面创建 index.html 文件。注意 root 指令要放在 server 上下文中。这种 root 指令将会在没有自己 root 指令的 location 指令块被选中来处理请求时应用。 下一步，使用上一节的服务器配置，并且修改其为一个代理服务器配置。在第一个 location 指令块，放置 proxy_pass 指令，将代理服务器的地址作为参数（包括代理服务器的协议，域名和端口号）。例子中，它是http://localhost:8080： 123456789server &#123; location / &#123; proxy_pass http://localhost:8080; &#125; location /images/ &#123; root /data; &#125;&#125; 第二个 location 指令块目前指定的是/images/前缀到/data/images 路径的映射，为了使其能根据文件后缀匹配相应图片的请求，我们修改之： 123location ~ \.(gif|jpg|png)$ &#123; root /data/images;&#125; 这里参数是一个匹配哪些以.gif，.jpg 或者.png 结尾的 URIs 的正则表达式。正则表达式前面需要放置~。相应的请求将会被影射到/data/images 路径。 当 nginx 选择一个 location 指令块去服务一个请求，它首先检查 location 指令指定的前缀（并记住此最长前缀），然后检查正则表达式。如果有一个正则表达式匹配了，nginx 选中此 location，否则，它将会应用前一个记住的 location。 最后，代理服务器的配置将会是这样： 123456789server &#123; location / &#123; proxy_pass http://localhost:8080; &#125; location ~ \.(gif|jpg|png)$ &#123; root /data/images; &#125;&#125; 此服务器将会过滤那些以.gif，.jpg 或.png 结尾的请求，并且影射它们到/data/images 目录。传递其他所有请求到上面配置的代理服务上去。 location = 开头表示精确匹配 ^~ 开头表示 uri 以某个常规字符串开头，不是正则匹配 ~ 开头表示区分大小写的正则匹配; ~* 开头表示不区分大小写的正则匹配 / 通用匹配, 如果没有其它匹配,任何请求都会匹配到 顺序 no 优先级： (location =) &gt; (location 完整路径) &gt; (location ^~ 路径) &gt; (location ~,~* 正则顺序) &gt; (location 部分起始路径) &gt; (/) 1234567891011121314151617181920#直接匹配网站根，通过域名访问网站首页比较频繁，使用这个会加速处理#这里是直接转发给后端应用服务器了，也可以是一个静态首页# 第一个必选规则location = / &#123; proxy_pass http://tomcat:8080/index&#125;# 第二个必选规则是处理静态文件请求，这是nginx作为http服务器的强项# 有两种配置模式，目录匹配或后缀匹配,任选其一或搭配使用location ^~ /static/ &#123; root /webroot/static/;&#125;location ~* \.(gif|jpg|jpeg|png|css|js|ico)$ &#123; root /webroot/res/;&#125;#第三个规则就是通用规则，用来转发动态请求到后端应用服务器#非静态文件请求就默认是动态请求，自己根据实际把握#毕竟目前的一些框架的流行，带.php,.jsp后缀的情况很少了location / &#123; proxy_pass http://tomcat:8080/&#125;]]></content>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[nginx官方文档译文]]></title>
+    <url>%2Fblog%2F2018%2F01%2F14%2Fstudy-nginx%2F</url>
+    <content type="text"><![CDATA[简介nginx 有一个 master 进程和几个 worker 进程。master 进程的主要作用是读取和操作配置文件，同时维护 worker 进程。而真正处理请求的是 worker 进程。nginx 采用基于事件模型和系统依赖的机制最终将请求分配给 worker 进程。worker 进程的数量被定义在配置文件中，或者有可能被自动调整为 CPU 的核心数。 默认情况下，配置文件命名为 nginx.conf，放在/usr/local/nginx/conf，/etc/nginx，或者/usr/local/etc/nginx 目录下 启动，停止，reloading 配置运行可执行文件即可开启 nginx。一旦 nginx 开启之后，它可以使用可执行的-s 参数进行控制。下面是其语法： 1nginx -s signal 信号(signal)可以是下面的其中一个： stop —— 快速关闭 quit —— 优雅地关闭 reload —— 重新加载配置文件 reopen —— 重新打开日志文件 比如，等待所有 worker 进程服务完当前请求，然后关闭 nginx 进程： 1nginx -s quit//这条命令，必须由开启nginx的同一个用户执行。 如果改变了配置文件，除非是 nginx 重启，否则可以执行下面的命令进行应用新的配置： 1nginx -s reload 一旦 master 进程收到信号重新加载配置文件，它会检查新的配置文件的语法，并尝试应用配置。如果成功，master 进程开启新的 worker 进程，并且给旧的 worker 进程发送信息，请求它们关闭。否则，master 进程将会回滚修改并继续使用旧配置。 旧的 worker 进程，接受到命令关闭，将会停止接收新的请求，并继续服务完当前请求。自此之后，worker 进程将正式退出。 信号可以通过 unix 工具发送给 nginx 进程，例如 kill 命令。这种情况下，信号会直接发送给指定 pid 的进程。默认情况下，nginx 的 master 进程 ID 被写在/usr/local/nginx/logs 或/var/run 目录下的 nginx.pid 文件中。 比如，假如 master 进程的 ID 是 1628，那么发送 QUIT 信号给 nginx 会导致其优雅地退出： 1kill -s QUIT 1628 获取所有正在运行的 nginx 进程列表信息，可以执行： 1ps -ax | grep nginx 配置文件结构nginx 由模块组成。这些模块都被配置文件中的指令所控制。指令包括简单指令和指令块。一条简单的指令由名字和参数组成，参数由空格隔开，以分号（;）结束。一个指令块的结构和简单指令的一样，但是，它以额外的指令集合结束，指令集用大括弧（{和}）包围。 如果一个指令块里面有其他的指令块，那么它被称为一个上下文（例如，events，http，server 和 location）。 配置文件中，那些位于任何上下文之外的指令都认为是在 main 上下文中。events 和 http 指令位于 main 上下文，server 位于 http 上下文之中，location 位于 server 之中。 一行位于#后面的被认为是注释。 静态内容web 服务器一个重要的任务就是提供静态资源服务（例如图片等）。我们会实现一个例子，这个例子会根据请求，从不同的本地目录提供静态文件：/data/www（包含 html 文件），/data/images（包含图片）。这时候我们需要在 http 指令块里面创建一个 server 指令块，里面又包含两个 location 指令块。 首先，创建/data/www/index.html 文件，并放置一些图片于/data/images 目录下。 打开配置文件，默认的配置文件已经包含几个实例 server 指令块，大部分都被注释了。我们取消注释，并且开始一个新的 server 指令块： 12345http &#123; server &#123; &#125;&#125; 通常来说，配置文件会包含几个 server 指令块，它们由它们监听的端口号和服务器名称来区分。一旦 nginx 决定由哪一个 server 处理一个请求，它会把在请求 header 中的 URI 与在 location 指令块中定义的参数进行测试比较。 向 server 指令块添加 location 指令块： 123location / &#123; root /data/www;&#125; location 指令块指定了 URI”/”前缀。为了匹配请求，URI 将会被添加到 root 指令指定的路径，即是/data/www，实现了从路径到本地文件系统的转变。如果有多个匹配的 location 指令块，那么 nginx 将会选择那个拥有最长匹配前缀的。上面的 location 指令块提供了最短的前缀，所以如果其他所有 location 指令块都匹配失败，此指令块才生效。 下一步，添加第二个 location 指令块： 123location /images/ &#123; root /data;&#125; 它会匹配以/images/开头的请求（虽然 location /也同时匹配此请求，但是却是更短的前缀匹配）。 最后 server 指令块的配置应该是这样的： 123456789server &#123; location / &#123; root /data/www; &#125; location /images/ &#123; root /data; &#125;&#125; 这已经是一个服务器的配置文件了，这个服务器将会在本地机器http://localhost/监听80端口，并且是可访问状态。服务器将从路径/data/images发送文件去响应URIs以/images/开头的请求。比如，客户请求http://localhost/images/example.png，nginx将发送/data/images/example.png文件。如果该文件不存在，nginx将返回包含404 error 的响应。URIs 不是以/images/开头的请求将会被影射到/data/www 路径。例如，请求http://localhost/some/example.html，nginx将会发送/data/www/some/example.html文件。 为了应用新的配置文件，如果 nginx 还没有开启，开启即可；否则可以发送 reload 信号给 nginx 的 master 进程： 1nginx -s reload]]></content>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈浏览器渲染]]></title>
+    <url>%2Fblog%2F2018%2F01%2F10%2Fstudy-render%2F</url>
+    <content type="text"><![CDATA[作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。 现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。 关键渲染路径 关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容 比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染出页面 了解浏览器渲染的过程与原理，很大程度上是为了优化关键渲染路径 为了保障首屏内容的最快速显示，通常会提到渐进式页面渲染，但是为了渐进式页面渲染，就要做资源的拆分，怎么拆分，这是按场景考虑的 浏览器渲染页面过程 1.dns 查询 2.tcp 连接 3.http 请求即响应 4.服务端响应 5.客户端渲染 客户端渲染 以下步骤不一定一次性顺序完成，如果 dom 或者 cssom 被修改，则以下过程需要重复执行，这样才能计算哪些像素在屏幕上需要重新渲染 1.处理 html 标记并构建 dom 树 2.处理 css 并构建 cssom 树 3.将 dom 树和 cssom 树合并成一个渲染树 4.根据渲染树来布局，以计算每个节点的几何信息 5.将各个节点绘制到屏幕上 阻塞渲染 现代浏览器是并行加载资源的。当 HTML 解析器(html parser)被脚本阻塞的时候，解析器虽然会停止构建 dom，但仍然会识别该脚本后面的资源，并进行预加载。 默认情况下，css 被视为阻塞渲染的资源，这意味着浏览器将不会渲染任何已处理的内容，直到 cssdom 构建完毕 js 不仅可以读取和修改 dom 属性，还可以读取和修改 cssom 属性 存在阻塞的 css 资源的时候，浏览器就会延迟 js 的执行和 dom 构建 当浏览器遇到一个 script 标记的时候，dom 构建将暂停，直到脚本完成执行 cssom 构建的时候，js 执行将暂停，直到 cssdom 就绪 所以 script 标签的位置很重要，实际使用的时候，可以遵循下面两个原则 css 优先：引入顺序上，css 资源先于 js 资源 js 应该尽量少影响 dom 的构建 CSS 渲染树(Render-Tree)的关键渲染路径中，要求同时具有 dom 和 cssom，之后才会构建渲染树。所以 html 和 css 都是被阻塞的资源。html 一定是需要的，那么可以从 css 上想办法。 精简 css 并尽快提供它，例如将多个 css 合并成一个，并进行压缩 JavaScript 实际工程，常常将 js 资源放到文档底部 defer 和 async 可以改变阻塞模式 defer defer 属性表示延迟执行引入的 js，这段 js 加载时候 html 也并未停止解析，这两个过程是并行的 整个 document 解析完毕且 defer-script 也加载完成之后（这两件事情的顺序无关），会执行所有由 defer-script 加载的 JavaScript 代码，然后触发 DOMContentLoaded 事件。 123&lt;script src="app1.js" defer&gt;&lt;/script&gt;&lt;script src="app2.js" defer&gt;&lt;/script&gt;&lt;script src="app3.js" defer&gt;&lt;/script&gt; defer 不会改变 script 中代码的执行顺序，示例代码会按照 1，2，3 的顺序执行。 async123&lt;script src="app.js" async&gt;&lt;/script&gt;&lt;script src="ad.js" async&gt;&lt;/script&gt;&lt;script src="statistics.js" async&gt;&lt;/script&gt; async 属性表示异步执行引入的 JavaScript，与 defer 的区别在于，如果已经加载好，就会开始执行——无论此刻是 HTML 解析阶段还是 DOMContentLoaded 触发之后。需要注意的是，这种方式加载的 JavaScript 依然会阻塞 load 事件。换句话说，async-script 可能在 DOMContentLoaded 触发之前或之后执行，但一定在 load 触发之前执行。 多个 async-script 的执行顺序是不确定的。所以 app.js 和 ad.js 和 statistics.js 不一定是顺序执行，谁先加载完谁先执行。]]></content>
+      <tags>
+        <tag>浏览器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[动画了解一下（二）]]></title>
+    <url>%2Fblog%2F2017%2F12%2F13%2Ffps%2F</url>
+    <content type="text"><![CDATA[fps fps 是 frame per second，一秒能够重新渲染多少个画面 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面。 我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的 现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率，刷新动画。 所以网页动画能够做到每秒 60 帧，就可以和显示器同步刷新，视觉效果达到最佳。 一秒之内进行 60 次渲染，每秒不能超过 16.66 毫秒 如果想要到 60 帧的刷新率，那么 js 线程每个任务的耗时，必须少于 16ms。一个解决办法是用 web worker，主线程只用于 ui 渲染，其他和 ui 渲染不想干的任务，都放在 worker 线程。 调节渲染 有一些 js 方法可以调节重新渲染，大幅度提高网页性能 requestAnimationFrame 他可以将代码放到下次重新渲染执行 1234567891011121314function doubleHeight(element) &#123; var currentHeight = element.clientHeight; element.style.height = currentHeight * 2 + "px";&#125;elements.forEach(doubleHeight);//读了马上又去写，这就会马上重排，导致重新渲染，这就对网页性能很不利//可以使用window.requestAnimation把读写操作分离，把所有写操作放到下一次浏览器正常的重新渲染function doubleHeight(element) &#123; var currentHeight = element.clientHeight; window.requestAnimationFrame(function() &#123; element.style.height = currentHeight * 2 + "px"; &#125;);&#125;elements.forEach(doubleHeight); 适用于页面滚动事件，推迟到下一次重新渲染 适用于网页动画，比如 1234567891011//元素一帧旋转一度var rAF = window.requestAnimationFrame;var degrees = 0;function update() &#123; div.style.transform = "rotate(" + degrees + "deg)"; console.log("updated to degrees " + degrees); degrees = degrees + 1; rAF(update);&#125;rAF(update); requestIdleCallback 只有当一帧的末尾有空闲时间，才会执行回调 requestIdleCallback(fn) 因为一秒 60 帧，一帧就 16.66ms，只有当前帧的运行时间小于 16.66ms 的时候，fn 才会执行。如果当前没有空闲时间，就推迟到下一帧，直到有空闲时间为止。 requestIdleCallback(fn，5000)可以制定第二个参数，表示指定的 ms，表示这段时间内，如果每一帧都没有空间时间，fn 将强制执行 网页性能管理详解]]></content>
+      <tags>
+        <tag>css 动画</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[javascript装逼指南]]></title>
+    <url>%2Fblog%2F2017%2F12%2F03%2Fwrite-nbjs%2F</url>
+    <content type="text"><![CDATA[1.javascript 代码错误处理方式 12345try &#123; something;&#125; catch (e) &#123; window.location.href = "http://stackoverflow.com/search?q=[js]+" + e.message;&#125; 2.如何优雅的取随机字符串 123456Math.random() .toString(16) .substring(2);Math.random() .toString(36) .substring(2); 3.如何优雅的取整 12345let a = ~~2.33; //2let b = 2.33 | 0; //2let c = 2.33 &gt;&gt; 0; //2 4.金钱数字取千分位的非正则优雅实现 12345678910111213//用reducefunction formatCash(str) &#123; return str .split("") .reverse() .reduce((prev, next, index) =&gt; &#123; return (index % 3 ? next : next + ",") + prev; &#125;);&#125;console.log(formatCash("1234567890")); // 1,234,567,890//toLocaleString(23333333).toLocaleString("en-US");("23,333,333"); 5.最短代码实现数组去重 12[...new Set([1, "1", 2, 1, 1, 3])];//[1,'1',2,3] 6.最短代码实现一个长度为 m(6)且值都为 n（8）的数组 12Array(6).fill(8);//[8,8,8,8,8,8] 7.短路表达式 123456789101112131415var a = b &amp;&amp; 1;// 相当于if (b) &#123; a = 1;&#125; else &#123; a = b;&#125;var a = b || 1;// 相当于if (b) &#123; a = b;&#125; else &#123; a = 1;&#125; 8.颜色 rgb 和 hex 的相互转换 123456789101112131415function rgbToHex(r, g, b) &#123; return "#" + ((1 &lt;&lt; 24) + (r &lt;&lt; 16) + (g &lt;&lt; 8) + b).toString(16).slice(1);&#125;function hexToRgb(hex) &#123; var result = /^#?([a-f\d]&#123;2&#125;)([a-f\d]&#123;2&#125;)([a-f\d]&#123;2&#125;)$/i.exec(hex); return result ? &#123; r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) &#125; : null;&#125;alert(hexToRgb("#0033ff").g); // "51";]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[初识vps]]></title>
+    <url>%2Fblog%2F2017%2F11%2F29%2Fstudy-vps%2F</url>
+    <content type="text"><![CDATA[vps 是什么 以下来自维基百科 虚拟专用服务器（英语：Virtual private server，缩写为 VPS），是将一台服务器分区成多个虚拟专享服务器的服务。 实现 VPS 的技术分为容器技术和虚拟机技术 。在容器或虚拟机中，每个 VPS 都可分配独立公网 IP 地址、独立操作系统、实现不同 VPS 间磁盘空间、内存、CPU 资源、进程和系统配置的隔离，为用户和应用程序模拟出“独占”使用计算资源的体验。 VPS 可以像独立服务器一样，重装操作系统，安装程序，单独重启服务器。 vps 能做什么 可以进行科学上网，参见搭建 ss 服务器 vps 可以配置一个 ip 或者多个 ip。既然有了 ip 那么干的事情就多了。 同时想了解一下 linux 服务器或者部署自己的小作品，这个时候一个配置较低的 vps 就可以发挥作用了。比如托管静态页面，爬虫，起 node 服务等等。 一些 vps 推荐 vultr(我就是用这个的) 搬瓦工 hostmybytes linode]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[动画了解一下(一)]]></title>
+    <url>%2Fblog%2F2017%2F11%2F23%2Fstudy-animate%2F</url>
+    <content type="text"><![CDATA[笼统的过一下动画的一些基本概念 基本概念 帧：在动画过程中，每一幅静止画面即为一“帧” 帧率：即每秒播放的静止画面的数量，单位是 fps(frame per second)或赫兹(Hz) 帧时长：即每一幅静止画面的停留时间，单位一般是毫秒 丢帧：在帧率固定的动画中，某一帧的时长远高于平均帧时长，导致其后续帧被挤压而丢失的现象 我们在显示器上看到的动画，每一帧变化都是系统绘制出来的（GPU 或者 CPU）。它的最高绘制频率受限于显示器的刷新频率（而非显卡，大多数都是 60Hz 或者 75Hz） 帧率越高，屏幕上图片闪烁感就越小，稳定性也就越高。人的眼睛不容易察觉 75Hz 以上刷新频率带来的闪烁感。 实现方式 js：通过定时器（setTimeout 和 setInterval）来改变元素样式，或者使用 requestAnimationFrame css3:transition 和 animation html5:使用 html5 提供的绘图方式(canvas/svg/webgl) requestAnimationFrame 这个 api 是浏览器用于定时循环操作的一个接口，类似于 setTimeout,主要用途是按帧对网页进行重绘 目的是为了让各种网页动画效果（dom 动画，canvas 动画，svg 动画，webgl 动画）能够有一个统一的刷新机制，从而节省系统资源，提供系统性能，改善视觉效果。 代码中使用这个 api，就是告诉浏览器希望执行一个动画，让浏览器在动画帧安排一次重绘。 其接受一个回调作为参数，这个回调函数会在浏览器重绘之前调用，由于功效只是一次性的，所以想实现连续的动效，需要递归调用。 12345678910111213&lt;div id="demo" style="position:absolute; width:100px; height:100px; background:#ccc; left:0; top:0;"&gt;&lt;/div&gt;&lt;script&gt;var demo = document.getElementById('demo');function render()&#123; demo.style.left = parseInt(demo.style.left) + 1 + 'px'; //每一帧向右移动1px&#125;requestAnimationFrame(function()&#123; render(); //当超过300px后才停止 if(parseInt(demo.style.left) &lt;= 300) requestAnimationFrame(arguments.callee);&#125;);&lt;/script&gt; cancelAnimationFrame 用于取消重绘 12var requestID = requestAnimationFrame(repeatOften);cancelAnimationFrame(requestID); 使用 requestAnimationFrame 的优势如下 会把每一帧中的所有 dom 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随着显示器的刷新频率（60 或者 75Hz） 在隐藏或不可见的元素中，将不会进行重绘或回流，这就意味着更少的 cpu，gpu 和内存使用量 所以它是性能优化版/专为动画量身打造的 setTimeout，不同的是它不是自己指定回调函数运行的时间，而是跟着浏览器内建的刷新频率来执行回调，这就能达到浏览器所能实现动画的最佳效果 transition css 中的 transition 属性允许块级元素中的属性在指定的时间内平滑的改变 1transition:property duration timing-function delay property 是过渡效果的 css 属性的名称，比如 height duration 规定完成过渡效果需要多少毫秒或者秒 timing-function 规定速度效果的曲线(linear/ease..) delay 规定过渡效果何时开始 animation 跟 transition 比较，作用于元素本身而不是样式属性,可以使用关键帧的概念，应该说可以实现更自由的动画效果 1animation:name duration timing-function delay iteration-count direction name 是需要绑定到选择器的 keyframe 名称 duration 规定完成动画所花费的时间，以秒或者毫秒算 timing-function 是动画的速度曲线(line/ease..) delay 规定在动画开始之前的延迟 iteration-count 规定动画应该播放的次数 animation-direction 规定是否应该轮流反向播放动画(normal/alternate) Canvas html5 新增的元素，作为页面图形绘制的容器，可用于使用 js 中的脚本来绘制图形。 它可以用于绘制图形，制作照片，创建动画，甚至可以进行实时视频处理或者渲染 它具有如下特点 依赖分辨率，基于位图 不支持事件处理器 弱的文本渲染能力 能够以.pbg 或者.jpg 格式保存结果图像 最适合图像密集型的游戏，其中的许多对象会被频繁重绘 SVG scalable vector graphics==可缩放矢量图形，用来定义用于网络的基于矢量的图形，使用 xml 格式定义图像 它具有如下特点 不依赖分辨率，基于矢量图 支持事件处理器 最适合带有大型渲染区域的应用程序，如谷歌地图 复杂度高会减慢渲染速度（任何过度使用 dom 的应用都不快） 不适合游戏应用 svg 示例 1234567891011&lt;svg xmlns="http://www.w3.org/2000/svg" version="1.1"&gt; &lt;rect x="50" y="20" rx="20" ry="20" width="150" height="150" style="fill:red;stroke:black;stroke-width:5;opacity:0.5" /&gt;&lt;/svg&gt; svg 代码以 svg 根元素开始。 width 和 height 设定 svg 文档的高度和宽度 version 指定所使用的 svg 版本 xmlns 定义 svg 命名空间 webgl webgl 使得网页在支持 canvas 标签的浏览器中，不需要安装任何插件，便可以使用基于 OpenGL ES 2.0 的 api 在 canvas 中进行 3D 渲染。 webgl 由 js 控制代码，和在计算机的图形处理单元（GPU）中执行的特效代码(shader code,渲染代码)组成 常用的动画库 Ani.js–基于 css 动画的生命处理库 Dynamics.js–创建具有物理运动效果动画的 js 库 Animate.css–齐全的 css3 动画库 Three.js–快速搭建 webgl 项目]]></content>
+      <tags>
+        <tag>css 动画</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[进程和线程]]></title>
+    <url>%2Fblog%2F2017%2F11%2F09%2Fstudy-processAndthread%2F</url>
+    <content type="text"><![CDATA[进程(process)和线程（thread） 进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。 进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。 线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈。 他们之间的关系是 一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（就是通常说的主线程） 资源分配给进程，同一进程的所有线程共享该进程的所有资源 线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的方法实现同步。 处理机分给线程，即真正在处理机上运行得是线程 线程是指进程内的一个执行单元，也是进程内的可调度实体 他们之间的区别 调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位 并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。 拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但也可以访问隶属于进程的资源。 生动形象 书面上，进程和线程基本是一个东西，只是进程可以包含若干个线程。此外就是在操作系统中的层级上，也就是粒度不同外，没有其他大的区别。在一般使用中，需要就多开几个线程。 形象的说，进程就是一个项目组，每个程序员就是里面的线程，当然一个程序员也可以是一个项目组，对应的一个进程只有一个线程，而且还是主线程。公司里面的任务是分配给项目组级别的，也就是说系统资源是分配给进程的，但是干活的是程序员（线程）。]]></content>
+      <tags>
+        <tag>计算机基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[杂乱无章]]></title>
+    <url>%2Fblog%2F2017%2F09%2F24%2Fthink%2F</url>
+    <content type="text"><![CDATA[最近有点忙，忙得几乎都不像是一个才毕业了两个月的人。生活也足够简单，两点一线，下班后最大的愿望便是去书店看（zhuang）书（bi），偷得浮生半日闲。 在九月过半的时候，我突然发觉应有点仪式感——纪念一下曾经是学生的日子，于是总想写些什么。在学校的日子已算是一去不复返了，他们开学的时候，我总是觉得自己失去了些什么，那种感觉无以言状。 出来工作的时候，确实会觉得上学的时光是美好的，这种生活的内核是多彩，不重复。也许这是钱老说的那样，城里的人想出去，城外的人想进来。小时候总是想快些长大，想快点去各种自己喜欢的事情，那些盼呀盼呀总觉得盼不到的日子，现在突然就来临了。那些小时候喜欢的事，反倒是换了一份新鲜感。人呀，越是要自由，就越要担起更多的责任。而我们开始慢慢长大，获得了从前不曾有的自由，不论是经济上还是情感上，但是同时也有了更多的责任。 有时候会觉得这些日子乏味，枯燥，我渐渐地就开始看起了以前那些没看完的书。学会了以宽容的心态去面对生活，可能也是时光宽容了我。有时候，在早晨公交车如此多人的时候，每个人的心情都十分烦躁，鸟儿的声音也是聒噪多余的，但我总是会看到我们这一路司机在特别人多下车的地方，都会大声提醒外面有车开过来，下车注意些。每当看到这些画面，心里就会特别感激，对于生活，感觉才真正有了那种烟火气息。 看到很多人工作之后发的朋友圈，千篇一律的累，单调，全然没有了上学时候的激情。我曾经也迷茫，但是周遭厉害的人都很多，容不得我没有激情。当在这二十几岁的年纪里，还有很多我们不曾到达的领域，褪掉了激情，再无可能去攀登——最近在《人性的弱点》里体会到，也算是满满的鸡汤文，但是与卡耐基对话，就有种想要变得更好的冲动。 不管如何，失败一些，成功一些，本就是一件很好的事。也庆幸在大学里谈过恋爱，懂得了如何去珍惜，分开的时候会对感情这件事极其失望，当然现在是以感恩面对这些，过往不究。有时候夜深了在黄埔大道上面走着，灯影明灭，总是会看见一两对小情侣在打闹，或是依偎，我会觉得特别有生气，也会想起大学时候谈恋爱的时光。现在一个人了，虽无拘束，但心情总有波澜。 思绪很杂，文字也随之杂乱无章。]]></content>
+      <tags>
+        <tag>生活随想</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Generator函数]]></title>
+    <url>%2Fblog%2F2017%2F05%2F23%2Fuse-generator%2F</url>
+    <content type="text"><![CDATA[Generator 函数 generator 是生成器。generator 可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。 generator 函数的创建 ES6 中用function*来创建生成器函数 当想要 generator 产生一个值之后暂停执行，需要使用到yield（生成）关键字，有点类似于 return 关键字（都可以返回一个值），只是 yield 返回值之后 generator 函数会暂停运行 123456function* ticketGenerate() &#123; //创建一个取号机 yield 1; yield 2; yield 3;&#125; yield*是委派至另一个生成器函数 12345678910111213141516171819function* anotherGenerator(i) &#123; yield i + 1; yield i + 2; yield i + 3;&#125;function* generator(i) &#123; yield i; yield* anotherGenerator(i); yield i + 10;&#125;var gen = generator(10);console.log(gen.next().value); // 10console.log(gen.next().value); // 11console.log(gen.next().value); // 12console.log(gen.next().value); // 13console.log(gen.next().value); // 20 generator 函数的使用 ticketGenerate()不会马上执行它的主体，而是会返回一个这个生成器函数的迭代器对象 当这个迭代器对象的 next 方法被调用时候，生成器函数的主体会执行到第一个 yield 表达式，该表达式定义了迭代器对象返回的值。 next()返回一个对象：{value:1,done:false}，value 属性是产出的值，done 属性是表示生成器是否已经产出了它最后的值。 12const ticket = ticketGenerate(); //返回一个生成器对象ticket.next(); //&#123;value: 1, done: false&#125; 影响 generator 的状态 next()的另一个妙用是可以给它传递值，它会被视为 generator 中的 yield 语句的结果对待。 因此 next 是在 generator 运行过程中向其传递信息的方式。我们可以借此来重置取号机，将号码变为 0。 1234567891011121314function* ticketGenerator() &#123; for (var i = 0; true; i++) &#123; var reset = yield i; if (reset) &#123; i = -1; &#125; &#125;&#125;var takeANumber = ticketGenerator();console.log(takeANumber.next().value); //0console.log(takeANumber.next().value); //1console.log(takeANumber.next().value); //2console.log(takeANumber.next(true).value); //0console.log(takeANumber.next().value); //1]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[js里的异常]]></title>
+    <url>%2Fblog%2F2017%2F05%2F18%2Fuse-CatchException%2F</url>
+    <content type="text"><![CDATA[throw 用来抛出一个异常，throw expression throw 12 //抛出数值 12 的异常 throw ‘err’ //抛出字符串’err’的异常 throw {name:’异常的名字’,message:’异常的信息’,stack:’一般还有个函数栈’} //抛出对象的异常，一般这个对象包含名字，信息，栈。可以试一下 throw new Error(‘123’) 也可以创建自定义错误 12345function UserException(message) &#123; this.name = "UserException"; this.message = message;&#125;throw new UserException("用户消息错误"); try..catch 大法 配合 throw 能找出自己程序的异常 123456789101112function printValue(value) &#123; if (value == 1) &#123; throw new Error("值是1错误"); &#125; else &#123; console.log(value); &#125;&#125;try &#123; printValue(1);&#125; catch (e) &#123; console.log(e.message, e.name, e.stack);&#125;]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用promise]]></title>
+    <url>%2Fblog%2F2017%2F05%2F17%2Fuse-promise%2F</url>
+    <content type="text"><![CDATA[Promise Promise 作为 ES6 的特性，可以很好地创建异步工作流 Promise 是构造函数 Promise 只有三种状态（pending，resolve，reject），pending 是刚创建 Promise 实例的状态，然后一旦转为 resolve 或者 reject，就不可变更 创建 Promise 以封装 xhr 为例子 123456789101112131415161718function getURL(url) &#123; return new Promise((resolve, reject) =&gt; &#123; //Promise构造函数接受一个函数，这个函数接受两个参数 let xhr = new XMLHttpRequest(); xhr.open("GET", url, true); xhr.onload = function() &#123; if (xhr.status == 200) &#123; resolve(JSON.parse(xhr.responseText)); //如果成功响应，那么把这个值填充到resolve &#125; else &#123; reject(new Error(xhr.statusText)); //把该错误对象填充到reject里面 &#125; &#125;; xhr.onError = function() &#123; reject(new Error(xhr.statusText)); //把该错误对象填充到reject里面 &#125;; xhr.send(null); &#125;);&#125; reject 必须是接受一个错误对象实例，比如new Error(&#39;12&#39;)里面是什么类型的都可以 使用 Promise 使用上面封装 xhr 的 getURL 的函数，该函数返回一个 Promise 实例 Promise 的实例方法有两个：then 和 catch，这个两个方法都返回新的 Promise 对象 then 有两个参数。then(onfilled,onrejected)，第一个是参数值 resolve 来填充，第二个是 reject 来填充 catch 实则是 then(undefined,onrejected)的别名，但是一般情况下都是用这个 then 检测不了自身 Promise 对象 onfilled 出了异常，而 catch 是基于对上次的 then 产生的 promise 对象 123456789let url1 = "http://azu.github.io/promises-book/json/comment.json", url2 = "http://azu.github.io/promises-book/json/people.json";getURL(url1) .then(val =&gt; &#123; console.log(val); //这里是onfilled填充 &#125;) .catch(error =&gt; &#123; console.log(error); //这里是onrejected填充 &#125;); Promise chain 获取上次 promise 的返回值 由于 Promise 链式调用的时候，每个 Promise 都是独立的。但是可以通过 return 值来传给下一个 Promise，因为 return 了值是填充了当前 Promise 对象的 resolve 1234567promise .then(val =&gt; &#123; return val; &#125;) .then(val =&gt; &#123; console.log(val); &#125;); Promise 静态方法 Promise.resolve(42) === new Promise((resolve,reject)=&gt;resolve(42)) ,是它的语法糖 Promise.reject(new Error(42)) === new Promise((resolve,reject)=&gt;reject(new Error(42))) 是它的语法糖 如果有多个 Promise 同时需要判断才能进行下一步，可以用 Promise.all([promise1,promise2])。这个 then 方法返回的参数也是一个数组，跟 promise1 和 promise2 的顺序一样。需要注意的是，all 是并行执行的。 Promise.race([promise1,promise2]) 则和数组的 some 方法很像，只要有一个 promise 对象进入 FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。 123456promise.all([getURL(url1), getURL(url2)]).then(function(result) &#123; console.log(result); //[getURL(url1)的结果，getURL(url2)的结果]&#125;);promise.race([getURL(url1), getURL(url2)]).then(function(value) &#123; console.log(value); //一旦这两个promise对象有一个完成了onfilled或onrejected状态，那么就会进行后续的then，所以这里then的参数只有一个value。但不并不会影响其他promise对象的进行，只是它们的结果值不会出现在then的里面&#125;);]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[模板字符串的替换]]></title>
+    <url>%2Fblog%2F2017%2F05%2F11%2Fstudy-replace-template%2F</url>
+    <content type="text"><![CDATA[简单介绍 看到 vue 模板里都是用包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了 es6 的字符串模板用起来实在是舒服，所以简单用实现一下 1234// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数str.replace(reg,function(match,key)=&gt;&#123;&#125;)//正则匹配&#123;&#123;内容&#125;&#125;，应该是/\&#123;\&#123;(.*?)\&#125;\&#125;/，用\转义&#123;和&#125;// /\&#123;\&#123;(.*?)\&#125;\&#125;/g; 正则表达 .*?是正则的固定搭配用法，就是表示非贪婪模式，尽可能匹配少的意思 .*则表示贪婪模式 123456789源字符串：aa&lt;div&gt;test1&lt;/div&gt;bb&lt;div&gt;test2&lt;/div&gt;cc正则表达式一：&lt;div&gt;.*&lt;/div&gt;匹配结果一：&lt;div&gt;test1&lt;/div&gt;bb&lt;div&gt;test2&lt;/div&gt;(从头部匹配到尾部，从第一个div到最后的那个&lt;/div&gt;)正则表达式二：&lt;div&gt;.*?&lt;/div&gt;匹配结果二：&lt;div&gt;test1&lt;/div&gt;（这里指的是一次匹配结果，不使用\/g，所以没包括&lt;div&gt;test2&lt;/div&gt;） 简单实现 所以有上面的简单铺垫，可以简单写出 12345678910function render(template, context) &#123; return template.replace(/\&#123;\&#123;(.*?)\&#125;\&#125;/g, (match, key) =&gt; &#123; console.log(match, key); //match是&#123;&#123;name &#125;&#125;，key是name return context[key.trim()]; &#125;);&#125;//可以使用trim去掉前后空格const template = "我是&#123;&#123;name &#125;&#125;，现在&#123;&#123;age &#125;&#125;岁";const context = &#123; name: "yoki", age: "20" &#125;;console.log(render(template, context));]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[函数节流和防抖]]></title>
+    <url>%2Fblog%2F2017%2F04%2F10%2FthrottleAndDebounce%2F</url>
+    <content type="text"><![CDATA[节流（throttle） 函数节流是指一定时间内只跑一次函数，就像是技能 cd，你再怎么按它一段时间内只能触发一次。 主要思想就是设置一个守卫（flag），如果 setTimeout 已经执行过了就不会创建新的 setTimeout 123456789101112131415let scrollFun = function(time) &#123; let canRun = true; //初始化守卫变量 return function() &#123; if (canRun) &#123; canRun = false; setTimeout(() =&gt; &#123; console.log("throttle"); //3s后变量才为true，才可以继续执行if条件 canRun = true; &#125;, time); &#125; &#125;;&#125;;//3s执行一次window.scroll = scrollFun(3000); 适用于窗口 resize 防抖(debounce) 函数防抖呢，就是频繁触发后，一旦空闲下来才开始执行这个函数。就像公交车司机，如果有人陆续刷卡，司机一直停车等待，直到所有人上来了才回开车。 主要思想就是如果频繁触发，就取消上一个，重新创建一个规定时长的 setTimeout 123456789101112let debounce = function(time) &#123; let setTimeId = null; return function() &#123; //取消上一个的 clearTimeout(setTimeId); setTimeId = setTimeout(() =&gt; &#123; console.log("debounce"); &#125;, time); &#125;;&#125;;//直到没有输入后，3s后才执行$(el).input(dubounce(3000)); 适用于输入框输入持续监听等]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用nvm]]></title>
+    <url>%2Fblog%2F2017%2F03%2F10%2Fuse-nvm%2F</url>
+    <content type="text"><![CDATA[Node Version Manager（node版本管理）使用nvm安装和管理node node版本更新很快，为了能在版本之间迅速切换，我们要使用nvm来安装和管理。用nvm下载了相应的node也会下载相应的npm进行管理 安装nvm我们可以从Github下载 默认安装路径是C:\Users\Administrator\AppData\Roaming\nvm，存放我们下载的各个版本的node 验证安装，打开控制台，输入nvm,看是否输出所有命令 命令 nvm list #查看本地所有node版本 nvm install 4.2.2 #安装 4.2.2 版本 nvm use 4.2.2 #切换至 4.2.2 版本 nvm uninstall 4.2.2 #卸载4.2.2 版本 镜像 nvm默认的下载地址是http://nodejs.org/dist/,这是国外的服务器，在国内下载速度很慢。 需要把下列代码复制到你nvm的安装路径下的setting.txt12node_mirror: https://npm.taobao.org/mirrors/node/npm_mirror: https://npm.taobao.org/mirrors/npm/]]></content>
+      <tags>
+        <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[工作中常用git命令]]></title>
+    <url>%2Fblog%2F2017%2F02%2F13%2Fstudy-git%2F</url>
+    <content type="text"><![CDATA[基础命令 git clone 克隆仓库 git checkout 切换分支 git add 添加文件 git commit 提交改动 git push 推送本地分支到远端 git merge 把某个分支的代码合并到当前分支 git pull = git fetch + git merge 把远端分支更新到本地 git status 当前分支状态 我一般习惯配置别名 alias，比如 merge 变成 mg，这样少打几个字母 常用命令组合1.丢掉本地未提交改动 git checkout -f 2.丢掉本地已提交但未推送到远端的提交 git reset –hard origin/xxx 测试和发布 内部使用 gitlab master 主分支：用于外网线上发布，永远保持跟线上一致 develop 分支：用于发布测试环境 日常开发说明 详情参见git flow 日常开发从 master 拉一个分支 feature-xxx 分支到本地 要发布测试环境，直接 mg 到 develop，然后发布 要发布线上，直接 mg 到 master，然后发布 日常紧急 bug 修复，可拉一个 hotfix 分支]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[add(1)(2)(3)解题思路]]></title>
+    <url>%2Fblog%2F2017%2F02%2F08%2Fadd%2F</url>
+    <content type="text"><![CDATA[投机解法 当时第一眼看到这个题目的时候，第一反应就是函数里返回一个新的函数 一个不灵活的解决方案,不具备拓展性 12345678function add(a) &#123; return function(b) &#123; return function(c) &#123; return a + b + c; &#125;; &#125;;&#125;add(1)(2)(3)=6 正确解法 函数最终的和要保存一个闭包当中 123456789101112131415function add(a) &#123; //sum保存于闭包之中 let sum = a; let tmp = function(b) &#123; sum = +b; //返回自己方便日后调用 return tmp; &#125;; //如果到这里什么都不写，那么console.log(add(1)(2)(3))是add这个函数的定义 //console.log有些情况下会调用toString和valueOf方法，所以我们重写这个方法 tmp.valueOf = tmp.toString = function() &#123; return sum; &#125;; return tmp;&#125;]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2Fblog%2F2017%2F01%2F15%2FhelloWorld%2F</url>
+    <content type="text"><![CDATA[在程序的世界里，开始的话就循例来一个 hello world 一级标题 在文字前面加上#表示标题 标题一共有六级（6 个#号）在#后面加上空格，才是标准的 md 语法 列表 在文字前面加上- 列表 1 列表 2 引用 在文字前面加上&gt; 图片与链接 插入链接与图片的语法的区别在于一个!号; 12&gt; 图片为：![](relative address);&gt; 链接为：[](); 粗体 两个**包含一段文本就是粗体 粗体 表格12345| Tables | Are | Cool || ------------- |:-------------:| -----:|| col 3 is | right-aligned | $1600 || col 2 is | centered | $12 || zebra stripes | are neat | $1 | Tables Are Cool col 3 is right-aligned $1600 col 2 is centered $12 zebra stripes are neat $1 代码框 用三个` 把中间的代码包裹,在第一段点之后加语言名可以显示代码高亮 1console.log(12); 分割线 分割线的语法为三个-]]></content>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+</search>
