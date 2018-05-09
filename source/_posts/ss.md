@@ -49,5 +49,5 @@ tags: 计算机基础
 
 # 推荐阅读
 
-[从零开始写一个 shadowsocks](https://segmentfault.com/a/1190000011862912)
+本文节选自[从零开始写一个 shadowsocks](https://segmentfault.com/a/1190000011862912)
 [自建 ss 服务教程](https://github.com/Austin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAss%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B)
