@@ -25,6 +25,7 @@ this.$proxy({
 ## 解决方案
 
 * 因为要上传类型是文件（二进制数据，而 http 提供的基于文本的通信协议），所以请求头的 Content-Type 要改成 multipart/form-data(默认是 application/x-www-form-urlencoded)
+* input 的 file 类型可以通过 change 事件来获取 file 对象（event.target.files）
 
 ### HTTP 请求实体
 
