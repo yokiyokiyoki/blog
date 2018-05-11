@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ajax使用FormData对象上传文件]]></title>
+    <url>%2Fblog%2F2018%2F05%2F11%2Fform-data%2F</url>
+    <content type="text"><![CDATA[背景 因为发现用 postman 很轻松的就可以选择 file 类型 但是 ajax 直接 data 提交键值对却是报不合法的 12345678910//报错的this.$proxy(&#123; url: "/pgsls/kol/addExcel", type: "post", data: &#123; brandId: "1", type: "1", file: file //文件类型 &#125;&#125;); 解决方案 因为要上传类型是文件（二进制数据，而 http 提供的基于文本的通信协议），所以请求头的 Content-Type 要改成 multipart/form-data(默认是 application/x-www-form-urlencoded) HTTP 请求实体 每个字段由一段 boundary string 来分隔，浏览器保证该 boundary string 不与内容重复,因而 multipart/form-data 能够成功编码二进制数据 1234567891011121314------WebKitFormBoundaryWyjhf3VZMVeInmDeContent-Disposition: form-data; name="brandId"0------WebKitFormBoundaryWyjhf3VZMVeInmDeContent-Disposition: form-data; name="type"1------WebKitFormBoundaryWyjhf3VZMVeInmDeContent-Disposition: form-data; name="file"; filename="test.xlsx"Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet------WebKitFormBoundaryWyjhf3VZMVeInmDe-- 实际发送123456789101112let formData = new FormData();formData.append("brandId", this.dialog.selectBrand);formData.append("type", this.dialog.selectType);formData.append("file", this.dialog.file);return this.$proxy(&#123; url: "/pgsls/kol/addExcel", type: "post", data: formData, cache: false, processData: false, contentType: false&#125;); cacah:false cache 设为 false 可以禁止浏览器对该 URL（以及对应的 HTTP 方法）的缓存。 jQuery 通过为 URL 添加一个冗余参数来实现。 该方法只对 GET 和 HEAD 起作用，然而 IE8 会缓存之前的 GET 结果来响应 POST 请求。 这里设置 cache: false 是为了兼容 IE8。 contentType：false jq 的 contentType 默认值是 application/x-www-form-urlencoded,因此传给 data 参数的对象会默认转换为 query string 我们不需要 jq 做这个转换，否则会破坏掉 multipart/form-data 的编码格式。所以设置 false 来禁止 jq 的转换操作 processData:false jq 会将 data 对象转换为字符串来发送 http 请求，默认情况会用 application/x-www-form-urlencoded 编码转换 我们设置 contentType:false 后该转换会失败。因此设置 processData:false 来禁止这个转换过程（相当于双层保险） data 本来就是用 formData 编码好的数据，不需要进行字符串转换 兼容性 由于 formdata 对象是 XMLHttpRequest Level2 接口，需要 IE 10+, Firefox 4.0+, Chrome 7+, Safari 5+, Opera 12+ 低版本浏览器只能用 form 表单了]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈前端缓存]]></title>
+    <url>%2Fblog%2F2018%2F05%2F11%2Fstudy-cache%2F</url>
+    <content type="text"><![CDATA[为什么需要前端缓存 重复利用资源，提高网页打开资源 减少 http 请求，减少网络带宽]]></content>
+      <tags>
+        <tag>浏览器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[shadowsocks了解一下]]></title>
     <url>%2Fblog%2F2018%2F05%2F09%2Fss%2F</url>
     <content type="text"><![CDATA[有时候需要科学上网，这个时候 ss 就大显身手了 初步认识 ss 是一个能骗过防火墙的网络代理工具。把要传输的原数据经过加密后再传输，网络中的防火墙由于得不出要传输的内容是啥，就只好放行了。 于是就完成了防火墙穿透，也就是所谓翻墙。 网络环境 自由的网络环境下 ，本机访问其他互联网服务建立连接传输数据的时候，直接 req 过去，res 回来 但是一般情况下，会有 GFW。req 过去的数据和 res 回来的数据都必须通过 GFW 的检查。 如果发现传输受限的内容，就会拦截本次传输，就会导致本机无法访问远程服务。 ss 做什么 ss 所做的就是把传输的数据加密，防火墙得到的数据是加密后的数据，如果想要破解加密数据可能经过大量运算，所以防火墙只好放弃。 放行这个请求，本机就可以访问到了远程服务 ss 准备什么 一台在 GFW 之外的服务器，ip 是国外的，比如（vultr 的 vps） 在本机安装 ss 客户端，用于加密传输数据 服务器需要安装 ss 服务端，用于解密加密的传输数据，然后再把揭秘后的原数据发送到目标服务器 原理 由两部分组成，运行在本地的 ss-local 和运行在 GFW 之外的服务器的 ss-server。 ss-local 在本机启动和监听着一个服务，本地软件的网络请求都先发送到 ss-local，然后按照用户配置的加密方法和密码加密传输数据，再转发到墙外的 ss-server PAC 代理模式和全局代理模式 pac 模式是访问网站先匹配 pac list，如果有在里面才会访问，否则直接连接访问网站 节省 ss 流量，提高国内的访问速度 ss-server 在墙外服务器启动和监听一个服务，监听 ss-local 的请求。 收到 ss-local 转发过来的数据后，会先根据用户配置的加密方法和密码对数据进行对称揭秘，以获得加密后的数据的原内容。 同时还会解析 socks5 协议，读出本次请求真正的目标服务地址（例如 facebook，google 服务器地址），再把解密后的数据发过去 当真正的目标服务返回了数据，比如谷歌返回了页面，ss-server 会把返回的数据加密返回给 ss-local。ss-local 收到数据后再解密，发给本机的软件。 这是一个对称相反的过程。 ss-local 和 ss-server 都需要用对称加密算法对数据进行加密和解密，因此这两端的加密方法和密码必须配置为一样。 ss 提供一系列的标准可靠的对称算法供用户选择。如 rc4,aes,does。 对数据加密后再传输的目的是为了混淆原数据，让途中的防火墙无法算出传输的原数据。 chrome 下 SwitchyOmega 配合使用 下载 SwitchyOmega 插件，勾选系统代理，将流量全部转给 ss-local 推荐阅读本文节选自从零开始写一个 shadowsocks自建 ss 服务教程]]></content>
