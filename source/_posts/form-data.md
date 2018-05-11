@@ -47,6 +47,9 @@ Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 ------WebKitFormBoundaryWyjhf3VZMVeInmDe--
 ```
 
+* 说一下为什么这里文件只有文件名，没有文件路径？
+* 按照浏览器的安全策略，网页是不能获取到一个文件的完整路径。因为网页开发者可能从这个路径获取到其他信息，甚至发起攻击。
+
 ### 实际发送
 
 ```javascript
