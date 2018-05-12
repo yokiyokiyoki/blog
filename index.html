@@ -266,6 +266,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/11/study-web-form/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/11/study-web-form/" itemprop="url">Http表单的常见编码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-11T23:14:51+08:00">
+                2018-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是-http-表单"><a href="#什么是-http-表单" class="headerlink" title="什么是 http 表单"></a>什么是 http 表单</h2><blockquote>
+<p>web 最常见的就是 post 和 get 方法。其中 get 一般将参数编码在 url 中来传递数据，post 或者 put 必须要将数据放在 http 请求实体中，这样的数据就是 http 表单</p>
+</blockquote>
+<ul>
+<li>表单数据的编码方式是 http 头部设置 Content-Type</li>
+<li>Content-Type 可以是任意 MIME 类型</li>
+<li>下面五种最为常见<ul>
+<li>URLencoded：application/x-www-form-urlencoded</li>
+<li>mutipart:mutipart/form-data</li>
+<li>json:application/json</li>
+<li>xml:text/xml</li>
+<li>纯文本：text/plain</li>
+</ul>
+</li>
+<li>html 的 form 表单支持 urlencoded，mutipart 和 plain text 的编码，通过 enctype 属性来设定。</li>
+<li>ajax 默认是 json 格式的编码</li>
+</ul>
+<h3 id="URLencoded"><a href="#URLencoded" class="headerlink" title="URLencoded"></a>URLencoded</h3><blockquote>
+<p>form 表单的 enctype 默认就是 urlencoded</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;form  method=<span class="string">'post'</span> enctype=<span class="string">'application/x-www-form-urlencoded'</span>&gt;</span><br><span class="line">  &lt;input type=<span class="string">"text"</span> name=<span class="string">'title'</span>&gt;</span><br><span class="line">  &lt;input type=<span class="string">"text"</span> name=<span class="string">'subtitle'</span>&gt;</span><br><span class="line">  &lt;input type=<span class="string">"submit"</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/form&gt;</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/http请求头</span></span><br><span class="line"><span class="regexp">Content-Type: application/</span>x-www-form-urlencoded</span><br><span class="line"><span class="comment">//请求体</span></span><br><span class="line">title=test&amp;subtitle=%E4%B8%AD%E5%<span class="number">9</span>B%<span class="function"><span class="params">BD</span>=&gt;</span>base64编码（url通用的编码，可以在chrome控制台用<span class="built_in">decodeURI</span>解码）</span><br></pre></td></tr></table></figure>
+<h3 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$.post(<span class="string">'/xxx'</span>, &#123;</span><br><span class="line">    title: <span class="string">'test'</span>,</span><br><span class="line">    content: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">&#125;);</span><br><span class="line">Content-Type: application/json;charset=utf<span class="number">-8</span></span><br><span class="line"><span class="comment">//请求实体</span></span><br><span class="line">&#123;<span class="string">"title"</span>:<span class="string">"test"</span>,<span class="string">"content"</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: text/xml</span><br><span class="line"><span class="comment">//请求实体</span></span><br><span class="line">&lt;!--?xml version=<span class="string">"1.0"</span>?--&gt;</span><br><span class="line">&lt;methodcall&gt;</span><br><span class="line">    &lt;methodname&gt;examples.getStateName&lt;<span class="regexp">/methodname&gt;</span></span><br><span class="line"><span class="regexp">    &lt;params&gt;</span></span><br><span class="line"><span class="regexp">        &lt;param&gt;</span></span><br><span class="line"><span class="regexp">            &lt;value&gt;&lt;i4&gt;41&lt;/i</span>4&gt;&lt;/value&gt;</span><br><span class="line">    &lt;<span class="regexp">/params&gt;</span></span><br><span class="line"><span class="regexp">&lt;/m</span>ethodcall&gt;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/11/form-data/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1718,153 +1860,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/03/study-Conversion/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/03/study-Conversion/" itemprop="url">了解二进制转换</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-03T22:46:38+08:00">
-                2018-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>十进制是为了人们方便记忆使用的，而计算机的世界里只有 0 和 1，也就是只有二进制</p>
-</blockquote>
-<h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><ul>
-<li>想要了解计算机，首先要了解二进制</li>
-</ul>
-<blockquote>
-<p>以下来自维基百科</p>
-</blockquote>
-<p>二进制（binary）数是指用二进制记数系统，即以 2 为基数的记数系统表示的数字。这一系统中，通常用两个不同的符号 0（代表零）和 1（代表一）来表示。以 2 为基数代表系统是二进位制的。数字电子电路中，逻辑门的实现直接应用了二进制，因此现代的计算机和依赖计算机的设备里都用到二进制。每个数字称为一个位元（二进制位）或比特（Bit，Binary digit 的缩写）</p>
-<h2 id="二进制转换成十进制"><a href="#二进制转换成十进制" class="headerlink" title="二进制转换成十进制"></a>二进制转换成十进制</h2><blockquote>
-<p>以 2 为底数，指数是权重（换句话说是位数-1，权重从 0 开始）</p>
-</blockquote>
-<ul>
-<li>例如：11=&gt;1<em>2^1+1</em>2^0=3</li>
-</ul>
-<h2 id="十进制转换成二进制"><a href="#十进制转换成二进制" class="headerlink" title="十进制转换成二进制"></a>十进制转换成二进制</h2><blockquote>
-<p>每一步除以进制数（2），直到商数为 0，然后取每一步的余数，再倒过来就是了</p>
-</blockquote>
-<ul>
-<li>例如 10=&gt;10/2=5 余 0,5/2=2 余 1，2/2=1 余 0，1/2=0 余 1,然后再取倒就是 1010</li>
-</ul>
-<blockquote>
-<p>如果是有小数的，比如 10.25,那么小数部分乘以 2，取它整数部分的结果，然后再用这个结果继续乘以 2 算，直到小数部分为 0</p>
-</blockquote>
-<ul>
-<li>例如 10.25 的小数部分是，0.25*2=0.5(取整数就是 0),0.5*2=1.0(取 1，然后终止，因为小数部分是 0），答案是 1010.01</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1919,7 +1914,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
