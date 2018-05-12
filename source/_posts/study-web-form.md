@@ -18,3 +18,46 @@ tags: Http
   * 纯文本：text/plain
 * html 的 form 表单支持 urlencoded，mutipart 和 plain text 的编码，通过 enctype 属性来设定。
 * ajax 默认是 json 格式的编码
+
+### URLencoded
+
+> form 表单的 enctype 默认就是 urlencoded
+
+```javascript
+<form  method='post' enctype='application/x-www-form-urlencoded'>
+  <input type="text" name='title'>
+  <input type="text" name='subtitle'>
+  <input type="submit">
+</form>
+//http请求头
+Content-Type: application/x-www-form-urlencoded
+//请求体
+title=test&subtitle=%E4%B8%AD%E5%9B%BD=>base64编码（url通用的编码，可以在chrome控制台用decodeURI解码）
+```
+
+### JSON
+
+```javascript
+$.post('/xxx', {
+    title: 'test',
+    content: [1,2,3]
+});
+Content-Type: application/json;charset=utf-8
+//请求实体
+{"title":"test","content":[1,2,3]}
+```
+
+### XML
+
+```javascript
+Content-Type: text/xml
+//请求实体
+<!--?xml version="1.0"?-->
+<methodcall>
+    <methodname>examples.getStateName</methodname>
+    <params>
+        <param>
+            <value><i4>41</i4></value>
+    </params>
+</methodcall>
+```
