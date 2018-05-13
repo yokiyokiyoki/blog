@@ -43,3 +43,7 @@ tags: 浏览器
 * 当按 F5 进行刷新的时候，会忽略叼 Expires/Cache-control 的设置，会再次发送请求取服务器请求，而 Last-Modified/ETag 还是有效的。就是有可能命中协商缓存。
 * 当按住 ctrl+f5 进行强制刷新的时候，所有缓存机制都将失效
 * 其他一些操作比如，地址栏回车，前进后退都不会影响缓存字段
+
+## 推荐阅读
+
+[node 实践 http 缓存](https://github.com/renjie1996/Doger-FrontEnd-Blog/issues/2)
