@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="为什么需要前端缓存 重复利用资源，提高网页打开资源 减少 http 请求，减少网络带宽">
+<meta name="description" content="为什么需要前端缓存 重复利用资源，提高网页打开资源 减少 http 请求，减少网络带宽  两种缓存 200(from cache)和 304（not modified）   强缓存：200(from cache)强缓存命中不会发送请求到服务端，直接从本地缓存中获取资源 协商缓存：会发送请求到服务器，服务器通过请求头部字段来验证资源是否命中协商缓存，如果命中，返回 304,通知浏览器从缓存中获取资源">
 <meta name="keywords" content="浏览器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈前端缓存">
+<meta property="og:title" content="浅谈前端缓存(一)">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/05/11/study-cache/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="为什么需要前端缓存 重复利用资源，提高网页打开资源 减少 http 请求，减少网络带宽">
+<meta property="og:description" content="为什么需要前端缓存 重复利用资源，提高网页打开资源 减少 http 请求，减少网络带宽  两种缓存 200(from cache)和 304（not modified）   强缓存：200(from cache)强缓存命中不会发送请求到服务端，直接从本地缓存中获取资源 协商缓存：会发送请求到服务器，服务器通过请求头部字段来验证资源是否命中协商缓存，如果命中，返回 304,通知浏览器从缓存中获取资源">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-11T06:51:22.824Z">
+<meta property="og:updated_time" content="2018-05-13T06:34:15.303Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈前端缓存">
-<meta name="twitter:description" content="为什么需要前端缓存 重复利用资源，提高网页打开资源 减少 http 请求，减少网络带宽">
+<meta name="twitter:title" content="浅谈前端缓存(一)">
+<meta name="twitter:description" content="为什么需要前端缓存 重复利用资源，提高网页打开资源 减少 http 请求，减少网络带宽  两种缓存 200(from cache)和 304（not modified）   强缓存：200(from cache)强缓存命中不会发送请求到服务端，直接从本地缓存中获取资源 协商缓存：会发送请求到服务器，服务器通过请求头部字段来验证资源是否命中协商缓存，如果命中，返回 304,通知浏览器从缓存中获取资源">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>浅谈前端缓存 | Blog</title>
+  <title>浅谈前端缓存(一) | Blog</title>
   
 
 
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">浅谈前端缓存</h1>
+          <h1 class="post-title" itemprop="name headline">浅谈前端缓存(一)</h1>
         
 
         <div class="post-meta">
@@ -337,6 +337,57 @@
         <h2 id="为什么需要前端缓存"><a href="#为什么需要前端缓存" class="headerlink" title="为什么需要前端缓存"></a>为什么需要前端缓存</h2><ul>
 <li>重复利用资源，提高网页打开资源</li>
 <li>减少 http 请求，减少网络带宽</li>
+</ul>
+<h2 id="两种缓存"><a href="#两种缓存" class="headerlink" title="两种缓存"></a>两种缓存</h2><blockquote>
+<p>200(from cache)和 304（not modified）</p>
+</blockquote>
+<ul>
+<li>强缓存：200(from cache)强缓存命中不会发送请求到服务端，直接从本地缓存中获取资源</li>
+<li>协商缓存：会发送请求到服务器，服务器通过请求头部字段来验证资源是否命中协商缓存，如果命中，返回 304,通知浏览器从缓存中获取资源</li>
+</ul>
+<h2 id="与缓存策略相关的字段"><a href="#与缓存策略相关的字段" class="headerlink" title="与缓存策略相关的字段"></a>与缓存策略相关的字段</h2><blockquote>
+<p>三个字段 Cache-Control,Pragma,Expires(过期时间)，下面介绍一下响应头中的</p>
+</blockquote>
+<h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><blockquote>
+<p>http1.1 新增的字段，是控制浏览器缓存的主要字段。</p>
+</blockquote>
+<ul>
+<li>no-cache：资源可以被缓存，但是立刻过期，下次访问必须验证资源有效性</li>
+<li>max-age：缓存资源，在指定时间（是 res 里面的 Date 字段）后过期，单位是秒</li>
+<li>no-store：资源不会被缓存</li>
+<li>public：资源可以被浏览器和代理服务器缓存</li>
+<li>private:资源只能被浏览器缓存</li>
+</ul>
+<h3 id="Pragma"><a href="#Pragma" class="headerlink" title="Pragma"></a>Pragma</h3><ul>
+<li>是 http1.0 的字段，只有一个值 no-cache，功能和 Cache-control:no-cache；一样，但是优先级比他低。</li>
+</ul>
+<h3 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h3><ul>
+<li>是缓存到期时间，是一个服务器的绝对时间，由于时区的误差等因素已经较少使用。优先级比 Cache-control:max-age 低。</li>
+</ul>
+<h2 id="强缓存命中条件"><a href="#强缓存命中条件" class="headerlink" title="强缓存命中条件"></a>强缓存命中条件</h2><ul>
+<li>有些场景下必须避免浏览器缓存，响应头可以这样设置：Cache-Control: no-cache, no-store, must-revalidate(必须验证)</li>
+<li>公开资源直接命中强缓存，这是响应最快的。<ul>
+<li>请求头部不包括 Pragma 字段</li>
+<li>响应头部 Cache-Control 中不包括 no-cache、no-store</li>
+<li>响应头部 max-age 或者 expire 大于请求日期</li>
+</ul>
+</li>
+<li>如果我们在很短的一段时间内多次访问同一个资源，并且响应头部却没有 max-age 或者 expires 信息，是不是就不会命中强缓存？不是的，浏览器会做出优化，默认会使用一个启发式算法，取响应头(Date-Last-Modified)*0.1 作为缓存的有效时间（其实就相当于 max-age），只要在这段时间内请求这个资源，即使没有缓存过期字段，也会命中强缓存</li>
+</ul>
+<h2 id="协商缓存命中条件"><a href="#协商缓存命中条件" class="headerlink" title="协商缓存命中条件"></a>协商缓存命中条件</h2><h3 id="Last-Modified-If-Modified-Since"><a href="#Last-Modified-If-Modified-Since" class="headerlink" title="Last-Modified/If-Modified-Since"></a>Last-Modified/If-Modified-Since</h3><ul>
+<li>响应头会有一个 Last-Modified，代表这个资源最后修改的时间。</li>
+<li>当浏览器再次向服务器请求该资源的时候，会传送 If-Modified-Since（也就是上次服务器传送过来的 Last-Modified），服务器会拿这个值跟本地资源实际最后修改时间作比较，如果文件没有被修改，那么返回 304，通知浏览器从缓存中读取文件。</li>
+</ul>
+<h3 id="ETag-If-None-Match"><a href="#ETag-If-None-Match" class="headerlink" title="ETag/If-None-Match"></a>ETag/If-None-Match</h3><ul>
+<li>ETag 是一个响应首部字段，他是根据资源内容生成的一段 hash 值，标识资源的状态，由服务器产生。</li>
+<li>当浏览器再次向服务器端请求这个资源，会带上 If-None-Match（其实就是上次服务器发过来的 ETag 的 hash 值），服务器收到后，会拿这个值和资源实际的 ETag 做比较。</li>
+<li>如果一样就命中协商缓存，返回 304</li>
+</ul>
+<h4 id="ETag-的优先级比-Last-Modified-高"><a href="#ETag-的优先级比-Last-Modified-高" class="headerlink" title="ETag 的优先级比 Last-Modified 高"></a>ETag 的优先级比 Last-Modified 高</h4><ul>
+<li>本来已经有了一个 Last-Modified，为什么还需要 ETag？</li>
+<li>这是因为 Last-Modified 只能精确到秒，而如果我们在服务器一秒内多次更改资源，那么将无法识别，还是会命中协商缓存</li>
+<li>而且某些服务器不能精确得到文件的最后修改时间</li>
+<li>一些文件或许会周期性被更改，但是他内容并没有改变，只是改变了修改时间，这个时候我们并不希望浏览器重新请求这个资源</li>
 </ul>
 
       
@@ -461,7 +512,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -507,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要前端缓存"><span class="nav-number">1.</span> <span class="nav-text">为什么需要前端缓存</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要前端缓存"><span class="nav-number">1.</span> <span class="nav-text">为什么需要前端缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种缓存"><span class="nav-number">2.</span> <span class="nav-text">两种缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与缓存策略相关的字段"><span class="nav-number">3.</span> <span class="nav-text">与缓存策略相关的字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cache-Control"><span class="nav-number">3.1.</span> <span class="nav-text">Cache-Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pragma"><span class="nav-number">3.2.</span> <span class="nav-text">Pragma</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Expires"><span class="nav-number">3.3.</span> <span class="nav-text">Expires</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强缓存命中条件"><span class="nav-number">4.</span> <span class="nav-text">强缓存命中条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协商缓存命中条件"><span class="nav-number">5.</span> <span class="nav-text">协商缓存命中条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Last-Modified-If-Modified-Since"><span class="nav-number">5.1.</span> <span class="nav-text">Last-Modified/If-Modified-Since</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ETag-If-None-Match"><span class="nav-number">5.2.</span> <span class="nav-text">ETag/If-None-Match</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ETag-的优先级比-Last-Modified-高"><span class="nav-number">5.2.1.</span> <span class="nav-text">ETag 的优先级比 Last-Modified 高</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

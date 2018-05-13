@@ -266,6 +266,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/13/study-cache02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/13/study-cache02/" itemprop="url">浅谈前端缓存(二)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T14:33:46+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="缓存历史"><a href="#缓存历史" class="headerlink" title="缓存历史"></a>缓存历史</h2><h3 id="http1-0-时代"><a href="#http1-0-时代" class="headerlink" title="http1.0 时代"></a>http1.0 时代</h3><ul>
+<li>主要通过 Pragma 和 Expires 这两个字段来规范。现在仍然有些古老的客户端不支持 http1.1，所以这个两个头还在使用。</li>
+</ul>
+<h4 id="Expires-字段不准确"><a href="#Expires-字段不准确" class="headerlink" title="Expires 字段不准确"></a>Expires 字段不准确</h4><ul>
+<li>是服务器返回该请求结果缓存的到期时间，如果再次发出这个请求，客户端的时间小于 Expires 的值，直接使用缓存结果</li>
+<li>但是客户端和服务器如果有一方的时间不准确，比如时区，比如客户故意调整系统时间，都会失效</li>
+</ul>
+<h3 id="http1-1-时代"><a href="#http1-1-时代" class="headerlink" title="http1.1 时代"></a>http1.1 时代</h3><ul>
+<li>主要就是 Cache-Control 来控制了</li>
+</ul>
+<h2 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h2><ul>
+<li>命中状态码是 200，后面会跟着 from cache。现在高版本的 Chrome 换成了 from disk cache（磁盘缓存）和 from memory cache（内存缓存）</li>
+</ul>
+<h3 id="内存缓存"><a href="#内存缓存" class="headerlink" title="内存缓存"></a>内存缓存</h3><ul>
+<li>快速读取：将编译解析后的文件，直接存入该进程的内存，占据该进程的一定内存资源，以方便下次运行的快速读取</li>
+<li>时效性：一旦进程关闭，那么该进程的内存将会被清空</li>
+</ul>
+<h3 id="磁盘缓存"><a href="#磁盘缓存" class="headerlink" title="磁盘缓存"></a>磁盘缓存</h3><ul>
+<li>直接将缓存写入磁盘文件中，读取缓存需要对缓存存放的硬盘文件进行 I/0 操作，然后重新解析该缓存内容，读取复杂，内容比内存缓存慢。</li>
+</ul>
+<h2 id="只有-get-请求能被缓存，post-不可以"><a href="#只有-get-请求能被缓存，post-不可以" class="headerlink" title="只有 get 请求能被缓存，post 不可以"></a>只有 get 请求能被缓存，post 不可以</h2><ul>
+<li>get 方法是从指定的资源请求数据，post 是向指定资源提交要被处理的数据</li>
+<li>get 请求可以被缓存，只应当用于取回数据，请求长度有限制</li>
+<li>post 请求不会被缓存，对数据长度没有要求</li>
+</ul>
+<h2 id="用户操作与缓存的关系"><a href="#用户操作与缓存的关系" class="headerlink" title="用户操作与缓存的关系"></a>用户操作与缓存的关系</h2><ul>
+<li>当按 F5 进行刷新的时候，会忽略叼 Expires/Cache-control 的设置，会再次发送请求取服务器请求，而 Last-Modified/ETag 还是有效的。就是有可能命中协商缓存。</li>
+<li>当按住 ctrl+f5 进行强制刷新的时候，所有缓存机制都将失效</li>
+<li>其他一些操作比如，地址栏回车，前进后退都不会影响缓存字段</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/11/study-web-form/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -581,7 +730,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2018/05/11/study-cache/" itemprop="url">浅谈前端缓存</a></h1>
+                <a class="post-title-link" href="/blog/2018/05/11/study-cache/" itemprop="url">浅谈前端缓存(一)</a></h1>
         
 
         <div class="post-meta">
@@ -636,6 +785,57 @@
             <h2 id="为什么需要前端缓存"><a href="#为什么需要前端缓存" class="headerlink" title="为什么需要前端缓存"></a>为什么需要前端缓存</h2><ul>
 <li>重复利用资源，提高网页打开资源</li>
 <li>减少 http 请求，减少网络带宽</li>
+</ul>
+<h2 id="两种缓存"><a href="#两种缓存" class="headerlink" title="两种缓存"></a>两种缓存</h2><blockquote>
+<p>200(from cache)和 304（not modified）</p>
+</blockquote>
+<ul>
+<li>强缓存：200(from cache)强缓存命中不会发送请求到服务端，直接从本地缓存中获取资源</li>
+<li>协商缓存：会发送请求到服务器，服务器通过请求头部字段来验证资源是否命中协商缓存，如果命中，返回 304,通知浏览器从缓存中获取资源</li>
+</ul>
+<h2 id="与缓存策略相关的字段"><a href="#与缓存策略相关的字段" class="headerlink" title="与缓存策略相关的字段"></a>与缓存策略相关的字段</h2><blockquote>
+<p>三个字段 Cache-Control,Pragma,Expires(过期时间)，下面介绍一下响应头中的</p>
+</blockquote>
+<h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><blockquote>
+<p>http1.1 新增的字段，是控制浏览器缓存的主要字段。</p>
+</blockquote>
+<ul>
+<li>no-cache：资源可以被缓存，但是立刻过期，下次访问必须验证资源有效性</li>
+<li>max-age：缓存资源，在指定时间（是 res 里面的 Date 字段）后过期，单位是秒</li>
+<li>no-store：资源不会被缓存</li>
+<li>public：资源可以被浏览器和代理服务器缓存</li>
+<li>private:资源只能被浏览器缓存</li>
+</ul>
+<h3 id="Pragma"><a href="#Pragma" class="headerlink" title="Pragma"></a>Pragma</h3><ul>
+<li>是 http1.0 的字段，只有一个值 no-cache，功能和 Cache-control:no-cache；一样，但是优先级比他低。</li>
+</ul>
+<h3 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h3><ul>
+<li>是缓存到期时间，是一个服务器的绝对时间，由于时区的误差等因素已经较少使用。优先级比 Cache-control:max-age 低。</li>
+</ul>
+<h2 id="强缓存命中条件"><a href="#强缓存命中条件" class="headerlink" title="强缓存命中条件"></a>强缓存命中条件</h2><ul>
+<li>有些场景下必须避免浏览器缓存，响应头可以这样设置：Cache-Control: no-cache, no-store, must-revalidate(必须验证)</li>
+<li>公开资源直接命中强缓存，这是响应最快的。<ul>
+<li>请求头部不包括 Pragma 字段</li>
+<li>响应头部 Cache-Control 中不包括 no-cache、no-store</li>
+<li>响应头部 max-age 或者 expire 大于请求日期</li>
+</ul>
+</li>
+<li>如果我们在很短的一段时间内多次访问同一个资源，并且响应头部却没有 max-age 或者 expires 信息，是不是就不会命中强缓存？不是的，浏览器会做出优化，默认会使用一个启发式算法，取响应头(Date-Last-Modified)*0.1 作为缓存的有效时间（其实就相当于 max-age），只要在这段时间内请求这个资源，即使没有缓存过期字段，也会命中强缓存</li>
+</ul>
+<h2 id="协商缓存命中条件"><a href="#协商缓存命中条件" class="headerlink" title="协商缓存命中条件"></a>协商缓存命中条件</h2><h3 id="Last-Modified-If-Modified-Since"><a href="#Last-Modified-If-Modified-Since" class="headerlink" title="Last-Modified/If-Modified-Since"></a>Last-Modified/If-Modified-Since</h3><ul>
+<li>响应头会有一个 Last-Modified，代表这个资源最后修改的时间。</li>
+<li>当浏览器再次向服务器请求该资源的时候，会传送 If-Modified-Since（也就是上次服务器传送过来的 Last-Modified），服务器会拿这个值跟本地资源实际最后修改时间作比较，如果文件没有被修改，那么返回 304，通知浏览器从缓存中读取文件。</li>
+</ul>
+<h3 id="ETag-If-None-Match"><a href="#ETag-If-None-Match" class="headerlink" title="ETag/If-None-Match"></a>ETag/If-None-Match</h3><ul>
+<li>ETag 是一个响应首部字段，他是根据资源内容生成的一段 hash 值，标识资源的状态，由服务器产生。</li>
+<li>当浏览器再次向服务器端请求这个资源，会带上 If-None-Match（其实就是上次服务器发过来的 ETag 的 hash 值），服务器收到后，会拿这个值和资源实际的 ETag 做比较。</li>
+<li>如果一样就命中协商缓存，返回 304</li>
+</ul>
+<h4 id="ETag-的优先级比-Last-Modified-高"><a href="#ETag-的优先级比-Last-Modified-高" class="headerlink" title="ETag 的优先级比 Last-Modified 高"></a>ETag 的优先级比 Last-Modified 高</h4><ul>
+<li>本来已经有了一个 Last-Modified，为什么还需要 ETag？</li>
+<li>这是因为 Last-Modified 只能精确到秒，而如果我们在服务器一秒内多次更改资源，那么将无法识别，还是会命中协商缓存</li>
+<li>而且某些服务器不能精确得到文件的最后修改时间</li>
+<li>一些文件或许会周期性被更改，但是他内容并没有改变，只是改变了修改时间，这个时候我们并不希望浏览器重新请求这个资源</li>
 </ul>
 
           
@@ -1646,220 +1846,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/06/study-number/" itemprop="url">js浮点数的坑</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T11:22:06+08:00">
-                2018-05-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="浮点数在计算机中的表示"><a href="#浮点数在计算机中的表示" class="headerlink" title="浮点数在计算机中的表示"></a>浮点数在计算机中的表示</h2><ul>
-<li>日常中，32767 这个数用科学计数法可以写成 3.2767*10^4，3.2767 称为尾数(Mantissa)，4 就是指数(exponent)</li>
-<li>浮点数在计算机中基于科学技术法来表示的，上面是我们日常用十进制来表示，计算机则是二进制，它的基数是 2 不是 10</li>
-</ul>
-<h2 id="一种浮点数格式"><a href="#一种浮点数格式" class="headerlink" title="一种浮点数格式"></a>一种浮点数格式</h2><blockquote>
-<p>假设共有 14bits，5bits 表指数，8bits 表尾数，1bit 表示符号</p>
-</blockquote>
-<ul>
-<li>17=&gt;10001=1.0001<em>2^4 类比十进制的 1.7</em>10^5</li>
-</ul>
-<h3 id="尾数部分"><a href="#尾数部分" class="headerlink" title="尾数部分"></a>尾数部分</h3><ul>
-<li>因为尾数在十进制里面 0&lt;尾数&lt;10，在二进制里面就是 0&lt;尾数&lt;2，那么规定最高位只能是 1</li>
-<li>因为尾数默认是 1，所以这个 1 就不用保存了，可以节省一位提高精度。所以尾数部分本来是 10001，这样就只用存储 0001，去掉了 1</li>
-<li>需要注意的是，这里我们尾数的有效位数是 8 位，而 128.25=&gt;10000000.01,需要 10 个有效位，而我们的模型中尾数部分是 8 位，算上隐含的最高位 1 也才 9 个有效位，所以 128.25 只能舍去末尾的 1，表示为 10000000.0，其实跟 128 相等。所以浮点数不能做精确比较就是这样的</li>
-</ul>
-<h3 id="指数部分"><a href="#指数部分" class="headerlink" title="指数部分"></a>指数部分</h3><ul>
-<li>但是指数部分是 4，换算成二进制也就是 100，如果以为是 100 就错了。</li>
-<li>因为 0.25=&gt;0.01=1*10^-2,但是这样我们无法用指数表示负数。第一个符号位表示的是整个数的正负</li>
-<li>现在广泛采用的是偏移的指数。规定一个偏移值，比如偏移值是 16，实际的指数要加上这个偏移值才可以，这样比 16 大的就是正指数，小的就是负指数。</li>
-<li>要表示 0.25，如果偏移值 16，那么指数部分是 14，要表示 17 的指数部分，是 16+5=21,换成二进制就是 10101</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>1bit</th>
-<th style="text-align:center">5bits</th>
-<th style="text-align:right">8bits</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>sign bit</td>
-<td style="text-align:center">exponent</td>
-<td style="text-align:right">Mantissa</td>
-</tr>
-<tr>
-<td>符号位</td>
-<td style="text-align:center">指数</td>
-<td style="text-align:right">尾数</td>
-</tr>
-<tr>
-<td>0</td>
-<td style="text-align:center">10101</td>
-<td style="text-align:right">00010000</td>
-</tr>
-</tbody>
-</table>
-<h2 id="js-的浮点数标准"><a href="#js-的浮点数标准" class="headerlink" title="js 的浮点数标准"></a>js 的浮点数标准</h2><blockquote>
-<p>js 的 number 遵循 IEEE 754 标准，使用 64 位固定长度表示，也就是 64 位 double 双精度浮点数（类似的有 float 32 位单精度标准）</p>
-</blockquote>
-<ul>
-<li>大多数语言的小数默认都是遵循这个标准，所以 js 有的问题他们也有，包括 java，ruby，python</li>
-<li>64bits 分为三部分<ul>
-<li>符号 S：1bit，0 表示正数，1 表示负数</li>
-<li>指数 E：中间的 11 位存储指数</li>
-<li>尾数 M：最后的 52 位是尾数</li>
-</ul>
-</li>
-<li>因为指数 E 有 11 位，取值范围是 2^11=2048，也就是[0,2047]，所以约定的偏移值是 1023，[0,1023]是负数</li>
-</ul>
-<h3 id="浮点误差"><a href="#浮点误差" class="headerlink" title="浮点误差"></a>浮点误差</h3><blockquote>
-<p>浮点数不是精确存储的</p>
-</blockquote>
-<h4 id="0-1-浮点误差（转成二进制无限循环）"><a href="#0-1-浮点误差（转成二进制无限循环）" class="headerlink" title="0.1 浮点误差（转成二进制无限循环）"></a>0.1 浮点误差（转成二进制无限循环）</h4><ul>
-<li>0.1 转成二进制==0.0001100110011001100(1100 循环)=1.100110011001100(1100 循环)x2^-4，因为尾数舍去首位的 1，存的是后面的数，但是最多也只能存 52 位，然后再把有误差的只有 52 位尾数的，转成十进制，就变成了 0.100000000000000005551115123126</li>
-<li>0.1+0.2=0.30000000000000004，那是因为把这两个转成二进制（这里就有误差了）后再运算，然后再转回十进制，正好是 0.30000000000000004</li>
-</ul>
-<h4 id="为什么-x-0-1-就能得到-0-1"><a href="#为什么-x-0-1-就能得到-0-1" class="headerlink" title="为什么 x=0.1 就能得到 0.1"></a>为什么 x=0.1 就能得到 0.1</h4><ul>
-<li>因为尾数的固定长度是 52 位，那么加上省略的一位，最多可以表示的数位 2^53=9007199254740992，对应科学计数尾数是 9.007199254740992,我们只用记住 2^53 就好了</li>
-<li>2^53 的长度是 16 位,这也是 js 最多能表示的精度</li>
-<li>所以可以近似用 toPrecision(16) 来做精度运算，超过的精度会自动凑整处理</li>
-<li>Precision 是精确的意思</li>
-<li>所以 0.1 转成二进制然后再成十进制是 0.100000000000000005551115123126.toPrecision(16)=0.1000000000000000，去掉末尾的 0 正好是 0.1</li>
-<li>所以我们看到的 0.1 并不是 0.1</li>
-<li>可以用更高的精度解释：0.1.toPrecision(21) = 0.100000000000000005551</li>
-</ul>
-<h4 id="toPrecision-vs-toFixed"><a href="#toPrecision-vs-toFixed" class="headerlink" title="toPrecision vs toFixed"></a>toPrecision vs toFixed</h4><blockquote>
-<p>两者都能对多余数字取整，但是，前者是处理精度，精度是从左到右第一个不为 0 的数开始计算。后者是小数点指定位数取整，从小数点开始数起来</p>
-</blockquote>
-<ul>
-<li>有些用 toFixed 用来四舍五入，但是其实是有 bug 的，</li>
-<li>1.005.toFixed(2)=1.00 而不是 1.01</li>
-<li>因为 1.005 实际上是 1.00499999999999989，4 是进不了 1 的</li>
-</ul>
-<h2 id="解决浮点数方案"><a href="#解决浮点数方案" class="headerlink" title="解决浮点数方案"></a>解决浮点数方案</h2><blockquote>
-<p>由于理论上用有限的空间来存储无限的小数是不可能保证精确的，但是我们可以处理一下得到我们精确的结果</p>
-</blockquote>
-<h3 id="数据展示类"><a href="#数据展示类" class="headerlink" title="数据展示类"></a>数据展示类</h3><ul>
-<li>1.4000000000000001 这样的数据要展示的话，建议使用 toPrecision 凑整并 parseFloat 转成数字后再显示</li>
-<li>parseFloat(1.4000000000000001.toPrecision(12)) === 1.4</li>
-<li>为什么选用 12 作为精度，因为这是一个经验之谈，大部分够用了</li>
-</ul>
-<h3 id="数据运算类"><a href="#数据运算类" class="headerlink" title="数据运算类"></a>数据运算类</h3><ul>
-<li>要把小数转成整数后再运算</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1914,7 +1900,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
