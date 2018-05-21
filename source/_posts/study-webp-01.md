@@ -16,3 +16,7 @@ tags: 浏览器
 # webp 的 MIME 类型
 
 * image/webp
+
+# 推荐阅读
+
+* [webp 适配](https://github.com/ShowJoy-com/showjoy-blog/issues/10)
