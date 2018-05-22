@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="http 和 https常规的 http 请求，所有信息明文传播，只要中间人在链路中的任意阶段进行劫持，就会带来三大风险：  窃听风险：第三方可以获取通信内容 篡改风险：第三方可以修改通信内容 冒充风险：第三方可以冒充他人身份参与通信  https 可以解决这些问题 https http+TLS，TLS 是传输层加密协议，前身是 SSL 协议  SSL/TLS 协议是为了解决 http 的三大风险">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-13T12:21:43.094Z">
+<meta property="og:updated_time" content="2018-05-21T12:24:09.546Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="加密传输之HTTPS">
 <meta name="twitter:description" content="http 和 https常规的 http 请求，所有信息明文传播，只要中间人在链路中的任意阶段进行劫持，就会带来三大风险：  窃听风险：第三方可以获取通信内容 篡改风险：第三方可以修改通信内容 冒充风险：第三方可以冒充他人身份参与通信  https 可以解决这些问题 https http+TLS，TLS 是传输层加密协议，前身是 SSL 协议  SSL/TLS 协议是为了解决 http 的三大风险">
@@ -369,23 +369,23 @@
 </li>
 <li>客户端解析证书<ul>
 <li>由客户端的 TLS 来完成的，主要是验证公钥 A 是否有效，比如颁发机构，过期时间等等，如果发现异常就会弹出一个警告框，提示证书有问题</li>
-<li>如果证书没有问题，那么就生成一个随机值。之后就进入了不对称加密（RSA）的过程，用证书对该随机值加密，生成私钥 C</li>
+<li>如果证书没有问题，那么就生成一个随机值（秘钥 D）。之后就进入了不对称加密（RSA）的过程，用证书对该随机值加密（秘钥 D），生成私钥 C</li>
 </ul>
 </li>
 <li>传送加密信息<ul>
-<li>这部分传送的是用证书加密后的随机值（私钥 C），目的就是让服务器端得到这个私钥，后续所有的数据都可以用私钥 C，进行对称加密和解密</li>
+<li>这部分传送的是用证书加密后的随机值（私钥 C）</li>
 </ul>
 </li>
 <li>服务端解密信息<ul>
-<li>服务端私钥 B 解密后，得到客户端传过来的秘钥 C，到此 RSA 非对称加密的过程结束</li>
+<li>服务端私钥 B 解密私钥 C 后，得到客户端传过来的秘钥 D，到此 RSA 非对称加密的过程结束，后续所有的数据都可以用私钥 D，进行对称加密和解密</li>
 </ul>
 </li>
 <li>传输加密后的信息<ul>
-<li>服务端用秘钥 c 加密信息</li>
+<li>服务端用秘钥 D 加密信息</li>
 </ul>
 </li>
 <li>客户端解密信息<ul>
-<li>客户端用之前生成的私钥 C 解密服务端传过来的信息，于是获取到了解密后的内容</li>
+<li>客户端用之前生成的私钥 D 解密服务端传过来的信息，于是获取到了解密后的内容</li>
 </ul>
 </li>
 </ul>
@@ -396,6 +396,7 @@
 <li>黑客自己伪造的证书需要通过客户端验证通过，才可以继续访问，只要客户端验证通过，那么公钥 A，私钥 B，私钥 C 对黑客来说都是透明的。</li>
 <li>所以黑客只要诱导用户安装自己伪造的证书就可以，例如各种钓鱼的不可描述网站</li>
 </ul>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p><a href="https://juejin.im/post/5a4f4884518825732b19a3ce" target="_blank" rel="noopener">https 加密过程和 tls 证书验证</a></p>
 
       
     </div>
@@ -519,7 +520,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -532,7 +533,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -565,7 +566,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#http-和-https"><span class="nav-number">1.</span> <span class="nav-text">http 和 https</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#https"><span class="nav-number">1.1.</span> <span class="nav-text">https</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-劫持"><span class="nav-number">1.1.1.</span> <span class="nav-text">DNS 劫持</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#https-流程"><span class="nav-number">2.</span> <span class="nav-text">https 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间人攻击"><span class="nav-number">3.</span> <span class="nav-text">中间人攻击</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#http-和-https"><span class="nav-number">1.</span> <span class="nav-text">http 和 https</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#https"><span class="nav-number">1.1.</span> <span class="nav-text">https</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-劫持"><span class="nav-number">1.1.1.</span> <span class="nav-text">DNS 劫持</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#https-流程"><span class="nav-number">2.</span> <span class="nav-text">https 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间人攻击"><span class="nav-number">3.</span> <span class="nav-text">中间人攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number"></span> <span class="nav-text">推荐阅读</span></a></div>
             
 
           </div>
