@@ -54,3 +54,4 @@ tags: 计算机网络
 
 * [http/2 安利篇(一)](https://aotu.io/notes/2016/03/17/http2-char/)
 * [http/2 优化篇(二)](https://aotu.io/notes/2016/06/14/http2/index.html)
+* [谷歌的 http2 学习篇](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
