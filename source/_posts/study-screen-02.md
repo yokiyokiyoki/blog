@@ -1,5 +1,5 @@
 ---
-title: study-screen-02
+title: 用户可操作时间和页面总下载时间
 date: 2018-05-23 11:53:12
-tags:
+tags: 浏览器
 ---
