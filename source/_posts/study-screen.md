@@ -8,6 +8,8 @@ tags: 浏览器
 
 > 浏览器开始显示内容的时间。从我们输入网址，到浏览器出现第一个字符的时间
 
+* chrome 有自己的 api，window.chrome.loadTimes().firstPaintTime \* 1000 - window.performance.timing.navigationStart
+
 ## 如何计算
 
 通常认为浏览器开始渲染 body 标签或者解析完 head 标签的时刻就是页面白屏结束的时间
