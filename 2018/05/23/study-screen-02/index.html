@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="白屏时间 浏览器开始显示内容的时间。从我们输入网址，到浏览器出现第一个字符的时间  如何计算通常认为浏览器开始渲染 body 标签或者解析完 head 标签的时刻就是页面白屏结束的时间 123456789101112131415161718192021&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&quot;en&quot;&amp;gt;&amp;lt;head&amp;gt;  &amp;lt;meta charset=">
+<meta name="description" content="官方的一个浏览器从打开一个页面内部的一系列状态 用 performance.timing 的 api 就可以获取到各个阶段的 一般 start 和 end 间包括一个阶段 具体可以观察推荐阅读的那张图 navigationStart 到 responseEnd 之间是网络传输层面 domLoading 到 domComplete 是服务器传输回字节后浏览器的各种事件状态 domLoading do">
 <meta name="keywords" content="浏览器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="白屏和首屏时间">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/05/22/study-screen/index.html">
+<meta property="og:title" content="前端性能之用户可操作时间">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/05/23/study-screen-02/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="白屏时间 浏览器开始显示内容的时间。从我们输入网址，到浏览器出现第一个字符的时间  如何计算通常认为浏览器开始渲染 body 标签或者解析完 head 标签的时刻就是页面白屏结束的时间 123456789101112131415161718192021&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&quot;en&quot;&amp;gt;&amp;lt;head&amp;gt;  &amp;lt;meta charset=">
+<meta property="og:description" content="官方的一个浏览器从打开一个页面内部的一系列状态 用 performance.timing 的 api 就可以获取到各个阶段的 一般 start 和 end 间包括一个阶段 具体可以观察推荐阅读的那张图 navigationStart 到 responseEnd 之间是网络传输层面 domLoading 到 domComplete 是服务器传输回字节后浏览器的各种事件状态 domLoading do">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-23T03:39:39.166Z">
+<meta property="og:updated_time" content="2018-05-23T09:09:01.127Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="白屏和首屏时间">
-<meta name="twitter:description" content="白屏时间 浏览器开始显示内容的时间。从我们输入网址，到浏览器出现第一个字符的时间  如何计算通常认为浏览器开始渲染 body 标签或者解析完 head 标签的时刻就是页面白屏结束的时间 123456789101112131415161718192021&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html lang=&quot;en&quot;&amp;gt;&amp;lt;head&amp;gt;  &amp;lt;meta charset=">
+<meta name="twitter:title" content="前端性能之用户可操作时间">
+<meta name="twitter:description" content="官方的一个浏览器从打开一个页面内部的一系列状态 用 performance.timing 的 api 就可以获取到各个阶段的 一般 start 和 end 间包括一个阶段 具体可以观察推荐阅读的那张图 navigationStart 到 responseEnd 之间是网络传输层面 domLoading 到 domComplete 是服务器传输回字节后浏览器的各种事件状态 domLoading do">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/05/22/study-screen/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/05/23/study-screen-02/"/>
 
 
 
 
 
-  <title>白屏和首屏时间 | Blog</title>
+  <title>前端性能之用户可操作时间 | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/22/study-screen/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/23/study-screen-02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">白屏和首屏时间</h1>
+          <h1 class="post-title" itemprop="name headline">前端性能之用户可操作时间</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T21:23:28+08:00">
-                2018-05-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T11:53:12+08:00">
+                2018-05-23
               </time>
             
 
@@ -334,34 +334,37 @@
       
 
       
-        <h1 id="白屏时间"><a href="#白屏时间" class="headerlink" title="白屏时间"></a>白屏时间</h1><blockquote>
-<p>浏览器开始显示内容的时间。从我们输入网址，到浏览器出现第一个字符的时间</p>
+        <h1 id="官方的一个浏览器从打开一个页面内部的一系列状态"><a href="#官方的一个浏览器从打开一个页面内部的一系列状态" class="headerlink" title="官方的一个浏览器从打开一个页面内部的一系列状态"></a>官方的一个浏览器从打开一个页面内部的一系列状态</h1><ul>
+<li>用 performance.timing 的 api 就可以获取到各个阶段的</li>
+<li>一般 start 和 end 间包括一个阶段</li>
+<li>具体可以观察推荐阅读的那张图</li>
+<li>navigationStart 到 responseEnd 之间是网络传输层面</li>
+<li>domLoading 到 domComplete 是服务器传输回字节后浏览器的各种事件状态<ul>
+<li>domLoading</li>
+<li>domInteractive(dom tree 构建完成)</li>
+<li>domContentLoadedEventStart(触发的是 domContentLoaded 事件，这个很重要，network 都有体现)</li>
+<li>domContentLoadedEventEnd</li>
+<li>domComplete（资源全部加载完成，包括异步 js）</li>
+<li>loadEventStart（触发 load 事件）</li>
+<li>loadEventEnd</li>
+</ul>
+</li>
+</ul>
+<h1 id="用户可操作时间"><a href="#用户可操作时间" class="headerlink" title="用户可操作时间"></a>用户可操作时间</h1><blockquote>
+<p>用户可以进行正常的事件输入交互操作</p>
 </blockquote>
-<h2 id="如何计算"><a href="#如何计算" class="headerlink" title="如何计算"></a>如何计算</h2><p>通常认为浏览器开始渲染 body 标签或者解析完 head 标签的时刻就是页面白屏结束的时间</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">  &lt;title&gt;白屏&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">  &lt;script type="text/</span>javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    // 不兼容performance.timing 的浏览器，如IE8</span></span><br><span class="line"><span class="string">    window.pageStartTime = Date.now();</span></span><br><span class="line"><span class="string">  &lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 页面 CSS 资源 --&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="</span>stylesheet<span class="string">" href="</span>common.css<span class="string">"&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="</span>stylesheet<span class="string">" href="</span>page.css<span class="string">"&gt;</span></span><br><span class="line"><span class="string">  &lt;script type="</span>text/javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    // 白屏时间结束点</span></span><br><span class="line"><span class="string">    window.firstPaint = Date.now();</span></span><br><span class="line"><span class="string">  &lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 页面内容 --&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>如果可以使用 performance api 的时候，白屏时间=firstPaint - performance.timing.navigationStart（浏览器打开网站开始）</li>
-<li>如果不可以使用，比如 ie8，那么白屏时间= firstPaint - pageStartTime</li>
+<li>就是 domContentLoadedEventEnd-navigationStart 的时间</li>
+<li>jq 的$()就是指 domContentLoaded 事件</li>
 </ul>
-<h1 id="首屏时间"><a href="#首屏时间" class="headerlink" title="首屏时间"></a>首屏时间</h1><blockquote>
-<p>指用户打开网站开始，到浏览器首屏内容渲染完成的时间。一般来说，5s 内优秀，10 之内可以接受，10s 以上不可以接受</p>
-</blockquote>
-<h2 id="怎么计算"><a href="#怎么计算" class="headerlink" title="怎么计算"></a>怎么计算</h2><blockquote>
-<p>1.首屏模块标签标记法，2.统计首屏内加载最慢的图片的时间，3.自定义首屏内容计算法</p>
-</blockquote>
-<h3 id="首屏模块标签标记法"><a href="#首屏模块标签标记法" class="headerlink" title="首屏模块标签标记法"></a>首屏模块标签标记法</h3><ul>
-<li>适用于首屏内容不需要通过拉取数据才能生存以及页面不考虑图片等资源加载的情况。</li>
-<li>但是现在大多数情况都需要通过接口拉数据才能完整显示，所以这个不太使用</li>
+<h1 id="一些知识点"><a href="#一些知识点" class="headerlink" title="一些知识点"></a>一些知识点</h1><ul>
+<li>document 到达 domInteractiv 状态的时候，代表 dom 树的构建完成</li>
+<li>浏览器拿到文档首字节之后，也就是 responseEnd 之后。浏览器将 html 解析并构建成 DOM tree，同时将 css 解析成 cssom，这个过程是同步的</li>
+<li>如果有 js 参与，因为同步的 js 可以改写文档在任何节点，所以 domtree 一旦碰上同步的 script 标签就会停止构建</li>
+<li>js 能查询 dom 对象的可被计算的样式，cssom 构建完之后才轮到 js 执行，但是这是指 css 文件在 js 之前，如果 css 在 js 之后，不会阻塞 js</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">  &lt;title&gt;首屏&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">  &lt;script type="text/</span>javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    window.pageStartTime = Date.now();</span></span><br><span class="line"><span class="string">  &lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="</span>stylesheet<span class="string">" href="</span>common.css<span class="string">"&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="</span>stylesheet<span class="string">" href="</span>page.css<span class="string">"&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 首屏可见模块1 --&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="</span><span class="built_in">module</span><span class="number">-1</span><span class="string">"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 首屏可见模块2 --&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="</span><span class="built_in">module</span><span class="number">-2</span><span class="string">"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;script type="</span>text/javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    window.firstScreen = Date.now();</span></span><br><span class="line"><span class="string">  &lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 首屏不可见模块3 --&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="</span><span class="built_in">module</span><span class="number">-3</span><span class="string">"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;!-- 首屏不可见模块4 --&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="</span><span class="built_in">module</span><span class="number">-4</span><span class="string">"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="统计首屏内图片完成加载的时间"><a href="#统计首屏内图片完成加载的时间" class="headerlink" title="统计首屏内图片完成加载的时间"></a>统计首屏内图片完成加载的时间</h3><ul>
-<li>通常首屏内容加载最慢的就是图片资源，因此我们会把首屏内加载最慢的图片的时间当作首屏时间</li>
-<li>遍历首屏内所有图片标签，并且监听所有图片标签的 onload 事件，最终遍历图片标签的加载时间的最大值，然后用这个最大值减去 navigationStart</li>
-</ul>
-<h3 id="自定义模块内容计算法"><a href="#自定义模块内容计算法" class="headerlink" title="自定义模块内容计算法"></a>自定义模块内容计算法</h3><ul>
-<li>由于统计图片加载时间比较复杂，通常会自定义模块内容，来简化</li>
-<li>忽略图片等资源加载情况，只考虑页面主要 dom</li>
-<li>只考虑首屏的主要模块，而不是严格意义首屏线上的所有内容</li>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000005784687" target="_blank" rel="noopener">前端性能的几个基础指标</a></li>
 </ul>
 
       
@@ -393,8 +396,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/05/22/study-http2/" rel="next" title="HTTP/2的学习">
-                <i class="fa fa-chevron-left"></i> HTTP/2的学习
+              <a href="/blog/2018/05/22/study-screen-01/" rel="next" title="白屏和首屏时间">
+                <i class="fa fa-chevron-left"></i> 白屏和首屏时间
               </a>
             
           </div>
@@ -482,7 +485,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -528,7 +531,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#白屏时间"><span class="nav-number">1.</span> <span class="nav-text">白屏时间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何计算"><span class="nav-number">1.1.</span> <span class="nav-text">如何计算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#首屏时间"><span class="nav-number">2.</span> <span class="nav-text">首屏时间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么计算"><span class="nav-number">2.1.</span> <span class="nav-text">怎么计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首屏模块标签标记法"><span class="nav-number">2.1.1.</span> <span class="nav-text">首屏模块标签标记法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#统计首屏内图片完成加载的时间"><span class="nav-number">2.1.2.</span> <span class="nav-text">统计首屏内图片完成加载的时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义模块内容计算法"><span class="nav-number">2.1.3.</span> <span class="nav-text">自定义模块内容计算法</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#官方的一个浏览器从打开一个页面内部的一系列状态"><span class="nav-number">1.</span> <span class="nav-text">官方的一个浏览器从打开一个页面内部的一系列状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用户可操作时间"><span class="nav-number">2.</span> <span class="nav-text">用户可操作时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些知识点"><span class="nav-number">3.</span> <span class="nav-text">一些知识点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">4.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
             
 
           </div>
