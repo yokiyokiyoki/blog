@@ -43,6 +43,14 @@ tags: 浏览器
 * 通过 Node 直出，将传统的三次 http 请求简化成一次 http 请求，降低首屏渲染时间
 * seo：服务端渲染对搜索引擎的爬取有着天然的优势
 
+# 同构的实现策略
+
+> 要实现同构，首先要正视一点，全盘同构是没有意义的。服务器端和浏览器端是两个不同的平台和环境，他们专注于解决各自的问题。
+
+* 能够同构的代码，直接复用
+* 无法同构的代码，封装成形式同构（具体看[react 同构与性能极致优化](http://web.jobbole.com/93421/)）
+  * 比如 User-Agent 字符串，浏览器端直接 navigation.userAgent，服务器端需要 req.get('user-agent')
+
 # 推荐阅读
 
 * [精读前后端渲染之争](https://github.com/camsong/blog/issues/8)
