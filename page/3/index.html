@@ -266,6 +266,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-Graphical-algorithm02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/06/study-Graphical-algorithm02/" itemprop="url">读《图解算法》02-数组,链表和选择排序</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T16:40:38+08:00">
+                2018-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="数组和链表"><a href="#数组和链表" class="headerlink" title="数组和链表"></a>数组和链表</h2><blockquote>
+<p>当需要将数据存储到内存的时候，我们请求计算机提供存储空间，计算机给我们一个存储地址。需要存储多项数据的时候，有两种基本方式——数组和链表。</p>
+</blockquote>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><h4 id="想象画面"><a href="#想象画面" class="headerlink" title="想象画面"></a>想象画面</h4><blockquote>
+<p>java 中一开始要确定数组的大小，不是没有道理的…</p>
+</blockquote>
+<ul>
+<li>两个人去电影院看电影，找到地方就座后，又来了一个朋友，但是你们下一个位置是别人占用了，你们三个是好朋友，没理由分开，只得挪去其他有三个位置的地方。</li>
+<li>所以来了新朋友是很麻烦的，但是有一种解决办法就是预先买了 10 个座位的，但是这样会浪费资源，要是超过 10 个还是转移（数组插入很麻烦）</li>
+<li>但是我想知道另外一个朋友坐哪里，这是很简单的，挨在一起（数组查找快）</li>
+<li>另一个朋友要走的话也很麻烦，因为剩下的朋友要往前来挨在一起坐，反正不管怎样大家是个整体，坐在一起就对了（数组删除很麻烦）</li>
+</ul>
+<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><blockquote>
+<p>链表和数组不一样，一定要顺序排着队这样。链表的元素可以存储再内存中的任何地方，当前元素存储存储着下一个元素的地址，从而使得一系列随机的内存地址串在了一起</p>
+</blockquote>
+<h4 id="想象画面-1"><a href="#想象画面-1" class="headerlink" title="想象画面"></a>想象画面</h4><ul>
+<li>寻宝游戏：前往第一个地址，那有宝箱，打开后是下一个宝箱的地址。</li>
+<li>但是我直接想要最后一个宝箱，是无法做到的，是要一个个查找直到倒数第二个才得到最后一个宝箱的位置（链表查找效率很低）</li>
+<li>移走一个宝箱很容易，直接把上一个宝箱的地址指向下一个的地址就可以了（链表删除很快）</li>
+<li>如果是五个人去看一部很火的电影，但是根本就无法坐一起，但是换做链表，就可以分开来做，所以这个来了新朋友一点也不麻烦（链表的优势就是插入）</li>
+</ul>
+<h3 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a>运行时</h3><blockquote>
+<p>这里是最差的情况，比如数组插入一个刚好就要移走（因为原来已经满了）</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">数组</th>
+<th style="text-align:right">链表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>插入</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>读取</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>删除</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>O（n）是线性时间，O（1）是常量时间</li>
+</ul>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>qq 音乐列表里面记录了每个音乐的播放次数，你要对它进行排序，从多到少</li>
+<li>一种办法是遍历这个列表，然后找到播放次数最多的，然后添加到一个新列表</li>
+<li>然后删除刚刚那个次数最多的，再继续这样找到第二多的</li>
+<li>需要检查的就越来越少</li>
+</ul>
+<h3 id="算法复杂度（运行时）"><a href="#算法复杂度（运行时）" class="headerlink" title="算法复杂度（运行时）"></a>算法复杂度（运行时）</h3><ul>
+<li>第一次每个元素都查看一次，那就是执行 n 次</li>
+<li>第二次执行 n-1 次</li>
+<li>依次查看最后得出，要执行 n（n-1）（n-2）..2*1=n*1/2*n</li>
+<li>但是大 O 表示法省略常数，所以最后是 O(n^2)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-Graphical-algorithm01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1737,171 +1921,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/19/study-http-tcp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/04/19/study-http-tcp/" itemprop="url">浅谈TCP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T15:33:27+08:00">
-                2018-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><blockquote>
-<p>tcp 协议对应于传输层，而 HTTP 协议对应于应用层。</p>
-</blockquote>
-<ul>
-<li>http 协议基于 tcp 协议</li>
-</ul>
-<h3 id="TCP-IP-协议分层模型"><a href="#TCP-IP-协议分层模型" class="headerlink" title="TCP/IP 协议分层模型"></a>TCP/IP 协议分层模型</h3><ul>
-<li>物理层将二进制的 0 和 1 和电压高低，光的闪灭和电波的强弱信号进行转换</li>
-<li>链路层代表驱动</li>
-<li>网络层<ul>
-<li>使用 IP 协议，IP 协议基于 IP 转发分包数据</li>
-<li>ip 协议是个不可靠协议，不会重发</li>
-<li>ip 协议发送失败会使用 icmp 协议通知失败</li>
-<li>ARP 解析 ip 中的 mac 地址，mac 地址由网卡出厂提供</li>
-<li>ip 还隐含链路层的功能，不管双方底层的链路层是啥，都能通信</li>
-</ul>
-</li>
-<li>传输层<ul>
-<li>通用的 tcp 和 udp 协议<ul>
-<li>tcp 协议面向有连接，能正确处理丢包，传输顺序错乱的问题，但是为了建立与断开链接，需要至少七次的发包收包，资源浪费</li>
-<li>udp 面向无连接，不管对方有没有收到，如果要得到通知，需要通过应用层</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>会话层<ul>
-<li>tcp/ip 分层中，会话层，表示层，应用层集中在一起</li>
-<li>网络管理通过 snmp 协议</li>
-</ul>
-</li>
-</ul>
-<h3 id="TCP-三次握手，建立连接"><a href="#TCP-三次握手，建立连接" class="headerlink" title="TCP 三次握手，建立连接"></a>TCP 三次握手，建立连接</h3><ul>
-<li>客户端-发送带有 syn 标志的数据包——一次握手-服务端</li>
-<li>服务端-发送带有 syn/ack 标志的数据包——二次握手-客户端</li>
-<li>客户端-发送带有 ack 标志的数据包-三次握手-服务端</li>
-</ul>
-<h3 id="TCP-四次挥手，断开连接"><a href="#TCP-四次挥手，断开连接" class="headerlink" title="TCP 四次挥手，断开连接"></a>TCP 四次挥手，断开连接</h3><ul>
-<li>客户端-发送一个 fin，用来关闭客户端到服务器的数据传送</li>
-<li>服务器-收到这个 fin，发回一个 ack，确认序号为收到的序号为 1。和 syn 一样，一个 fin 将占用一个序号</li>
-<li>服务器-关闭与客户端的连接，发送一个 fin 给客户端</li>
-<li>客户端-发回 ack 报文确定，并将确认序号设置为收到序号加 1</li>
-</ul>
-<h3 id="TCP-和-UDP"><a href="#TCP-和-UDP" class="headerlink" title="TCP 和 UDP"></a>TCP 和 UDP</h3><ul>
-<li>tcp 就好比在微信聊天，你说一句我说一句</li>
-<li>udp 就好比我找你，直接就打电话，简单粗暴</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1956,7 +1975,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
