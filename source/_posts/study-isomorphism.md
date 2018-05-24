@@ -40,6 +40,11 @@ tags: 浏览器
 
 # 为什么要同构
 
+* 通过 Node 直出，将传统的三次 http 请求简化成一次 http 请求，降低首屏渲染时间
+* seo：服务端渲染对搜索引擎的爬取有着天然的优势
+
 # 推荐阅读
 
 * [精读前后端渲染之争](https://github.com/camsong/blog/issues/8)
+* [同构 mvc 的前端实践](https://github.com/Lucifier129/Lucifier129.github.io/issues/14)
+* [react 同构与性能极致优化](http://web.jobbole.com/93421/)
