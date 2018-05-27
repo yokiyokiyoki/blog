@@ -47,13 +47,13 @@ graph["b"] = {};
 graph["b"]["a"] = 3;
 graph["b"]["fin"] = 5;
 graph["fin"] = {}; //终点没有任何邻居
-//
+//开销表
 costs = {};
 costs["a"] = 6;
 costs["b"] = 2;
 costs["fin"] = infinity;
 
-//
+//父节点表
 parents = {};
 parents["a"] = "start";
 parents["b"] = "start";
@@ -70,4 +70,14 @@ while node is not None:  //←------这个while循环在所有节点都被处理
             parents[n] = node  //←------同时将该邻居的父节点设置为当前节点
     processed.append(node)  //←------将当前节点标记为处理过
     node = find_lowest_cost_node(costs)  //←------找出接下来要处理的节点，并循环
+//找出最便宜的节点且没处理过的函数
+def find_lowest_cost_node(costs):
+    lowest_cost = float("inf")
+    lowest_cost_node = None
+    for node in costs:  ←------遍历所有的节点
+        cost = costs[node]
+        if cost < lowest_cost and node not in processed:  ←------如果当前节点的开销更低且未处理过，
+            lowest_cost = cost  ←------就将其视为开销最低的节点
+            lowest_cost_node = node
+    return lowest_cost_node
 ```
