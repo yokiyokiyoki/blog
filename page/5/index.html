@@ -266,6 +266,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/02/12/fe-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/02/12/fe-error/" itemprop="url">前端错误收集</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-12T11:27:51+08:00">
+                2018-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="为什么要进行前端的错误进行监控"><a href="#为什么要进行前端的错误进行监控" class="headerlink" title="为什么要进行前端的错误进行监控"></a>为什么要进行前端的错误进行监控</h2><ul>
+<li>现在网页的要求已经趋近于原生的应用，几乎都是有着大量交互的。面对各种用户，不同的浏览器等等出现的不同问题，有必要进行及时的监控，毕竟有些问题复现也是挺困难的。</li>
+</ul>
+<h2 id="捕获错误的方法"><a href="#捕获错误的方法" class="headerlink" title="捕获错误的方法"></a>捕获错误的方法</h2><ul>
+<li>try..catch 之前说过，但是它只能在 try 的块里运行才可以捕捉错误，无法捕捉全局的错误事件</li>
+<li>window.onerror 可以用来捕捉全局的错误,但是它无法捕捉异步错误，我们在 ajax 模块统一埋点</li>
+</ul>
+<h3 id="window-onerror"><a href="#window-onerror" class="headerlink" title="window.onerror"></a>window.onerror</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onerror=<span class="function"><span class="keyword">function</span>(<span class="params">message,url,linNo,columnNo,error</span>)</span></span><br><span class="line"><span class="function"><span class="title">message</span>:错误信息</span></span><br><span class="line"><span class="function"><span class="title">url</span>:发生错误对应的脚本路径，比如是<span class="title">bundle</span>.<span class="title">js</span></span></span><br><span class="line"><span class="function"><span class="title">lineNo</span>:错误发生的行号</span></span><br><span class="line"><span class="function"><span class="title">colunmnNo</span>:错误发生的列号</span></span><br><span class="line"><span class="function"><span class="title">error</span>：具体的<span class="title">error</span>对象，包含更加详细的错误调用堆栈信息</span></span><br></pre></td></tr></table></figure>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="Script-Error"><a href="#Script-Error" class="headerlink" title="Script Error"></a>Script Error</h3><blockquote>
+<p>现在我们一般都把资源放在 cdn 上，其他资源在本页面相当于跨域为什么会有这种设置，这是避免数据泄露到不安全的域中。如果我是银行页面，随便引入一个 js 资源，读取了账户密码，那可如何是好。</p>
+</blockquote>
+<h4 id="解决手段"><a href="#解决手段" class="headerlink" title="解决手段"></a>解决手段</h4><p>添加信任的域</p>
+<ul>
+<li>客户端的 script 添加 crossorigin，他的作用就是告诉浏览器，要加载一个其他域的资源，并且信任他</li>
+<li>服务端设置<strong>Acess-Control-Allow-Origin</strong>的响应头，可以直接设置为*，信任全部资源。cdn 资源应该全部加上 CORS 响应头。<blockquote>
+<p>如果我们使用 nginx 的话，可以像下面那样简单配置</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">     root /Users<span class="comment">/**;</span></span><br><span class="line"><span class="comment">     index  index.html index.htm;</span></span><br><span class="line"><span class="comment">     add_header "Access-Control-Allow-Origin" "*";</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="代码压缩"><a href="#代码压缩" class="headerlink" title="代码压缩"></a>代码压缩</h3><blockquote>
+<p>现代 web 工程都会直接压缩 js 代码，所以线上一般都是只有几行代码但是我们有 sourcemap，可以定位到源代码的位置。但是线上是没有这个东西，我们可以通过<a href="https://github.com/mozilla/source-map/" target="_blank" rel="noopener">sourcemap</a>这个工具来将压缩后的代码生成 sourcemap</p>
+</blockquote>
+<ul>
+<li>这里简单介绍一下生成 sourcemap 文件的方式</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uglifyjs --source-map 最终生成的map名称 --output 压缩文件名称 原文件名称</span><br></pre></td></tr></table></figure>
+<ul>
+<li>简单通过 soucemap 定位到源文件的真正行数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sourceMap = <span class="built_in">require</span>(<span class="string">"source-map"</span>);</span><br><span class="line"><span class="keyword">let</span> mapData = <span class="built_in">require</span>(<span class="string">"./test.json"</span>);</span><br><span class="line"><span class="keyword">let</span> consumer = <span class="keyword">new</span> sourceMap.SourceMapConsumer(mapData);</span><br><span class="line"><span class="keyword">let</span> info = consumer.originalPositionFor(&#123; <span class="attr">line</span>: <span class="number">1</span>, <span class="attr">column</span>: <span class="number">102</span> &#125;);</span><br><span class="line"><span class="built_in">console</span>.log(info); <span class="comment">//&#123; source: "test.js", line: 11, column: 6, name: "yoki" &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="推荐工具"><a href="#推荐工具" class="headerlink" title="推荐工具"></a>推荐工具</h2><blockquote>
+<p>由以上可以简单知道前端收集的原理了，但真正到线上肯定是不够的，这里有一些成熟的工具</p>
+</blockquote>
+<ul>
+<li><a href="https://sentry.io" target="_blank" rel="noopener">sentry</a></li>
+<li><a href="https://www.fundebug.com/" target="_blank" rel="noopener">fundebug</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>分享一篇干货<a href="http://web.jobbole.com/90033/" target="_blank" rel="noopener">如何设计一个前端监控系统</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/01/20/study-nginx2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1694,146 +1855,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/05/23/use-generator/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/05/23/use-generator/" itemprop="url">Generator函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T15:04:59+08:00">
-                2017-05-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h3><blockquote>
-<p>generator 是生成器。generator 可以看成是一个取号机，你拿一张票去向机器请求一个号码，你接受了你的号码之后，机器不会自动为你提供下一个。换句话说，取票机“暂停”直到另外一个人来请求另一个号码，此时它才会向后进行。</p>
-</blockquote>
-<h5 id="generator-函数的创建"><a href="#generator-函数的创建" class="headerlink" title="generator 函数的创建"></a>generator 函数的创建</h5><ul>
-<li>ES6 中用<code>function*</code>来创建生成器函数</li>
-<li>当想要 generator 产生一个值之后暂停执行，需要使用到<code>yield</code>（生成）关键字，有点类似于 return 关键字（都可以返回一个值），只是 yield 返回值之后 generator 函数会暂停运行</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//创建一个取号机</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>yield*</code>是委派至另一个生成器函数</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">anotherGenerator</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">generator</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> i;</span><br><span class="line">  <span class="keyword">yield</span>* anotherGenerator(i);</span><br><span class="line">  <span class="keyword">yield</span> i + <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = generator(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 11</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 13</span></span><br><span class="line"><span class="built_in">console</span>.log(gen.next().value); <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
-<h5 id="generator-函数的使用"><a href="#generator-函数的使用" class="headerlink" title="generator 函数的使用"></a>generator 函数的使用</h5><ul>
-<li><code>ticketGenerate()</code>不会马上执行它的主体，而是会返回一个这个生成器函数的迭代器对象</li>
-<li>当这个迭代器对象的 next 方法被调用时候，生成器函数的主体会执行到第一个 yield 表达式，该表达式定义了迭代器对象返回的值。</li>
-<li>next()返回一个对象：{value:1,done:false}，value 属性是产出的值，done 属性是表示生成器是否已经产出了它最后的值。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ticket = ticketGenerate(); <span class="comment">//返回一个生成器对象</span></span><br><span class="line">ticket.next(); <span class="comment">//&#123;value: 1, done: false&#125;</span></span><br></pre></td></tr></table></figure>
-<h5 id="影响-generator-的状态"><a href="#影响-generator-的状态" class="headerlink" title="影响 generator 的状态"></a>影响 generator 的状态</h5><ul>
-<li>next()的另一个妙用是可以给它传递值，它会被视为 generator 中的 yield 语句的结果对待。</li>
-<li>因此 next 是在 generator 运行过程中向其传递信息的方式。我们可以借此来重置取号机，将号码变为 0。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">ticketGenerator</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; <span class="literal">true</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> reset = <span class="keyword">yield</span> i;</span><br><span class="line">    <span class="keyword">if</span> (reset) &#123;</span><br><span class="line">      i = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> takeANumber = ticketGenerator();</span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//2</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next(<span class="literal">true</span>).value); <span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(takeANumber.next().value); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1888,7 +1909,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

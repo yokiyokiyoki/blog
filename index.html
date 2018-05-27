@@ -266,6 +266,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/27/study-hashtable-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/27/study-hashtable-01/" itemprop="url">读《图解算法》04-散列表（hash table）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-27T14:43:27+08:00">
+                2018-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="为什么散列表会出现"><a href="#为什么散列表会出现" class="headerlink" title="为什么散列表会出现"></a>为什么散列表会出现</h1><ul>
+<li>场景：如果超市买东西结账的时候，售货员在一个本子里查找价格</li>
+<li>如果是有序的（二分查找）还好，时间是 O（logn）,如果是无序（简单查找）的话，那就是 O（n）</li>
+<li>如果直接有一个 O(1)的查找速度就好了</li>
+</ul>
+<h1 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h1><blockquote>
+<p>将输入映射到数字</p>
+</blockquote>
+<ul>
+<li>一致性：输入 apple 时得到的是 4，那么每次输入 apple 都必须是 4</li>
+<li>不同性：不同的输入将得到不同的输出。如果输入 apple 和 yoki 都得到 4，那么这是一个不好的散列函数。</li>
+</ul>
+<h2 id="创造散列表"><a href="#创造散列表" class="headerlink" title="创造散列表"></a>创造散列表</h2><blockquote>
+<p>结合散列函数和数组</p>
+</blockquote>
+<ul>
+<li>创建一个空数组</li>
+<li>apple 输入到散列函数，输出 3，然后把 apple 的价格存储到数组索引 3</li>
+<li>接着各个类推，知道存完数组</li>
+<li>然后我们要找 apple 的价格，就把 apple 输入交给散列函数，得到 3 去数组里面找</li>
+</ul>
+<h1 id="散列表的经典应用"><a href="#散列表的经典应用" class="headerlink" title="散列表的经典应用"></a>散列表的经典应用</h1><blockquote>
+<p>查找，防止重复，用于缓存</p>
+</blockquote>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><ul>
+<li>被用于大海捞针的查找</li>
+<li>这个就不用细说了，类似的有 dns 解析</li>
+</ul>
+<h2 id="防止重复"><a href="#防止重复" class="headerlink" title="防止重复"></a>防止重复</h2><blockquote>
+<p>场景：负责一个投票站，每个人只能投一票，如何避免重复投票</p>
+</blockquote>
+<ul>
+<li>有一个方法是：有人来投票，就将它记录在一个投票名单里面，然后接下来的人都遍历这个投票名单，如果有就不能投票，但是这样就列表会越来越长，就会变慢</li>
+<li>另外一种就是散列表，超快</li>
+</ul>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><ul>
+<li>浏览器缓存的数据存储在散列表里面</li>
+<li>如果访问 facebook 的页面，会先检查散列表中是否存储了该页面</li>
+<li>如果不在缓存中，才去访问服务器，然后把数据放到缓存里，这样下次有人访问就可以直接命中缓存</li>
+</ul>
+<h1 id="冲突"><a href="#冲突" class="headerlink" title="冲突"></a>冲突</h1><blockquote>
+<p>事实上不可能不同的输入都能获得不同的值</p>
+</blockquote>
+<ul>
+<li>假设有一个数组包含 26 个位置，而我们使用的散列函数非常简单，按照字母表顺序分配位置</li>
+<li>apple 第一个，bear 第二个，接下来来了一个 banana，理应分到第二个，但是这个时候第二个位置已经是 bear 了</li>
+<li>这个就叫冲突，解决冲突的办法有很多，简单的就是在这个冲突的位置存储一个链表，bear 末尾的指针指向 banana</li>
+<li>所以散列函数很重要，好的散列函数将 key 均匀的映射到散列表的不同位置</li>
+</ul>
+<h2 id="如何避免冲突"><a href="#如何避免冲突" class="headerlink" title="如何避免冲突"></a>如何避免冲突</h2><ul>
+<li>较低的填装因子<ul>
+<li>散列表包含的元素数：位置总数就是填装因子</li>
+<li>越小越好，满了只能调整长度，换一个更长的数组</li>
+<li>一个不错的经验规则就是，一旦填装因子大于 0.7，那么就要调整散列表的长度</li>
+</ul>
+</li>
+<li>良好的散列函数<ul>
+<li>SHA 函数</li>
+</ul>
+</li>
+</ul>
+<h1 id="散列表性能如何"><a href="#散列表性能如何" class="headerlink" title="散列表性能如何"></a>散列表性能如何</h1><h2 id="平均情况"><a href="#平均情况" class="headerlink" title="平均情况"></a>平均情况</h2><ul>
+<li>查找，插入，删除都是 O（1）,常量时间</li>
+</ul>
+<h2 id="最糟糕情况"><a href="#最糟糕情况" class="headerlink" title="最糟糕情况"></a>最糟糕情况</h2><ul>
+<li>查找，插入，删除都是 O（1）,线性时间</li>
+</ul>
+<blockquote>
+<p>为什么会有两种情况，这是因为有了冲突可能会靠链表解决，n 个长度的链表，最好情况下没有冲突，就常量时间</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/24/study-isomorphism/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -396,6 +585,7 @@
 <li><a href="https://github.com/camsong/blog/issues/8" target="_blank" rel="noopener">精读前后端渲染之争</a></li>
 <li><a href="https://github.com/Lucifier129/Lucifier129.github.io/issues/14" target="_blank" rel="noopener">同构 mvc 的前端实践</a></li>
 <li><a href="http://web.jobbole.com/93421/" target="_blank" rel="noopener">react 同构与性能极致优化</a></li>
+<li><a href="https://juejin.im/post/5b063962f265da0ddb63dac3?utm_medium=fe&amp;utm_source=weixinqun" target="_blank" rel="noopener">解密 Vue SSR</a></li>
 </ul>
 
           
@@ -1721,134 +1911,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/13/study-https-03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/13/study-https-03/" itemprop="url">加密传输之加盐</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T20:24:03+08:00">
-                2018-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="加盐提高安全性"><a href="#加盐提高安全性" class="headerlink" title="加盐提高安全性"></a>加盐提高安全性</h2><blockquote>
-<p>盐：一个随机的字符串，往明文密码和一个随机的字符串拼接在一起</p>
-</blockquote>
-<p>为了应对黑客们用彩虹表破解密码，我们可以先往明文密码加盐，然后再对加盐之后的密码用哈希算法加密。由于盐在密码校验的时候还要用到，因此通常盐和密码的哈希值是存储在一起的。</p>
-<p>采用加盐的哈希算法对密码加密，要确保要往每个密码里添加随机的唯一的盐，而不是让所有密码共享一样的盐。</p>
-<p>虽然加盐的算法能有效应对彩虹表的破解法，但它的安全级别并不高，因为计算哈希值耗时极短，黑客仍然可以用穷举法来破解，只是增加了一些耗时。</p>
-<h2 id="用-BCrypt-或者-PBKDF2-增加破解的难度"><a href="#用-BCrypt-或者-PBKDF2-增加破解的难度" class="headerlink" title="用 BCrypt 或者 PBKDF2 增加破解的难度"></a>用 BCrypt 或者 PBKDF2 增加破解的难度</h2><p>为了应对暴力破解法，我们需要非常耗时的而不是非常高效的哈希算法。BCrypt 和 PBKDF2 算法应运而生。</p>
-<p>这两个算法最大的特点是我们可以通过参数设置重复计算的次数，重复计算的次数越多耗时越长。如果计算一个哈希值需要耗时 1 秒甚至更多，那么黑客们采用暴利法破解密码将几乎不再可能。破解一个 6 位纯数字密码需要耗时 11.5 天，更不要说高安全级别的密码了。</p>
-<p>摘自<a href="https://zhuanlan.zhihu.com/p/36603247" target="_blank" rel="noopener">如何加密传输和存储用户密码</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1903,7 +1965,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
