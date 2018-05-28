@@ -74,10 +74,10 @@ while node is not None:  //←------这个while循环在所有节点都被处理
 def find_lowest_cost_node(costs):
     lowest_cost = float("inf")
     lowest_cost_node = None
-    for node in costs:  ←------遍历所有的节点
+    for node in costs: // ←------遍历所有的节点
         cost = costs[node]
-        if cost < lowest_cost and node not in processed:  ←------如果当前节点的开销更低且未处理过，
-            lowest_cost = cost  ←------就将其视为开销最低的节点
+        if cost < lowest_cost and node not in processed:  //←------如果当前节点的开销更低且未处理过，
+            lowest_cost = cost // ←------就将其视为开销最低的节点
             lowest_cost_node = node
     return lowest_cost_node
 ```
