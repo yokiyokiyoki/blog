@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="css," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="云在青天水在瓶">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/tags/css-动画/index.html">
+<meta name="description" content="什么是 FC formatting context 的缩写，格式上下文   是 css2.1 的一个规范 是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用 css2.1 定义了两个格式上下文 BFC（block） IFC（inline）   css3 定义了两个格式上下文 GFC(grid) FFC(flex)    概念 block-leve">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css中的四种fc（格式上下文）">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/05/28/study-formatting-context/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="云在青天水在瓶">
+<meta property="og:description" content="什么是 FC formatting context 的缩写，格式上下文   是 css2.1 的一个规范 是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用 css2.1 定义了两个格式上下文 BFC（block） IFC（inline）   css3 定义了两个格式上下文 GFC(grid) FFC(flex)    概念 block-leve">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-29T04:38:32.365Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
-<meta name="twitter:description" content="云在青天水在瓶">
+<meta name="twitter:title" content="css中的四种fc（格式上下文）">
+<meta name="twitter:description" content="什么是 FC formatting context 的缩写，格式上下文   是 css2.1 的一个规范 是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用 css2.1 定义了两个格式上下文 BFC（block） IFC（inline）   css3 定义了两个格式上下文 GFC(grid) FFC(flex)    概念 block-leve">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/tags/css-动画/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/05/28/study-formatting-context/"/>
 
 
 
 
 
-  <title>标签: css 动画 | Blog</title>
+  <title>css中的四种fc（格式上下文） | Blog</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -251,82 +253,211 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>css 动画<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/28/study-formatting-context/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/blog/2017/12/13/fps/" itemprop="url">
-              
-                <span itemprop="name">动画了解一下（二）</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">css中的四种fc（格式上下文）</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-13T11:23:45+08:00"
-              content="2017-12-13" >
-          12-13
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-28T11:47:47+08:00">
+                2018-05-28
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2017/11/23/study-animate/" itemprop="url">
-              
-                <span itemprop="name">动画了解一下(一)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-23T14:32:05+08:00"
-              content="2017-11-23" >
-          11-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <h1 id="什么是-FC"><a href="#什么是-FC" class="headerlink" title="什么是 FC"></a>什么是 FC</h1><blockquote>
+<p>formatting context 的缩写，格式上下文</p>
+</blockquote>
+<ul>
+<li>是 css2.1 的一个规范</li>
+<li>是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用</li>
+<li>css2.1 定义了两个格式上下文<ul>
+<li>BFC（block）</li>
+<li>IFC（inline）</li>
+</ul>
+</li>
+<li>css3 定义了两个格式上下文<ul>
+<li>GFC(grid)</li>
+<li>FFC(flex)</li>
+</ul>
+</li>
+</ul>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><ul>
+<li>block-level boxes:display 属性值为’block’，‘list-item’,‘table’会生成一个 block-level box，这样盒子会参与到 bfc（一种布局方式）中</li>
+<li>containing block:在浏览器内，想要把一个元素画出来，至少要知道定位和尺寸。定位有三种，无论哪一种都要先找到所在的 containing block，相当于一个大箱子里面摆很多小盒子，小盒子怎么摆取决于大箱子</li>
+</ul>
+<h1 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h1><blockquote>
+<p>是一个独立的渲染区域，只有 block-level boxes 参与，规定了内部的 block-level box 如何布局，并且与这个区域外部毫不相干。</p>
+</blockquote>
+<h2 id="布局规则"><a href="#布局规则" class="headerlink" title="布局规则"></a>布局规则</h2><ul>
+<li>内部的 box 会在垂直方向一个接着一个的放置</li>
+<li>box 垂直方向的距离由 margin 决定，属于同一个 BFC 的两个相邻 box 的 margin 会发生重叠</li>
+<li>bfc 的区域不会与 float box 重叠（可以用来实现两栏布局）</li>
+<li>bfc 就是页面上一个隔离的独立容器，容器里面的子元素不会影响到外面的元素</li>
+</ul>
+<h2 id="如何触发"><a href="#如何触发" class="headerlink" title="如何触发"></a>如何触发</h2><ul>
+<li>根元素（body）</li>
+<li>float 属性不为 none</li>
+<li>position 为 abs 或者 fixed</li>
+<li>display 为 inline-block, table-cell, table-caption(表格相关的)</li>
+<li>在 BFC 中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）著作权归作者所有。</li>
+<li>overflow 不为 visible</li>
+</ul>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><ul>
+<li><a href="https://blog.csdn.net/web_hwg/article/details/78470765" target="_blank" rel="noopener">理解 BFC 的原理及其作用</a></li>
+<li><a href="https://www.w3cplus.com/css/understanding-bfc-and-margin-collapse.html" target="_blank" rel="noopener">深入理解 BFC 和 Margin Collapse</a></li>
+<li><a href="https://www.w3cplus.com/css/understanding-block-formatting-contexts-in-css.html" target="_blank" rel="noopener">理解 css 中的 bfc</a></li>
+</ul>
+<h1 id="IFC"><a href="#IFC" class="headerlink" title="IFC"></a>IFC</h1><blockquote>
+<p>内联格式化上下文</p>
+</blockquote>
+<h2 id="如何触发-1"><a href="#如何触发-1" class="headerlink" title="如何触发"></a>如何触发</h2><ul>
+<li>元素满足 inline-level box</li>
+</ul>
+<h2 id="布局特点"><a href="#布局特点" class="headerlink" title="布局特点"></a>布局特点</h2><ul>
+<li>与 BFC 的区别是，水平方向的</li>
+<li>内部元素全是 inline-level</li>
+<li>如果由一个子节点是 block-level，父节点就要生成 BFC，但是 inline 元素怎么放进 BFC（浏览器会生成匿名盒子来容纳这些 inline 元素）</li>
+<li>IFC 中时不可能有块级元素的，当插入块级元素时（如 p 中插入 div）会产生两个匿名块与 div 分隔开，即产生两个 IFC，每个 IFC 对外表现为块级元素，与 div 垂直排列。</li>
+<li>每一行的多个内联元素都会生成同一个 line-box（线框）</li>
+<li>计算行框里的各行内级框的高度。对于置换元素、行内块元素、行内表格元素来说，这是边界框的高度，对于行内框来说，这是其 ‘line-height’。</li>
+</ul>
+<h2 id="具体作用"><a href="#具体作用" class="headerlink" title="具体作用"></a>具体作用</h2><ul>
+<li>水平居中：当一个块要在环境中水平居中时，设置其为 inline-block 则会在外层产生 IFC，通过设置父容器 text-align:center 则可以使其水平居中。</li>
+<li>垂直居中：创建一个 IFC，用其中一个元素撑开父元素的高度，然后设置其 vertical-align:middle，其他行内元素则可以在此父元素下垂直居中。</li>
+</ul>
+<h2 id="推荐阅读-1"><a href="#推荐阅读-1" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="https://www.bbsmax.com/A/rV573pX5PD/" target="_blank" rel="noopener">浅析 CSS 中的 BFC 和 IFC</a></li>
+<li><a href="https://segmentfault.com/a/1190000008723748" target="_blank" rel="noopener">line box，inline box 及 vertical-align 分析</a></li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/05/27/study-DijKstra/" rel="next" title="读《图解算法》06-狄克斯特拉算法">
+                <i class="fa fa-chevron-left"></i> 读《图解算法》06-狄克斯特拉算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -334,6 +465,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -354,8 +489,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -374,7 +518,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -410,6 +554,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是-FC"><span class="nav-number">1.</span> <span class="nav-text">什么是 FC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BFC"><span class="nav-number">3.</span> <span class="nav-text">BFC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#布局规则"><span class="nav-number">3.1.</span> <span class="nav-text">布局规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何触发"><span class="nav-number">3.2.</span> <span class="nav-text">如何触发</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">4.</span> <span class="nav-text">推荐阅读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IFC"><span class="nav-number">5.</span> <span class="nav-text">IFC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何触发-1"><span class="nav-number">5.1.</span> <span class="nav-text">如何触发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布局特点"><span class="nav-number">5.2.</span> <span class="nav-text">布局特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体作用"><span class="nav-number">5.3.</span> <span class="nav-text">具体作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读-1"><span class="nav-number">5.4.</span> <span class="nav-text">推荐阅读</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -550,6 +710,10 @@
 
 
   
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
