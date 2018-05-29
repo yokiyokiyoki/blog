@@ -38,7 +38,7 @@ tags: css
 * 根元素（body）
 * float 属性不为 none
 * position 为 abs 或者 fixed
-* display 为 inline-block, flex, inline-flex,table-cell, table-caption(表格相关的)
+* display 为 inline-block, table-cell, table-caption(表格相关的)
 * 在 BFC 中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）著作权归作者所有。
 * overflow 不为 visible
 
@@ -46,3 +46,31 @@ tags: css
 
 * [理解 BFC 的原理及其作用](https://blog.csdn.net/web_hwg/article/details/78470765)
 * [深入理解 BFC 和 Margin Collapse](https://www.w3cplus.com/css/understanding-bfc-and-margin-collapse.html)
+* [理解 css 中的 bfc](https://www.w3cplus.com/css/understanding-block-formatting-contexts-in-css.html)
+
+# IFC
+
+> 内联格式化上下文
+
+## 如何触发
+
+* 元素满足 inline-level box
+
+## 布局特点
+
+* 与 BFC 的区别是，水平方向的
+* 内部元素全是 inline-level
+* 如果由一个子节点是 block-level，父节点就要生成 BFC，但是 inline 元素怎么放进 BFC（浏览器会生成匿名盒子来容纳这些 inline 元素）
+* IFC 中时不可能有块级元素的，当插入块级元素时（如 p 中插入 div）会产生两个匿名块与 div 分隔开，即产生两个 IFC，每个 IFC 对外表现为块级元素，与 div 垂直排列。
+* 每一行的多个内联元素都会生成同一个 line-box（线框）
+* 计算行框里的各行内级框的高度。对于置换元素、行内块元素、行内表格元素来说，这是边界框的高度，对于行内框来说，这是其 ‘line-height’。
+
+## 具体作用
+
+* 水平居中：当一个块要在环境中水平居中时，设置其为 inline-block 则会在外层产生 IFC，通过设置父容器 text-align:center 则可以使其水平居中。
+* 垂直居中：创建一个 IFC，用其中一个元素撑开父元素的高度，然后设置其 vertical-align:middle，其他行内元素则可以在此父元素下垂直居中。
+
+## 推荐阅读
+
+* [浅析 CSS 中的 BFC 和 IFC](https://www.bbsmax.com/A/rV573pX5PD/)
+* [line box，inline box 及 vertical-align 分析](https://segmentfault.com/a/1190000008723748)
