@@ -46,7 +46,7 @@ function getURL(url) {
 * Promise 的实例方法有两个：then 和 catch，这个两个方法都返回新的 Promise 对象
 * then 有两个参数。then(onfilled,onrejected)，第一个是参数值 resolve 来填充，第二个是 reject 来填充
 * catch 实则是 then(undefined,onrejected)的别名，但是一般情况下都是用这个
-* then 检测不了自身 Promise 对象 onfilled 出了异常，而 catch 是基于对上次的 then 产生的 promise 对象
+* then 的第二个参数 检测不了自身 Promise 对象 onfilled 出了异常，而 catch 是基于对上次的 then 产生的 promise 对象，[看这里](https://www.kancloud.cn/kancloud/promises-book/44255)
 
 ```javascript
 let url1 = "http://azu.github.io/promises-book/json/comment.json",
