@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="fps fps 是 frame per second，一秒能够重新渲染多少个画面 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面。 我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的 现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-28T03:42:52.604Z">
+<meta property="og:updated_time" content="2018-06-04T06:25:18.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动画了解一下（二）">
 <meta name="twitter:description" content="fps fps 是 frame per second，一秒能够重新渲染多少个画面 网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面。 我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的 现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率">
@@ -340,7 +340,7 @@
 <li>我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的</li>
 <li>现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率，刷新动画。</li>
 <li>所以网页动画能够做到每秒 60 帧，就可以和显示器同步刷新，视觉效果达到最佳。</li>
-<li>一秒之内进行 60 次渲染，每秒不能超过 16.66 毫秒</li>
+<li>一秒之内进行 60 次渲染，每次不能超过 16.66 毫秒</li>
 </ul>
 <blockquote>
 <p>如果想要到 60 帧的刷新率，那么 js 线程每个任务的耗时，必须少于 16ms。一个解决办法是用 web worker，主线程只用于 ui 渲染，其他和 ui 渲染不想干的任务，都放在 worker 线程。</p>
