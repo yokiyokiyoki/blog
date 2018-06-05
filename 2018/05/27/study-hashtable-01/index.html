@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="为什么散列表会出现 场景：如果超市买东西结账的时候，售货员在一个本子里查找价格 如果是有序的（二分查找）还好，时间是 O（logn）,如果是无序（简单查找）的话，那就是 O（n） 如果直接有一个 O(1)的查找速度就好了  散列函数 将输入映射到数字   一致性：输入 apple 时得到的是 4，那么每次输入 apple 都必须是 4 不同性：不同的输入将得到不同的输出。如果输入 apple 和">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-27T08:36:14.918Z">
+<meta property="og:updated_time" content="2018-06-04T13:27:00.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读《图解算法》04-散列表（hash table）">
 <meta name="twitter:description" content="为什么散列表会出现 场景：如果超市买东西结账的时候，售货员在一个本子里查找价格 如果是有序的（二分查找）还好，时间是 O（logn）,如果是无序（简单查找）的话，那就是 O（n） 如果直接有一个 O(1)的查找速度就好了  散列函数 将输入映射到数字   一致性：输入 apple 时得到的是 4，那么每次输入 apple 都必须是 4 不同性：不同的输入将得到不同的输出。如果输入 apple 和">
@@ -399,7 +399,7 @@
 <li>查找，插入，删除都是 O（1）,常量时间</li>
 </ul>
 <h2 id="最糟糕情况"><a href="#最糟糕情况" class="headerlink" title="最糟糕情况"></a>最糟糕情况</h2><ul>
-<li>查找，插入，删除都是 O（1）,线性时间</li>
+<li>查找，插入，删除都是 O（n）,线性时间</li>
 </ul>
 <blockquote>
 <p>为什么会有两种情况，这是因为有了冲突可能会靠链表解决，n 个长度的链表，最好情况下没有冲突，就常量时间</p>
