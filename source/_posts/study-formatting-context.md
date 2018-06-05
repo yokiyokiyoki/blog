@@ -39,7 +39,7 @@ tags: css
 * float 属性不为 none
 * position 为 abs 或者 fixed
 * display 为 inline-block, table-cell, table-caption(表格相关的)
-* 在 BFC 中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）著作权归作者所有。
+* 在 BFC 中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）
 * overflow 不为 visible
 
 # 推荐阅读
