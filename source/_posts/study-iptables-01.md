@@ -10,6 +10,13 @@ tags: 计算机基础
 * 但是输入网址却无法连接
 * 但是开启了 vpn 之后，可以上到这个服务器
 
+### 解决办法
+
+* 一开始以为是墙的问题，可以封禁端口，导致 80 端口不能使用
+* 但是我换了其他端口也无法连接
+* 后来用 wireshark 抓包，发现返回 icmp 协议： host administratively prohibited
+* 上网查发现是服务器防火墙没有开放 80 端口的缘故
+
 # iptables 是什么
 
 > 以下来自[维基百科](<https://wiki.archlinux.org/index.php/Iptables_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)>)
