@@ -17,7 +17,7 @@ tags: 计算机基础
 * 后来用 wireshark 抓包，发现返回 icmp 协议： host administratively prohibited
 * 谷歌后查发现是服务器防火墙没有开放 80 端口的缘故
 * 那么另外一个问题随之而来呢，为什么通过 ss 之后就可以连接到服务器呢
-* ss 服务端采用了将客户端传过来的用 socks5 协议封装，发到真正的目的地
+* [ss 服务端和 ss 客户端用 socks5 协议封装，服务端再发到真正的目的地](https://github.com/shadowsocks/shadowsocks/issues/1130)
 * 换句话 socks5 协议穿透了防火墙，可以查看[这里](https://segmentfault.com/a/1190000011862912#articleHeader2)
 
 # SOCK5 协议
@@ -25,6 +25,18 @@ tags: 计算机基础
 > 以下来自[维基百科](https://zh.wikipedia.org/wiki/SOCKS)
 
 * SOCKS 是一种网络传输协议，主要用于客户端与外网服务器之间通讯的中间传递。SOCKS 是"SOCKetS"的缩写
+
+## 目的
+
+* SOCKS5 是一个代理协议，旨在为位于 Intranet 防火墙后的用户提供访问 Internet 的代理服务，这是个有一定年头的协议，其 RFC 提案的时间比 HTTP 1.0 还要早两个月
+
+## 用途
+
+* [防火墙穿透](http://zhihan.me/network/2017/09/24/socks5-protocol/)
+
+## 实现
+
+* [socks 代理实现](https://github.com/gwuhaolin/blog/issues/12)
 
 # iptables
 
