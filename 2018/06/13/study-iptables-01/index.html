@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="nginx," />
+  <meta name="keywords" content="计算机基础," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="简介nginx 有一个 master 进程和几个 worker 进程。master 进程的主要作用是读取和操作配置文件，同时维护 worker 进程。而真正处理请求的是 worker 进程。nginx 采用基于事件模型和系统依赖的机制最终将请求分配给 worker 进程。worker 进程的数量被定义在配置文件中，或者有可能被自动调整为 CPU 的核心数。 默认情况下，配置文件命名为 nginx.">
-<meta name="keywords" content="nginx">
+<meta name="description" content="场景 在 vultr 买了一个服务器后，发现可以 ping 通 但是输入网址却无法连接 但是开启了 ss 之后，可以连接到这个服务器  解决办法 一开始以为是墙的问题，可以封禁端口，导致 80 端口不能使用 但是我换了其他端口也无法连接 后来用 wireshark 抓包，发现返回 icmp 协议： host administratively prohibited 谷歌后查发现是服务器防火墙没有开放">
+<meta name="keywords" content="计算机基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx官方文档译文">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/01/14/study-nginx/index.html">
+<meta property="og:title" content="通过一个场景了解iptables和socks5协议">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/06/13/study-iptables-01/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="简介nginx 有一个 master 进程和几个 worker 进程。master 进程的主要作用是读取和操作配置文件，同时维护 worker 进程。而真正处理请求的是 worker 进程。nginx 采用基于事件模型和系统依赖的机制最终将请求分配给 worker 进程。worker 进程的数量被定义在配置文件中，或者有可能被自动调整为 CPU 的核心数。 默认情况下，配置文件命名为 nginx.">
+<meta property="og:description" content="场景 在 vultr 买了一个服务器后，发现可以 ping 通 但是输入网址却无法连接 但是开启了 ss 之后，可以连接到这个服务器  解决办法 一开始以为是墙的问题，可以封禁端口，导致 80 端口不能使用 但是我换了其他端口也无法连接 后来用 wireshark 抓包，发现返回 icmp 协议： host administratively prohibited 谷歌后查发现是服务器防火墙没有开放">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-14T05:38:54.000Z">
+<meta property="og:updated_time" content="2018-06-13T07:44:28.253Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nginx官方文档译文">
-<meta name="twitter:description" content="简介nginx 有一个 master 进程和几个 worker 进程。master 进程的主要作用是读取和操作配置文件，同时维护 worker 进程。而真正处理请求的是 worker 进程。nginx 采用基于事件模型和系统依赖的机制最终将请求分配给 worker 进程。worker 进程的数量被定义在配置文件中，或者有可能被自动调整为 CPU 的核心数。 默认情况下，配置文件命名为 nginx.">
+<meta name="twitter:title" content="通过一个场景了解iptables和socks5协议">
+<meta name="twitter:description" content="场景 在 vultr 买了一个服务器后，发现可以 ping 通 但是输入网址却无法连接 但是开启了 ss 之后，可以连接到这个服务器  解决办法 一开始以为是墙的问题，可以封禁端口，导致 80 端口不能使用 但是我换了其他端口也无法连接 后来用 wireshark 抓包，发现返回 icmp 协议： host administratively prohibited 谷歌后查发现是服务器防火墙没有开放">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/01/14/study-nginx/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/06/13/study-iptables-01/"/>
 
 
 
 
 
-  <title>nginx官方文档译文 | Blog</title>
+  <title>通过一个场景了解iptables和socks5协议 | Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/01/14/study-nginx/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/06/13/study-iptables-01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">nginx官方文档译文</h1>
+          <h1 class="post-title" itemprop="name headline">通过一个场景了解iptables和socks5协议</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-14T13:16:04+08:00">
-                2018-01-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-13T11:27:06+08:00">
+                2018-06-13
               </time>
             
 
@@ -334,48 +334,64 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>nginx 有一个 master 进程和几个 worker 进程。master 进程的主要作用是读取和操作配置文件，同时维护 worker 进程。而真正处理请求的是 worker 进程。nginx 采用基于事件模型和系统依赖的机制最终将请求分配给 worker 进程。worker 进程的数量被定义在配置文件中，或者有可能被自动调整为 CPU 的核心数。</p>
-<p>默认情况下，配置文件命名为 nginx.conf，放在/usr/local/nginx/conf，/etc/nginx，或者/usr/local/etc/nginx 目录下</p>
-<h2 id="启动，停止，reloading-配置"><a href="#启动，停止，reloading-配置" class="headerlink" title="启动，停止，reloading 配置"></a>启动，停止，reloading 配置</h2><p>运行可执行文件即可开启 nginx。一旦 nginx 开启之后，它可以使用可执行的-s 参数进行控制。下面是其语法：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s signal</span><br></pre></td></tr></table></figure>
-<p>信号(signal)可以是下面的其中一个：</p>
-<ul>
-<li>stop —— 快速关闭</li>
-<li>quit —— 优雅地关闭</li>
-<li>reload —— 重新加载配置文件</li>
-<li>reopen —— 重新打开日志文件</li>
+        <h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><ul>
+<li>在 vultr 买了一个服务器后，发现可以 ping 通</li>
+<li>但是输入网址却无法连接</li>
+<li>但是开启了 ss 之后，可以连接到这个服务器</li>
 </ul>
-<p>比如，等待所有 worker 进程服务完当前请求，然后关闭 nginx 进程：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit<span class="comment">//这条命令，必须由开启nginx的同一个用户执行。</span></span><br></pre></td></tr></table></figure>
-<p>如果改变了配置文件，除非是 nginx 重启，否则可以执行下面的命令进行应用新的配置：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
-<p>一旦 master 进程收到信号重新加载配置文件，它会检查新的配置文件的语法，并尝试应用配置。如果成功，master 进程开启新的 worker 进程，并且给旧的 worker 进程发送信息，请求它们关闭。否则，master 进程将会回滚修改并继续使用旧配置。</p>
-<p>旧的 worker 进程，接受到命令关闭，将会停止接收新的请求，并继续服务完当前请求。自此之后，worker 进程将正式退出。</p>
-<p>信号可以通过 unix 工具发送给 nginx 进程，例如 kill 命令。这种情况下，信号会直接发送给指定 pid 的进程。默认情况下，nginx 的 master 进程 ID 被写在/usr/local/nginx/logs 或/var/run 目录下的 nginx.pid 文件中。</p>
-<p>比如，假如 master 进程的 ID 是 1628，那么发送 QUIT 信号给 nginx 会导致其优雅地退出：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -s QUIT <span class="number">1628</span></span><br></pre></td></tr></table></figure>
-<p>获取所有正在运行的 nginx 进程列表信息，可以执行：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ax | grep nginx</span><br></pre></td></tr></table></figure>
-<h2 id="配置文件结构"><a href="#配置文件结构" class="headerlink" title="配置文件结构"></a>配置文件结构</h2><p>nginx 由模块组成。这些模块都被配置文件中的指令所控制。指令包括简单指令和指令块。一条简单的指令由名字和参数组成，参数由空格隔开，以分号（;）结束。一个指令块的结构和简单指令的一样，但是，它以额外的指令集合结束，指令集用大括弧（{和}）包围。</p>
-<p>如果一个指令块里面有其他的指令块，那么它被称为一个上下文（例如，events，http，server 和 location）。</p>
-<p>配置文件中，那些位于任何上下文之外的指令都认为是在 main 上下文中。events 和 http 指令位于 main 上下文，server 位于 http 上下文之中，location 位于 server 之中。</p>
-<p>一行位于#后面的被认为是注释。</p>
-<h2 id="静态内容"><a href="#静态内容" class="headerlink" title="静态内容"></a>静态内容</h2><p>web 服务器一个重要的任务就是提供静态资源服务（例如图片等）。我们会实现一个例子，这个例子会根据请求，从不同的本地目录提供静态文件：/data/www（包含 html 文件），/data/images（包含图片）。这时候我们需要在 http 指令块里面创建一个 server 指令块，里面又包含两个 location 指令块。</p>
-<p>首先，创建/data/www/index.html 文件，并放置一些图片于/data/images 目录下。</p>
-<p>打开配置文件，默认的配置文件已经包含几个实例 server 指令块，大部分都被注释了。我们取消注释，并且开始一个新的 server 指令块：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	server &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通常来说，配置文件会包含几个 server 指令块，它们由它们监听的端口号和服务器名称来区分。一旦 nginx 决定由哪一个 server 处理一个请求，它会把在请求 header 中的 URI 与在 location 指令块中定义的参数进行测试比较。</p>
-<p>向 server 指令块添加 location 指令块：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">	root /data/www;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>location 指令块指定了 URI”/”前缀。为了匹配请求，URI 将会被添加到 root 指令指定的路径，即是/data/www，实现了从路径到本地文件系统的转变。如果有多个匹配的 location 指令块，那么 nginx 将会选择那个拥有最长匹配前缀的。上面的 location 指令块提供了最短的前缀，所以如果其他所有 location 指令块都匹配失败，此指令块才生效。</p>
-<p>下一步，添加第二个 location 指令块：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /images/ &#123;</span><br><span class="line">	root /data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>它会匹配以/images/开头的请求（虽然 location /也同时匹配此请求，但是却是更短的前缀匹配）。</p>
-<p>最后 server 指令块的配置应该是这样的：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	location / &#123;</span><br><span class="line">		root /data/www;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location /images/ &#123;</span><br><span class="line">		root /data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这已经是一个服务器的配置文件了，这个服务器将会在本地机器<a href="http://localhost/监听80端口，并且是可访问状态。服务器将从路径/data/images发送文件去响应URIs以/images/开头的请求。比如，客户请求http://localhost/images/example.png，nginx将发送/data/images/example.png文件。如果该文件不存在，nginx将返回包含404" target="_blank" rel="noopener">http://localhost/监听80端口，并且是可访问状态。服务器将从路径/data/images发送文件去响应URIs以/images/开头的请求。比如，客户请求http://localhost/images/example.png，nginx将发送/data/images/example.png文件。如果该文件不存在，nginx将返回包含404</a> error 的响应。URIs 不是以/images/开头的请求将会被影射到/data/www 路径。例如，请求<a href="http://localhost/some/example.html，nginx将会发送/data/www/some/example.html文件。" target="_blank" rel="noopener">http://localhost/some/example.html，nginx将会发送/data/www/some/example.html文件。</a></p>
-<p>为了应用新的配置文件，如果 nginx 还没有开启，开启即可；否则可以发送 reload 信号给 nginx 的 master 进程：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><ul>
+<li>一开始以为是墙的问题，可以封禁端口，导致 80 端口不能使用</li>
+<li>但是我换了其他端口也无法连接</li>
+<li>后来用 wireshark 抓包，发现返回 icmp 协议： host administratively prohibited</li>
+<li>谷歌后查发现是服务器防火墙没有开放 80 端口的缘故</li>
+<li>那么另外一个问题随之而来呢，为什么通过 ss 之后就可以连接到服务器呢</li>
+<li><a href="https://github.com/shadowsocks/shadowsocks/issues/1130" target="_blank" rel="noopener">ss 服务端和 ss 客户端用 socks5 协议封装，服务端再发到真正的目的地</a></li>
+<li>换句话 socks5 协议穿透了防火墙，可以查看<a href="https://segmentfault.com/a/1190000011862912#articleHeader2" target="_blank" rel="noopener">这里</a></li>
+</ul>
+<h1 id="SOCK5-协议"><a href="#SOCK5-协议" class="headerlink" title="SOCK5 协议"></a>SOCK5 协议</h1><blockquote>
+<p>以下来自<a href="https://zh.wikipedia.org/wiki/SOCKS" target="_blank" rel="noopener">维基百科</a></p>
+</blockquote>
+<ul>
+<li>SOCKS 是一种网络传输协议，主要用于客户端与外网服务器之间通讯的中间传递。SOCKS 是”SOCKetS”的缩写</li>
+</ul>
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><ul>
+<li>SOCKS5 是一个代理协议，旨在为位于 Intranet 防火墙后的用户提供访问 Internet 的代理服务，这是个有一定年头的协议，其 RFC 提案的时间比 HTTP 1.0 还要早两个月</li>
+</ul>
+<h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><ul>
+<li><a href="http://zhihan.me/network/2017/09/24/socks5-protocol/" target="_blank" rel="noopener">防火墙穿透</a></li>
+</ul>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ul>
+<li><a href="https://github.com/gwuhaolin/blog/issues/12" target="_blank" rel="noopener">socks 代理实现</a></li>
+</ul>
+<h1 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h1><blockquote>
+<p>以下来自<a href="https://wiki.archlinux.org/index.php/Iptables_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">维基百科</a>&gt;)</p>
+</blockquote>
+<ul>
+<li>iptables 是 linux 内核防火墙的命令行工具</li>
+<li>通常也指代内核级防火墙</li>
+<li>iptables 用于 ipv4，ip6tables 用于 ipv6</li>
+<li>iptables 可以检测，修改，转发，重定向和丢弃 ipv4 数据包</li>
+</ul>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="表（tables）"><a href="#表（tables）" class="headerlink" title="表（tables）"></a>表（tables）</h3><ul>
+<li>过滤 ipv4 数据包的代码已经内置于内核之中，并且按照不同的目的被组织成表的集合</li>
+<li>表由一组预先定义的链组成，链包含遍历顺序规则</li>
+<li>包含五张表，比较常用的就是 filter 表：用于存放于与防火墙相关操作的默认表</li>
+</ul>
+<h3 id="链-chain"><a href="#链-chain" class="headerlink" title="链(chain)"></a>链(chain)</h3><ul>
+<li>表由链组成</li>
+<li>内核空间中：从一个网络接口进来，到另一个网络接口取得 PREROUTING（路由前）</li>
+<li>数据包从内核流入用户空间的 INPUT （数据包流入口）</li>
+<li>数据包从用户空间流出的 FORWARD （转发关卡）</li>
+<li>进入/离开本机的外网接口 OUTPUT （数据包出口）</li>
+<li>进入/离开本机的内网接口 POSTROUTING （路由后）</li>
+</ul>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><ul>
+<li>去到所在文件，一般是在/etc/init.d/iptables</li>
+<li>可以进行关闭(stop)，开启（start），重启（restart）</li>
+</ul>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><ul>
+<li><a href="http://www.cnblogs.com/lvxiaobo616/p/5715739.html" target="_blank" rel="noopener">iptables 深入理解</a></li>
+</ul>
 
       
     </div>
@@ -393,7 +409,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/nginx/" rel="tag"># nginx</a>
+            <a href="/blog/tags/计算机基础/" rel="tag"># 计算机基础</a>
           
         </div>
       
@@ -406,8 +422,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/01/10/study-render/" rel="next" title="浅谈浏览器渲染">
-                <i class="fa fa-chevron-left"></i> 浅谈浏览器渲染
+              <a href="/blog/2018/06/01/study-Dynamic-planning/" rel="next" title="读《图解算法》08-动态规划">
+                <i class="fa fa-chevron-left"></i> 读《图解算法》08-动态规划
               </a>
             
           </div>
@@ -415,10 +431,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2018/01/20/study-nginx2/" rel="prev" title="nginx简单使用">
-                nginx简单使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -545,7 +557,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动，停止，reloading-配置"><span class="nav-number">2.</span> <span class="nav-text">启动，停止，reloading 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件结构"><span class="nav-number">3.</span> <span class="nav-text">配置文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态内容"><span class="nav-number">4.</span> <span class="nav-text">静态内容</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#场景"><span class="nav-number">1.</span> <span class="nav-text">场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决办法"><span class="nav-number">1.0.1.</span> <span class="nav-text">解决办法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SOCK5-协议"><span class="nav-number">2.</span> <span class="nav-text">SOCK5 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目的"><span class="nav-number">2.1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用途"><span class="nav-number">2.2.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">2.3.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iptables"><span class="nav-number">3.</span> <span class="nav-text">iptables</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">3.1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表（tables）"><span class="nav-number">3.1.1.</span> <span class="nav-text">表（tables）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链-chain"><span class="nav-number">3.1.2.</span> <span class="nav-text">链(chain)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">3.2.</span> <span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">4.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
             
 
           </div>
