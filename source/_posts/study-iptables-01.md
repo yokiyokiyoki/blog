@@ -1,5 +1,5 @@
 ---
-title: iptables的设置
+title: 通过一个场景了解iptables和socks5协议
 date: 2018-06-13 11:27:06
 tags: 计算机基础
 ---
@@ -16,6 +16,7 @@ tags: 计算机基础
 * 但是我换了其他端口也无法连接
 * 后来用 wireshark 抓包，发现返回 icmp 协议： host administratively prohibited
 * 上网查发现是服务器防火墙没有开放 80 端口的缘故
+* 那么另外一个问题随之而来呢
 
 # iptables 是什么
 
@@ -47,3 +48,7 @@ tags: 计算机基础
 
 * 去到所在文件，一般是在/etc/init.d/iptables
 * 可以进行关闭(stop)，开启（start），重启（restart）
+
+# 推荐阅读
+
+* [iptables 深入理解](http://www.cnblogs.com/lvxiaobo616/p/5715739.html)
