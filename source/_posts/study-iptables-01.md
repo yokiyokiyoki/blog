@@ -24,7 +24,7 @@ tags: 计算机基础
 
 > 以下来自[维基百科](https://zh.wikipedia.org/wiki/SOCKS)
 
-* SOCKS 是一种网络传输协议，主要用于客户端与外网服务器之间通讯的中间传递。SOCKS 是"SOCKetS"的缩写
+* SOCKS5 是一种网络传输协议，主要用于客户端与外网服务器之间通讯的中间传递。SOCKS 是"SOCKetS"的缩写
 
 ## 目的
 
