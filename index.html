@@ -266,6 +266,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/06/23/study-random-num/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/06/23/study-random-num/" itemprop="url">计算机的随机数是伪随机</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-23T20:36:57+08:00">
+                2018-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="计算机中的随机数"><a href="#计算机中的随机数" class="headerlink" title="计算机中的随机数"></a>计算机中的随机数</h2><ul>
+<li>我们平时通过摇骰子来扔出点数</li>
+<li>这个事情是随机的（不考虑作弊）</li>
+<li>但是作为计算机的大脑，cpu 可不会摇骰子</li>
+<li>所以它只能通过公式算出来，而且是根据随时在变的时间</li>
+<li>具有周期性</li>
+<li>有很多种公式，这里介绍一下线性同余法</li>
+</ul>
+<h4 id="线性同余法"><a href="#线性同余法" class="headerlink" title="线性同余法"></a>线性同余法</h4><ul>
+<li>计算公式是(a+b*r)%c，就是取余数</li>
+</ul>
+<ul>
+<li>a,b,c 都是系数（也称为随机数的种子），r 是上次算出来的随机数</li>
+<li>我们先把 r 设为 1</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:right">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:right">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:right">7</th>
+<th style="text-align:center">8</th>
+<th style="text-align:right">9</th>
+<th style="text-align:center">10</th>
+<th style="text-align:right">11</th>
+<th style="text-align:right">12</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td style="text-align:center">3</td>
+<td style="text-align:right">2</td>
+<td style="text-align:center">5</td>
+<td style="text-align:right">4</td>
+<td style="text-align:center">7</td>
+<td style="text-align:right">6</td>
+<td style="text-align:center">1</td>
+<td style="text-align:right">0</td>
+<td style="text-align:center">3</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">5</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>容易看出，产生 8 次随机数后，下次产生的也就相同了，这就是所谓周期性</li>
+<li>所以要看起来更随机的话，随机数的种子要根据时间来变化</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/06/13/study-iptables-01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,7 +527,7 @@
 <p>以下来自<a href="https://zh.wikipedia.org/wiki/SOCKS" target="_blank" rel="noopener">维基百科</a></p>
 </blockquote>
 <ul>
-<li>SOCKS 是一种网络传输协议，主要用于客户端与外网服务器之间通讯的中间传递。SOCKS 是”SOCKetS”的缩写</li>
+<li>SOCKS5 是一种网络传输协议，主要用于客户端与外网服务器之间通讯的中间传递。SOCKS 是”SOCKetS”的缩写</li>
 </ul>
 <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><ul>
 <li>SOCKS5 是一个代理协议，旨在为位于 Intranet 防火墙后的用户提供访问 Internet 的代理服务，这是个有一定年头的协议，其 RFC 提案的时间比 HTTP 1.0 还要早两个月</li>
@@ -1792,160 +1964,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/22/study-screen-01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/22/study-screen-01/" itemprop="url">白屏和首屏时间</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T21:23:28+08:00">
-                2018-05-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="白屏时间"><a href="#白屏时间" class="headerlink" title="白屏时间"></a>白屏时间</h1><blockquote>
-<p>浏览器开始显示内容的时间。从我们输入网址，到浏览器出现第一个字符的时间</p>
-</blockquote>
-<ul>
-<li>chrome 有自己的 api，window.chrome.loadTimes().firstPaintTime * 1000 - window.performance.timing.navigationStart</li>
-</ul>
-<h2 id="如何计算"><a href="#如何计算" class="headerlink" title="如何计算"></a>如何计算</h2><p>通常认为浏览器开始渲染 body 标签或者解析完 head 标签的时刻就是页面白屏结束的时间</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">  &lt;title&gt;白屏&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">  &lt;script type="text/</span>javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    // 不兼容performance.timing 的浏览器，如IE8</span></span><br><span class="line"><span class="string">    window.pageStartTime = Date.now();</span></span><br><span class="line"><span class="string">  &lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 页面 CSS 资源 --&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="</span>stylesheet<span class="string">" href="</span>common.css<span class="string">"&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="</span>stylesheet<span class="string">" href="</span>page.css<span class="string">"&gt;</span></span><br><span class="line"><span class="string">  &lt;script type="</span>text/javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    // 白屏时间结束点</span></span><br><span class="line"><span class="string">    window.firstPaint = Date.now();</span></span><br><span class="line"><span class="string">  &lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 页面内容 --&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>如果可以使用 performance api 的时候，白屏时间=firstPaint - performance.timing.navigationStart（浏览器打开网站开始）</li>
-<li>如果不可以使用，比如 ie8，那么白屏时间= firstPaint - pageStartTime</li>
-</ul>
-<h1 id="首屏时间"><a href="#首屏时间" class="headerlink" title="首屏时间"></a>首屏时间</h1><blockquote>
-<p>指用户打开网站开始，到浏览器首屏内容渲染完成的时间。一般来说，5s 内优秀，10 之内可以接受，10s 以上不可以接受</p>
-</blockquote>
-<h2 id="怎么计算"><a href="#怎么计算" class="headerlink" title="怎么计算"></a>怎么计算</h2><blockquote>
-<p>1.首屏模块标签标记法，2.统计首屏内加载最慢的图片的时间，3.自定义首屏内容计算法</p>
-</blockquote>
-<h3 id="首屏模块标签标记法"><a href="#首屏模块标签标记法" class="headerlink" title="首屏模块标签标记法"></a>首屏模块标签标记法</h3><ul>
-<li>适用于首屏内容不需要通过拉取数据才能生存以及页面不考虑图片等资源加载的情况。</li>
-<li>但是现在大多数情况都需要通过接口拉数据才能完整显示，所以这个不太使用</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">  &lt;title&gt;首屏&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">  &lt;script type="text/</span>javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    window.pageStartTime = Date.now();</span></span><br><span class="line"><span class="string">  &lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="</span>stylesheet<span class="string">" href="</span>common.css<span class="string">"&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="</span>stylesheet<span class="string">" href="</span>page.css<span class="string">"&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 首屏可见模块1 --&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="</span><span class="built_in">module</span><span class="number">-1</span><span class="string">"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 首屏可见模块2 --&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="</span><span class="built_in">module</span><span class="number">-2</span><span class="string">"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;script type="</span>text/javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">    window.firstScreen = Date.now();</span></span><br><span class="line"><span class="string">  &lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- 首屏不可见模块3 --&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="</span><span class="built_in">module</span><span class="number">-3</span><span class="string">"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;!-- 首屏不可见模块4 --&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="</span><span class="built_in">module</span><span class="number">-4</span><span class="string">"&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="统计首屏内图片完成加载的时间"><a href="#统计首屏内图片完成加载的时间" class="headerlink" title="统计首屏内图片完成加载的时间"></a>统计首屏内图片完成加载的时间</h3><ul>
-<li>通常首屏内容加载最慢的就是图片资源，因此我们会把首屏内加载最慢的图片的时间当作首屏时间</li>
-<li>遍历首屏内所有图片标签，并且监听所有图片标签的 onload 事件，最终遍历图片标签的加载时间的最大值，然后用这个最大值减去 navigationStart</li>
-</ul>
-<h3 id="自定义模块内容计算法"><a href="#自定义模块内容计算法" class="headerlink" title="自定义模块内容计算法"></a>自定义模块内容计算法</h3><ul>
-<li>由于统计图片加载时间比较复杂，通常会自定义模块内容，来简化</li>
-<li>忽略图片等资源加载情况，只考虑页面主要 dom</li>
-<li>只考虑首屏的主要模块，而不是严格意义首屏线上的所有内容</li>
-</ul>
-<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><ul>
-<li><a href="http://fex.baidu.com/blog/2014/05/build-performance-monitor-in-7-days/" target="_blank" rel="noopener">7 天打造前端性能监控系统</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2000,7 +2018,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
