@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="node," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="云在青天水在瓶">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/tags/图解算法/index.html">
+<meta name="description" content="浏览器中 Event Loop 因为 js 最初是为了和浏览器交互，是一门非阻塞单线程语言。如果多线程处理 dom 可能会有一些意想不到的问题，比如一个线程中增加节点，另外一个线程删除节点。当然引入读写锁可以解决这个问题。  执行栈和队列 js 在执行过程中会产生执行环境，这些执行环境会被顺序的加入到执行栈中。如果遇到异步的代码，会被挂起并加入到 task（有多种）队列中。一旦执行栈为空，even">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习一下Event Loop">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/07/04/study-event-loop/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="云在青天水在瓶">
+<meta property="og:description" content="浏览器中 Event Loop 因为 js 最初是为了和浏览器交互，是一门非阻塞单线程语言。如果多线程处理 dom 可能会有一些意想不到的问题，比如一个线程中增加节点，另外一个线程删除节点。当然引入读写锁可以解决这个问题。  执行栈和队列 js 在执行过程中会产生执行环境，这些执行环境会被顺序的加入到执行栈中。如果遇到异步的代码，会被挂起并加入到 task（有多种）队列中。一旦执行栈为空，even">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-04T12:12:45.852Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
-<meta name="twitter:description" content="云在青天水在瓶">
+<meta name="twitter:title" content="学习一下Event Loop">
+<meta name="twitter:description" content="浏览器中 Event Loop 因为 js 最初是为了和浏览器交互，是一门非阻塞单线程语言。如果多线程处理 dom 可能会有一些意想不到的问题，比如一个线程中增加节点，另外一个线程删除节点。当然引入读写锁可以解决这个问题。  执行栈和队列 js 在执行过程中会产生执行环境，这些执行环境会被顺序的加入到执行栈中。如果遇到异步的代码，会被挂起并加入到 task（有多种）队列中。一旦执行栈为空，even">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/tags/图解算法/"/>
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2018/07/04/study-event-loop/"/>
 
 
 
 
 
-  <title>标签: 图解算法 | Blog</title>
+  <title>学习一下Event Loop | Blog</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -251,278 +253,213 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>图解算法<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/07/04/study-event-loop/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/blog/2018/06/01/study-Dynamic-planning/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》08-动态规划</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">学习一下Event Loop</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-01T14:50:22+08:00"
-              content="2018-06-01" >
-          06-01
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-04T16:57:08+08:00">
+                2018-07-04
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2018/05/31/study-greedy/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》07-贪婪算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-31T11:45:47+08:00"
-              content="2018-05-31" >
-          05-31
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2018/05/27/study-DijKstra/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》06-狄克斯特拉算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-27T19:45:02+08:00"
-              content="2018-05-27" >
-          05-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2018/05/27/study-breadth-first-search/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》05-广度优先搜索</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-27T16:43:09+08:00"
-              content="2018-05-27" >
-          05-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2018/05/27/study-hashtable-01/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》04-散列表（hash table）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-27T14:43:27+08:00"
-              content="2018-05-27" >
-          05-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2018/05/06/study-Graphical-algorithm04/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》03-快速排序</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-06T19:25:46+08:00"
-              content="2018-05-06" >
-          05-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2018/05/06/study-Graphical-algorithm03/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》03-递归和栈</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-06T19:07:56+08:00"
-              content="2018-05-06" >
-          05-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2018/05/06/study-Graphical-algorithm02/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》02-数组,链表和选择排序</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-06T16:40:38+08:00"
-              content="2018-05-06" >
-          05-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/blog/2018/05/06/study-Graphical-algorithm01/" itemprop="url">
-              
-                <span itemprop="name">读《图解算法》01-二分查找和大O表示法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-06T14:10:22+08:00"
-              content="2018-05-06" >
-          05-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <h2 id="浏览器中-Event-Loop"><a href="#浏览器中-Event-Loop" class="headerlink" title="浏览器中 Event Loop"></a>浏览器中 Event Loop</h2><blockquote>
+<p>因为 js 最初是为了和浏览器交互，是一门非阻塞单线程语言。如果多线程处理 dom 可能会有一些意想不到的问题，比如一个线程中增加节点，另外一个线程删除节点。当然引入读写锁可以解决这个问题。</p>
+</blockquote>
+<h3 id="执行栈和队列"><a href="#执行栈和队列" class="headerlink" title="执行栈和队列"></a>执行栈和队列</h3><ul>
+<li>js 在执行过程中会产生执行环境，这些执行环境会被顺序的加入到执行栈中。如果遇到异步的代码，会被挂起并加入到 task（有多种）队列中。一旦执行栈为空，event-loop 就会从 task 队列中拿出需要执行的代码并放入执行栈中执行。所以本质上来说 js 的异步还是同步行为。</li>
+</ul>
+<h3 id="任务源"><a href="#任务源" class="headerlink" title="任务源"></a>任务源</h3><ul>
+<li>不同的任务源会被分配到不同的 task 队列中，任务源可以分为微任务（microtask）和宏任务（macrotask）。</li>
+<li>在 es6 中，microtask 被称为 jobs，macrotask 被称为 task</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"script start"</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Promise"</span>);</span><br><span class="line">  resolve();</span><br><span class="line">&#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"promise1"</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"promise2"</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script end"</span>);</span><br><span class="line"><span class="comment">// script start =&gt; Promise =&gt; script end =&gt; promise1 =&gt; promise2 =&gt; setTimeout</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>微任务包括 process.nextTick,promise,Object.ovserve,MutationObserve</li>
+<li>宏任务包括 script，setTimeout，setInterval,setImmediate,I/O,UI rendering</li>
+<li>很多人认为微任务一定快于宏任务，其实是错的。因为宏任务中包括了 script，浏览器会执行一个宏任务，接下来有异步代码的话会先执行微任务。</li>
+</ul>
+<h3 id="正确的一次-event-loop-顺序"><a href="#正确的一次-event-loop-顺序" class="headerlink" title="正确的一次 event-loop 顺序"></a>正确的一次 event-loop 顺序</h3><ul>
+<li>执行同步代码，这属于宏任务</li>
+<li>执行栈为空，查询是否有微任务需要执行</li>
+<li>执行所有微任务</li>
+<li>必要的话渲染 ui</li>
+<li>开始下一轮 event-loop，执行宏任务中的异步代码</li>
+</ul>
+<p>所以宏任务中的异步代码有大量的计算并且需要操作 dom 的话，为了更快的界面响应，我们可以把操作 dom 放入微任务中。思考一下 vue ～</p>
+<h2 id="node-中的-event-loop"><a href="#node-中的-event-loop" class="headerlink" title="node 中的 event loop"></a>node 中的 event loop</h2><blockquote>
+<p>node 中的 event loop 和浏览器的不一样，分为以下六个阶段，他们会按照顺序反复执行</p>
+</blockquote>
+<h3 id="timers"><a href="#timers" class="headerlink" title="timers"></a>timers</h3><ul>
+<li>会执行 setTimeout 和 setInterval</li>
+<li>一个 timer 指定的事件并不是准确时间，而是在达到这个时间后尽快执行回调，可能会因为系统正在执行别的事务而延迟。</li>
+<li>下限的时间会有个范围</li>
+</ul>
+<h3 id="I-O-callbacks"><a href="#I-O-callbacks" class="headerlink" title="I/O callbacks"></a>I/O callbacks</h3><ul>
+<li>会执行除了 close 事件，定时器和 setImmediat 的回调</li>
+</ul>
+<h3 id="idle，prepare"><a href="#idle，prepare" class="headerlink" title="idle，prepare"></a>idle，prepare</h3><ul>
+<li>idle，prepare 阶段内部实现</li>
+</ul>
+<h3 id="poll-阶段"><a href="#poll-阶段" class="headerlink" title="poll 阶段"></a>poll 阶段</h3><ul>
+<li>poll 阶段很重要，这一阶段中，系统会做两件事情<ul>
+<li>执行到点的定时器</li>
+<li>执行 poll 队列中的事件</li>
+</ul>
+</li>
+<li>如果有别的定时器需要被执行，会回到 timer 阶段执行回调</li>
+</ul>
+<h3 id="check-阶段"><a href="#check-阶段" class="headerlink" title="check 阶段"></a>check 阶段</h3><ul>
+<li>执行 setImmediate</li>
+</ul>
+<h3 id="close-callbacks"><a href="#close-callbacks" class="headerlink" title="close callbacks"></a>close callbacks</h3><ul>
+<li>执行 close 事件</li>
+</ul>
+<h2 id="node-中执行顺序举例"><a href="#node-中执行顺序举例" class="headerlink" title="node 中执行顺序举例"></a>node 中执行顺序举例</h2><ul>
+<li>有些情况下，定时器执行顺序是随机的</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line">setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setImmediate"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 这里可能会输出 setTimeout，setImmediate</span></span><br><span class="line"><span class="comment">// 可能也会相反的输出，这取决于性能</span></span><br><span class="line"><span class="comment">// 因为可能进入 event loop 用了不到 1 毫秒，这时候会执行 setImmediate</span></span><br><span class="line"><span class="comment">// 否则会执行 setTimeout</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>有些情况下是一定的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;)</span><br><span class="line"></span><br><span class="line">fs.readFile(__filename, () =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&apos;timeout&apos;);</span><br><span class="line">    &#125;, 0);</span><br><span class="line">    setImmediate(() =&gt; &#123;</span><br><span class="line">        console.log(&apos;immediate&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">// 因为 readFile 的回调在 poll 中执行</span><br><span class="line">// 发现有 setImmediate ，所以会立即跳到 check 阶段执行回调</span><br><span class="line">// 再去 timer 阶段执行 setTimeout</span><br><span class="line">// 所以以上输出一定是 setImmediate，setTimeout</span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面都是 macrotask 的执行情况，microtask 会在以上每个阶段完成后立即执行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"timer1"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"promise1"</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"timer2"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"promise2"</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上代码在浏览器和 node 中打印情况是不同的</span></span><br><span class="line"><span class="comment">// 浏览器中打印 timer1, promise1, timer2, promise2</span></span><br><span class="line"><span class="comment">// node 中打印 timer1, timer2, promise1, promise2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>node 中的 process.nextTick 会优先于其他微任务执行</li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/node/" rel="tag"># node</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/06/23/study-random-num/" rel="next" title="计算机的随机数是伪随机">
+                <i class="fa fa-chevron-left"></i> 计算机的随机数是伪随机
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -530,6 +467,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -550,8 +491,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -606,6 +556,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器中-Event-Loop"><span class="nav-number">1.</span> <span class="nav-text">浏览器中 Event Loop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#执行栈和队列"><span class="nav-number">1.1.</span> <span class="nav-text">执行栈和队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任务源"><span class="nav-number">1.2.</span> <span class="nav-text">任务源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确的一次-event-loop-顺序"><span class="nav-number">1.3.</span> <span class="nav-text">正确的一次 event-loop 顺序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-中的-event-loop"><span class="nav-number">2.</span> <span class="nav-text">node 中的 event loop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#timers"><span class="nav-number">2.1.</span> <span class="nav-text">timers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O-callbacks"><span class="nav-number">2.2.</span> <span class="nav-text">I/O callbacks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#idle，prepare"><span class="nav-number">2.3.</span> <span class="nav-text">idle，prepare</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll-阶段"><span class="nav-number">2.4.</span> <span class="nav-text">poll 阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#check-阶段"><span class="nav-number">2.5.</span> <span class="nav-text">check 阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#close-callbacks"><span class="nav-number">2.6.</span> <span class="nav-text">close callbacks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-中执行顺序举例"><span class="nav-number">3.</span> <span class="nav-text">node 中执行顺序举例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -746,6 +712,10 @@
 
 
   
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
