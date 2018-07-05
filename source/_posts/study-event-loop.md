@@ -43,7 +43,7 @@ console.log("script end");
 - 宏任务包括 script，setTimeout，setInterval,setImmediate,I/O,UI rendering
 - 很多人认为微任务一定快于宏任务，其实是错的。因为宏任务中包括了 script，浏览器会执行一个宏任务，接下来有异步代码的话会先执行微任务。
 
-### 正确的一次 event-loop 顺序
+### 正确的一次 Event-loop 顺序
 
 - 执行同步代码，这属于宏任务
 - 执行栈为空，查询是否有微任务需要执行
