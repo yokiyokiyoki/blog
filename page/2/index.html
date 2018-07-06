@@ -361,7 +361,7 @@
 <li>jq 的$()就是指 domContentLoaded 事件</li>
 </ul>
 <h1 id="一些知识点"><a href="#一些知识点" class="headerlink" title="一些知识点"></a>一些知识点</h1><ul>
-<li>document 到达 domInteractiv 状态的时候，代表 dom 树的构建完成</li>
+<li>document 到达 domInteractive 状态的时候，代表 dom 树的构建完成</li>
 <li>浏览器拿到文档首字节之后，也就是 responseEnd 之后。浏览器将 html 解析并构建成 DOM tree，同时将 css 解析成 cssom，这个过程是同步的</li>
 <li>如果有 js 参与，因为同步的 js 可以改写文档在任何节点，所以 domtree 一旦碰上同步的 script 标签就会停止构建</li>
 <li>js 能查询 dom 对象的可被计算的样式，cssom 构建完之后才轮到 js 执行，但是这是指 css 文件在 js 之前，如果 css 在 js 之后，不会阻塞 js</li>
@@ -1486,13 +1486,13 @@
 <li>如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.domain = <span class="string">"a.com"</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="完全不同源的跨域（两个页面之间的通信）"><a href="#完全不同源的跨域（两个页面之间的通信）" class="headerlink" title="完全不同源的跨域（两个页面之间的通信）"></a>完全不同源的跨域（两个页面之间的通信）</h3><h4 id="window-name-跨域"><a href="#window-name-跨域" class="headerlink" title="window.name 跨域"></a>window.name 跨域</h4><ul>
+<h3 id="完全不同源的跨域（两个页面之间的通信）"><a href="#完全不同源的跨域（两个页面之间的通信）" class="headerlink" title="完全不同源的跨域（两个页面之间的通信）"></a>完全不同源的跨域（两个页面之间的通信）</h3><h4 id="window-name-跨域（同窗口）"><a href="#window-name-跨域（同窗口）" class="headerlink" title="window.name 跨域（同窗口）"></a>window.name 跨域（同窗口）</h4><ul>
 <li>window 对象有个属性 name，在一个窗口的生命周期内，窗口载入的所有页面都是共享一个 window.name，每个页面对于 window.name 都有读写的权限</li>
 <li>window.name 是持久存在一个窗口载入过的所有页面中的。</li>
 <li>window.name 的神奇之处在于 name 值在不同的页面（甚至不同域名）加载后依旧存在（如果没修改当然就不会变化）</li>
 <li>可以支持非常长的 name 值（2mb）</li>
 </ul>
-<h4 id="window-postMessage"><a href="#window-postMessage" class="headerlink" title="window.postMessage"></a>window.postMessage</h4><ul>
+<h4 id="window-postMessage（跨窗口）"><a href="#window-postMessage（跨窗口）" class="headerlink" title="window.postMessage（跨窗口）"></a>window.postMessage（跨窗口）</h4><ul>
 <li>html 为了解决这个问题，引入了一个全新的 api，跨文档通信 API，它为 window 对象新增了 postMessage 的方法</li>
 <li>允许跨窗口通信，不论这个两个窗口是否同源</li>
 </ul>

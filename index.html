@@ -353,7 +353,7 @@
 <li>宏任务包括 script，setTimeout，setInterval,setImmediate,I/O,UI rendering</li>
 <li>很多人认为微任务一定快于宏任务，其实是错的。因为宏任务中包括了 script，浏览器会执行一个宏任务，接下来有异步代码的话会先执行微任务。</li>
 </ul>
-<h3 id="正确的一次-event-loop-顺序"><a href="#正确的一次-event-loop-顺序" class="headerlink" title="正确的一次 event-loop 顺序"></a>正确的一次 event-loop 顺序</h3><ul>
+<h3 id="正确的一次-Event-loop-顺序"><a href="#正确的一次-Event-loop-顺序" class="headerlink" title="正确的一次 Event-loop 顺序"></a>正确的一次 Event-loop 顺序</h3><ul>
 <li>执行同步代码，这属于宏任务</li>
 <li>执行栈为空，查询是否有微任务需要执行</li>
 <li>执行所有微任务</li>

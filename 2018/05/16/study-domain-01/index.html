@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="什么是跨域 因为有浏览器同源策略限制，当前域名的 js 只能读取同域下的窗口属性 跨域不仅仅是指跨域名。 只要协议，域名，端口有任意不同，都被当作不同的域。  解决跨域问题主域相同的跨域 如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置  1document.domain = &quot;a.com&quot;; 完全不同源的跨域（两个页面之间的通信）window.name 跨域">
+<meta name="description" content="什么是跨域 因为有浏览器同源策略限制，当前域名的 js 只能读取同域下的窗口属性 跨域不仅仅是指跨域名。 只要协议，域名，端口有任意不同，都被当作不同的域。  解决跨域问题主域相同的跨域 如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置  1document.domain = &quot;a.com&quot;; 完全不同源的跨域（两个页面之间的通信）window.name 跨域（">
 <meta name="keywords" content="浏览器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈前端跨域（一）">
 <meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2018/05/16/study-domain-01/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="什么是跨域 因为有浏览器同源策略限制，当前域名的 js 只能读取同域下的窗口属性 跨域不仅仅是指跨域名。 只要协议，域名，端口有任意不同，都被当作不同的域。  解决跨域问题主域相同的跨域 如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置  1document.domain = &quot;a.com&quot;; 完全不同源的跨域（两个页面之间的通信）window.name 跨域">
+<meta property="og:description" content="什么是跨域 因为有浏览器同源策略限制，当前域名的 js 只能读取同域下的窗口属性 跨域不仅仅是指跨域名。 只要协议，域名，端口有任意不同，都被当作不同的域。  解决跨域问题主域相同的跨域 如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置  1document.domain = &quot;a.com&quot;; 完全不同源的跨域（两个页面之间的通信）window.name 跨域（">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-16T13:29:42.609Z">
+<meta property="og:updated_time" content="2018-07-06T07:42:58.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈前端跨域（一）">
-<meta name="twitter:description" content="什么是跨域 因为有浏览器同源策略限制，当前域名的 js 只能读取同域下的窗口属性 跨域不仅仅是指跨域名。 只要协议，域名，端口有任意不同，都被当作不同的域。  解决跨域问题主域相同的跨域 如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置  1document.domain = &quot;a.com&quot;; 完全不同源的跨域（两个页面之间的通信）window.name 跨域">
+<meta name="twitter:description" content="什么是跨域 因为有浏览器同源策略限制，当前域名的 js 只能读取同域下的窗口属性 跨域不仅仅是指跨域名。 只要协议，域名，端口有任意不同，都被当作不同的域。  解决跨域问题主域相同的跨域 如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置  1document.domain = &quot;a.com&quot;; 完全不同源的跨域（两个页面之间的通信）window.name 跨域（">
 
 
 
@@ -343,13 +343,13 @@
 <li>如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.domain = <span class="string">"a.com"</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="完全不同源的跨域（两个页面之间的通信）"><a href="#完全不同源的跨域（两个页面之间的通信）" class="headerlink" title="完全不同源的跨域（两个页面之间的通信）"></a>完全不同源的跨域（两个页面之间的通信）</h3><h4 id="window-name-跨域"><a href="#window-name-跨域" class="headerlink" title="window.name 跨域"></a>window.name 跨域</h4><ul>
+<h3 id="完全不同源的跨域（两个页面之间的通信）"><a href="#完全不同源的跨域（两个页面之间的通信）" class="headerlink" title="完全不同源的跨域（两个页面之间的通信）"></a>完全不同源的跨域（两个页面之间的通信）</h3><h4 id="window-name-跨域（同窗口）"><a href="#window-name-跨域（同窗口）" class="headerlink" title="window.name 跨域（同窗口）"></a>window.name 跨域（同窗口）</h4><ul>
 <li>window 对象有个属性 name，在一个窗口的生命周期内，窗口载入的所有页面都是共享一个 window.name，每个页面对于 window.name 都有读写的权限</li>
 <li>window.name 是持久存在一个窗口载入过的所有页面中的。</li>
 <li>window.name 的神奇之处在于 name 值在不同的页面（甚至不同域名）加载后依旧存在（如果没修改当然就不会变化）</li>
 <li>可以支持非常长的 name 值（2mb）</li>
 </ul>
-<h4 id="window-postMessage"><a href="#window-postMessage" class="headerlink" title="window.postMessage"></a>window.postMessage</h4><ul>
+<h4 id="window-postMessage（跨窗口）"><a href="#window-postMessage（跨窗口）" class="headerlink" title="window.postMessage（跨窗口）"></a>window.postMessage（跨窗口）</h4><ul>
 <li>html 为了解决这个问题，引入了一个全新的 api，跨文档通信 API，它为 window 对象新增了 postMessage 的方法</li>
 <li>允许跨窗口通信，不论这个两个窗口是否同源</li>
 </ul>
@@ -533,7 +533,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是跨域"><span class="nav-number">1.</span> <span class="nav-text">什么是跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决跨域问题"><span class="nav-number">2.</span> <span class="nav-text">解决跨域问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主域相同的跨域"><span class="nav-number">2.1.</span> <span class="nav-text">主域相同的跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完全不同源的跨域（两个页面之间的通信）"><span class="nav-number">2.2.</span> <span class="nav-text">完全不同源的跨域（两个页面之间的通信）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#window-name-跨域"><span class="nav-number">2.2.1.</span> <span class="nav-text">window.name 跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#window-postMessage"><span class="nav-number">2.2.2.</span> <span class="nav-text">window.postMessage</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是跨域"><span class="nav-number">1.</span> <span class="nav-text">什么是跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决跨域问题"><span class="nav-number">2.</span> <span class="nav-text">解决跨域问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主域相同的跨域"><span class="nav-number">2.1.</span> <span class="nav-text">主域相同的跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完全不同源的跨域（两个页面之间的通信）"><span class="nav-number">2.2.</span> <span class="nav-text">完全不同源的跨域（两个页面之间的通信）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#window-name-跨域（同窗口）"><span class="nav-number">2.2.1.</span> <span class="nav-text">window.name 跨域（同窗口）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#window-postMessage（跨窗口）"><span class="nav-number">2.2.2.</span> <span class="nav-text">window.postMessage（跨窗口）</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

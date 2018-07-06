@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="官方的一个浏览器从打开一个页面内部的一系列状态 用 performance.timing 的 api 就可以获取到各个阶段的 一般 start 和 end 间包括一个阶段 具体可以观察推荐阅读的那张图 navigationStart 到 responseEnd 之间是网络传输层面 domLoading 到 domComplete 是服务器传输回字节后浏览器的各种事件状态 domLoading do">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-23T09:09:01.127Z">
+<meta property="og:updated_time" content="2018-07-06T08:56:54.492Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端性能之用户可操作时间">
 <meta name="twitter:description" content="官方的一个浏览器从打开一个页面内部的一系列状态 用 performance.timing 的 api 就可以获取到各个阶段的 一般 start 和 end 间包括一个阶段 具体可以观察推荐阅读的那张图 navigationStart 到 responseEnd 之间是网络传输层面 domLoading 到 domComplete 是服务器传输回字节后浏览器的各种事件状态 domLoading do">
@@ -358,7 +358,7 @@
 <li>jq 的$()就是指 domContentLoaded 事件</li>
 </ul>
 <h1 id="一些知识点"><a href="#一些知识点" class="headerlink" title="一些知识点"></a>一些知识点</h1><ul>
-<li>document 到达 domInteractiv 状态的时候，代表 dom 树的构建完成</li>
+<li>document 到达 domInteractive 状态的时候，代表 dom 树的构建完成</li>
 <li>浏览器拿到文档首字节之后，也就是 responseEnd 之后。浏览器将 html 解析并构建成 DOM tree，同时将 css 解析成 cssom，这个过程是同步的</li>
 <li>如果有 js 参与，因为同步的 js 可以改写文档在任何节点，所以 domtree 一旦碰上同步的 script 标签就会停止构建</li>
 <li>js 能查询 dom 对象的可被计算的样式，cssom 构建完之后才轮到 js 执行，但是这是指 css 文件在 js 之前，如果 css 在 js 之后，不会阻塞 js</li>
