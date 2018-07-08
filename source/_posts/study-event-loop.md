@@ -55,7 +55,7 @@ console.log("script end");
 
 ## node 中的 event loop
 
-> node 中的 event loop 和浏览器的不一样，分为以下六个阶段，他们会按照顺序反复执行
+> node 中的 event loop （存在于 libuv 中）和浏览器的不一样，分为以下六个阶段，他们会按照顺序反复执行
 
 ### timers
 
@@ -105,7 +105,7 @@ setImmediate(() => {
 
 - 有些情况下是一定的
 
-```javascirpt
+```java
 var fs = require('fs')
 
 fs.readFile(__filename, () => {
@@ -147,3 +147,7 @@ setTimeout(() => {
 ```
 
 - node 中的 process.nextTick 会优先于其他微任务执行
+
+# 推荐阅读
+
+-
