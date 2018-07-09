@@ -56,3 +56,29 @@ document.write(message);
 # csrf
 
 > cross site request forgery 的缩写，即跨站脚本请求伪造
+
+- 顾名思义是，是伪造请求冒充用户在站内的正常操作。
+- 我们知道绝大多数网站是通过 cookie 等方式辨识用户身份（包括服务器端 session 的网站，因为 session id 大多也是保存在 cookie），再予以授权。
+- 所以要伪造用户的正常操作，最好是通过 xss 或者链接欺骗等途径，让用户再本机（即拥有身份 cookie 的浏览器端）发起用户所不知道的请求（xss 是实现 csrf 的手段之一）
+
+## 案例
+
+- 一论坛网站的发帖是通过 get 请求访问，点击发帖之后 js 把发帖内容拼接成目标 url 并访问：http://example.com/bbs/create_post.php?title=标题&content=内容
+- 那么我在论坛发一贴http://example.com/bbs/create_post.php?title=我是脑残&content=哈哈，只要有用户看到这个链接，那么他们的账户就会在不知情的情况下发布了这一个帖子。
+- 如果一家银行用以执行转账操作的 url 为 http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName，那么黑客可以可以再另一个网站上放置如下代码：<img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">
+- 如果有账户名为 alice 的用户访问了恶意站点，而她之前也刚访问锅银行不久，登陆信息尚未过期，那么她就会损失 1000 元
+
+## 解决方案
+
+- 如何解决这个问题，过滤用户输入，不允许发布这种含有站内操作 url 的链接，这么做可能有点用，但是阻挡不了 csrf，因为攻击者可以通过 qq 发布这个链接，这样点击到这个链接的用户一样会中招
+
+- 所以对待 csrf，我们的视角需要和对待 xss 有所不同。csrf 不一定要有站内的输入，因为他不属于注入攻击，而是属于请求伪造。被伪造的请求可以是任何来源，而非一定是站内。
+
+- 过滤请求的处理者
+  - 检查 Referer 字段：可以检查是否来源于该域名（但是请求者是可以更改 http 请求头的，他可以给这个任何值）
+  - 添加校验 token：也就是请求令牌，由于 csrf 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求再访问敏感数据请求的时候，要求用户浏览器提供不保存在 cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法执行 csrf 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求的时候，这个伪乱数也一并提交上去校验。
+- 改良站内 api 的设计，对于发布帖子这类创建资源的操作，应该只接受 post 请求，而 get 请求应该只浏览。最好是采用 REST 风格设计。
+
+# 推荐阅读
+
+- [总结 xss 与 csrf 两种跨站攻击](https://blog.tonyseek.com/post/introduce-to-xss-and-csrf/)
