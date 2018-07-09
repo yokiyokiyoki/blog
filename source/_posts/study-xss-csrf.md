@@ -53,6 +53,11 @@ document.write(message);
 
 - 所以写 js 的前端同学注意了，万一写出了有漏洞的代码，这锅得自己背。
 
+## 解决方案
+
+- 过滤一些关键字
+- Cookie 防盗，在 Cookie 中防止放入用户名和密码，对 Cookie 信息进行 MD5 等算法进行多次散列存放，必要时还要对 ip 和 cookie 进行绑定，一旦检测异常，立马让用户重新登录；设置 http-only（不能用 js 脚本进行获取）
+
 # csrf
 
 > cross site request forgery 的缩写，即跨站脚本请求伪造
