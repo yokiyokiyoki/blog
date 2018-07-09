@@ -362,7 +362,7 @@
 </ul>
 <p>所以宏任务中的异步代码有大量的计算并且需要操作 dom 的话，为了更快的界面响应，我们可以把操作 dom 放入微任务中。思考一下 vue ～</p>
 <h2 id="node-中的-event-loop"><a href="#node-中的-event-loop" class="headerlink" title="node 中的 event loop"></a>node 中的 event loop</h2><blockquote>
-<p>node 中的 event loop 和浏览器的不一样，分为以下六个阶段，他们会按照顺序反复执行</p>
+<p>node 中的 event loop （存在于 libuv 中）和浏览器的不一样，分为以下六个阶段，他们会按照顺序反复执行</p>
 </blockquote>
 <h3 id="timers"><a href="#timers" class="headerlink" title="timers"></a>timers</h3><ul>
 <li>会执行 setTimeout 和 setInterval</li>
@@ -396,7 +396,7 @@
 <ul>
 <li>有些情况下是一定的</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&apos;fs&apos;)</span><br><span class="line"></span><br><span class="line">fs.readFile(__filename, () =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&apos;timeout&apos;);</span><br><span class="line">    &#125;, 0);</span><br><span class="line">    setImmediate(() =&gt; &#123;</span><br><span class="line">        console.log(&apos;immediate&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">// 因为 readFile 的回调在 poll 中执行</span><br><span class="line">// 发现有 setImmediate ，所以会立即跳到 check 阶段执行回调</span><br><span class="line">// 再去 timer 阶段执行 setTimeout</span><br><span class="line">// 所以以上输出一定是 setImmediate，setTimeout</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(<span class="string">'fs'</span>)</span><br><span class="line"></span><br><span class="line">fs.readFile(__filename, () =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(<span class="string">'timeout'</span>);</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">    setImmediate(() =&gt; &#123;</span><br><span class="line">        console.log(<span class="string">'immediate'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 因为 readFile 的回调在 poll 中执行</span></span><br><span class="line"><span class="comment">// 发现有 setImmediate ，所以会立即跳到 check 阶段执行回调</span></span><br><span class="line"><span class="comment">// 再去 timer 阶段执行 setTimeout</span></span><br><span class="line"><span class="comment">// 所以以上输出一定是 setImmediate，setTimeout</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>上面都是 macrotask 的执行情况，microtask 会在以上每个阶段完成后立即执行</li>
 </ul>
@@ -404,6 +404,7 @@
 <ul>
 <li>node 中的 process.nextTick 会优先于其他微任务执行</li>
 </ul>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>-</p>
 
           
         
