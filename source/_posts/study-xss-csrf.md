@@ -71,7 +71,7 @@ document.write(message);
 - 一论坛网站的发帖是通过 get 请求访问，点击发帖之后 js 把发帖内容拼接成目标 url 并访问：http://example.com/bbs/create_post.php?title=标题&content=内容
 - 那么我在论坛发一贴http://example.com/bbs/create_post.php?title=我是脑残&content=哈哈，只要有用户看到这个链接，那么他们的账户就会在不知情的情况下发布了这一个帖子。
 - 如果一家银行用以执行转账操作的 url 为 http://www.examplebank.com/withdraw?account=AccoutName&amount=1000&for=PayeeName，那么黑客可以可以再另一个网站上放置如下代码：<img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman">
-- 如果有账户名为 alice 的用户访问了恶意站点，而她之前也刚访问锅银行不久，登陆信息尚未过期，那么她就会损失 1000 元
+- 如果有账户名为 alice 的用户访问了恶意站点，而她之前也刚访问过银行不久，登陆信息尚未过期，那么她就会损失 1000 元
 
 ## 解决方案
 
