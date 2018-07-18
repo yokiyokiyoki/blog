@@ -62,7 +62,7 @@ document.write(message);
 
 > cross site request forgery 的缩写，即跨站脚本请求伪造
 
-- 顾名思义是，是伪造请求冒充用户在站内的正常操作。
+- 顾名思义是伪造请求冒充用户在站内的正常操作。
 - 我们知道绝大多数网站是通过 cookie 等方式辨识用户身份（包括服务器端 session 的网站，因为 session id 大多也是保存在 cookie），再予以授权。
 - 所以要伪造用户的正常操作，最好是通过 xss 或者链接欺骗等途径，让用户再本机（即拥有身份 cookie 的浏览器端）发起用户所不知道的请求（xss 是实现 csrf 的手段之一）
 
