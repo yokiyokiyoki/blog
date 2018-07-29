@@ -266,6 +266,134 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/13/study-https-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/13/study-https-03/" itemprop="url">加密传输之加盐</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T20:24:03+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="加盐提高安全性"><a href="#加盐提高安全性" class="headerlink" title="加盐提高安全性"></a>加盐提高安全性</h2><blockquote>
+<p>盐：一个随机的字符串，往明文密码和一个随机的字符串拼接在一起</p>
+</blockquote>
+<p>为了应对黑客们用彩虹表破解密码，我们可以先往明文密码加盐，然后再对加盐之后的密码用哈希算法加密。由于盐在密码校验的时候还要用到，因此通常盐和密码的哈希值是存储在一起的。</p>
+<p>采用加盐的哈希算法对密码加密，要确保要往每个密码里添加随机的唯一的盐，而不是让所有密码共享一样的盐。</p>
+<p>虽然加盐的算法能有效应对彩虹表的破解法，但它的安全级别并不高，因为计算哈希值耗时极短，黑客仍然可以用穷举法来破解，只是增加了一些耗时。</p>
+<h2 id="用-BCrypt-或者-PBKDF2-增加破解的难度"><a href="#用-BCrypt-或者-PBKDF2-增加破解的难度" class="headerlink" title="用 BCrypt 或者 PBKDF2 增加破解的难度"></a>用 BCrypt 或者 PBKDF2 增加破解的难度</h2><p>为了应对暴力破解法，我们需要非常耗时的而不是非常高效的哈希算法。BCrypt 和 PBKDF2 算法应运而生。</p>
+<p>这两个算法最大的特点是我们可以通过参数设置重复计算的次数，重复计算的次数越多耗时越长。如果计算一个哈希值需要耗时 1 秒甚至更多，那么黑客们采用暴利法破解密码将几乎不再可能。破解一个 6 位纯数字密码需要耗时 11.5 天，更不要说高安全级别的密码了。</p>
+<p>摘自<a href="https://zhuanlan.zhihu.com/p/36603247" target="_blank" rel="noopener">如何加密传输和存储用户密码</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/13/study-https-02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1683,149 +1811,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-Graphical-algorithm03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/06/study-Graphical-algorithm03/" itemprop="url">读《图解算法》03-递归和栈</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T19:07:56+08:00">
-                2018-05-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
-<li>函数调用自己</li>
-<li>需要有基线条件和递归条件</li>
-</ul>
-<h3 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h3><blockquote>
-<p>每个递归函数都有两部分：基线条件和递归条件。</p>
-</blockquote>
-<ul>
-<li>递归条件是指函数调用自己</li>
-<li>基线条件是指函数不再调用自己，从而避免无限循环</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//倒计时</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">countdown</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">  <span class="keyword">if</span> (i &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">//基线条件</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    countdown(i - <span class="number">1</span>);</span><br><span class="line">    <span class="comment">//递归条件;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><ul>
-<li>一种类似堆叠的盘子的数据结构</li>
-</ul>
-<h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><ul>
-<li>函数里面调用函数，形成一个栈结构</li>
-<li>greet 里面调用 greet1 函数，计算机先为第一个函数调用分配一个内存块，再为第二个分配一个内存块（位于第一个上面），然后第二个从函数调用返回，此时栈顶的内存块被弹出，然后剩下第一个</li>
-</ul>
-<h4 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h4><ul>
-<li>特殊一点的调用栈，就是调用自己的</li>
-<li>栈中包含未完成的函数调用，这样栈就帮你跟踪了函数</li>
-<li>使用栈虽然方便，但也要付出代价，存储详尽的信息可能占用大量的内存。每个函数调用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1880,7 +1865,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

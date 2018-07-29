@@ -266,6 +266,125 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/07/29/2018-think-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/07/29/2018-think-01/" itemprop="url">2018-think-01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T17:38:59+08:00">
+                2018-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/07/09/study-xss-csrf/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -349,7 +468,7 @@
 </ul>
 <h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><ul>
 <li>如果一个网站的错误消息是这样显示的，<a href="http://www.xxx.com/error.php?message=sorry,an" target="_blank" rel="noopener">www.xxx.com/error.php?message=sorry,an</a> error occurred，然后服务器根据得到的 message，不进行过滤，复制到错误页面的模板<p>sorry,an error occurred</p>，返回给用户</li>
-<li><p><a href="http://www.xxx.com/error.php?message=" target="_blank" rel="noopener">www.xxx.com/error.php?message=</a><script>alert(1)</script>，当用户打开错误页面的时候，就会出现</p><p><script>alert(1)</script></p>，弹出一个消息框<p></p>
+<li><p><a href="http://www.xxx.com/error.php?message=" target="_blank" rel="noopener">www.xxx.com/error.php?message=</a><script>alert 的写法(1)</script>，当用户打开错误页面的时候，就会出现</p><p><script>alert 的写法(1)</script></p>，弹出一个消息框<p></p>
 </li>
 <li><p>当然攻击者不会很傻的只 alert 一些消息，通常 xss 都会伴随会话劫持，截获通过验证的会话令牌。</p>
 </li>
@@ -381,7 +500,7 @@
 <p>cross site request forgery 的缩写，即跨站脚本请求伪造</p>
 </blockquote>
 <ul>
-<li>顾名思义是，是伪造请求冒充用户在站内的正常操作。</li>
+<li>顾名思义是伪造请求冒充用户在站内的正常操作。</li>
 <li>我们知道绝大多数网站是通过 cookie 等方式辨识用户身份（包括服务器端 session 的网站，因为 session id 大多也是保存在 cookie），再予以授权。</li>
 <li>所以要伪造用户的正常操作，最好是通过 xss 或者链接欺骗等途径，让用户再本机（即拥有身份 cookie 的浏览器端）发起用户所不知道的请求（xss 是实现 csrf 的手段之一）</li>
 </ul>
@@ -1820,195 +1939,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/27/study-hashtable-01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/27/study-hashtable-01/" itemprop="url">读《图解算法》04-散列表（hash table）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-27T14:43:27+08:00">
-                2018-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="为什么散列表会出现"><a href="#为什么散列表会出现" class="headerlink" title="为什么散列表会出现"></a>为什么散列表会出现</h1><ul>
-<li>场景：如果超市买东西结账的时候，售货员在一个本子里查找价格</li>
-<li>如果是有序的（二分查找）还好，时间是 O（logn）,如果是无序（简单查找）的话，那就是 O（n）</li>
-<li>如果直接有一个 O(1)的查找速度就好了</li>
-</ul>
-<h1 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h1><blockquote>
-<p>将输入映射到数字</p>
-</blockquote>
-<ul>
-<li>一致性：输入 apple 时得到的是 4，那么每次输入 apple 都必须是 4</li>
-<li>不同性：不同的输入将得到不同的输出。如果输入 apple 和 yoki 都得到 4，那么这是一个不好的散列函数。</li>
-</ul>
-<h2 id="创造散列表"><a href="#创造散列表" class="headerlink" title="创造散列表"></a>创造散列表</h2><blockquote>
-<p>结合散列函数和数组</p>
-</blockquote>
-<ul>
-<li>创建一个空数组</li>
-<li>apple 输入到散列函数，输出 3，然后把 apple 的价格存储到数组索引 3</li>
-<li>接着各个类推，知道存完数组</li>
-<li>然后我们要找 apple 的价格，就把 apple 输入交给散列函数，得到 3 去数组里面找</li>
-</ul>
-<h1 id="散列表的经典应用"><a href="#散列表的经典应用" class="headerlink" title="散列表的经典应用"></a>散列表的经典应用</h1><blockquote>
-<p>查找，防止重复，用于缓存</p>
-</blockquote>
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><ul>
-<li>被用于大海捞针的查找</li>
-<li>这个就不用细说了，类似的有 dns 解析</li>
-</ul>
-<h2 id="防止重复"><a href="#防止重复" class="headerlink" title="防止重复"></a>防止重复</h2><blockquote>
-<p>场景：负责一个投票站，每个人只能投一票，如何避免重复投票</p>
-</blockquote>
-<ul>
-<li>有一个方法是：有人来投票，就将它记录在一个投票名单里面，然后接下来的人都遍历这个投票名单，如果有就不能投票，但是这样就列表会越来越长，就会变慢</li>
-<li>另外一种就是散列表，超快</li>
-</ul>
-<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><ul>
-<li>浏览器缓存的数据存储在散列表里面</li>
-<li>如果访问 facebook 的页面，会先检查散列表中是否存储了该页面</li>
-<li>如果不在缓存中，才去访问服务器，然后把数据放到缓存里，这样下次有人访问就可以直接命中缓存</li>
-</ul>
-<h1 id="冲突"><a href="#冲突" class="headerlink" title="冲突"></a>冲突</h1><blockquote>
-<p>事实上不可能不同的输入都能获得不同的值</p>
-</blockquote>
-<ul>
-<li>假设有一个数组包含 26 个位置，而我们使用的散列函数非常简单，按照字母表顺序分配位置</li>
-<li>apple 第一个，bear 第二个，接下来来了一个 banana，理应分到第二个，但是这个时候第二个位置已经是 bear 了</li>
-<li>这个就叫冲突，解决冲突的办法有很多，简单的就是在这个冲突的位置存储一个链表，bear 末尾的指针指向 banana</li>
-<li>所以散列函数很重要，好的散列函数将 key 均匀的映射到散列表的不同位置</li>
-</ul>
-<h2 id="如何避免冲突"><a href="#如何避免冲突" class="headerlink" title="如何避免冲突"></a>如何避免冲突</h2><ul>
-<li>较低的填装因子<ul>
-<li>散列表包含的元素数：位置总数就是填装因子</li>
-<li>越小越好，满了只能调整长度，换一个更长的数组</li>
-<li>一个不错的经验规则就是，一旦填装因子大于 0.7，那么就要调整散列表的长度</li>
-</ul>
-</li>
-<li>良好的散列函数<ul>
-<li>SHA 函数</li>
-</ul>
-</li>
-</ul>
-<h1 id="散列表性能如何"><a href="#散列表性能如何" class="headerlink" title="散列表性能如何"></a>散列表性能如何</h1><h2 id="平均情况"><a href="#平均情况" class="headerlink" title="平均情况"></a>平均情况</h2><ul>
-<li>查找，插入，删除都是 O（1）,常量时间</li>
-</ul>
-<h2 id="最糟糕情况"><a href="#最糟糕情况" class="headerlink" title="最糟糕情况"></a>最糟糕情况</h2><ul>
-<li>查找，插入，删除都是 O（n）,线性时间</li>
-</ul>
-<blockquote>
-<p>为什么会有两种情况，这是因为有了冲突可能会靠链表解决，n 个长度的链表，最好情况下没有冲突，就常量时间</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2063,7 +1993,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
