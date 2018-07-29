@@ -18,7 +18,7 @@ tags: 浏览器
 ### 案例
 
 - 如果一个网站的错误消息是这样显示的，www.xxx.com/error.php?message=sorry,an error occurred，然后服务器根据得到的 message，不进行过滤，复制到错误页面的模板<p>sorry,an error occurred</p>，返回给用户
-- www.xxx.com/error.php?message=<script>alert(1)</script>，当用户打开错误页面的时候，就会出现<p><script>alert(1)</script></p>，弹出一个消息框
+- www.xxx.com/error.php?message=<script>alert 的写法(1)</script>，当用户打开错误页面的时候，就会出现<p><script>alert 的写法(1)</script></p>，弹出一个消息框
 
 - 当然攻击者不会很傻的只 alert 一些消息，通常 xss 都会伴随会话劫持，截获通过验证的会话令牌。
 - 截获用户的会话后，就可以访问该用户授权访问的所有数据和功能
