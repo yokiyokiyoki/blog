@@ -266,6 +266,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/27/study-breadth-first-search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/27/study-breadth-first-search/" itemprop="url">读《图解算法》05-广度优先搜索</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-27T16:43:09+08:00">
+                2018-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="广度优先算法简单介绍"><a href="#广度优先算法简单介绍" class="headerlink" title="广度优先算法简单介绍"></a>广度优先算法简单介绍</h1><blockquote>
+<p>breadth-first search ，以下简称 BFS</p>
+</blockquote>
+<ul>
+<li>能让你找出两样东西之间的最短距离，不过最短距离的含义有很多。</li>
+</ul>
+<h2 id="可以干什么（感受一下多强大）"><a href="#可以干什么（感受一下多强大）" class="headerlink" title="可以干什么（感受一下多强大）"></a>可以干什么（感受一下多强大）</h2><ul>
+<li>编写国际跳棋 AI，计算最少走多少就可以获胜</li>
+<li>根据人际关系网络找到关系最近的医生</li>
+</ul>
+<h2 id="可以回答两类问题"><a href="#可以回答两类问题" class="headerlink" title="可以回答两类问题"></a>可以回答两类问题</h2><ul>
+<li>从节点 A 出发，有前往节点 B 的途径吗</li>
+<li>从节点 a 出发，前往节点 b 的路径哪条最短</li>
+</ul>
+<h2 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h2><ul>
+<li>创建一个队列，存储要检查的人</li>
+<li>从队列弹出一个人，检查这个人是否是想要的，不是的话，把这个人的邻居加入队列</li>
+<li>假设队列里面肯定有重复的，所以要将检查的人标记，不能检查两次，不然会出现无限循环的情况</li>
+<li>可以专门存一个数组来记录检查过的人，或者用散列表存储，本质去掉重复</li>
+</ul>
+<h2 id="运行时间"><a href="#运行时间" class="headerlink" title="运行时间"></a>运行时间</h2><ul>
+<li>在整个人际关系网找到正确的，意味着要沿每条边前行，因此运行时间为 O(n)</li>
+<li>还使用了队列，其中要包含每个检查的人。将一个人添加到队列是 O（1），n 个人就是 O（n）</li>
+<li>所以运行时间通常为 O(V+E)，v 为定点数，e 为边数</li>
+</ul>
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p>想象以下场景</p>
+</blockquote>
+<ul>
+<li>从我家到公园，需要几步，求最短路径</li>
+<li>一个欠钱的关系图，几个人之间的</li>
+</ul>
+<h2 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h2><ul>
+<li>图是由节点和边组成。</li>
+<li>图用于模拟不同的东西是如何相连的</li>
+</ul>
+<h3 id="有向图和无向图"><a href="#有向图和无向图" class="headerlink" title="有向图和无向图"></a>有向图和无向图</h3><ul>
+<li>有向图的关系是单向的，从节点 a 到节点 b，但不能反过来</li>
+<li>无向图直接相连</li>
+</ul>
+<h2 id="查找算法"><a href="#查找算法" class="headerlink" title="查找算法"></a>查找算法</h2><ul>
+<li>有序列表的查找算法有二分法，同样，图的查找算法是广度优先搜索</li>
+</ul>
+<h2 id="如何实现图"><a href="#如何实现图" class="headerlink" title="如何实现图"></a>如何实现图</h2><ul>
+<li>因为图是由多个节点组成，每个节点都与邻近节点相连，怎么表示我-&gt;bob 这样的关系，可以使用散列表，将 key 映射到 value</li>
+<li>这里我们将节点映射到所有邻居</li>
+<li>图不过是一系列的节点和边的组合</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> graph = &#123;&#125;;</span><br><span class="line">graph[<span class="string">"me"</span>] = [<span class="string">"alice"</span>, <span class="string">"bob"</span>];</span><br><span class="line">graph[<span class="string">"bob"</span>] = [<span class="string">"peggy"</span>];</span><br><span class="line">graph[<span class="string">"alice"</span>] = [<span class="string">"peggy"</span>];</span><br><span class="line">graph[<span class="string">"peggy"</span>] = [];</span><br></pre></td></tr></table></figure>
+<h1 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h1><blockquote>
+<p>和生活中的队列完全一样</p>
+</blockquote>
+<ul>
+<li>是一个先进先出的数据结构</li>
+<li>队列只支持两种操作：入队和出队</li>
+</ul>
+<h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><blockquote>
+<p>特殊的图，没有往后指的边，自上而下</p>
+</blockquote>
+<ul>
+<li>假设正在规划一场婚礼，并有一个很大的图</li>
+<li>其中充满着需要做的事，但是却不知道从何开始</li>
+<li>可以使用拓扑排序来创建一个有序列表</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/27/study-hashtable-01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1762,155 +1945,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/16/study-domain-01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/16/study-domain-01/" itemprop="url">浅谈前端跨域（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T20:14:18+08:00">
-                2018-05-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h2><ul>
-<li>因为有浏览器同源策略限制，当前域名的 js 只能读取同域下的窗口属性</li>
-<li>跨域不仅仅是指跨域名。</li>
-<li>只要协议，域名，端口有任意不同，都被当作不同的域。</li>
-</ul>
-<h2 id="解决跨域问题"><a href="#解决跨域问题" class="headerlink" title="解决跨域问题"></a>解决跨域问题</h2><h3 id="主域相同的跨域"><a href="#主域相同的跨域" class="headerlink" title="主域相同的跨域"></a>主域相同的跨域</h3><ul>
-<li>如果主域相同，比如 a.com 和 b.a.com，那么可以在 b.a.com 设置</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.domain = <span class="string">"a.com"</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="完全不同源的跨域（两个页面之间的通信）"><a href="#完全不同源的跨域（两个页面之间的通信）" class="headerlink" title="完全不同源的跨域（两个页面之间的通信）"></a>完全不同源的跨域（两个页面之间的通信）</h3><h4 id="window-name-跨域（同窗口）"><a href="#window-name-跨域（同窗口）" class="headerlink" title="window.name 跨域（同窗口）"></a>window.name 跨域（同窗口）</h4><ul>
-<li>window 对象有个属性 name，在一个窗口的生命周期内，窗口载入的所有页面都是共享一个 window.name，每个页面对于 window.name 都有读写的权限</li>
-<li>window.name 是持久存在一个窗口载入过的所有页面中的。</li>
-<li>window.name 的神奇之处在于 name 值在不同的页面（甚至不同域名）加载后依旧存在（如果没修改当然就不会变化）</li>
-<li>可以支持非常长的 name 值（2mb）</li>
-</ul>
-<h4 id="window-postMessage（跨窗口）"><a href="#window-postMessage（跨窗口）" class="headerlink" title="window.postMessage（跨窗口）"></a>window.postMessage（跨窗口）</h4><ul>
-<li>html 为了解决这个问题，引入了一个全新的 api，跨文档通信 API，它为 window 对象新增了 postMessage 的方法</li>
-<li>允许跨窗口通信，不论这个两个窗口是否同源</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//父窗口http://aaa.com向子窗口http://bbb.com发消息，调用postMessage方法。</span></span><br><span class="line"><span class="keyword">let</span> popup = <span class="built_in">window</span>.open(<span class="string">"http://bbb.com"</span>, <span class="string">"title"</span>);</span><br><span class="line">popup.postMessage(<span class="string">"Hello World!"</span>, <span class="string">"http://bbb.com"</span>);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>postMessage 的第一个参数是具体的信息内容，第二个参数是接受消息的窗口的源（origin），也可以设置为‘*’，表示向所有窗口发送</li>
-<li>父窗口和子窗口都可以通过 message 事件，监听对方的消息。message 事件的事件对象 event，有三个属性<ul>
-<li>event.source:发送消息的窗口</li>
-<li>event.origin:消息发向的网址</li>
-<li>event.data:消息内容</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> data = event.data; <span class="comment">//消息</span></span><br><span class="line">  <span class="keyword">var</span> origin = event.origin; <span class="comment">//消息来源地址</span></span><br><span class="line">  <span class="keyword">var</span> source = event.source; <span class="comment">//源Window对象</span></span><br><span class="line">  <span class="keyword">if</span> (origin == <span class="string">"http://www.aaa.com"</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data); <span class="comment">//hello world!</span></span><br><span class="line">  &#125;</span><br><span class="line">  source.postMessage(<span class="string">"Nice to see you!"</span>, <span class="string">"*"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span>.addEventListener != <span class="string">"undefined"</span>) &#123;</span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">"message"</span>, onmessage, <span class="literal">false</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span>.attachEvent != <span class="string">"undefined"</span>) &#123;</span><br><span class="line">  <span class="comment">//ie</span></span><br><span class="line">  <span class="built_in">window</span>.attachEvent(<span class="string">"onmessage"</span>, onmessage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1965,7 +1999,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1978,7 +2012,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
