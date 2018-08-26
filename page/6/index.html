@@ -266,6 +266,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/03/13/fe-progress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/03/13/fe-progress/" itemprop="url">我理解的前端进阶</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T11:13:26+08:00">
+                2018-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><ul>
+<li>前端是一个需要广度的职位，感觉如果多了解上下游各部门的相关技术会对工作有极大的帮助。单从比起技术来，眼界跟逻辑思维其实更重要。</li>
+<li>从技术上来说，走出前端那一亩三分地，多接触自己不熟悉的技术。当回头看前端的时候往往会有一种豁然开朗的感觉。</li>
+<li>现阶段感觉是要接触不同的技术，换种不一样的思维。因为之前也写过 php（用的是国人 tp 框架），初次接触了 mvc 的思想，后来为学校的公众号也写过后台，用的是 python（Django），然后公司现在用的 java 的 spring 那一套（在疯狂补 java 核心卷 I 中…），后端的路已经很成熟的，前端还在探索属于自己的方式。这样看来是豁然开朗了～</li>
+<li>萌新 -&gt; 页面重构 -&gt; 前端开发工程师 -&gt; 大前端 -&gt; 前端打杂 -&gt; 团队打杂</li>
+</ul>
+<h2 id="练级之路"><a href="#练级之路" class="headerlink" title="练级之路"></a>练级之路</h2><h3 id="可以写出方便维护的代码"><a href="#可以写出方便维护的代码" class="headerlink" title="可以写出方便维护的代码"></a>可以写出方便维护的代码</h3><ul>
+<li>commonjs/cmd/amd(node/sea.js/require.js)</li>
+<li>es6 module(babel)</li>
+<li>webpack</li>
+<li>mvvm 解决 jq 意大利面条</li>
+<li>使用 async/await，promise</li>
+</ul>
+<h3 id="可以写出不容易出错的代码"><a href="#可以写出不容易出错的代码" class="headerlink" title="可以写出不容易出错的代码"></a>可以写出不容易出错的代码</h3><ul>
+<li>类型检查，不能相信传进来的参数(当然现在有 ts)</li>
+<li>try-catch 捕获错误</li>
+<li>window.onerror</li>
+</ul>
+<h3 id="可以写出性能比较好的代码"><a href="#可以写出性能比较好的代码" class="headerlink" title="可以写出性能比较好的代码"></a>可以写出性能比较好的代码</h3><ul>
+<li>大量 dom 操作的时候可以批量读，批量写，会用缓存</li>
+<li>会使用递归分而治之，将大问题分解成相似的小问题</li>
+</ul>
+<h3 id="可以灵活使用工具"><a href="#可以灵活使用工具" class="headerlink" title="可以灵活使用工具"></a>可以灵活使用工具</h3><ul>
+<li>charles/whistle 替换本地文件，模拟数据，代理 host</li>
+<li>会用 ps 切图，markman 测量工具</li>
+<li>各种带语法提示的小插件</li>
+<li>sourcemap 定位代码</li>
+</ul>
+<h3 id="知道怎么定位到问题"><a href="#知道怎么定位到问题" class="headerlink" title="知道怎么定位到问题"></a>知道怎么定位到问题</h3><ul>
+<li>会有 chrome devtool 里面的 network/performance 等，断点调试</li>
+<li>网络不通，ping 一下百度</li>
+</ul>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><h4 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h4><ul>
+<li>jsonp（get）</li>
+<li>服务器代理</li>
+</ul>
+<h4 id="安全问题"><a href="#安全问题" class="headerlink" title="安全问题"></a>安全问题</h4><ul>
+<li>xss（不能信任用户的输入，过滤一下输入，转义带有脚本的标签）</li>
+<li>csrf（所有请求都需要带有 token）</li>
+</ul>
+<h4 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h4><ul>
+<li>小文件，快展现</li>
+<li>图片资源无损压缩（webp 了解一下）</li>
+<li>服务端渲染</li>
+<li>预加载</li>
+<li>dns 预解析</li>
+<li>web workers 进行大计算</li>
+<li><a href="https://kb.cnblogs.com/page/129756/" target="_blank" rel="noopener">知道浏览器的内部工作原理</a></li>
+</ul>
+<h3 id="关注新技术，并能快速化为己用"><a href="#关注新技术，并能快速化为己用" class="headerlink" title="关注新技术，并能快速化为己用"></a>关注新技术，并能快速化为己用</h3><ul>
+<li>webaseembly 将 js 转为二进制的规范</li>
+<li>小程序</li>
+<li>pwa</li>
+</ul>
+<hr>
+<blockquote>
+<p>有感而发于公司内部分享 ppt</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/02/25/2018/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1756,163 +1933,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/11/09/study-processAndthread/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/11/09/study-processAndthread/" itemprop="url">进程和线程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T11:56:29+08:00">
-                2017-11-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>进程(process)和线程（thread）</p>
-</blockquote>
-<ul>
-<li>进程和线程独立运行，并可能同时运行，多个线程能够共享单个进程的内存。</li>
-<li>进程是具有一定独立功能的程序，它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，换句话说进程是可以独立运行的一段程序。</li>
-<li>线程是进程得一个实体，是 CPU 调度和分派的基本单位，他是比进程更小的独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈。</li>
-</ul>
-<blockquote>
-<p>他们之间的关系是</p>
-</blockquote>
-<ul>
-<li>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（就是通常说的主线程）</li>
-<li>资源分配给进程，同一进程的所有线程共享该进程的所有资源</li>
-<li>线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的方法实现同步。</li>
-<li>处理机分给线程，即真正在处理机上运行得是线程</li>
-<li>线程是指进程内的一个执行单元，也是进程内的可调度实体</li>
-</ul>
-<blockquote>
-<p>他们之间的区别</p>
-</blockquote>
-<ul>
-<li>调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位</li>
-<li>并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。</li>
-<li>拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但也可以访问隶属于进程的资源。</li>
-</ul>
-<blockquote>
-<p>生动形象</p>
-</blockquote>
-<ul>
-<li>书面上，进程和线程基本是一个东西，只是进程可以包含若干个线程。此外就是在操作系统中的层级上，也就是粒度不同外，没有其他大的区别。在一般使用中，需要就多开几个线程。</li>
-<li>形象的说，进程就是一个项目组，每个程序员就是里面的线程，当然一个程序员也可以是一个项目组，对应的一个进程只有一个线程，而且还是主线程。公司里面的任务是分配给项目组级别的，也就是说系统资源是分配给进程的，但是干活的是程序员（线程）。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><a class="extend next" rel="next" href="/blog/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><a class="page-number" href="/blog/page/8/">8</a><a class="extend next" rel="next" href="/blog/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1962,7 +1987,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1975,7 +2000,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
