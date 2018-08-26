@@ -358,12 +358,12 @@
 <li>yum install -y mysql-community-server</li>
 </ul>
 <h4 id="安装成功后重启-MySQL-服务"><a href="#安装成功后重启-MySQL-服务" class="headerlink" title="安装成功后重启 MySQL 服务"></a>安装成功后重启 MySQL 服务</h4><ul>
-<li>yum install -y mysql-community-server</li>
+<li>service mysqld restart</li>
 </ul>
 <h4 id="查看-MySQL-服务进程和端口"><a href="#查看-MySQL-服务进程和端口" class="headerlink" title="查看 MySQL 服务进程和端口"></a>查看 MySQL 服务进程和端口</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep mysql</span><br><span class="line">netstat -tunpl | grep <span class="number">3306</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>ps 命令是 Process Status 的缩写</li>
-<li>ps 命令用来列出系统中当前运行的那些进程。ps 命令列出的是当前那些进程的快照，就是执行 ps 命令的那个时刻的那些进程，如果想要动态的显示进程信息，就可以使用 top 命令。<a href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ps.html#id7" target="_blank" rel="noopener">改命令详情实例查看这里</a></li>
+<li>ps 命令用来列出系统中当前运行的那些进程。ps 命令列出的是当前那些进程的快照，就是执行 ps 命令的那个时刻的那些进程，如果想要动态的显示进程信息，就可以使用 top 命令。<a href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ps.html#id7" target="_blank" rel="noopener">ps 命令详情实例查看这里</a></li>
 <li>netstat 是显示各种网络信息的工具</li>
 </ul>
 <h4 id="获取-mysql-默认密码"><a href="#获取-mysql-默认密码" class="headerlink" title="获取 mysql 默认密码"></a>获取 mysql 默认密码</h4><ul>
