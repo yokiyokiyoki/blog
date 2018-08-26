@@ -58,7 +58,7 @@ rpm -ivh mysql-community-release-el7-5.noarch.rpm //rpm -ivh是安装命令的�
 
 #### 安装成功后重启 MySQL 服务
 
-- yum install -y mysql-community-server
+- service mysqld restart
 
 #### 查看 MySQL 服务进程和端口
 
