@@ -68,7 +68,7 @@ netstat -tunpl | grep 3306
 ```
 
 - ps 命令是 Process Status 的缩写
-- ps 命令用来列出系统中当前运行的那些进程。ps 命令列出的是当前那些进程的快照，就是执行 ps 命令的那个时刻的那些进程，如果想要动态的显示进程信息，就可以使用 top 命令。[改命令详情实例查看这里](https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ps.html#id7)
+- ps 命令用来列出系统中当前运行的那些进程。ps 命令列出的是当前那些进程的快照，就是执行 ps 命令的那个时刻的那些进程，如果想要动态的显示进程信息，就可以使用 top 命令。[ps 命令详情实例查看这里](https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ps.html#id7)
 - netstat 是显示各种网络信息的工具
 
 #### 获取 mysql 默认密码
