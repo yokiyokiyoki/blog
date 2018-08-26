@@ -27,10 +27,14 @@ yum -y install gcc gcc-c++ ncurses ncurses-devel cmake bison
 #### 先检测系统是否自带原有版本 mysql 安装包，如果有要先卸载删除，不然不能成功安装和启动
 
 ```javascript
-    [root@root ~]# rpm -qa | grep mysql 查看有哪些安装包，如没有直接进入第3、4
-    [root@root ~]# yum remove mysql mysql-server mysql-libs compat-mysql51 注意这个卸载不干净
-    [root@root ~]# rm -rf /var/lib/mysql
-    [root@root ~]# rm /etc/my.cnf
-    [root@root ~]# rpm -qa|grep mysql 再看下有没有删完
-    [root@root ~]# whereis mysql 查看残留的目录、如有则删除
+rpm -qa | grep mysql 查看有哪些安装包
+yum remove mysql mysql-server mysql-libs compat-mysql51 注意这个卸载不干净
+rm -rf /var/lib/mysql
+rm /etc/my.cnf
+rpm -qa|grep mysql 再看下有没有删完
+whereis mysql 查看残留的目录、如有则删除
 ```
+
+- 如果发现有安装包，可以用 rpm -e 命令删掉安装包
+
+#### 下载 Mysql 的 repo 源
