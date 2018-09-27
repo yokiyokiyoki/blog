@@ -61,3 +61,7 @@ tags: vue
 ```
 
 - npm publish
+
+## 参考
+
+- [vue-fullpage](https://github.com/yokiyokiyoki/vue-fullpage)
