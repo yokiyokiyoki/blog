@@ -380,7 +380,7 @@
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">use mysql;</span><br><span class="line">update user set host=<span class="string">'%'</span> where user=<span class="string">'root'</span> and host=<span class="string">'localhost'</span>;</span><br><span class="line">exit；</span><br><span class="line">systemctl restart mysql<span class="comment">//重启mysql</span></span><br></pre></td></tr></table></figure>
 <h2 id="阿里云远程连接的坑"><a href="#阿里云远程连接的坑" class="headerlink" title="阿里云远程连接的坑"></a>阿里云远程连接的坑</h2><ul>
-<li>在外面怎么连接 mysql 各种超时，即使把防火墙关了也无济于事。是因为阿里云有个<a href="https://help.aliyun.com/document_detail/25471.html" target="_blank" rel="noopener">安全组策略</a>，</li>
+<li>在外面怎么连接 mysql 各种超时，即使把防火墙关了也无济于事。是因为阿里云有个<a href="https://help.aliyun.com/document_detail/25471.html" target="_blank" rel="noopener">安全组策略</a></li>
 <li><a href="https://blog.csdn.net/u010955892/article/details/72774920" target="_blank" rel="noopener">在安全组策略配置 3306 端口开放</a></li>
 </ul>
 
