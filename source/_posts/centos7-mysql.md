@@ -106,5 +106,5 @@ systemctl restart mysql//重启mysql
 
 ## 阿里云远程连接的坑
 
-- 在外面怎么连接 mysql 各种超时，即使把防火墙关了也无济于事。是因为阿里云有个[安全组策略](https://help.aliyun.com/document_detail/25471.html)，
+- 在外面怎么连接 mysql 各种超时，即使把防火墙关了也无济于事。是因为阿里云有个[安全组策略](https://help.aliyun.com/document_detail/25471.html)
 - [在安全组策略配置 3306 端口开放](https://blog.csdn.net/u010955892/article/details/72774920)
