@@ -16,7 +16,7 @@ tags: git
 - 确保全局安装或者该项目已经有了 commitizen 和 cz-customizable，命令：npm i -g commitizen / npm i -D commitizen
 - 查看 package.json，看看是否有 config 选项，并且里面 commitizen 选项，如果有则跳过第三个步骤。
 - 执行`commitizen init cz-conventional-changelog --save --save-exact`
-- 以后提交使用`git cz`
+- `git add`以后提交使用`git cz`
 
 # git hook 检查
 
