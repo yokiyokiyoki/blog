@@ -266,6 +266,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/21/study-tcpip-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/21/study-tcpip-01/" itemprop="url">TCP/IP学习（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T15:42:30+08:00">
+                2018-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="TCP-IP-概念层模型"><a href="#TCP-IP-概念层模型" class="headerlink" title="TCP/IP 概念层模型"></a>TCP/IP 概念层模型</h1><blockquote>
+<p>对比的是 OSI 七层模型</p>
+</blockquote>
+<ul>
+<li>应用层（http）</li>
+<li>传输层（tcp）</li>
+<li>网络层（ip）</li>
+<li>链路层(以太网)</li>
+</ul>
+<h1 id="数据包"><a href="#数据包" class="headerlink" title="数据包"></a>数据包</h1><blockquote>
+<p>网络中传输的数据包由两部分组成，一个是协议所要用到的首部，另一部分是上一层传过来的数据。</p>
+</blockquote>
+<ul>
+<li>首部，明确标明了协议应该如何读取数据，就像协议的脸。</li>
+</ul>
+<h1 id="传输层协议"><a href="#传输层协议" class="headerlink" title="传输层协议"></a>传输层协议</h1><blockquote>
+<p>具有代表性的两个，分别是 tcp 和 udp</p>
+</blockquote>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><ul>
+<li>面向连接的，可靠的协议。</li>
+<li>为提供可靠性传输，提供顺序控制和重发控制。</li>
+</ul>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><ul>
+<li>不具有可靠性的数据报协议</li>
+<li>实时性要求高</li>
+</ul>
+<h1 id="端口号"><a href="#端口号" class="headerlink" title="端口号"></a>端口号</h1><blockquote>
+<p>一台计算机上可以同时运行多个程序。传输层协议正是利用这些端口号识别本机中正在进行通信的应用程序。</p>
+</blockquote>
+<ul>
+<li>数据链路层，指的是 mac 地址，用于识别统一链路中不同的计算机。</li>
+<li>网络层，指的是 ip 地址，用于识别 tcp/ip 网络中互联的主机和路由器</li>
+<li>传输层，指的是端口号，用于识别同一计算机中进行通信的不同应用程序。被称为程序地址。</li>
+</ul>
+<h2 id="端口号的确定"><a href="#端口号的确定" class="headerlink" title="端口号的确定"></a>端口号的确定</h2><h3 id="标准既定的端口号"><a href="#标准既定的端口号" class="headerlink" title="标准既定的端口号"></a>标准既定的端口号</h3><ul>
+<li>每个应用程序都有其指定的端口号，但不是说随意使用任何一个端口号。例如 http，ftp 所使用的端口号就是固定的，这些叫知名端口号。</li>
+<li>知名端口号分布在 0-1023</li>
+<li>此外还有一些端口号被正式注册，他们分布在 1024-49151 之间，可用于任何通信用途</li>
+</ul>
+<h3 id="时序分配法"><a href="#时序分配法" class="headerlink" title="时序分配法"></a>时序分配法</h3><ul>
+<li>服务器有必要确定监听端口号，但是接受服务的客户端没必要确定端口号</li>
+<li>客户端应用程序全权交由操作系统设置</li>
+</ul>
+<h1 id="TCP-的三次握手"><a href="#TCP-的三次握手" class="headerlink" title="TCP 的三次握手"></a>TCP 的三次握手</h1><blockquote>
+<p>建立连接</p>
+</blockquote>
+<ul>
+<li>第一次握手：客户端将标志位 SYN 置为 1，随机产生一个值 seq=J，并将该数据包发送给服务器端，客户端进入 SYN_SENT 状态，等待服务器端确认。</li>
+<li>第二次握手：服务器端收到数据包后由标志位 SYN=1 知道客户端请求建立连接，服务器端将标志位 SYN 和 ACK 都置为 1，ack=J+1，随机产生一个值 seq=K，并将该数据包发送给客户端以确认连接请求，服务器端进入 SYN_RCVD 状态。</li>
+<li>第三次握手：客户端收到确认后，检查 ack 是否为 J+1，ACK 是否为 1，如果正确则将标志位 ACK 置为 1，ack=K+1，并将该数据包发送给服务器端，服务器端检查 ack 是否为 K+1，ACK 是否为 1，如果正确则连接建立成功，客户端和服务器端进入 ESTABLISHED 状态，完成三次握手，随后客户端与服务器端之间可以开始传输数据了。</li>
+</ul>
+<h1 id="TCP-的四次挥手"><a href="#TCP-的四次挥手" class="headerlink" title="TCP 的四次挥手"></a>TCP 的四次挥手</h1><blockquote>
+<p>中断连接端可以是客户端，也可以是服务器端。</p>
+</blockquote>
+<ul>
+<li>第一次挥手：客户端发送一个 FIN=M，用来关闭客户端到服务器端的数据传送，客户端进入 FIN_WAIT_1 状态。意思是说”我客户端没有数据要发给你了”，但是如果你服务器端还有数据没有发送完成，则不必急着关闭连接，可以继续发送数据。</li>
+<li>第二次挥手：服务器端收到 FIN 后，先发送 ack=M+1，告诉客户端，你的请求我收到了，但是我还没准备好，请继续你等我的消息。这个时候客户端就进入 FIN_WAIT_2 状态，继续等待服务器端的 FIN 报文。</li>
+<li>第三次挥手：当服务器端确定数据已发送完成，则向客户端发送 FIN=N 报文，告诉客户端，好了，我这边数据发完了，准备好关闭连接了。服务器端进入 LAST_ACK 状态。</li>
+<li>第四次挥手：客户端收到 FIN=N 报文后，就知道可以关闭连接了，但是他还是不相信网络，怕服务器端不知道要关闭，所以发送 ack=N+1 后进入 TIME_WAIT 状态，如果 Server 端没有收到 ACK 则可以重传。服务器端收到 ACK 后，就知道可以断开连接了。客户端等待了 2MSL 后依然没有收到回复，则证明服务器端已正常关闭，那好，我客户端也可以关闭连接了。最终完成了四次握手。</li>
+</ul>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><ul>
+<li><a href="https://juejin.im/post/5a069b6d51882509e5432656" target="_blank" rel="noopener">tcp/ip 协议篇二</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/17/study-webp-01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1628,180 +1810,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/11/study-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/11/study-cache/" itemprop="url">浅谈前端缓存(一)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-11T13:51:21+08:00">
-                2018-05-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="为什么需要前端缓存"><a href="#为什么需要前端缓存" class="headerlink" title="为什么需要前端缓存"></a>为什么需要前端缓存</h2><ul>
-<li>重复利用资源，提高网页打开资源</li>
-<li>减少 http 请求，减少网络带宽</li>
-</ul>
-<h2 id="两种缓存"><a href="#两种缓存" class="headerlink" title="两种缓存"></a>两种缓存</h2><blockquote>
-<p>200(from cache)和 304（not modified）</p>
-</blockquote>
-<ul>
-<li>强缓存：200(from cache)强缓存命中不会发送请求到服务端，直接从本地缓存中获取资源</li>
-<li>协商缓存：会发送请求到服务器，服务器通过请求头部字段来验证资源是否命中协商缓存，如果命中，返回 304,通知浏览器从缓存中获取资源</li>
-</ul>
-<h2 id="与缓存策略相关的字段"><a href="#与缓存策略相关的字段" class="headerlink" title="与缓存策略相关的字段"></a>与缓存策略相关的字段</h2><blockquote>
-<p>三个字段 Cache-Control,Pragma,Expires(过期时间)，下面介绍一下响应头中的</p>
-</blockquote>
-<h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><blockquote>
-<p>http1.1 新增的字段，是控制浏览器缓存的主要字段。</p>
-</blockquote>
-<ul>
-<li>no-cache：资源可以被缓存，但是立刻过期，下次访问必须验证资源有效性</li>
-<li>max-age：缓存资源，在指定时间（是 res 里面的 Date 字段）后过期，单位是秒</li>
-<li>no-store：资源不会被缓存</li>
-<li>public：资源可以被浏览器和代理服务器缓存</li>
-<li>private:资源只能被浏览器缓存</li>
-</ul>
-<h3 id="Pragma"><a href="#Pragma" class="headerlink" title="Pragma"></a>Pragma</h3><ul>
-<li>是 http1.0 的字段，只有一个值 no-cache，功能和 Cache-control:no-cache；一样，但是优先级比他低。</li>
-</ul>
-<h3 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h3><ul>
-<li>是缓存到期时间，是一个服务器的绝对时间，由于时区的误差等因素已经较少使用。优先级比 Cache-control:max-age 低。</li>
-</ul>
-<h2 id="强缓存命中条件"><a href="#强缓存命中条件" class="headerlink" title="强缓存命中条件"></a>强缓存命中条件</h2><ul>
-<li>有些场景下必须避免浏览器缓存，响应头可以这样设置：Cache-Control: no-cache, no-store, must-revalidate(必须验证)</li>
-<li>公开资源直接命中强缓存，这是响应最快的。<ul>
-<li>请求头部不包括 Pragma 字段</li>
-<li>响应头部 Cache-Control 中不包括 no-cache、no-store</li>
-<li>响应头部 max-age 或者 expire 大于请求日期</li>
-</ul>
-</li>
-<li>如果我们在很短的一段时间内多次访问同一个资源，并且响应头部却没有 max-age 或者 expires 信息，是不是就不会命中强缓存？不是的，浏览器会做出优化，默认会使用一个启发式算法，取响应头(Date-Last-Modified)*0.1 作为缓存的有效时间（其实就相当于 max-age），只要在这段时间内请求这个资源，即使没有缓存过期字段，也会命中强缓存</li>
-</ul>
-<h2 id="协商缓存命中条件"><a href="#协商缓存命中条件" class="headerlink" title="协商缓存命中条件"></a>协商缓存命中条件</h2><h3 id="Last-Modified-If-Modified-Since"><a href="#Last-Modified-If-Modified-Since" class="headerlink" title="Last-Modified/If-Modified-Since"></a>Last-Modified/If-Modified-Since</h3><ul>
-<li>响应头会有一个 Last-Modified，代表这个资源最后修改的时间。</li>
-<li>当浏览器再次向服务器请求该资源的时候，会传送 If-Modified-Since（也就是上次服务器传送过来的 Last-Modified），服务器会拿这个值跟本地资源实际最后修改时间作比较，如果文件没有被修改，那么返回 304，通知浏览器从缓存中读取文件。</li>
-</ul>
-<h3 id="ETag-If-None-Match"><a href="#ETag-If-None-Match" class="headerlink" title="ETag/If-None-Match"></a>ETag/If-None-Match</h3><ul>
-<li>ETag 是一个响应首部字段，他是根据资源内容生成的一段 hash 值，标识资源的状态，由服务器产生。</li>
-<li>当浏览器再次向服务器端请求这个资源，会带上 If-None-Match（其实就是上次服务器发过来的 ETag 的 hash 值），服务器收到后，会拿这个值和资源实际的 ETag 做比较。</li>
-<li>如果一样就命中协商缓存，返回 304</li>
-</ul>
-<h4 id="ETag-的优先级比-Last-Modified-高"><a href="#ETag-的优先级比-Last-Modified-高" class="headerlink" title="ETag 的优先级比 Last-Modified 高"></a>ETag 的优先级比 Last-Modified 高</h4><ul>
-<li>本来已经有了一个 Last-Modified，为什么还需要 ETag？</li>
-<li>这是因为 Last-Modified 只能精确到秒，而如果我们在服务器一秒内多次更改资源，那么将无法识别，还是会命中协商缓存</li>
-<li>而且某些服务器不能精确得到文件的最后修改时间</li>
-<li>一些文件或许会周期性被更改，但是他内容并没有改变，只是改变了修改时间，这个时候我们并不希望浏览器重新请求这个资源</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1856,7 +1864,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
