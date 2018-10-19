@@ -15,10 +15,75 @@ tags: git
 
 ### 第一种方式（并非自定义）
 
+> 无法定义自己的模块/组件（scopes）,比如项目具体业务的页面
+
 - 确保全局安装或者该项目已经有了 commitizen ，命令：npm i -g commitizen / npm i -D commitizen
 - 查看 package.json，看看是否有 config 选项，并且里面 commitizen 选项，如果有则跳过第三个步骤。
 - 安装 `adapter` 配置 commit message，例如，要使用 Angular 的 commit message 格式，可以安装 `cz-conventional-changelog`，执行`commitizen init cz-conventional-changelog --save --save-exact`
 - `git add`以后提交使用`git cz`
+
+### 第二钟方式
+
+> 自定义程度较高，可以有自己想要的模块
+
+- 确保全局安装或者该项目已经有了 commitizen 和 cz-customizable
+- 查看 package.json，看看是否有 config 选项，并且里面 commitizen 选项，如果有则跳过第三个步骤。
+- 该项目下手动新建`.cz-config.js`文件，如下
+
+```javascript
+"use strict";
+module.exports = {
+  // 不要更改types, 只允许出现这几种
+  types: [
+    {
+      value: "wip",
+      name: "wip：大版本功能开发阶段性提交"
+    },
+    { value: "feat", name: "feat：完整新功能提交" },
+    { value: "fix", name: "fix：修复bug" },
+    {
+      value: "build",
+      name: "build：打包，准备发布"
+    },
+    { value: "docs", name: "docs：只修改了文档相关的文件，例如修改README.md" },
+    {
+      value: "style",
+      name:
+        "style：代码风格、不影响代码功能的更改，例如修改空格缩进，换行规范等n"
+    },
+    {
+      value: "refactor",
+      name: "refactor：既不修复错误也不添加新功能的代码更改，例如重构"
+    },
+    {
+      value: "chore",
+      name:
+        "chore：对非业务性代码进行修改，例如包管理器,构建过程或辅助工具的变动"
+    }
+  ],
+  // 按照项目模块, 自行配置
+  scopes: [{ name: "品牌监测" }, { name: "活动监测" }, { name: "kol监测" }],
+  // 可以根据匹配的类型不同, 显示不一样的scope,
+  scopeOverrides: {
+    fix: [{ name: "merge" }]
+  },
+  allowCustomScopes: true,
+  //重要的改动要声明
+  allowBreakingChanges: ["feat", "fix"]
+};
+```
+
+- 在 package.json 下面添加
+
+```javascript
+{
+  "config": {
+    "commitizen": {
+      "path": "cz-customizable"
+    }
+  }
+}
+```
 
 # git hook 检查
 
