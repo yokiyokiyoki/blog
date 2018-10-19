@@ -13,14 +13,14 @@ tags: git
 
 # 使用说明
 
-### 第一种方式（并非自定义）
+### 第一种方式（并非自定义,使用 ng 团队）
 
 > 无法定义自己的模块/组件（scopes）,比如项目具体业务的页面
 
 - 确保全局安装或者该项目已经有了 commitizen ，命令：npm i -g commitizen / npm i -D commitizen
 - 查看 package.json，看看是否有 config 选项，并且里面 commitizen 选项，如果有则跳过第三个步骤。
 - 安装 `adapter` 配置 commit message，例如，要使用 Angular 的 commit message 格式，可以安装 `cz-conventional-changelog`，执行`commitizen init cz-conventional-changelog --save --save-exact`
-- `git add`以后提交使用`git cz`
+- `git commit`以后提交使用`git cz`
 
 ### 第二钟方式
 
@@ -85,6 +85,8 @@ module.exports = {
 }
 ```
 
+- `git commit`以后提交使用`git cz`
+
 # git hook 检查
 
 > 鉴于 vscode 有很方便的提交 git 的图形化按钮，有些童鞋可能会一不小心就提交了自己的信息
@@ -93,12 +95,38 @@ module.exports = {
 
 ### commit-msg 钩子
 
-##### 简介
+#### 简介
 
 - 它会在用户输入提交信息之后被调用。这适合用来提醒开发者他们的提交信息不符合团队的规范。
 
-##### 使用
+#### 使用
 
-- 为了简化使用 git hook，这里直接使用了 husky 插件，让 hook 使用更简单～（npm i husky -D）
+- 为了简化使用 git hook，这里直接使用了 husky 插件（继承了 git hook 所有钩子），让 hook 使用更简单～（npm i husky -D）
+
+##### 使用 ng 的提交规范
+
 - 使用符合 angular 提交规范的检查流（npm i validate-commit-msg -D）
 - 在 package.json 的 scripts 里面加上"commitmsg": "validate-commit-msg"
+
+#### 针对自定义的 Adapter
+
+- 需要安装 `commitlint-config-cz`(自定义) 和`@commitlint/cli`（检查）
+- 新建`.commitlintrc.js`,如下
+
+```javascript
+"use strict";
+module.exports = {
+  extends: ["cz"],
+  rules: {}
+};
+```
+
+- package.json 里面添加
+
+```javascript
+"husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+```
