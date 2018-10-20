@@ -106,7 +106,7 @@ module.exports = {
 
 ##### 使用 ng 的提交规范
 
-- 安装`@commitlint/config-conventional`
+- 安装`@commitlint/config-conventional`和`@commitlint/cli`（检查）
 - - 新建`.commitlintrc.js`,如下
 
 ```javascript
