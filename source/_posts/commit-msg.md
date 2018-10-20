@@ -65,7 +65,8 @@ module.exports = {
   scopes: [{ name: "品牌监测" }, { name: "活动监测" }, { name: "kol监测" }],
   // 可以根据匹配的类型不同, 显示不一样的scope,
   scopeOverrides: {
-    fix: [{ name: "merge" }]
+    fix: [{ name: "merge" }],
+    chore: []
   },
   allowCustomScopes: true,
   //重要的改动要声明
@@ -79,7 +80,7 @@ module.exports = {
 {
   "config": {
     "commitizen": {
-      "path": "cz-customizable"
+      "path": "node_modules/cz-customizable"
     }
   }
 }
@@ -105,8 +106,16 @@ module.exports = {
 
 ##### 使用 ng 的提交规范
 
-- 使用符合 angular 提交规范的检查流（npm i validate-commit-msg -D）
-- 在 package.json 的 scripts 里面加上"commitmsg": "validate-commit-msg"
+- 安装`@commitlint/config-conventional`
+- - 新建`.commitlintrc.js`,如下
+
+```javascript
+"use strict";
+module.exports = {
+  extends: ["@commitlint/config-conventional"],
+  rules: {}
+};
+```
 
 #### 针对自定义的 Adapter
 
@@ -126,7 +135,21 @@ module.exports = {
 ```javascript
 "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -c -e $GIT_PARAMS"
     }
   }
 ```
+
+### 自动生成 CHANGELOG
+
+- 我们可以借助 `standard-version`(很多特性)这样的工具, 自动生成 CHANGELOG
+- npm i -S standard-version
+- package.json 里面添加
+
+```javascript
+"script": {
+    "release": "standard-version"
+}
+```
+
+- npm run release 生成 CHANGELOG
