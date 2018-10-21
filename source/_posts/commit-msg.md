@@ -6,7 +6,7 @@ tags: git
 
 # 背景
 
-> 我们团队采用 [Angular 的提交规范](https://github.com/isLishude/blog/issues/69)，有方便的插件，可放心食用。
+> 团队如果采用 [Angular 的提交规范](https://github.com/isLishude/blog/issues/69)，有方便的插件，可放心食用。
 
 - 对 git commit -m "不知道提交些什么"——这样的 commit 说拒绝。
 - 生成易读的 commit，可以方便回退版本以及 code-review。
