@@ -264,6 +264,513 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/06/study-number/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/06/study-number/" itemprop="url">js浮点数的坑</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T11:22:06+08:00">
+                2018-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="浮点数在计算机中的表示"><a href="#浮点数在计算机中的表示" class="headerlink" title="浮点数在计算机中的表示"></a>浮点数在计算机中的表示</h2><ul>
+<li>日常中，32767 这个数用科学计数法可以写成 3.2767*10^4，3.2767 称为尾数(Mantissa)，4 就是指数(exponent)</li>
+<li>浮点数在计算机中基于科学技术法来表示的，上面是我们日常用十进制来表示，计算机则是二进制，它的基数是 2 不是 10</li>
+</ul>
+<h2 id="一种浮点数格式"><a href="#一种浮点数格式" class="headerlink" title="一种浮点数格式"></a>一种浮点数格式</h2><blockquote>
+<p>假设共有 14bits，5bits 表指数，8bits 表尾数，1bit 表示符号</p>
+</blockquote>
+<ul>
+<li>17=&gt;10001=1.0001*2^4 类比十进制的 1.7*10^5</li>
+</ul>
+<h3 id="尾数部分"><a href="#尾数部分" class="headerlink" title="尾数部分"></a>尾数部分</h3><ul>
+<li>因为尾数在十进制里面 0&lt;尾数&lt;10，在二进制里面就是 0&lt;尾数&lt;2，那么规定最高位只能是 1</li>
+<li>因为尾数默认是 1，所以这个 1 就不用保存了，可以节省一位提高精度。所以尾数部分本来是 10001，这样就只用存储 0001，去掉了 1</li>
+<li>需要注意的是，这里我们尾数的有效位数是 8 位，而 128.25=&gt;10000000.01,需要 10 个有效位，而我们的模型中尾数部分是 8 位，算上隐含的最高位 1 也才 9 个有效位，所以 128.25 只能舍去末尾的 1，表示为 10000000.0，其实跟 128 相等。所以浮点数不能做精确比较就是这样的</li>
+</ul>
+<h3 id="指数部分"><a href="#指数部分" class="headerlink" title="指数部分"></a>指数部分</h3><ul>
+<li>但是指数部分是 4，换算成二进制也就是 100，如果以为是 100 就错了。</li>
+<li>因为 0.25=&gt;0.01=1*10^-2,但是这样我们无法用指数表示负数。第一个符号位表示的是整个数的正负</li>
+<li>现在广泛采用的是偏移的指数。规定一个偏移值，比如偏移值是 16，实际的指数要加上这个偏移值才可以，这样比 16 大的就是正指数，小的就是负指数。</li>
+<li>要表示 0.25，如果偏移值 16，那么指数部分是 14，要表示 17 的指数部分，是 16+5=21,换成二进制就是 10101</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>1bit</th>
+<th style="text-align:center">5bits</th>
+<th style="text-align:right">8bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sign bit</td>
+<td style="text-align:center">exponent</td>
+<td style="text-align:right">Mantissa</td>
+</tr>
+<tr>
+<td>符号位</td>
+<td style="text-align:center">指数</td>
+<td style="text-align:right">尾数</td>
+</tr>
+<tr>
+<td>0</td>
+<td style="text-align:center">10101</td>
+<td style="text-align:right">00010000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="js-的浮点数标准"><a href="#js-的浮点数标准" class="headerlink" title="js 的浮点数标准"></a>js 的浮点数标准</h2><blockquote>
+<p>js 的 number 遵循 IEEE 754 标准，使用 64 位固定长度表示，也就是 64 位 double 双精度浮点数（类似的有 float 32 位单精度标准）</p>
+</blockquote>
+<ul>
+<li>大多数语言的小数默认都是遵循这个标准，所以 js 有的问题他们也有，包括 java，ruby，python</li>
+<li>64bits 分为三部分<ul>
+<li>符号 S：1bit，0 表示正数，1 表示负数</li>
+<li>指数 E：中间的 11 位存储指数</li>
+<li>尾数 M：最后的 52 位是尾数</li>
+</ul>
+</li>
+<li>因为指数 E 有 11 位，取值范围是 2^11=2048，也就是[0,2047]，所以约定的偏移值是 1023，[0,1023]是负数</li>
+</ul>
+<h3 id="浮点误差"><a href="#浮点误差" class="headerlink" title="浮点误差"></a>浮点误差</h3><blockquote>
+<p>浮点数不是精确存储的</p>
+</blockquote>
+<h4 id="0-1-浮点误差（转成二进制无限循环）"><a href="#0-1-浮点误差（转成二进制无限循环）" class="headerlink" title="0.1 浮点误差（转成二进制无限循环）"></a>0.1 浮点误差（转成二进制无限循环）</h4><ul>
+<li>0.1 转成二进制==0.0001100110011001100(1100 循环)=1.100110011001100(1100 循环)x2^-4，因为尾数舍去首位的 1，存的是后面的数，但是最多也只能存 52 位，然后再把有误差的只有 52 位尾数的，转成十进制，就变成了 0.100000000000000005551115123126</li>
+<li>0.1+0.2=0.30000000000000004，那是因为把这两个转成二进制（这里就有误差了）后再运算，然后再转回十进制，正好是 0.30000000000000004</li>
+</ul>
+<h4 id="为什么-x-0-1-就能得到-0-1"><a href="#为什么-x-0-1-就能得到-0-1" class="headerlink" title="为什么 x=0.1 就能得到 0.1"></a>为什么 x=0.1 就能得到 0.1</h4><ul>
+<li>因为尾数的固定长度是 52 位，那么加上省略的一位，最多可以表示的数位 2^53=9007199254740992，对应科学计数尾数是 9.007199254740992,我们只用记住 2^53 就好了</li>
+<li>2^53 的长度是 16 位,这也是 js 最多能表示的精度</li>
+<li>所以可以近似用 toPrecision(16) 来做精度运算，超过的精度会自动凑整处理</li>
+<li>Precision 是精确的意思</li>
+<li>所以 0.1 转成二进制然后再成十进制是 0.100000000000000005551115123126.toPrecision(16)=0.1000000000000000，去掉末尾的 0 正好是 0.1</li>
+<li>所以我们看到的 0.1 并不是 0.1</li>
+<li>可以用更高的精度解释：0.1.toPrecision(21) = 0.100000000000000005551</li>
+</ul>
+<h4 id="toPrecision-vs-toFixed"><a href="#toPrecision-vs-toFixed" class="headerlink" title="toPrecision vs toFixed"></a>toPrecision vs toFixed</h4><blockquote>
+<p>两者都能对多余数字取整，但是，前者是处理精度，精度是从左到右第一个不为 0 的数开始计算。后者是小数点指定位数取整，从小数点开始数起来</p>
+</blockquote>
+<ul>
+<li>有些用 toFixed 用来四舍五入，但是其实是有 bug 的，</li>
+<li>1.005.toFixed(2)=1.00 而不是 1.01</li>
+<li>因为 1.005 实际上是 1.00499999999999989，4 是进不了 1 的</li>
+</ul>
+<h2 id="解决浮点数方案"><a href="#解决浮点数方案" class="headerlink" title="解决浮点数方案"></a>解决浮点数方案</h2><blockquote>
+<p>由于理论上用有限的空间来存储无限的小数是不可能保证精确的，但是我们可以处理一下得到我们精确的结果</p>
+</blockquote>
+<h3 id="数据展示类"><a href="#数据展示类" class="headerlink" title="数据展示类"></a>数据展示类</h3><ul>
+<li>1.4000000000000001 这样的数据要展示的话，建议使用 toPrecision 凑整并 parseFloat 转成数字后再显示</li>
+<li>parseFloat(1.4000000000000001.toPrecision(12)) === 1.4</li>
+<li>为什么选用 12 作为精度，因为这是一个经验之谈，大部分够用了</li>
+</ul>
+<h3 id="数据运算类"><a href="#数据运算类" class="headerlink" title="数据运算类"></a>数据运算类</h3><ul>
+<li>要把小数转成整数后再运算</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/03/study-Conversion/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/03/study-Conversion/" itemprop="url">了解二进制转换</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-03T22:46:38+08:00">
+                2018-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>十进制是为了人们方便记忆使用的，而计算机的世界里只有 0 和 1，也就是只有二进制</p>
+</blockquote>
+<h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><ul>
+<li>想要了解计算机，首先要了解二进制</li>
+</ul>
+<blockquote>
+<p>以下来自维基百科</p>
+</blockquote>
+<p>二进制（binary）数是指用二进制记数系统，即以 2 为基数的记数系统表示的数字。这一系统中，通常用两个不同的符号 0（代表零）和 1（代表一）来表示。以 2 为基数代表系统是二进位制的。数字电子电路中，逻辑门的实现直接应用了二进制，因此现代的计算机和依赖计算机的设备里都用到二进制。每个数字称为一个位元（二进制位）或比特（Bit，Binary digit 的缩写）</p>
+<h2 id="二进制转换成十进制"><a href="#二进制转换成十进制" class="headerlink" title="二进制转换成十进制"></a>二进制转换成十进制</h2><blockquote>
+<p>以 2 为底数，指数是权重（换句话说是位数-1，权重从 0 开始）</p>
+</blockquote>
+<ul>
+<li>例如：11=&gt;1<em>2^1+1</em>2^0=3</li>
+</ul>
+<h2 id="十进制转换成二进制"><a href="#十进制转换成二进制" class="headerlink" title="十进制转换成二进制"></a>十进制转换成二进制</h2><blockquote>
+<p>每一步除以进制数（2），直到商数为 0，然后取每一步的余数，再倒过来就是了</p>
+</blockquote>
+<ul>
+<li>例如 10=&gt;10/2=5 余 0,5/2=2 余 1，2/2=1 余 0，1/2=0 余 1,然后再取倒就是 1010</li>
+</ul>
+<blockquote>
+<p>如果是有小数的，比如 10.25,那么小数部分乘以 2，取它整数部分的结果，然后再用这个结果继续乘以 2 算，直到小数部分为 0</p>
+</blockquote>
+<ul>
+<li>例如 10.25 的小数部分是，0.25*2=0.5(取整数就是 0),0.5*2=1.0(取 1，然后终止，因为小数部分是 0），答案是 1010.01</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/01/study-dataUrl/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/01/study-dataUrl/" itemprop="url">浅谈Data URL</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-01T15:08:38+08:00">
+                2018-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Data-URL-是什么"><a href="#Data-URL-是什么" class="headerlink" title="Data URL 是什么"></a>Data URL 是什么</h2><p>是一种提供让外置资源直接内嵌在页面中的方案。格式如下：</p>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;base64],&lt;encoded data&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一部分是<code>data：</code>协议头，它标识这个内容为一个 dataurl 资源</li>
+<li>第二部分是 MIME 类型，表示这串内容的展现方式，比如 text/plain，就是文本展示;image/jpeg,就是以 jpeg 图片形式展示，同样浏览器会根据这个 MIME 类型来解析数据。</li>
+<li>第三部分是编码设置，默认编码是 charset=US-ASCII，可以在浏览器输入框分别输入下面内容：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// output: &amp;auml;&amp;frac12; &amp;aring;&amp;yen;&amp;frac12; -&gt; 使用默认的编码展示，故乱码</span></span><br><span class="line">data:text/html,你好</span><br><span class="line"><span class="comment">// output: 你好 -&gt; 使用 UTF-8 展示</span></span><br><span class="line">data:text/html;charset=UTF<span class="number">-8</span>,你好</span><br><span class="line"><span class="comment">// output: 浣犲ソ -&gt; 使用 gbk 展示（浏览器默认编码 UTF-8，故乱码）</span></span><br><span class="line">data:text/html;charset=gbk,你好</span><br><span class="line"><span class="comment">// output: 你好 -&gt; UTF-8 编码，内容先使用 base64 解码，然后展示</span></span><br><span class="line">data:text/html;charset=UTF<span class="number">-8</span>;base64,<span class="number">5</span>L2g5aW9</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第四部分是 base64 编码设定，可选</li>
+<li>最后一部分是这个 dataurl 承载的内容，可以是纯文本，也可以是经过 base64 编码的内容</li>
+</ul>
+<p>平时我们经常见到的是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//内嵌base64图片</span></span><br><span class="line">background-image: url(<span class="string">"data:image/gif;base64,R0lGODlhAwADAIAAAP///8zMzCH5BAAAAAAALAAAAAADAAMAAAIEBHIJBQA7"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="Data-URL-的优劣"><a href="#Data-URL-的优劣" class="headerlink" title="Data URL 的优劣"></a>Data URL 的优劣</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>img 的 src 说明这个是外部资源，浏览器会向服务器拉取一次资源请求，占用网络资源</li>
+<li>大多数浏览器都有一个并发请求数不能超过 4 个的限制。如果一个网页里嵌入了太多的外部资源，请求会使整个页面加载延迟。</li>
+<li>图片体积太小的时候，不值得占用一个 http 会话</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>base64 编码的数据体积是原数据的体积 4/3，也就是说 data url 形式的图片会比二进制格式的图片体积大 1/3</li>
+<li><p>data url 形式的图片不会被浏览器缓存，这意味着每次访问这样页面的时候都会被下载一次。如果这个图片被整个网站使用，就是一个使用效率问题（已被解决）</p>
+<blockquote>
+<p>如何将 data url 数据放入浏览器缓存，通过 css 样式文件。所有浏览器都会积极缓存 css 文件来提高页面加载效率</p>
+</blockquote>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/23/study-http/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1387,490 +1894,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/15/study-performance/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/04/15/study-performance/" itemprop="url">js性能填坑之路</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-15T13:48:30+08:00">
-                2018-04-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><ul>
-<li>javascript 是解释性语言，性能很慢，随着 web 在生活中的普及，这点性能显然不够用。你能想象双十一的一个按钮点半天才有反应嘛？所幸很多大神，都在不断的改进这个性能问题</li>
-</ul>
-<h2 id="漫漫填坑路"><a href="#漫漫填坑路" class="headerlink" title="漫漫填坑路"></a>漫漫填坑路</h2><h3 id="JIT"><a href="#JIT" class="headerlink" title="JIT"></a>JIT</h3><blockquote>
-<p>google 在 09 年 v8 引擎里引入 just in time compiling（即时编译），跟之前 ajax 出现引起的轰动是一样的，性能瞬间就上升了 20-40 倍的速度。</p>
-</blockquote>
-<ul>
-<li>从此网页进入了网页应用的时代</li>
-</ul>
-<h4 id="解释器和编译器"><a href="#解释器和编译器" class="headerlink" title="解释器和编译器"></a>解释器和编译器</h4><ul>
-<li>解释器是一行行解释代码，性能会下降。编译器是把源代码编译成目标代码。</li>
-<li>解释器是叫他干什么立刻就去干什么，比如买菜，马上去市场回来，再去买油又马上市场</li>
-<li>编译器是叫他干什么直到说完才去干什么，去买菜，买油统一去市场</li>
-</ul>
-<ul>
-<li>但是 jit 是基于运行期编译，js 是一个没有类型的语言，所以 jit 大多数时候都在猜测 js 的类型。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">//这时候jit就把a和b确认为int类型</span></span><br><span class="line"><span class="comment">//然后你这样做</span></span><br><span class="line">add(<span class="string">"hi"</span>, <span class="string">"yoki"</span>); <span class="comment">//已经编译成机器码了，但是又变成字符串类型，只能推倒重来，有时候jit的性能提升，还没有这个重编的开销大</span></span><br></pre></td></tr></table></figure>
-<h3 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h3><ul>
-<li>既然 jit 大多数时候在猜测类型，那索性搞个强类型语言，再编译成 js 就行了</li>
-</ul>
-<h3 id="asm-js"><a href="#asm-js" class="headerlink" title="asm.js"></a>asm.js</h3><ul>
-<li>ts 是 js 的超集，这个是语法兼容 js 的汇编语言，是 js 的子集</li>
-<li>通过标注声明类型，而且不得改变，这样就节省了类型判断的时间</li>
-</ul>
-<h3 id="WebAssembly"><a href="#WebAssembly" class="headerlink" title="WebAssembly"></a>WebAssembly</h3><ul>
-<li>一种二进制码的规范，是比 asm.js 更为激进的东西</li>
-<li>理论上所有语言都可以编译成这个，然后泡在浏览器上</li>
-<li>但是目前还摸不了 dom</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/10/repaint/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/04/10/repaint/" itemprop="url">浅谈重排和重绘</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-10T19:37:30+08:00">
-                2018-04-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><ul>
-<li>网页生成布局(重排 reflow)，页面绘制（重绘 repaint）一个个盒子元素<blockquote>
-<p>重排一定会引起重绘，重绘不一定引起重排</p>
-</blockquote>
-</li>
-</ul>
-<ul>
-<li>为什么这样说，如果我改变了布局，比如改变边框宽度或者给段落增加文字，浏览器需要重新计算元素的几何属性，就会重排，然后就会重新绘制</li>
-<li>但是如果改变元素的背景色，就只会发生重绘，而不会影响布局</li>
-<li>重绘和重排非常消耗资源，应该尽量避免</li>
-</ul>
-<h2 id="怎样优化"><a href="#怎样优化" class="headerlink" title="怎样优化"></a>怎样优化</h2><h3 id="批量读或者批量写"><a href="#批量读或者批量写" class="headerlink" title="批量读或者批量写"></a>批量读或者批量写</h3><blockquote>
-<p>现代浏览器已经很智能，会把所有变动排在一起，然后一次性集中在一起，推入到一个队列然后再渲染，这样通过队列话修改然后批量执行可以优化重排过程。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">div.stryle.color = <span class="string">"red"</span>;</span><br><span class="line">div.style.marginTop = <span class="string">"30px"</span>;</span><br><span class="line"><span class="comment">//这里不会是一次次变，而是只会触发一次重排和重绘</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//但是下面这样，就会触发两次重排和重绘</span></span><br><span class="line">div.style.color = <span class="string">"blue"</span>;</span><br><span class="line"><span class="keyword">var</span> margin = <span class="built_in">parseInt</span>(div.style.marginTop);</span><br><span class="line">div.style.marginTop = margin + <span class="number">10</span> + <span class="string">"px"</span>;</span><br><span class="line"><span class="comment">//第二行中，我们读取该div的元素位置，这个时候浏览器这个队列马上就要推出去渲染，才可以得知新的布局的位置，所以浏览器必须要重排</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>由上可知，如果我们在写操作之后，再读会立即渲染，有以下读操作</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">offsetTop / offsetLeft / offsetWidth / offsetHeight;</span><br><span class="line">scrollTop / scrollLeft / scrollWidth / scrollHeight;</span><br><span class="line">clientTop / clientLeft / clientWidth / clientHeight;</span><br><span class="line">getComputedStyle();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>所以我们要懂得批量读和批量写</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line">div.style.left = div.offsetLeft + <span class="number">10</span> + <span class="string">"px"</span>;</span><br><span class="line">div.style.top = div.offsetTop + <span class="number">10</span> + <span class="string">"px"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">var</span> left = div.offsetLeft;</span><br><span class="line"><span class="keyword">var</span> top = div.offsetTop;</span><br><span class="line">div.style.left = left + <span class="number">10</span> + <span class="string">"px"</span>;</span><br><span class="line">div.style.top = top + <span class="number">10</span> + <span class="string">"px"</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="合并样式操作"><a href="#合并样式操作" class="headerlink" title="合并样式操作"></a>合并样式操作</h3><blockquote>
-<p>尽管现代浏览器做了优化，但是旧的浏览器可能没有，所以我们应该尽可能合并对样式的修改</p>
-</blockquote>
-<ul>
-<li>cssText：el.style.cssText=’border-left: 1px; border-right: 2px; padding: 5px;’</li>
-<li>修改 className：如果不是那么依赖计算，可以通过修改 className</li>
-</ul>
-<h3 id="修改-dom-元素的时候使其脱离文档流"><a href="#修改-dom-元素的时候使其脱离文档流" class="headerlink" title="修改 dom 元素的时候使其脱离文档流"></a>修改 dom 元素的时候使其脱离文档流</h3><blockquote>
-<p>当我们需要对 dom 元素频繁操作的时候，我们可以这样减少重排和重绘</p>
-</blockquote>
-<ul>
-<li>让该 dom 元素脱离文档流（重排）</li>
-<li>操作元素</li>
-<li>完成后再添加到 document（重排）</li>
-</ul>
-<h4 id="如何脱离文档流"><a href="#如何脱离文档流" class="headerlink" title="如何脱离文档流"></a>如何脱离文档流</h4><ul>
-<li>隐藏元素：display:none，然后一系列操作后，再显示</li>
-<li>推荐：使用 document fragment，就是传说中的文档碎片了，document.createDocumentFragment()，另外的 dom 子树，操作完后，再拷贝回来文档中，div.appendChild（fragment）</li>
-<li>将原始元素拷贝到一个脱离文档的节点中，cloneNode,修改这个副本，然后再通过这个元素的父元素的 replaceChild 替换他</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> old = <span class="built_in">document</span>.getElementById(<span class="string">"mylist"</span>);</span><br><span class="line"><span class="keyword">let</span> clone = old.cloneNode(<span class="literal">true</span>);</span><br><span class="line">appendDataToElement(clone, data);</span><br><span class="line">old.parentNode.replaceChild(clone, old);</span><br></pre></td></tr></table></figure>
-<h3 id="缓存读过的样式结果"><a href="#缓存读过的样式结果" class="headerlink" title="缓存读过的样式结果"></a>缓存读过的样式结果</h3><ul>
-<li>div.style.top 读取可能会重排，这样最好这个缓存到变量里面，下次要用到这个就不用再读 div 的信息了</li>
-</ul>
-<h3 id="定位脱离文档流"><a href="#定位脱离文档流" class="headerlink" title="定位脱离文档流"></a>定位脱离文档流</h3><ul>
-<li>可以将要多次重排的元素，position 可以设置 abs 和 fixed，这样就脱离文档流，不会影响其他元素。</li>
-<li>有动画效果的可以设置为绝对定位</li>
-</ul>
-<h3 id="使用-window-requestAnimationFrame-、window-requestIdleCallback-重新渲染"><a href="#使用-window-requestAnimationFrame-、window-requestIdleCallback-重新渲染" class="headerlink" title="使用 window.requestAnimationFrame()、window.requestIdleCallback() 重新渲染"></a>使用 window.requestAnimationFrame()、window.requestIdleCallback() 重新渲染</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/04/05/study-vue2/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/04/05/study-vue2/" itemprop="url">vue的一些问题集合（二）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T14:19:46+08:00">
-                2018-04-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>再写一波</p>
-</blockquote>
-<h2 id="‘-components-‘的"><a href="#‘-components-‘的" class="headerlink" title="‘@/components/‘的@"></a>‘@/components/‘的@</h2><ul>
-<li>webpack 可以配置 alias 配置别名，这个@一般是 src 目录的别名</li>
-</ul>
-<h2 id="npm-run-dev-报端口已经在运行"><a href="#npm-run-dev-报端口已经在运行" class="headerlink" title="npm run dev 报端口已经在运行"></a>npm run dev 报端口已经在运行</h2><ul>
-<li>可能你在运行其他项目，去修改一下默认端口</li>
-</ul>
-<h2 id="父组件怎么调用子组件的方法"><a href="#父组件怎么调用子组件的方法" class="headerlink" title="父组件怎么调用子组件的方法"></a>父组件怎么调用子组件的方法</h2><ul>
-<li>this.$refs 里面找到该实例,前提是先设置了 ref</li>
-<li>this.$children 里面找到该实例</li>
-</ul>
-<h2 id="nginx-怎么配置"><a href="#nginx-怎么配置" class="headerlink" title="nginx 怎么配置"></a>nginx 怎么配置</h2><p><a href="https://juejin.im/post/58bfc412da2f60124db5999a" target="_blank" rel="noopener">一大波不靠谱的 nginx 配置</a></p>
-<h2 id="v-if-和-v-show"><a href="#v-if-和-v-show" class="headerlink" title="v-if 和 v-show"></a>v-if 和 v-show</h2><blockquote>
-<p>v-if 是 dom 没有插入到文档里面，等条件成立，才 append 到 document 里面。</p>
-</blockquote>
-<ul>
-<li>等拿到值才可以处理组件内部的逻辑的，不然会报错</li>
-<li>有些 v-for 但是还没有拿到值的</li>
-</ul>
-<blockquote>
-<p>v-show 只是简单通过 css 隐藏了</p>
-</blockquote>
-<ul>
-<li>不会导致页面重绘，改善用户体验</li>
-</ul>
-<h2 id="axios-的请求后台不接受"><a href="#axios-的请求后台不接受" class="headerlink" title="axios 的请求后台不接受"></a>axios 的请求后台不接受</h2><ul>
-<li>axios 默认是 json 格式提交，如果后台只支持表单序列化，就要自己转义</li>
-<li>axios 有个 qs 模块可以试试</li>
-</ul>
-<h2 id="css-的-scoped-有什么功能"><a href="#css-的-scoped-有什么功能" class="headerlink" title="css 的 scoped 有什么功能"></a>css 的 scoped 有什么功能</h2><ul>
-<li>给每个类或者 id 自动添加 hash，只能给该组件用，不同组件不能进行继承</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/ 写的时候是这个</span><br><span class="line">.a&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译过后,加上了 hash</span></span><br><span class="line">.a[data-v<span class="number">-1</span>ec35ffc]&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="小图片渲染出来-base64"><a href="#小图片渲染出来-base64" class="headerlink" title="小图片渲染出来 base64"></a>小图片渲染出来 base64</h2><ul>
-<li>webpack 的 url-loader 处理，对于小于多少 k 一下的图片转成 base64 内联到 html</li>
-<li>减少 http 请求降低服务器负担</li>
-<li>网络不好的时候，内联的内容先加载，优化体验</li>
-</ul>
-<h2 id="ERROR-in-static-js-xxxxxxx-js-from-UglifyJs"><a href="#ERROR-in-static-js-xxxxxxx-js-from-UglifyJs" class="headerlink" title="ERROR in static/js/xxxxxxx.js from UglifyJs"></a>ERROR in static/js/xxxxxxx.js from UglifyJs</h2><ul>
-<li>引入压缩后的 js，webpack 又开启了 uglifyjs 压缩，报错</li>
-</ul>
-<h2 id="keep-alive-缓存组件后很慢"><a href="#keep-alive-缓存组件后很慢" class="headerlink" title="keep-alive 缓存组件后很慢"></a>keep-alive 缓存组件后很慢</h2><ul>
-<li>因为都是保存在内存里面的，一旦大量组件缓存性能肯定不会好</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1923,7 +1946,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1973,7 +1996,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
