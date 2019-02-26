@@ -1,7 +1,7 @@
 ---
 title: 分支规范说明（git flow）
 date: 2019-01-06 22:36:24
-tags:
+tags: git
 ---
 
 # 背景
