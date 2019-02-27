@@ -264,6 +264,501 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/01/10/study-render/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/01/10/study-render/" itemprop="url">浅谈浏览器渲染</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-10T10:26:50+08:00">
+                2018-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>作为一个前端工程师，了解浏览器的渲染过程，可以掌握优化的指导原则。</li>
+<li>现在有那么多的优化方案，预编译，预加载，资源合并，按需加载等等都是针对浏览器渲染的优化。</li>
+</ul>
+<h3 id="关键渲染路径"><a href="#关键渲染路径" class="headerlink" title="关键渲染路径"></a>关键渲染路径</h3><ul>
+<li>关键渲染路径(Critical Rendering Path)是指与当前用户操作有关的内容</li>
+<li>比如用户刚刚打开一个页面，首屏的显示就是当前用户操作的内容，具体就是浏览器收到 html/css/js 等资源并对其进行处理从而渲染出页面</li>
+<li>了解浏览器渲染的过程与原理，很大程度上是为了优化关键渲染路径</li>
+<li>为了保障首屏内容的最快速显示，通常会提到渐进式页面渲染，但是为了渐进式页面渲染，就要做资源的拆分，怎么拆分，这是按场景考虑的</li>
+</ul>
+<h2 id="浏览器渲染页面过程"><a href="#浏览器渲染页面过程" class="headerlink" title="浏览器渲染页面过程"></a>浏览器渲染页面过程</h2><ul>
+<li>1.dns 查询</li>
+<li>2.tcp 连接</li>
+<li>3.http 请求即响应</li>
+<li>4.服务端响应</li>
+<li>5.客户端渲染</li>
+</ul>
+<h3 id="客户端渲染"><a href="#客户端渲染" class="headerlink" title="客户端渲染"></a>客户端渲染</h3><blockquote>
+<p>以下步骤不一定一次性顺序完成，如果 dom 或者 cssom 被修改，则以下过程需要重复执行，这样才能计算哪些像素在屏幕上需要重新渲染</p>
+</blockquote>
+<ul>
+<li>1.处理 html 标记并构建 dom 树</li>
+<li>2.处理 css 并构建 cssom 树</li>
+<li>3.将 dom 树和 cssom 树合并成一个渲染树</li>
+<li>4.根据渲染树来布局，以计算每个节点的几何信息</li>
+<li>5.将各个节点绘制到屏幕上</li>
+</ul>
+<h2 id="阻塞渲染"><a href="#阻塞渲染" class="headerlink" title="阻塞渲染"></a>阻塞渲染</h2><blockquote>
+<p>现代浏览器是并行加载资源的。当 HTML 解析器(html parser)被脚本阻塞的时候，解析器虽然会停止构建 dom，但仍然会识别该脚本后面的资源，并进行预加载。</p>
+</blockquote>
+<ul>
+<li>默认情况下，css 被视为阻塞渲染的资源，这意味着浏览器将不会渲染任何已处理的内容，直到 cssdom 构建完毕</li>
+<li>js 不仅可以读取和修改 dom 属性，还可以读取和修改 cssom 属性</li>
+</ul>
+<blockquote>
+<p>存在阻塞的 css 资源的时候，浏览器就会延迟 js 的执行和 dom 构建</p>
+</blockquote>
+<ul>
+<li>当浏览器遇到一个 script 标记的时候，dom 构建将暂停，直到脚本完成执行</li>
+<li>cssom 构建的时候，js 执行将暂停，直到 cssdom 就绪</li>
+</ul>
+<blockquote>
+<p>所以 script 标签的位置很重要，实际使用的时候，可以遵循下面两个原则</p>
+</blockquote>
+<ul>
+<li>css 优先：引入顺序上，css 资源先于 js 资源</li>
+<li>js 应该尽量少影响 dom 的构建</li>
+</ul>
+<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><blockquote>
+<p>渲染树(Render-Tree)的关键渲染路径中，要求同时具有 dom 和 cssom，之后才会构建渲染树。所以 html 和 css 都是被阻塞的资源。html 一定是需要的，那么可以从 css 上想办法。</p>
+</blockquote>
+<ul>
+<li>精简 css 并尽快提供它，例如将多个 css 合并成一个，并进行压缩</li>
+</ul>
+<h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><ul>
+<li>实际工程，常常将 js 资源放到文档底部</li>
+<li>defer 和 async 可以改变阻塞模式</li>
+</ul>
+<h4 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h4><ul>
+<li>defer 属性表示延迟执行引入的 js，这段 js 加载时候 html 也并未停止解析，这两个过程是并行的</li>
+<li>整个 document 解析完毕且 defer-script 也加载完成之后（这两件事情的顺序无关），会执行所有由 defer-script 加载的 JavaScript 代码，然后触发 DOMContentLoaded 事件。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"app1.js"</span> defer&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"app2.js"</span> defer&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"app3.js"</span> defer&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>defer 不会改变 script 中代码的执行顺序，示例代码会按照 1，2，3 的顺序执行。</li>
+</ul>
+<h4 id="async"><a href="#async" class="headerlink" title="async"></a>async</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"app.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"ad.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">"statistics.js"</span> <span class="keyword">async</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>async 属性表示异步执行引入的 JavaScript，与 defer 的区别在于，如果已经加载好，就会开始执行——无论此刻是 HTML 解析阶段还是 DOMContentLoaded 触发之后。需要注意的是，这种方式加载的 JavaScript 依然会阻塞 load 事件。换句话说，async-script 可能在 DOMContentLoaded 触发之前或之后执行，但一定在 load 触发之前执行。</li>
+<li>多个 async-script 的执行顺序是不确定的。所以 app.js 和 ad.js 和 statistics.js 不一定是顺序执行，谁先加载完谁先执行。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/12/13/fps/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/12/13/fps/" itemprop="url">动画了解一下（二）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T11:23:45+08:00">
+                2017-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="fps"><a href="#fps" class="headerlink" title="fps"></a>fps</h2><ul>
+<li>fps 是 frame per second，一秒能够重新渲染多少个画面</li>
+<li>网页的每一帧都是一次重新渲染，一帧（frame）就是一个画面。</li>
+<li>我们平时看电视，电视上的画面连续播放，其实一个画面接着一个画面的，如果一秒有 60 个画面播放，我们看着就很流畅了。如果一秒 10 个画面，可能就会感觉像在跳机械舞一样，一顿一顿的</li>
+<li>现在大多数显示器的刷新频率都是 60Hz，浏览器一般也会自动按照这个频率，刷新动画。</li>
+<li>所以网页动画能够做到每秒 60 帧，就可以和显示器同步刷新，视觉效果达到最佳。</li>
+<li>一秒之内进行 60 次渲染，每次不能超过 16.66 毫秒</li>
+</ul>
+<blockquote>
+<p>如果想要到 60 帧的刷新率，那么 js 线程每个任务的耗时，必须少于 16ms。一个解决办法是用 web worker，主线程只用于 ui 渲染，其他和 ui 渲染不想干的任务，都放在 worker 线程。</p>
+</blockquote>
+<h2 id="调节渲染"><a href="#调节渲染" class="headerlink" title="调节渲染"></a>调节渲染</h2><blockquote>
+<p>有一些 js 方法可以调节重新渲染，大幅度提高网页性能</p>
+</blockquote>
+<h3 id="requestAnimationFrame"><a href="#requestAnimationFrame" class="headerlink" title="requestAnimationFrame"></a>requestAnimationFrame</h3><ul>
+<li>他可以将代码放到下次重新渲染执行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doubleHeight</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> currentHeight = element.clientHeight;</span><br><span class="line">  element.style.height = currentHeight * <span class="number">2</span> + <span class="string">"px"</span>;</span><br><span class="line">&#125;</span><br><span class="line">elements.forEach(doubleHeight);</span><br><span class="line"><span class="comment">//读了马上又去写，这就会马上重排，导致重新渲染，这就对网页性能很不利</span></span><br><span class="line"><span class="comment">//可以使用window.requestAnimation把读写操作分离，把所有写操作放到下一次浏览器正常的重新渲染</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doubleHeight</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> currentHeight = element.clientHeight;</span><br><span class="line">  <span class="built_in">window</span>.requestAnimationFrame(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    element.style.height = currentHeight * <span class="number">2</span> + <span class="string">"px"</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">elements.forEach(doubleHeight);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>适用于页面滚动事件，推迟到下一次重新渲染</li>
+<li>适用于网页动画，比如</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//元素一帧旋转一度</span></span><br><span class="line"><span class="keyword">var</span> rAF = <span class="built_in">window</span>.requestAnimationFrame;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> degrees = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  div.style.transform = <span class="string">"rotate("</span> + degrees + <span class="string">"deg)"</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"updated to degrees "</span> + degrees);</span><br><span class="line">  degrees = degrees + <span class="number">1</span>;</span><br><span class="line">  rAF(update);</span><br><span class="line">&#125;</span><br><span class="line">rAF(update);</span><br></pre></td></tr></table></figure>
+<h3 id="requestIdleCallback"><a href="#requestIdleCallback" class="headerlink" title="requestIdleCallback"></a>requestIdleCallback</h3><blockquote>
+<p>只有当一帧的末尾有空闲时间，才会执行回调</p>
+</blockquote>
+<ul>
+<li>requestIdleCallback(fn)</li>
+<li>因为一秒 60 帧，一帧就 16.66ms，只有当前帧的运行时间小于 16.66ms 的时候，fn 才会执行。如果当前没有空闲时间，就推迟到下一帧，直到有空闲时间为止。</li>
+<li>requestIdleCallback(fn，5000)可以制定第二个参数，表示指定的 ms，表示这段时间内，如果每一帧都没有空间时间，fn 将强制执行</li>
+</ul>
+<hr>
+<blockquote>
+<p><a href="http://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html" target="_blank" rel="noopener">网页性能管理详解</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/12/03/write-nbjs/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/12/03/write-nbjs/" itemprop="url">javascript装逼指南</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-03T18:53:56+08:00">
+                2017-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>1.javascript 代码错误处理方式</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  something;</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">window</span>.location.href = <span class="string">"http://stackoverflow.com/search?q=[js]+"</span> + e.message;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>2.如何优雅的取随机字符串</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.random()</span><br><span class="line">  .toString(<span class="number">16</span>)</span><br><span class="line">  .substring(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">Math</span>.random()</span><br><span class="line">  .toString(<span class="number">36</span>)</span><br><span class="line">  .substring(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>3.如何优雅的取整</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = ~~<span class="number">2.33</span>; <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">2.33</span> | <span class="number">0</span>; <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = <span class="number">2.33</span> &gt;&gt; <span class="number">0</span>; <span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>4.金钱数字取千分位的非正则优雅实现</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用reduce</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatCash</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> str</span><br><span class="line">    .split(<span class="string">""</span>)</span><br><span class="line">    .reverse()</span><br><span class="line">    .reduce(<span class="function">(<span class="params">prev, next, index</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> (index % <span class="number">3</span> ? next : next + <span class="string">","</span>) + prev;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(formatCash(<span class="string">"1234567890"</span>)); <span class="comment">// 1,234,567,890</span></span><br><span class="line"><span class="comment">//toLocaleString</span></span><br><span class="line">(<span class="number">23333333</span>).toLocaleString(<span class="string">"en-US"</span>);</span><br><span class="line">(<span class="string">"23,333,333"</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>5.最短代码实现数组去重</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[...new <span class="built_in">Set</span>([<span class="number">1</span>, <span class="string">"1"</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>])];</span><br><span class="line"><span class="comment">//[1,'1',2,3]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>6.最短代码实现一个长度为 m(6)且值都为 n（8）的数组</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>(<span class="number">6</span>).fill(<span class="number">8</span>);</span><br><span class="line"><span class="comment">//[8,8,8,8,8,8]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>7.短路表达式</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = b &amp;&amp; <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line"><span class="keyword">if</span> (b) &#123;</span><br><span class="line">  a = <span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  a = b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = b || <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line"><span class="keyword">if</span> (b) &#123;</span><br><span class="line">  a = b;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  a = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>8.颜色 rgb 和 hex 的相互转换</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rgbToHex</span>(<span class="params">r, g, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"#"</span> + ((<span class="number">1</span> &lt;&lt; <span class="number">24</span>) + (r &lt;&lt; <span class="number">16</span>) + (g &lt;&lt; <span class="number">8</span>) + b).toString(<span class="number">16</span>).slice(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hexToRgb</span>(<span class="params">hex</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> result = <span class="regexp">/^#?([a-f\d]&#123;2&#125;)([a-f\d]&#123;2&#125;)([a-f\d]&#123;2&#125;)$/i</span>.exec(hex);</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">    ? &#123;</span><br><span class="line">        r: <span class="built_in">parseInt</span>(result[<span class="number">1</span>], <span class="number">16</span>),</span><br><span class="line">        g: <span class="built_in">parseInt</span>(result[<span class="number">2</span>], <span class="number">16</span>),</span><br><span class="line">        b: <span class="built_in">parseInt</span>(result[<span class="number">3</span>], <span class="number">16</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    : <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">alert(hexToRgb(<span class="string">"#0033ff"</span>).g); <span class="comment">// "51";</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/11/29/study-vps/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1313,417 +1808,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/05/11/study-replace-template/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/05/11/study-replace-template/" itemprop="url">模板字符串的替换</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-11T11:04:02+08:00">
-                2017-05-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><blockquote>
-<p>看到 vue 模板里都是用包含变量，然后替换成变量，觉得比字符串拼接实在是好太多了</p>
-</blockquote>
-<ul>
-<li>es6 的字符串模板用起来实在是舒服，所以简单用实现一下</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先 str.replace(regexp|substr, newSubStr|function) ，replace 可以传递一个函数</span></span><br><span class="line">str.replace(reg,<span class="function"><span class="keyword">function</span>(<span class="params">match,key</span>)=&gt;</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//正则匹配&#123;&#123;内容&#125;&#125;，应该是/\&#123;\&#123;(.*?)\&#125;\&#125;/，用\转义&#123;和&#125;</span></span><br><span class="line"><span class="comment">// /\&#123;\&#123;(.*?)\&#125;\&#125;/g;</span></span><br></pre></td></tr></table></figure>
-<h2 id="正则表达"><a href="#正则表达" class="headerlink" title="正则表达"></a>正则表达</h2><ul>
-<li><strong>.*?</strong>是正则的固定搭配用法，就是表示非贪婪模式，尽可能匹配少的意思</li>
-<li><strong>.*</strong>则表示贪婪模式</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">源字符串：aa&lt;div&gt;test1&lt;<span class="regexp">/div&gt;bb&lt;div&gt;test2&lt;/</span>div&gt;cc</span><br><span class="line"></span><br><span class="line">正则表达式一：&lt;div&gt;.*&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">匹配结果一：&lt;div&gt;test1&lt;<span class="regexp">/div&gt;bb&lt;div&gt;test2&lt;/</span>div&gt;(从头部匹配到尾部，从第一个div到最后的那个&lt;<span class="regexp">/div&gt;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">正则表达式二：&lt;div&gt;.*?&lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line">匹配结果二：&lt;div&gt;test1&lt;<span class="regexp">/div&gt;（这里指的是一次匹配结果，不使用\/g，所以没包括&lt;div&gt;test2&lt;/</span>div&gt;）</span><br></pre></td></tr></table></figure>
-<h2 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h2><ul>
-<li>所以有上面的简单铺垫，可以简单写出</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">template, context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> template.replace(<span class="regexp">/\&#123;\&#123;(.*?)\&#125;\&#125;/g</span>, (match, key) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(match, key); <span class="comment">//match是&#123;&#123;name &#125;&#125;，key是name</span></span><br><span class="line">    <span class="keyword">return</span> context[key.trim()];</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//可以使用trim去掉前后空格</span></span><br><span class="line"><span class="keyword">const</span> template = <span class="string">"我是&#123;&#123;name   &#125;&#125;，现在&#123;&#123;age   &#125;&#125;岁"</span>;</span><br><span class="line"><span class="keyword">const</span> context = &#123; <span class="attr">name</span>: <span class="string">"yoki"</span>, <span class="attr">age</span>: <span class="string">"20"</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(render(template, context));</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/04/10/throttleAndDebounce/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/04/10/throttleAndDebounce/" itemprop="url">函数节流和防抖</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-10T20:26:06+08:00">
-                2017-04-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="节流（throttle）"><a href="#节流（throttle）" class="headerlink" title="节流（throttle）"></a>节流（throttle）</h2><blockquote>
-<p>函数节流是指一定时间内只跑一次函数，就像是技能 cd，你再怎么按它一段时间内只能触发一次。</p>
-</blockquote>
-<ul>
-<li>主要思想就是设置一个守卫（flag），如果 setTimeout 已经执行过了就不会创建新的 setTimeout</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> scrollFun = <span class="function"><span class="keyword">function</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> canRun = <span class="literal">true</span>; <span class="comment">//初始化守卫变量</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (canRun) &#123;</span><br><span class="line">      canRun = <span class="literal">false</span>;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"throttle"</span>);</span><br><span class="line">        <span class="comment">//3s后变量才为true，才可以继续执行if条件</span></span><br><span class="line">        canRun = <span class="literal">true</span>;</span><br><span class="line">      &#125;, time);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//3s执行一次</span></span><br><span class="line"><span class="built_in">window</span>.scroll = scrollFun(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>适用于窗口 resize</li>
-</ul>
-<h2 id="防抖-debounce"><a href="#防抖-debounce" class="headerlink" title="防抖(debounce)"></a>防抖(debounce)</h2><blockquote>
-<p>函数防抖呢，就是频繁触发后，一旦空闲下来才开始执行这个函数。就像公交车司机，如果有人陆续刷卡，司机一直停车等待，直到所有人上来了才回开车。</p>
-</blockquote>
-<ul>
-<li>主要思想就是如果频繁触发，就取消上一个，重新创建一个规定时长的 setTimeout</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> debounce = <span class="function"><span class="keyword">function</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> setTimeId = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//取消上一个的</span></span><br><span class="line">    clearTimeout(setTimeId);</span><br><span class="line">    setTimeId = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"debounce"</span>);</span><br><span class="line">    &#125;, time);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//直到没有输入后，3s后才执行</span></span><br><span class="line">$(el).input(dubounce(<span class="number">3000</span>));</span><br></pre></td></tr></table></figure>
-<ul>
-<li>适用于输入框输入持续监听等</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/03/10/use-nvm/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/03/10/use-nvm/" itemprop="url">使用nvm</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T11:04:09+08:00">
-                2017-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Node-Version-Manager（node版本管理）"><a href="#Node-Version-Manager（node版本管理）" class="headerlink" title="Node Version Manager（node版本管理）"></a>Node Version Manager（node版本管理）</h1><h2 id="使用nvm安装和管理node"><a href="#使用nvm安装和管理node" class="headerlink" title="使用nvm安装和管理node"></a>使用nvm安装和管理node</h2><blockquote>
-<p>node版本更新很快，为了能在版本之间迅速切换，我们要使用nvm来安装和管理。<br><br>用nvm下载了相应的node也会下载相应的npm进行管理</p>
-</blockquote>
-<h4 id="安装nvm"><a href="#安装nvm" class="headerlink" title="安装nvm"></a>安装nvm</h4><p>我们可以从<a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener">Github</a>下载</p>
-<p>默认安装路径是<code>C:\Users\Administrator\AppData\Roaming\nvm</code>，存放我们下载的各个版本的node</p>
-<blockquote>
-<p>验证安装，打开控制台，输入<code>nvm</code>,看是否输出所有命令</p>
-</blockquote>
-<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><ul>
-<li>nvm list   #查看本地所有node版本</li>
-<li>nvm install 4.2.2   #安装 4.2.2 版本</li>
-<li>nvm use 4.2.2    #切换至 4.2.2 版本</li>
-<li>nvm uninstall 4.2.2    #卸载4.2.2 版本</li>
-</ul>
-<h4 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h4><blockquote>
-<p>nvm默认的下载地址是<code>http://nodejs.org/dist/</code>,这是国外的服务器，在国内下载速度很慢。</p>
-</blockquote>
-<ul>
-<li>需要把下列代码复制到你nvm的安装路径下的setting.txt<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node_mirror: https://npm.taobao.org/mirrors/node/</span><br><span class="line">npm_mirror: https://npm.taobao.org/mirrors/npm/</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1776,7 +1860,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1826,7 +1910,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
