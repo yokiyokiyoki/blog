@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="javascript,">
+  <meta name="keywords" content="前端,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Promise Promise 作为 ES6 的特性，可以很好地创建异步工作流   Promise 是构造函数 Promise 只有三种状态（pending，resolve，reject），pending 是刚创建 Promise 实例的状态，然后一旦转为 resolve 或者 reject，就不可变更  创建 Promise 以封装 xhr 为例子  1234567891011121314151">
-<meta name="keywords" content="javascript">
+<meta name="description" content="前言这里先简单了解一下基础知识，接下来会基于typescript和rollup参考写一个较为完整的脚手架（动态模板），以下只能拉取静态模板。 基础脚手架发布和安装 这里假设我们的脚手架名字是ds-cli,以下都用这个名字。我们在命令行使用脚手架命令为ds   我们怎么样让用户通过npm或者yarn全局安装ds-cli之后，在终端能执行ds命令呢？答案就在package.json的bin字段 当我们">
+<meta name="keywords" content="前端">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用promise">
-<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2017/05/17/use-promise/index.html">
+<meta property="og:title" content="前端如何搭建一个的简单脚手架">
+<meta property="og:url" content="https://yokiyokiyoki.github.io/blog/2019/02/18/study-cli-01/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="Promise Promise 作为 ES6 的特性，可以很好地创建异步工作流   Promise 是构造函数 Promise 只有三种状态（pending，resolve，reject），pending 是刚创建 Promise 实例的状态，然后一旦转为 resolve 或者 reject，就不可变更  创建 Promise 以封装 xhr 为例子  1234567891011121314151">
+<meta property="og:description" content="前言这里先简单了解一下基础知识，接下来会基于typescript和rollup参考写一个较为完整的脚手架（动态模板），以下只能拉取静态模板。 基础脚手架发布和安装 这里假设我们的脚手架名字是ds-cli,以下都用这个名字。我们在命令行使用脚手架命令为ds   我们怎么样让用户通过npm或者yarn全局安装ds-cli之后，在终端能执行ds命令呢？答案就在package.json的bin字段 当我们">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-04T03:45:38.821Z">
+<meta property="og:updated_time" content="2019-03-19T01:55:34.048Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用promise">
-<meta name="twitter:description" content="Promise Promise 作为 ES6 的特性，可以很好地创建异步工作流   Promise 是构造函数 Promise 只有三种状态（pending，resolve，reject），pending 是刚创建 Promise 实例的状态，然后一旦转为 resolve 或者 reject，就不可变更  创建 Promise 以封装 xhr 为例子  1234567891011121314151">
+<meta name="twitter:title" content="前端如何搭建一个的简单脚手架">
+<meta name="twitter:description" content="前言这里先简单了解一下基础知识，接下来会基于typescript和rollup参考写一个较为完整的脚手架（动态模板），以下只能拉取静态模板。 基础脚手架发布和安装 这里假设我们的脚手架名字是ds-cli,以下都用这个名字。我们在命令行使用脚手架命令为ds   我们怎么样让用户通过npm或者yarn全局安装ds-cli之后，在终端能执行ds命令呢？答案就在package.json的bin字段 当我们">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2017/05/17/use-promise/">
+  <link rel="canonical" href="https://yokiyokiyoki.github.io/blog/2019/02/18/study-cli-01/">
 
 
 
 
 
-  <title>使用promise | Blog</title>
+  <title>前端如何搭建一个的简单脚手架 | Blog</title>
   
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2017/05/17/use-promise/">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/02/18/study-cli-01/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yoki">
@@ -282,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">使用promise</h1>
+          <h1 class="post-title" itemprop="name headline">前端如何搭建一个的简单脚手架</h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:16:13+08:00">
-                2017-05-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T20:34:44+08:00">
+                2019-02-18
               </time>
             
 
@@ -306,6 +306,8 @@
 
           
 
+          
+            
           
 
           
@@ -330,41 +332,55 @@
       
 
       
-        <h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><blockquote>
-<p>Promise 作为 ES6 的特性，可以很好地创建异步工作流</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里先简单了解一下基础知识，接下来会基于typescript和rollup参考写一个较为完整的脚手架（动态模板），以下只能拉取静态模板。</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h4 id="脚手架发布和安装"><a href="#脚手架发布和安装" class="headerlink" title="脚手架发布和安装"></a>脚手架发布和安装</h4><blockquote>
+<p>这里假设我们的脚手架名字是ds-cli,以下都用这个名字。我们在命令行使用脚手架命令为ds</p>
 </blockquote>
 <ul>
-<li>Promise 是构造函数</li>
-<li>Promise 只有三种状态（pending，resolve，reject），pending 是刚创建 Promise 实例的状态，然后一旦转为 resolve 或者 reject，就不可变更</li>
+<li>我们怎么样让用户通过npm或者yarn全局安装ds-cli之后，在终端能执行ds命令呢？答案就在package.json的bin字段</li>
+<li><p>当我们bin字段指向我们的目标文件main.js,同时目标文件开头具有</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里是main.js</span></span><br><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// --这种用法是为了防止操作系统用户没有将node装在默认的/usr/bin路径里。当系统看到这一行的时候，</span></span><br><span class="line"><span class="comment">// 首先会到env设置里查找node的安装路径，再调用对应路径下的解释器程序完成操作。</span></span><br><span class="line"><span class="comment">//这里是package.json</span></span><br><span class="line"><span class="string">"bin"</span>: &#123;</span><br><span class="line">    <span class="string">"ds"</span>: <span class="string">"./main.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样当我们发布上npm，别人下载下来后，就可以直接使用ds命令了。</p>
+</li>
 </ul>
-<h4 id="创建-Promise"><a href="#创建-Promise" class="headerlink" title="创建 Promise"></a>创建 Promise</h4><blockquote>
-<p>以封装 xhr 为例子</p>
+<h4 id="解析命令行"><a href="#解析命令行" class="headerlink" title="解析命令行"></a>解析命令行</h4><ul>
+<li>如何轻松便捷的读取命令行里的参数呢？这里我们使用tj大神的commander<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cmd = <span class="built_in">require</span>(<span class="string">"commander"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 比如我们想执行ds init **的命令，想出现“初始化组件模板”的描述</span></span><br><span class="line"><span class="comment">// action是执行这个命令后续的回调，...args是后面**的参数</span></span><br><span class="line">cmd</span><br><span class="line">  .command(<span class="string">'init'</span>)</span><br><span class="line">  .description(<span class="string">'初始化组件模板'</span>)</span><br><span class="line">  .action(<span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//解析命令行</span></span><br><span class="line">cmd.parse(process.argv);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="用户交互"><a href="#用户交互" class="headerlink" title="用户交互"></a>用户交互</h4><blockquote>
+<p>我们通过询问用户来获得一定的交互，这样可以知道用户需要什么</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getURL</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//Promise构造函数接受一个函数，这个函数接受两个参数</span></span><br><span class="line">    <span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    xhr.open(<span class="string">"GET"</span>, url, <span class="literal">true</span>);</span><br><span class="line">    xhr.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (xhr.status == <span class="number">200</span>) &#123;</span><br><span class="line">        resolve(<span class="built_in">JSON</span>.parse(xhr.responseText)); <span class="comment">//如果成功响应，那么把这个值填充到resolve</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        reject(<span class="keyword">new</span> <span class="built_in">Error</span>(xhr.statusText)); <span class="comment">//把该错误对象填充到reject里面</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    xhr.onError = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      reject(<span class="keyword">new</span> <span class="built_in">Error</span>(xhr.statusText)); <span class="comment">//把该错误对象填充到reject里面</span></span><br><span class="line">    &#125;;</span><br><span class="line">    xhr.send(<span class="literal">null</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>reject 必须是接受一个错误对象实例，比如<code>new Error(&#39;12&#39;)</code>里面是什么类型的都可以</li>
+<li>采用inquirer询问项目描述，作者<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//比如我们在上面那个action里面搞事情,即ds init之后问用户</span></span><br><span class="line">...action(<span class="function">(<span class="params">...args</span>)=&gt;</span>&#123;</span><br><span class="line">    inquirer</span><br><span class="line">      .prompt([</span><br><span class="line">        &#123;</span><br><span class="line">          name: <span class="string">"description"</span>,</span><br><span class="line">          message: <span class="string">"请输入项目描述"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          name: <span class="string">"author"</span>,</span><br><span class="line">          message: <span class="string">"请输入作者名称"</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]).then(<span class="function"><span class="params">answers</span>=&gt;</span>&#123;</span><br><span class="line">          <span class="comment">//在这里获得上面的答案</span></span><br><span class="line">          <span class="built_in">console</span>.log(answers.description,answers.author)</span><br><span class="line">      &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h4 id="使用-Promise"><a href="#使用-Promise" class="headerlink" title="使用 Promise"></a>使用 Promise</h4><blockquote>
-<p>使用上面封装 xhr 的 getURL 的函数，该函数返回一个 Promise 实例</p>
-</blockquote>
+<h4 id="拉取远程的仓库"><a href="#拉取远程的仓库" class="headerlink" title="拉取远程的仓库"></a>拉取远程的仓库</h4><ul>
+<li>download-git-repo可拉取远程仓库</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> download = <span class="built_in">require</span>(<span class="string">"download-git-repo"</span>);</span><br><span class="line"><span class="comment">// 第一个git地址，第二个name是git clone下来后的名字...</span></span><br><span class="line">download(</span><br><span class="line">    <span class="string">"https://github.com/yokiyokiyoki/vue-fullpage.git#master"</span>,</span><br><span class="line">    name,</span><br><span class="line">    &#123; <span class="attr">clone</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">    err =&gt; &#123;</span><br><span class="line">    ...</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4 id="简单的模板替换"><a href="#简单的模板替换" class="headerlink" title="简单的模板替换"></a>简单的模板替换</h4><ul>
+<li>我们通过询问交互后，肯定内部做了些改变。这里我们可以把package.json的作者和描述简单改了</li>
+<li><p>可以使用handbars，模板语法简单</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个是通过download-git-repo拉下来的package.json</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"author"</span>:<span class="string">"&#123;&#123;author&#125;&#125;"</span>,</span><br><span class="line">    <span class="string">"description"</span>:<span class="string">"&#123;&#123;description&#125;&#125;"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后我们通过读取文件字符串给handbars编译一下拿到的变量，再写入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过询问拿到的answers</span></span><br><span class="line"><span class="keyword">const</span> meta = &#123;</span><br><span class="line">    name,</span><br><span class="line">    description: answers.description,</span><br><span class="line">    author: answers.author</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> fileName = <span class="string">`<span class="subst">$&#123;name&#125;</span>/package.json`</span>;</span><br><span class="line"><span class="comment">//判断一下是否有这个文件</span></span><br><span class="line"><span class="keyword">if</span> (fs.existsSync(fileName)) &#123;</span><br><span class="line">    <span class="keyword">const</span> content = fs.readFileSync(fileName).toString();</span><br><span class="line">    <span class="keyword">const</span> result = handlebars.compile(content)(meta);</span><br><span class="line">    fs.writeFileSync(fileName, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="终端的一些效果"><a href="#终端的一些效果" class="headerlink" title="终端的一些效果"></a>终端的一些效果</h4><ul>
+<li>高亮终端打印出来的信息:chalk。如chalk.green(‘成功了’)，chalk.red(‘失败了’)</li>
+<li><p>终端加载效果：ora,有个loading效果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> spinner = ora(<span class="string">"正在下载模板..."</span>);</span><br><span class="line">spinner.start();</span><br><span class="line">spinner.succeed();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打印日志的特殊标志：log-symbols</p>
+</li>
+</ul>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cmd = <span class="built_in">require</span>(<span class="string">"commander"</span>);</span><br><span class="line"><span class="keyword">const</span> download = <span class="built_in">require</span>(<span class="string">"download-git-repo"</span>);</span><br><span class="line"><span class="keyword">const</span> inquirer = <span class="built_in">require</span>(<span class="string">"inquirer"</span>);</span><br><span class="line"><span class="keyword">const</span> handlebars = <span class="built_in">require</span>(<span class="string">"handlebars"</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> ora = <span class="built_in">require</span>(<span class="string">"ora"</span>);</span><br><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">"chalk"</span>);</span><br><span class="line"><span class="keyword">const</span> symbols = <span class="built_in">require</span>(<span class="string">"log-symbols"</span>);</span><br><span class="line"></span><br><span class="line">cmd</span><br><span class="line">  .version(<span class="string">"0.0.1"</span>, <span class="string">"-v, --version"</span>)</span><br><span class="line">  .command(<span class="string">"init &lt;name&gt;"</span>)</span><br><span class="line">  .action(<span class="function"><span class="params">name</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (fs.existsSync(name)) &#123;</span><br><span class="line">      <span class="comment">// 错误提示项目已存在，避免覆盖原有项目</span></span><br><span class="line">      <span class="built_in">console</span>.log(symbols.error, chalk.red(<span class="string">"项目已存在"</span>));</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    inquirer</span><br><span class="line">      .prompt([</span><br><span class="line">        &#123;</span><br><span class="line">          name: <span class="string">"description"</span>,</span><br><span class="line">          message: <span class="string">"请输入项目描述"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          name: <span class="string">"author"</span>,</span><br><span class="line">          message: <span class="string">"请输入作者名称"</span></span><br><span class="line">        &#125;</span><br><span class="line">      ])</span><br><span class="line">      .then(<span class="function"><span class="params">answers</span> =&gt;</span> &#123;</span><br><span class="line">        download(</span><br><span class="line">          <span class="string">"https://git.datatub.com:Uranus/general-template#master"</span>,</span><br><span class="line">          name,</span><br><span class="line">          &#123; <span class="attr">clone</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">          err =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> spinner = ora(<span class="string">"正在下载模板..."</span>);</span><br><span class="line">            spinner.start();</span><br><span class="line">            <span class="keyword">if</span> (!err) &#123;</span><br><span class="line">              spinner.succeed();</span><br><span class="line">              <span class="keyword">const</span> meta = &#123;</span><br><span class="line">                name,</span><br><span class="line">                description: answers.description,</span><br><span class="line">                author: answers.author</span><br><span class="line">              &#125;;</span><br><span class="line">              <span class="keyword">const</span> fileName = <span class="string">`<span class="subst">$&#123;name&#125;</span>/package.json`</span>;</span><br><span class="line">              <span class="keyword">if</span> (fs.existsSync(fileName)) &#123;</span><br><span class="line">                <span class="keyword">const</span> content = fs.readFileSync(fileName).toString();</span><br><span class="line">                <span class="keyword">const</span> result = handlebars.compile(content)(meta);</span><br><span class="line">                fs.writeFileSync(fileName, result);</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="built_in">console</span>.log(symbols.success, chalk.green(<span class="string">"项目初始化完成"</span>));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              spinner.fail();</span><br><span class="line">              <span class="built_in">console</span>.log(symbols.error, chalk.red(<span class="string">`拉取远程仓库失败<span class="subst">$&#123;err&#125;</span>`</span>));</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        );</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"><span class="comment">//解析命令行</span></span><br><span class="line">cmd.parse(process.argv);</span><br></pre></td></tr></table></figure>
 <ul>
-<li>Promise 的实例方法有两个：then 和 catch，这个两个方法都返回新的 Promise 对象</li>
-<li>then 有两个参数。then(onfilled,onrejected)，第一个是参数值 resolve 来填充，第二个是 reject 来填充</li>
-<li>catch 实则是 then(undefined,onrejected)的别名，但是一般情况下都是用这个</li>
-<li>then 的第二个参数 检测不了自身 Promise 对象 onfilled 出了异常，而 catch 是基于对上次的 then 产生的 promise 对象，<a href="https://www.kancloud.cn/kancloud/promises-book/44255" target="_blank" rel="noopener">看这里</a></li>
+<li>上面是main.js文件，然后修改一下package.json的字段（bin字段修改，模板变量）</li>
+<li>发布npm，自己下载下来体验一下</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url1 = <span class="string">"http://azu.github.io/promises-book/json/comment.json"</span>,</span><br><span class="line">  url2 = <span class="string">"http://azu.github.io/promises-book/json/people.json"</span>;</span><br><span class="line">getURL(url1)</span><br><span class="line">  .then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(val); <span class="comment">//这里是onfilled填充</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error); <span class="comment">//这里是onrejected填充</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h5 id="Promise-chain-获取上次-promise-的返回值"><a href="#Promise-chain-获取上次-promise-的返回值" class="headerlink" title="Promise chain 获取上次 promise 的返回值"></a>Promise chain 获取上次 promise 的返回值</h5><blockquote>
-<p>由于 Promise 链式调用的时候，每个 Promise 都是独立的。但是可以通过 return 值来传给下一个 Promise，因为 return 了值是填充了当前 Promise 对象的 resolve</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">promise</span><br><span class="line">  .then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="params">val</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(val);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h5 id="Promise-静态方法"><a href="#Promise-静态方法" class="headerlink" title="Promise 静态方法"></a>Promise 静态方法</h5><ul>
-<li>Promise.resolve(42) === new Promise((resolve,reject)=&gt;resolve(42)) ,是它的语法糖</li>
-<li>Promise.reject(new Error(42)) === new Promise((resolve,reject)=&gt;reject(new Error(42))) 是它的语法糖</li>
-<li>如果有多个 Promise 同时需要判断才能进行下一步，可以用 Promise.all([promise1,promise2])。这个 then 方法返回的参数也是一个数组，跟 promise1 和 promise2 的顺序一样。需要注意的是，all 是并行执行的。</li>
-<li>Promise.race([promise1,promise2]) 则和数组的 some 方法很像，只要有一个 promise 对象进入 FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">promise.all([getURL(url1), getURL(url2)]).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(result); <span class="comment">//[getURL(url1)的结果，getURL(url2)的结果]</span></span><br><span class="line">&#125;);</span><br><span class="line">promise.race([getURL(url1), getURL(url2)]).then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value); <span class="comment">//一旦这两个promise对象有一个完成了onfilled或onrejected状态，那么就会进行后续的then，所以这里then的参数只有一个value。但不并不会影响其他promise对象的进行，只是它们的结果值不会出现在then的里面</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -382,7 +398,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/javascript/" rel="tag"># javascript</a>
+            <a href="/blog/tags/前端/" rel="tag"># 前端</a>
           
         </div>
       
@@ -395,8 +411,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2017/05/11/study-replace-template/" rel="next" title="模板字符串的替换">
-                <i class="fa fa-chevron-left"></i> 模板字符串的替换
+              <a href="/blog/2019/01/08/git-branch-use/" rel="next" title="分支规范使用（git flow）">
+                <i class="fa fa-chevron-left"></i> 分支规范使用（git flow）
               </a>
             
           </div>
@@ -405,8 +421,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2017/05/18/use-CatchException/" rel="prev" title="js里的异常">
-                js里的异常 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2019/02/26/geek-self-cultivation/" rel="prev" title="前端工程师的儒家修养">
+                前端工程师的儒家修养 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -435,6 +451,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -528,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise"><span class="nav-number">1.</span> <span class="nav-text">Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-Promise"><span class="nav-number">1.1.</span> <span class="nav-text">创建 Promise</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Promise"><span class="nav-number">1.2.</span> <span class="nav-text">使用 Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Promise-chain-获取上次-promise-的返回值"><span class="nav-number">1.2.1.</span> <span class="nav-text">Promise chain 获取上次 promise 的返回值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Promise-静态方法"><span class="nav-number">1.2.2.</span> <span class="nav-text">Promise 静态方法</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">2.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#脚手架发布和安装"><span class="nav-number">2.0.1.</span> <span class="nav-text">脚手架发布和安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析命令行"><span class="nav-number">2.0.2.</span> <span class="nav-text">解析命令行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户交互"><span class="nav-number">2.0.3.</span> <span class="nav-text">用户交互</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拉取远程的仓库"><span class="nav-number">2.0.4.</span> <span class="nav-text">拉取远程的仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的模板替换"><span class="nav-number">2.0.5.</span> <span class="nav-text">简单的模板替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#终端的一些效果"><span class="nav-number">2.0.6.</span> <span class="nav-text">终端的一些效果</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#源码"><span class="nav-number">3.</span> <span class="nav-text">源码</span></a></li></div>
             
 
           </div>

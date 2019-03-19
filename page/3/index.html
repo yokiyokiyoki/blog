@@ -264,6 +264,157 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/23/study-screen-02/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/05/23/study-screen-02/" itemprop="url">前端性能之用户可操作时间</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T11:53:12+08:00">
+                2018-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="官方的一个浏览器从打开一个页面内部的一系列状态"><a href="#官方的一个浏览器从打开一个页面内部的一系列状态" class="headerlink" title="官方的一个浏览器从打开一个页面内部的一系列状态"></a>官方的一个浏览器从打开一个页面内部的一系列状态</h1><ul>
+<li>用 performance.timing 的 api 就可以获取到各个阶段的</li>
+<li>一般 start 和 end 间包括一个阶段</li>
+<li>具体可以观察推荐阅读的那张图</li>
+<li>navigationStart 到 responseEnd 之间是网络传输层面</li>
+<li>domLoading 到 domComplete 是服务器传输回字节后浏览器的各种事件状态<ul>
+<li>domLoading</li>
+<li>domInteractive(dom tree 构建完成)</li>
+<li>domContentLoadedEventStart(触发的是 domContentLoaded 事件，这个很重要，network 都有体现)</li>
+<li>domContentLoadedEventEnd</li>
+<li>domComplete（资源全部加载完成，包括异步 js）</li>
+<li>loadEventStart（触发 load 事件）</li>
+<li>loadEventEnd</li>
+</ul>
+</li>
+</ul>
+<h1 id="用户可操作时间"><a href="#用户可操作时间" class="headerlink" title="用户可操作时间"></a>用户可操作时间</h1><blockquote>
+<p>用户可以进行正常的事件输入交互操作</p>
+</blockquote>
+<ul>
+<li>就是 domContentLoadedEventEnd-navigationStart 的时间</li>
+<li>jq 的$()就是指 domContentLoaded 事件</li>
+</ul>
+<h1 id="一些知识点"><a href="#一些知识点" class="headerlink" title="一些知识点"></a>一些知识点</h1><ul>
+<li>document 到达 domInteractive 状态的时候，代表 dom 树的构建完成</li>
+<li>浏览器拿到文档首字节之后，也就是 responseEnd 之后。浏览器将 html 解析并构建成 DOM tree，同时将 css 解析成 cssom，这个过程是同步的</li>
+<li>如果有 js 参与，因为同步的 js 可以改写文档在任何节点，所以 domtree 一旦碰上同步的 script 标签就会停止构建</li>
+<li>js 能查询 dom 对象的可被计算的样式，cssom 构建完之后才轮到 js 执行，但是这是指 css 文件在 js 之前，如果 css 在 js 之后，不会阻塞 js</li>
+</ul>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000005784687" target="_blank" rel="noopener">前端性能的几个基础指标</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/22/study-screen-01/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1699,152 +1850,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/13/study-https-01/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/13/study-https-01/" itemprop="url">加密传输之加密方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T18:11:12+08:00">
-                2018-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="加密传输方式"><a href="#加密传输方式" class="headerlink" title="加密传输方式"></a>加密传输方式</h2><ul>
-<li>主要有两种，一种是对称加密（想想 shadowsocks），另外一种是非对称加密</li>
-</ul>
-<h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><blockquote>
-<p>对称加密算法在加密和解密的时候用的是同一个秘钥</p>
-</blockquote>
-<p>对称加密模式：</p>
-<ul>
-<li>甲方选择某一种加密规则，对信息进行加密</li>
-<li>乙方使用同一种规则，对信息进行解密</li>
-</ul>
-<p>客户端和服务端进行通信，采用对称加密，如果只用一个秘钥，很容易破解；如果每次用不同的，海量秘钥的管理和传输成本又比较高，所以可以采用非对称加密。</p>
-<h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><blockquote>
-<p>需要两个密钥，一个是公钥，一个是私钥</p>
-</blockquote>
-<p>非对称加密模式：</p>
-<ul>
-<li>乙方生成两把密钥（公钥和私钥）。公钥是公开的，任何人都可以获得，私钥则是保密的。</li>
-<li>甲方获得乙方的公钥后，用它对信息进行加密</li>
-<li>乙方拿到加密后的数据后，用私钥进行解密</li>
-</ul>
-<p>即使黑客拿到了公钥，没有私钥也是没有办法解密，不考虑彩虹表的情况下，完全可以长期使用一对私钥</p>
-<h4 id="什么是彩虹表"><a href="#什么是彩虹表" class="headerlink" title="什么是彩虹表"></a>什么是彩虹表</h4><p>彩虹表是一个用于加密散列函数逆运算的预先计算好的表，常用于破解加密过的密码散列。 查找表常常用于包含有限字符固定长度纯文本密码的加密。这是以空间换时间的典型实践，在每一次尝试都计算的暴力破解中使用更少的计算能力和更多的储存空间，但却比简单的每个输入一条散列的翻查表使用更少的储存空间和更多的计算性能。</p>
-<h4 id="RSA-算法"><a href="#RSA-算法" class="headerlink" title="RSA 算法"></a>RSA 算法</h4><p>最经典的非对称加密算法是 RSA</p>
-<blockquote>
-<p>RSA 公钥加密算法是 1977 年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。公钥私钥成对出现，用其中一个加密只能用另一个解密，通常用公钥加密私钥解密。</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1897,7 +1902,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

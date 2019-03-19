@@ -264,6 +264,193 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/07/04/study-event-loop/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/07/04/study-event-loop/" itemprop="url">学习一下Event Loop</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-04T16:57:08+08:00">
+                2018-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="浏览器中-Event-Loop"><a href="#浏览器中-Event-Loop" class="headerlink" title="浏览器中 Event Loop"></a>浏览器中 Event Loop</h2><blockquote>
+<p>因为 js 最初是为了和浏览器交互，是一门非阻塞单线程语言。如果多线程处理 dom 可能会有一些意想不到的问题，比如一个线程中增加节点，另外一个线程删除节点。当然引入读写锁可以解决这个问题。</p>
+</blockquote>
+<h3 id="执行栈和队列"><a href="#执行栈和队列" class="headerlink" title="执行栈和队列"></a>执行栈和队列</h3><ul>
+<li>js 在执行过程中会产生执行环境，这些执行环境会被顺序的加入到执行栈中。如果遇到异步的代码，会被挂起并加入到 task（有多种）队列中。一旦执行栈为空，event-loop 就会从 task 队列中拿出需要执行的代码并放入执行栈中执行。所以本质上来说 js 的异步还是同步行为。</li>
+</ul>
+<h3 id="任务源"><a href="#任务源" class="headerlink" title="任务源"></a>任务源</h3><ul>
+<li>不同的任务源会被分配到不同的 task 队列中，任务源可以分为微任务（microtask）和宏任务（macrotask）。</li>
+<li>在 es6 中，microtask 被称为 jobs，macrotask 被称为 task</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"script start"</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Promise"</span>);</span><br><span class="line">  resolve();</span><br><span class="line">&#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"promise1"</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"promise2"</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script end"</span>);</span><br><span class="line"><span class="comment">// script start =&gt; Promise =&gt; script end =&gt; promise1 =&gt; promise2 =&gt; setTimeout</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>微任务包括 process.nextTick,promise,Object.ovserve,MutationObserve</li>
+<li>宏任务包括 script，setTimeout，setInterval,setImmediate,I/O,UI rendering</li>
+<li>很多人认为微任务一定快于宏任务，其实是错的。因为宏任务中包括了 script，浏览器会执行一个宏任务，接下来有异步代码的话会先执行微任务。</li>
+</ul>
+<h3 id="正确的一次-Event-loop-顺序"><a href="#正确的一次-Event-loop-顺序" class="headerlink" title="正确的一次 Event-loop 顺序"></a>正确的一次 Event-loop 顺序</h3><ul>
+<li>执行同步代码，这属于宏任务</li>
+<li>执行栈为空，查询是否有微任务需要执行</li>
+<li>执行所有微任务</li>
+<li>必要的话渲染 ui</li>
+<li>开始下一轮 event-loop，执行宏任务中的异步代码</li>
+</ul>
+<p>所以宏任务中的异步代码有大量的计算并且需要操作 dom 的话，为了更快的界面响应，我们可以把操作 dom 放入微任务中。思考一下 vue ～</p>
+<h2 id="node-中的-event-loop"><a href="#node-中的-event-loop" class="headerlink" title="node 中的 event loop"></a>node 中的 event loop</h2><blockquote>
+<p>node 中的 event loop （存在于 libuv 中）和浏览器的不一样，分为以下六个阶段，他们会按照顺序反复执行</p>
+</blockquote>
+<h3 id="timers"><a href="#timers" class="headerlink" title="timers"></a>timers</h3><ul>
+<li>会执行 setTimeout 和 setInterval</li>
+<li>一个 timer 指定的事件并不是准确时间，而是在达到这个时间后尽快执行回调，可能会因为系统正在执行别的事务而延迟。</li>
+<li>下限的时间会有个范围</li>
+</ul>
+<h3 id="I-O-callbacks"><a href="#I-O-callbacks" class="headerlink" title="I/O callbacks"></a>I/O callbacks</h3><ul>
+<li>会执行除了 close 事件，定时器和 setImmediat 的回调</li>
+</ul>
+<h3 id="idle，prepare"><a href="#idle，prepare" class="headerlink" title="idle，prepare"></a>idle，prepare</h3><ul>
+<li>idle，prepare 阶段内部实现</li>
+</ul>
+<h3 id="poll-阶段"><a href="#poll-阶段" class="headerlink" title="poll 阶段"></a>poll 阶段</h3><ul>
+<li>poll 阶段很重要，这一阶段中，系统会做两件事情<ul>
+<li>执行到点的定时器</li>
+<li>执行 poll 队列中的事件</li>
+</ul>
+</li>
+<li>如果有别的定时器需要被执行，会回到 timer 阶段执行回调</li>
+</ul>
+<h3 id="check-阶段"><a href="#check-阶段" class="headerlink" title="check 阶段"></a>check 阶段</h3><ul>
+<li>执行 setImmediate</li>
+</ul>
+<h3 id="close-callbacks"><a href="#close-callbacks" class="headerlink" title="close callbacks"></a>close callbacks</h3><ul>
+<li>执行 close 事件</li>
+</ul>
+<h2 id="node-中执行顺序举例"><a href="#node-中执行顺序举例" class="headerlink" title="node 中执行顺序举例"></a>node 中执行顺序举例</h2><ul>
+<li>有些情况下，定时器执行顺序是随机的</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line">setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setImmediate"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 这里可能会输出 setTimeout，setImmediate</span></span><br><span class="line"><span class="comment">// 可能也会相反的输出，这取决于性能</span></span><br><span class="line"><span class="comment">// 因为可能进入 event loop 用了不到 1 毫秒，这时候会执行 setImmediate</span></span><br><span class="line"><span class="comment">// 否则会执行 setTimeout</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>有些情况下是一定的</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(<span class="string">'fs'</span>)</span><br><span class="line"></span><br><span class="line">fs.readFile(__filename, () =&gt; &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(<span class="string">'timeout'</span>);</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">    setImmediate(() =&gt; &#123;</span><br><span class="line">        console.log(<span class="string">'immediate'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 因为 readFile 的回调在 poll 中执行</span></span><br><span class="line"><span class="comment">// 发现有 setImmediate ，所以会立即跳到 check 阶段执行回调</span></span><br><span class="line"><span class="comment">// 再去 timer 阶段执行 setTimeout</span></span><br><span class="line"><span class="comment">// 所以以上输出一定是 setImmediate，setTimeout</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面都是 macrotask 的执行情况，microtask 会在以上每个阶段完成后立即执行</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"timer1"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"promise1"</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"timer2"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"promise2"</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上代码在浏览器和 node 中打印情况是不同的</span></span><br><span class="line"><span class="comment">// 浏览器中打印 timer1, promise1, timer2, promise2</span></span><br><span class="line"><span class="comment">// node 中打印 timer1, timer2, promise1, promise2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>node 中的 process.nextTick 会优先于其他微任务执行</li>
+</ul>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>-</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/06/23/study-random-num/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1583,7 +1770,7 @@
 </ul>
 </li>
 <li>良好的散列函数<ul>
-<li>SHA 函数</li>
+<li>SHA 函数s</li>
 </ul>
 </li>
 </ul>
@@ -1811,157 +1998,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/23/study-screen-02/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/23/study-screen-02/" itemprop="url">前端性能之用户可操作时间</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T11:53:12+08:00">
-                2018-05-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="官方的一个浏览器从打开一个页面内部的一系列状态"><a href="#官方的一个浏览器从打开一个页面内部的一系列状态" class="headerlink" title="官方的一个浏览器从打开一个页面内部的一系列状态"></a>官方的一个浏览器从打开一个页面内部的一系列状态</h1><ul>
-<li>用 performance.timing 的 api 就可以获取到各个阶段的</li>
-<li>一般 start 和 end 间包括一个阶段</li>
-<li>具体可以观察推荐阅读的那张图</li>
-<li>navigationStart 到 responseEnd 之间是网络传输层面</li>
-<li>domLoading 到 domComplete 是服务器传输回字节后浏览器的各种事件状态<ul>
-<li>domLoading</li>
-<li>domInteractive(dom tree 构建完成)</li>
-<li>domContentLoadedEventStart(触发的是 domContentLoaded 事件，这个很重要，network 都有体现)</li>
-<li>domContentLoadedEventEnd</li>
-<li>domComplete（资源全部加载完成，包括异步 js）</li>
-<li>loadEventStart（触发 load 事件）</li>
-<li>loadEventEnd</li>
-</ul>
-</li>
-</ul>
-<h1 id="用户可操作时间"><a href="#用户可操作时间" class="headerlink" title="用户可操作时间"></a>用户可操作时间</h1><blockquote>
-<p>用户可以进行正常的事件输入交互操作</p>
-</blockquote>
-<ul>
-<li>就是 domContentLoadedEventEnd-navigationStart 的时间</li>
-<li>jq 的$()就是指 domContentLoaded 事件</li>
-</ul>
-<h1 id="一些知识点"><a href="#一些知识点" class="headerlink" title="一些知识点"></a>一些知识点</h1><ul>
-<li>document 到达 domInteractive 状态的时候，代表 dom 树的构建完成</li>
-<li>浏览器拿到文档首字节之后，也就是 responseEnd 之后。浏览器将 html 解析并构建成 DOM tree，同时将 css 解析成 cssom，这个过程是同步的</li>
-<li>如果有 js 参与，因为同步的 js 可以改写文档在任何节点，所以 domtree 一旦碰上同步的 script 标签就会停止构建</li>
-<li>js 能查询 dom 对象的可被计算的样式，cssom 构建完之后才轮到 js 执行，但是这是指 css 文件在 js 之前，如果 css 在 js 之后，不会阻塞 js</li>
-</ul>
-<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><ul>
-<li><a href="https://segmentfault.com/a/1190000005784687" target="_blank" rel="noopener">前端性能的几个基础指标</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2014,7 +2050,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
