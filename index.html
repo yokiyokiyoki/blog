@@ -264,6 +264,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/04/30/use-sftp-bash-deploy/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/04/30/use-sftp-bash-deploy/" itemprop="url">使用shell脚本来自动部署项目到服务器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-30T17:11:12+08:00">
+                2019-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们可以通过shell远程执行一些命令，来达到我们部署系统的目的。这样我们就可以不用sftp可视化界面来拖动，省去了这一步。</p>
+<h1 id="远程执行"><a href="#远程执行" class="headerlink" title="远程执行"></a>远程执行</h1><blockquote>
+<p>一般我们是通过ssh来登录服务器</p>
+</blockquote>
+<h2 id="简单的命令"><a href="#简单的命令" class="headerlink" title="简单的命令"></a>简单的命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@remoteNode <span class="string">"cd /home ; ls"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>双引号，必须有。如果不加双引号，第二个ls命令在本地执行</li>
+<li>分号，两个命令之间用分号隔开</li>
+</ul>
+<h2 id="复杂的命令"><a href="#复杂的命令" class="headerlink" title="复杂的命令"></a>复杂的命令</h2><p>远程执行的内容在“&lt;&lt; eeooff ” 至“ eeooff ”之间，在远程机器上的操作就位于其中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh user@remoteNode &gt; /dev/null 2&gt;&amp;1 &lt;&lt; eeooff</span><br><span class="line"><span class="built_in">cd</span> /home</span><br><span class="line">touch abcdefg.txt</span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">eeooff</span><br><span class="line"><span class="built_in">echo</span> <span class="keyword">done</span>!</span><br></pre></td></tr></table></figure>
+<p>需要注意以下</p>
+<ul>
+<li>&lt;&lt; eeooff，ssh后直到遇到eeooff这样的内容结束，eeooff可以随便修改成其他形式。</li>
+<li>重定向目的在于不显示远程的输出了</li>
+<li>在结束前，加exit退出远程节点</li>
+</ul>
+<h2 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h2><p>先使用tar 命令压缩文件，减少文件上传的大小，过去了服务器再解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 移除本地压缩文件</span></span><br><span class="line">rm -rf dist.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 压缩文件，其中 dist为要上传的文件所在目录</span></span><br><span class="line">tar -zcvf dist.tar.gz dist/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传到服务器（需要输入密码，如果已经进行过私钥配置，则不用），其中/home/savoygu/gusaifei 为上传文件所在目录</span></span><br><span class="line">scp  -r dist.tar.gz root@47.93.xxx.xxx:/home/savoygu/gusaifei</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录到服务器（需要输入密码，如果已经进行过私钥配置，则不用）</span></span><br><span class="line"><span class="comment"># 服务器环境开启</span></span><br><span class="line">ssh root@47.93.xxx.xxx &lt;&lt; EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入目标目录</span></span><br><span class="line"><span class="built_in">cd</span> /home/savoygu/gusaifei</span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">sudo tar -zxvf dist.tar.gz --strip-components 1</span><br><span class="line"><span class="comment"># 移除线上压缩文件</span></span><br><span class="line">sudo rm -rf </span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">EOF</span><br><span class="line"><span class="comment"># 服务器环境结束</span></span><br><span class="line"><span class="built_in">echo</span> 上传完成！</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/03/25/study-cli-02/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1754,161 +1891,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/07/15/2018-think-01/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/07/15/2018-think-01/" itemprop="url">对于'我'的思考</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-15T17:38:59+08:00">
-                2018-07-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="‘我’是什么"><a href="#‘我’是什么" class="headerlink" title="‘我’是什么"></a>‘我’是什么</h1><blockquote>
-<p>一个人有两个我。一个在黑暗中醒着，一个在光明中睡着。——纪伯伦</p>
-</blockquote>
-<ul>
-<li>‘我’是人类创造出来表达自我的词汇，但其实这里定义已经有误，不能用重复性词语进行描述。</li>
-<li>那怎么定义呢，我想这是个很大的问题，大到佛家都论证有’无我’一说。</li>
-<li>这里先简单分为内在的我，外在的我两个部分。</li>
-</ul>
-<h3 id="内在的我"><a href="#内在的我" class="headerlink" title="内在的我"></a>内在的我</h3><ul>
-<li>其实核心是灵魂，是你自我意志的体现，来源</li>
-<li>而后是你从小到大经历的伤害，也可以称之为苦难，包在你的灵魂外面</li>
-<li>这个苦难就会在外面造就一个内在批评家，告诉你哪些不要做，哪些要做，胆小怕事还是胆大妄为其实取决于此。比如会有一个声音告诉你，你遇到了什么事情，要以什么样的方式去做</li>
-<li>这样你在别人眼里就会被打上标签，谨慎，聪明等等，这其实是你在这个社会的外在角色</li>
-</ul>
-<h3 id="外在的我"><a href="#外在的我" class="headerlink" title="外在的我"></a>外在的我</h3><ul>
-<li>是内在的我映射出来的外在角色在团队，组织，乃至于整个社会的‘我’</li>
-</ul>
-<h1 id="昨天的我和今天的我"><a href="#昨天的我和今天的我" class="headerlink" title="昨天的我和今天的我"></a>昨天的我和今天的我</h1><ul>
-<li>昨天的我做完了所有的事，晚上睡觉第二天睁眼一看，我跟昨天的我有什么关系呢？昨天的我和今天的我可以自我感知是另外一个完全不一样的人</li>
-<li>但是是昨天这个状态的我，才会导致现在醒来的我躺在了这张床上，这是一个连续状态的我。</li>
-<li>但是我经常会感觉到这种状态不连续，也就是我会觉得这种联系是断层的。</li>
-<li>于是我想到人是一个会思考的芦苇，如果我对当下的思考在未来也可以深刻感受到（除了记忆太久远，会忘记之外），我才会真真切切的感受这样连续的状态。</li>
-<li>而且人生是一场长跑，我肯定是在不停的进步的，是你会觉得自己和从前有所不同的其中一个原因。</li>
-<li>所以只有强化自己当下‘想’的状态，不断的享受思考这一过程，才会让更加深刻认识到自己</li>
-</ul>
-<h3 id="如何强化’想’的状态"><a href="#如何强化’想’的状态" class="headerlink" title="如何强化’想’的状态"></a>如何强化’想’的状态</h3><blockquote>
-<p>历史上能成就一番事业的，必定是对自己想得很明白的人。</p>
-</blockquote>
-<ul>
-<li>写下来你的感受，不断写不断回顾</li>
-<li>去感受不同的世界观，去不同的地方</li>
-</ul>
-<h3 id="迷惑的’我’"><a href="#迷惑的’我’" class="headerlink" title="迷惑的’我’"></a>迷惑的’我’</h3><ul>
-<li>有时候在出租车上，在看电影的时候等等，会突然像是大梦初醒，为何我是在这个宇宙降临了’我’这样的意识——先是怀疑这个宇宙，其次是怀疑’我’这个意识</li>
-<li>如果是科学来解释，也无法说明：通过各种化学物质反应而成的‘我’这个意志，为何存在于这个躯壳，而不是其他人。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1961,7 +1943,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
