@@ -13,10 +13,40 @@ comments: false
 
 #### 安装nvm
 
+##### windows
+
 我们可以从[Github](https://github.com/coreybutler/nvm-windows)下载
 
 默认安装路径是`C:\Users\Administrator\AppData\Roaming\nvm`，存放我们下载的各个版本的node
 > 验证安装，打开控制台，输入`nvm`,看是否输出所有命令
+
+##### centos7
+
+- 下载
+```bash
+#首先确保centos已安装git,以确保之后nvm本身的升级
+curl https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
+```
+- 重启终端
+- 升级nvm
+```bash
+[root@localhost .nvm]# nvm --version
+0.30.2
+[root@localhost .nvm]# git fetch -p
+[root@localhost .nvm]# git rev-list --tags --max-count=1
+0a95e77000515c1156be593642dd4e452f2f098e
+[root@localhost .nvm]# git describe --tags 0a95e77000515c1156be593642dd4e452f2f098e
+v0.33.2
+[root@localhost .nvm]# git describe --abbrev=0 --tags
+v0.33.2
+[root@localhost .nvm]# git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+之前的 HEAD 位置是 7f3145b... [New] add support for `$NVM_DIR/default-packages` file
+HEAD 目前位于 0a95e77... v0.33.2
+[root@localhost .nvm]# source ~/.nvm/nvm.sh
+[root@localhost .nvm]# nvm --version
+0.33.2
+```
+
 
 #### 命令
 - nvm list   #查看本地所有node版本
