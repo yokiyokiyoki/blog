@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="介绍SSR与CSR的相爱相杀首先看一下传统的web开发，传统的web开发是，客户端向服务端发送请求，服务端查询数据库，拼接HTML字符串（模板），通过一系列的数据处理之后，把整理好的HTML返回给客户端,浏览器相当于打开了一个页面。这种比如我们经常听说过的jsp,PHP,aspx也就是传统的MVC的开发。 SPA应用，到了Vue、React，单页面应用优秀的用户体验，逐渐成为了主流，页面整体式ja">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-16T06:57:41.520Z">
+<meta property="og:updated_time" content="2019-08-16T07:06:35.422Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nuxt初步">
 <meta name="twitter:description" content="介绍SSR与CSR的相爱相杀首先看一下传统的web开发，传统的web开发是，客户端向服务端发送请求，服务端查询数据库，拼接HTML字符串（模板），通过一系列的数据处理之后，把整理好的HTML返回给客户端,浏览器相当于打开了一个页面。这种比如我们经常听说过的jsp,PHP,aspx也就是传统的MVC的开发。 SPA应用，到了Vue、React，单页面应用优秀的用户体验，逐渐成为了主流，页面整体式ja">
@@ -360,7 +360,10 @@
 <ul>
 <li>同时nuxt配置router的base为<code>/m</code></li>
 </ul>
-<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><p>pm2可使进程常驻</p>
+<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><blockquote>
+<p><a href="https://imweb.io/topic/57c8cbb27f226f687b365636" target="_blank" rel="noopener">pm2使用入门</a></p>
+</blockquote>
+<p>pm2可使进程常驻</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  apps: [&#123;</span><br><span class="line">    name: <span class="string">'h5-nuxt-ssr'</span>,</span><br><span class="line">    cwd: <span class="string">'./'</span>,<span class="comment">//当前工作路径</span></span><br><span class="line">    script: <span class="string">'npm'</span>,<span class="comment">// 实际启动脚本</span></span><br><span class="line">    args: [<span class="string">'start'</span>, <span class="string">'--max-memory-restart 500M'</span>],/参数</span><br><span class="line">    autorestart: <span class="literal">true</span>,</span><br><span class="line">    watch: [<span class="string">'nuxt-dist'</span>, <span class="string">'client'</span>, <span class="string">'server'</span>, <span class="string">'nuxt.config.ts'</span>],<span class="comment">// 监控变化的目录，一旦变化，自动重启</span></span><br><span class="line">    watch_delay: <span class="number">1000</span>,</span><br><span class="line">    ignore_watch: [<span class="string">'node_modules'</span>],<span class="comment">// 从监控目录中排除</span></span><br><span class="line">    watch_options: &#123;</span><br><span class="line">      followSymlinks: <span class="literal">false</span>,</span><br><span class="line">      usePolling: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    error_file: <span class="string">'./logs/app-err.log'</span>,<span class="comment">//错误日志</span></span><br><span class="line">    out_file: <span class="string">'./logs/app-out.log'</span><span class="comment">//输出日志</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最好配置脚本在package.json里</p>
 <ul>
@@ -414,6 +417,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/08/16/study-mobile-rem/" rel="prev" title="关于移动端rem适配方案">
+                关于移动端rem适配方案 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -492,7 +499,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

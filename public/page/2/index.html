@@ -264,6 +264,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/08/26/centos7-mysql/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/08/26/centos7-mysql/" itemprop="url">阿里云centos7的mysql安装与启动</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T16:07:52+08:00">
+                2018-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
+<li>需要给人开发一个项目，然后我让客户自己选购了阿里云的 centos7 系统（他才买了 350 元一年，我很好奇为什么这么便宜，我是 680…杀熟嘛）</li>
+<li>然后让客户用 ssh 工具配置，这样我就可以通过 ssh 来连接他的服务器了</li>
+<li>这个时候我就需要安装 mysql，并在外面来远程连接了</li>
+</ul>
+<h2 id="安装-mysql"><a href="#安装-mysql" class="headerlink" title="安装 mysql"></a>安装 mysql</h2><h4 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc gcc-c++ ncurses ncurses-devel cmake bison</span><br></pre></td></tr></table></figure>
+<h6 id="yum-和-rpm-是什么"><a href="#yum-和-rpm-是什么" class="headerlink" title="yum 和 rpm 是什么"></a>yum 和 rpm 是什么</h6><ul>
+<li>yum，是 Yellow dog Updater Modified 的简称，起初是由 yellow dog 这一发行版的开发者 Terra Soft 研发，用 python 写成，那时还叫做 yup(yellow dog updater)，后经杜克大学的 Linux@Duke 开发团队进行改进，遂有此名。</li>
+<li>yum 的宗旨是自动化地升级，安装/移除 rpm 包，收集 rpm 包的相关信息，检查依赖性并自动提示用户解决。</li>
+<li>rpm（二进制包）是 linux 的可执行程序，类似 windows 的 exe 文件</li>
+</ul>
+<h4 id="先检测系统是否自带原有版本-mysql-安装包，如果有要先卸载删除，不然不能成功安装和启动"><a href="#先检测系统是否自带原有版本-mysql-安装包，如果有要先卸载删除，不然不能成功安装和启动" class="headerlink" title="先检测系统是否自带原有版本 mysql 安装包，如果有要先卸载删除，不然不能成功安装和启动"></a>先检测系统是否自带原有版本 mysql 安装包，如果有要先卸载删除，不然不能成功安装和启动</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql 查看有哪些安装包</span><br><span class="line">yum remove mysql mysql-server mysql-libs compat-mysql51 注意这个卸载不干净</span><br><span class="line">rm -rf /<span class="keyword">var</span>/lib/mysql</span><br><span class="line">rm /etc/my.cnf</span><br><span class="line">rpm -qa|grep mysql 再看下有没有删完</span><br><span class="line">whereis mysql 查看残留的目录、如有则删除</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果发现有安装包，可以用 rpm -e 命令删掉安装包</li>
+</ul>
+<h4 id="下载-Mysql-的-repo-源"><a href="#下载-Mysql-的-repo-源" class="headerlink" title="下载 Mysql 的 repo 源"></a>下载 Mysql 的 repo 源</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdi /usr/local/download</span><br><span class="line">cd /usr/local/download/</span><br><span class="line">wget http:<span class="comment">//dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm</span></span><br><span class="line">wget http:<span class="comment">//dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装-mysql-community-release-el7-5-noarch-rpm-包"><a href="#安装-mysql-community-release-el7-5-noarch-rpm-包" class="headerlink" title="安装 mysql-community-release-el7-5.noarch.rpm 包"></a>安装 mysql-community-release-el7-5.noarch.rpm 包</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-release-el7<span class="number">-5.</span>noarch.rpm <span class="comment">//rpm -ivh是安装命令的意思</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装-mysql-1"><a href="#安装-mysql-1" class="headerlink" title="安装 mysql"></a>安装 mysql</h4><ul>
+<li>yum install -y mysql-community-server</li>
+</ul>
+<h4 id="安装成功后重启-MySQL-服务"><a href="#安装成功后重启-MySQL-服务" class="headerlink" title="安装成功后重启 MySQL 服务"></a>安装成功后重启 MySQL 服务</h4><ul>
+<li>service mysqld restart</li>
+</ul>
+<h4 id="查看-MySQL-服务进程和端口"><a href="#查看-MySQL-服务进程和端口" class="headerlink" title="查看 MySQL 服务进程和端口"></a>查看 MySQL 服务进程和端口</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep mysql</span><br><span class="line">netstat -tunpl | grep <span class="number">3306</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>ps 命令是 Process Status 的缩写</li>
+<li>ps 命令用来列出系统中当前运行的那些进程。ps 命令列出的是当前那些进程的快照，就是执行 ps 命令的那个时刻的那些进程，如果想要动态的显示进程信息，就可以使用 top 命令。<a href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ps.html#id7" target="_blank" rel="noopener">ps 命令详情实例查看这里</a></li>
+<li>netstat 是显示各种网络信息的工具</li>
+</ul>
+<h4 id="获取-mysql-默认密码"><a href="#获取-mysql-默认密码" class="headerlink" title="获取 mysql 默认密码"></a>获取 mysql 默认密码</h4><ul>
+<li>grep ‘temporary password’ /var/log/mysqld.log</li>
+<li>如果没有反应，需要重置密码</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root</span><br><span class="line">use mysql;</span><br><span class="line">update user set password=password(<span class="string">'123456'</span>) where user=<span class="string">'root'</span>;</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> user where user=<span class="string">''</span>;<span class="comment">//删除空用户</span></span><br><span class="line">systemctl restart mysql<span class="comment">//重启mysql</span></span><br></pre></td></tr></table></figure>
+<h4 id="需要远程连接"><a href="#需要远程连接" class="headerlink" title="需要远程连接"></a>需要远程连接</h4><ul>
+<li>开放 3306 端口</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld.service <span class="comment">//启动防火墙</span></span><br><span class="line">firewall-cmd --permanent --add-port=<span class="number">3306</span>/tcp</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<ul>
+<li>开启远程登录</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">use mysql;</span><br><span class="line">update user set host=<span class="string">'%'</span> where user=<span class="string">'root'</span> and host=<span class="string">'localhost'</span>;</span><br><span class="line">exit；</span><br><span class="line">systemctl restart mysql<span class="comment">//重启mysql</span></span><br></pre></td></tr></table></figure>
+<h2 id="阿里云远程连接的坑"><a href="#阿里云远程连接的坑" class="headerlink" title="阿里云远程连接的坑"></a>阿里云远程连接的坑</h2><ul>
+<li>在外面怎么连接 mysql 各种超时，即使把防火墙关了也无济于事。是因为阿里云有个<a href="https://help.aliyun.com/document_detail/25471.html" target="_blank" rel="noopener">安全组策略</a></li>
+<li><a href="https://blog.csdn.net/u010955892/article/details/72774920" target="_blank" rel="noopener">在安全组策略配置 3306 端口开放</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/08/06/think-douyin/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1786,161 +1951,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/05/27/study-DijKstra/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/05/27/study-DijKstra/" itemprop="url">读《图解算法》06-狄克斯特拉算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-27T19:45:02+08:00">
-                2018-05-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="为什么有狄克斯特拉算法"><a href="#为什么有狄克斯特拉算法" class="headerlink" title="为什么有狄克斯特拉算法"></a>为什么有狄克斯特拉算法</h1><blockquote>
-<p>这里的时间，换句话，我们给边加上了权重</p>
-</blockquote>
-<ul>
-<li>之前 BFS 求出了最短路径，那么如果我们给边加上了时间呢？</li>
-<li>发现最短路径并不是最快路径</li>
-</ul>
-<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ul>
-<li>找出最便宜的节点，就是说可以在最短时间内到达的节点（算法关键）</li>
-<li>更新该节点的邻居的开销，检查是否有前往他们的更短路径，有就更新</li>
-<li>重复这个过程，直到对图中的每个节点都这样做了</li>
-<li>计算最终路径</li>
-</ul>
-<h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><ul>
-<li>权重：狄克斯特拉算法用于每条边都有关联数字的图，这些关联数字叫做权重</li>
-<li>带权重的图叫做加权图，计算最短路径用狄克斯特拉算法</li>
-<li>不带权重的叫非加权图，计算最短路径用广度优先搜索</li>
-<li>图还可能有环</li>
-<li>负权边：权重是负的。</li>
-<li>有负权边的情况，不能使用狄克斯特拉算法。因为该算法这样假设：对于处理过的节点，没有前往该节点的更短路径，只要在没有负权边才成立。应该使用贝尔曼-福德算法。</li>
-</ul>
-<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><ul>
-<li>需要三个散列表<ul>
-<li>图的散列表</li>
-<li>节点的开销的散列表</li>
-<li>存储父节点的散列表</li>
-</ul>
-</li>
-<li>需要一个数组，用于记录处理过的节点，不用多次处理</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如何表示加权图</span></span><br><span class="line">graph = &#123;&#125;;</span><br><span class="line">graph[<span class="string">"start"</span>] = &#123;&#125;;</span><br><span class="line">graph[<span class="string">"start"</span>][<span class="string">"a"</span>] = <span class="number">6</span>;</span><br><span class="line">graph[<span class="string">"start"</span>][<span class="string">"b"</span>] = <span class="number">2</span>;</span><br><span class="line">graph[<span class="string">"a"</span>] = &#123;&#125;;</span><br><span class="line">graph[<span class="string">"a"</span>][<span class="string">"fin"</span>] = <span class="number">1</span>;</span><br><span class="line">graph[<span class="string">"b"</span>] = &#123;&#125;;</span><br><span class="line">graph[<span class="string">"b"</span>][<span class="string">"a"</span>] = <span class="number">3</span>;</span><br><span class="line">graph[<span class="string">"b"</span>][<span class="string">"fin"</span>] = <span class="number">5</span>;</span><br><span class="line">graph[<span class="string">"fin"</span>] = &#123;&#125;; <span class="comment">//终点没有任何邻居</span></span><br><span class="line"><span class="comment">//开销表</span></span><br><span class="line">costs = &#123;&#125;;</span><br><span class="line">costs[<span class="string">"a"</span>] = <span class="number">6</span>;</span><br><span class="line">costs[<span class="string">"b"</span>] = <span class="number">2</span>;</span><br><span class="line">costs[<span class="string">"fin"</span>] = infinity;</span><br><span class="line"></span><br><span class="line"><span class="comment">//父节点表</span></span><br><span class="line">parents = &#123;&#125;;</span><br><span class="line">parents[<span class="string">"a"</span>] = <span class="string">"start"</span>;</span><br><span class="line">parents[<span class="string">"b"</span>] = <span class="string">"start"</span>;</span><br><span class="line">parents[<span class="string">"fin"</span>] = None;</span><br><span class="line"><span class="comment">//算法</span></span><br><span class="line">node = find_lowest_cost_node(costs)  <span class="comment">//在未处理的节点中找出开销最小的节点</span></span><br><span class="line"><span class="keyword">while</span> node is not None:  <span class="comment">//←------这个while循环在所有节点都被处理过后结束</span></span><br><span class="line">    cost = costs[node]</span><br><span class="line">    neighbors = graph[node]</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> neighbors.keys():  <span class="comment">//←------遍历当前节点的所有邻居</span></span><br><span class="line">        new_cost = cost + neighbors[n]</span><br><span class="line">        <span class="keyword">if</span> costs[n] &gt; new_cost:  <span class="comment">//←------如果经当前节点前往该邻居更近，</span></span><br><span class="line">            costs[n] = new_cost  <span class="comment">//←------就更新该邻居的开销</span></span><br><span class="line">            parents[n] = node  <span class="comment">//←------同时将该邻居的父节点设置为当前节点</span></span><br><span class="line">    processed.append(node)  <span class="comment">//←------将当前节点标记为处理过</span></span><br><span class="line">    node = find_lowest_cost_node(costs)  <span class="comment">//←------找出接下来要处理的节点，并循环</span></span><br><span class="line"><span class="comment">//找出最便宜的节点且没处理过的函数</span></span><br><span class="line">def find_lowest_cost_node(costs):</span><br><span class="line">    lowest_cost = float(<span class="string">"inf"</span>)</span><br><span class="line">    lowest_cost_node = None</span><br><span class="line">    <span class="keyword">for</span> node <span class="keyword">in</span> costs: <span class="comment">// ←------遍历所有的节点</span></span><br><span class="line">        cost = costs[node]</span><br><span class="line">        <span class="keyword">if</span> cost &lt; lowest_cost and node not <span class="keyword">in</span> processed:  <span class="comment">//←------如果当前节点的开销更低且未处理过，</span></span><br><span class="line">            lowest_cost = cost <span class="comment">// ←------就将其视为开销最低的节点</span></span><br><span class="line">            lowest_cost_node = node</span><br><span class="line">    <span class="keyword">return</span> lowest_cost_node</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/8/">8</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1988,7 +2003,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
