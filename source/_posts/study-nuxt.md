@@ -85,12 +85,12 @@ const config = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [{ src: '~plugins/vant', ssr: true },
-    { src: '~/plugins/proxy.ts', ssr: true },
+   plugins: [{ src: '~plugins/vant', ssr: false },
+    { src: '~/plugins/proxy.ts' },
     { src: '~/plugins/dayjs.ts', ssr: true },
     { src: '~/plugins/ramda.ts', ssr: true },
     { src: '~/plugins/throttle-debounce.ts', ssr: true },
-    { src: '~/plugins/echarts.ts', ssr: true }],
+    { src: '~/plugins/echarts.ts', ssr: false }],
   /*
   ** Nuxt.js modules
   */
@@ -213,6 +213,8 @@ module.exports = config
 
 # 部署
 
+## Nginx
+
 > 假设域名为a.com,该域名映射到pc端网站（vue的spa）。a.com/m映射到服务端（nuxt启动的服务，移动端网站）
 
 - nginx配置如下
@@ -324,3 +326,41 @@ server {
 
 ```
 - 同时nuxt配置router的base为`/m`
+
+## 守护进程
+
+pm2可使进程常驻
+
+```js
+module.exports = {
+  apps: [{
+    name: 'h5-nuxt-ssr',
+    cwd: './',//当前工作路径
+    script: 'npm',// 实际启动脚本
+    args: ['start', '--max-memory-restart 500M'],/参数
+    autorestart: true,
+    watch: ['nuxt-dist', 'client', 'server', 'nuxt.config.ts'],// 监控变化的目录，一旦变化，自动重启
+    watch_delay: 1000,
+    ignore_watch: ['node_modules'],// 从监控目录中排除
+    watch_options: {
+      followSymlinks: false,
+      usePolling: true
+    },
+    error_file: './logs/app-err.log',//错误日志
+    out_file: './logs/app-out.log'//输出日志
+  }]
+}
+
+```
+最好配置脚本在package.json里
+
+- "pm2-start": "yarn build && pm2 start pm2.config.js"
+- "pm2-delete": "pm2 delete h5-nuxt-ssr",
+- "pm2-monit": "pm2 monit h5-nuxt-ssr"
+
+### 开机自动启动
+
+> 我们希望直接通过服务器重启之后能自动启动
+
+- 通过pm2 save保存当前进程状态。
+- pm2 startup
