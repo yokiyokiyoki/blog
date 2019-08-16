@@ -59,3 +59,7 @@ postcss: [require('postcss-pxtorem')({
 
 在rem方案中，如果没有特殊处理，1px的线条在 dpr 大于 1 的设备会比较粗。根本原因是1px可能会占用两个物理像素点或以上。
 可以采用 transform: scale(0.5);来解决，在上面的selectorBlackList添加'.ui-hairline'
+
+# 相关资料
+
+- [移动WEB的硬知识](https://juejin.im/post/5c9cc7b6f265da6102099f36)
