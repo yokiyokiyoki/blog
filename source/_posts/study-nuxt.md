@@ -329,6 +329,8 @@ server {
 
 ## 守护进程
 
+> [pm2使用入门](https://imweb.io/topic/57c8cbb27f226f687b365636)
+
 pm2可使进程常驻
 
 ```js
