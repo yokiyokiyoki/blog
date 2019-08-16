@@ -264,6 +264,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/08/16/study-nuxt/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/08/16/study-nuxt/" itemprop="url">nuxt初步</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-16T11:44:20+08:00">
+                2019-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><h2 id="SSR与CSR的相爱相杀"><a href="#SSR与CSR的相爱相杀" class="headerlink" title="SSR与CSR的相爱相杀"></a>SSR与CSR的相爱相杀</h2><p>首先看一下传统的web开发，传统的web开发是，客户端向服务端发送请求，服务端查询数据库，拼接HTML字符串（模板），通过一系列的数据处理之后，把整理好的HTML返回给客户端,浏览器相当于打开了一个页面。这种比如我们经常听说过的jsp,PHP,aspx也就是传统的MVC的开发。</p>
+<p>SPA应用，到了Vue、React，单页面应用优秀的用户体验，逐渐成为了主流，页面整体式javaScript渲染出来的，称之为客户端渲染CSR。SPA渲染过程。由客户端访问URL发送请求到服务端，返回HTML结构（但是SPA的返回的HTML结构是非常的小的，只有一个基本的结构）。客户端接收到返回结果之后，在客户端开始渲染HTML，渲染时执行对应javaScript，最后渲染template，渲染完成之后，再次向服务端发送数据请求，注意这里时数据请求，服务端返回json格式数据。客户端接收数据，然后完成最终渲染。</p>
+<p>SPA虽然给服务器减轻了压力，但是也是有缺点的：</p>
+<ul>
+<li>首屏渲染时间比较长：必须等待JavaScript加载完毕，并且执行完毕，才能渲染出首屏。</li>
+<li>SEO不友好：爬虫只能拿到一个div元素，认为页面是空的，不利于SEO。</li>
+</ul>
+<p>为了解决如上两个问题，出现了SSR解决方案，后端渲染出首屏的DOM结构返回，前端拿到内容带上首屏，后续的页面操作，再用单页面路由和渲染，称之为服务端渲染(SSR)。</p>
+<p>SSR渲染流程是这样的，客户端发送URL请求到服务端，服务端读取对应的url的模板信息，在服务端做出html和数据的渲染，渲染完成之后返回html结构，客户端这时拿到的之后首屏页面的html结构。所以用户在浏览首屏的时候速度会很快，因为客户端不需要再次发送ajax请求。并不是做了SSR我们的页面就不属于SPA应用了，它仍然是一个独立的spa应用。</p>
+<p>SSR是处于CSR与SPA应用之间的一个折中的方案，在渲染首屏的时候在服务端做出了渲染，注意仅仅是首屏，其他页面还是需要在客户端渲染的，在服务端接收到请求之后并且渲染出首屏页面，会携带着剩余的路由信息预留给客户端去渲染其他路由的页面。</p>
+<h1 id="渲染流程"><a href="#渲染流程" class="headerlink" title="渲染流程"></a>渲染流程</h1><p>从服务端到客户端的一个过程，主要查看官网。</p>
+<p>注意：vue的生命周期created和beforeCreated在客户端和服务端同时执行。</p>
+<h1 id="布局思想"><a href="#布局思想" class="headerlink" title="布局思想"></a>布局思想</h1><ul>
+<li>layouts</li>
+<li>pages</li>
+<li>components</li>
+</ul>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  server: &#123;</span><br><span class="line">    host: <span class="string">'localhost'</span>,</span><br><span class="line">    port: <span class="number">16700</span> <span class="comment">// default: 3000</span></span><br><span class="line">  &#125;,</span><br><span class="line">  mode: <span class="string">'universal'</span>,</span><br><span class="line">  <span class="comment">// 源码目录,分层使之有客户端和服务端</span></span><br><span class="line">  srcDir: <span class="string">'client/'</span>,</span><br><span class="line">  <span class="comment">// 打包目录</span></span><br><span class="line">  buildDir: <span class="string">'nuxt-dist'</span>,</span><br><span class="line">  env: &#123;</span><br><span class="line">    baseUrl: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'linker.sz.datastory.com.cn/m'</span> : <span class="string">'linker.sz.datastory.com.cn'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  router: &#123;</span><br><span class="line">    base: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'/m/'</span> : <span class="string">''</span>,</span><br><span class="line">    middleware: <span class="string">'permission'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Headers of the page</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  head: &#123;</span><br><span class="line">    title: <span class="string">'数说领客'</span>,</span><br><span class="line">    meta: [&#123; <span class="attr">charset</span>: <span class="string">'utf-8'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">name</span>: <span class="string">'viewport'</span>, <span class="attr">content</span>: <span class="string">'width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">hid</span>: <span class="string">'description'</span>, <span class="attr">name</span>: <span class="string">'description'</span>, <span class="attr">content</span>: process.env.npm_package_description || <span class="string">''</span> &#125;],</span><br><span class="line">    link: [&#123; <span class="attr">rel</span>: <span class="string">'icon'</span>, <span class="attr">type</span>: <span class="string">'image/x-icon'</span>, <span class="attr">href</span>: <span class="string">'/favicon.ico'</span> &#125;],</span><br><span class="line">    <span class="comment">// eslint-disable-next-line array-bracket-newline</span></span><br><span class="line">    script: [</span><br><span class="line">      <span class="comment">// flexible</span></span><br><span class="line">      &#123; <span class="attr">src</span>: <span class="string">'//g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js'</span>, <span class="attr">type</span>: <span class="string">'text/javascript'</span>, <span class="attr">charset</span>: <span class="string">'utf-8'</span> &#125;,</span><br><span class="line">      <span class="comment">// 接入微信js</span></span><br><span class="line">      &#123; <span class="attr">src</span>: <span class="string">'//res.wx.qq.com/open/js/jweixin-1.4.0.js'</span>, <span class="attr">type</span>: <span class="string">'text/javascript'</span>, <span class="attr">charset</span>: <span class="string">'utf-8'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">src</span>: <span class="string">'//cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'</span>, <span class="attr">type</span>: <span class="string">'text/javascript'</span>, <span class="attr">charset</span>: <span class="string">'utf-8'</span> &#125;</span><br><span class="line">    <span class="comment">// eslint-disable-next-line array-bracket-newline</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Customize the progress-bar color</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  loading: &#123; <span class="attr">color</span>: <span class="string">'#fff'</span> &#125;,</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Global CSS</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  css: [<span class="string">'~/assets/styles/app.less'</span>],</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Plugins to load before mounting the App</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">   plugins: [&#123; <span class="attr">src</span>: <span class="string">'~plugins/vant'</span>, <span class="attr">ssr</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">src</span>: <span class="string">'~/plugins/proxy.ts'</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">src</span>: <span class="string">'~/plugins/dayjs.ts'</span>, <span class="attr">ssr</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">src</span>: <span class="string">'~/plugins/ramda.ts'</span>, <span class="attr">ssr</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">src</span>: <span class="string">'~/plugins/throttle-debounce.ts'</span>, <span class="attr">ssr</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">src</span>: <span class="string">'~/plugins/echarts.ts'</span>, <span class="attr">ssr</span>: <span class="literal">false</span> &#125;],</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Nuxt.js modules</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="comment">// eslint-disable-next-line array-bracket-newline</span></span><br><span class="line">  modules: [</span><br><span class="line">    <span class="comment">// Doc: https://axios.nuxtjs.org/usage</span></span><br><span class="line">    <span class="string">'@nuxtjs/axios'</span>,</span><br><span class="line">    <span class="string">'@nuxtjs/pwa'</span>,</span><br><span class="line">    <span class="string">'@nuxtjs/eslint-module'</span>,</span><br><span class="line">    <span class="string">'@nuxtjs/style-resources'</span>],</span><br><span class="line">  styleResources: &#123;</span><br><span class="line">    less: [<span class="string">'./assets/styles/variable.less'</span>]</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Axios module configuration</span></span><br><span class="line"><span class="comment">  ** See https://axios.nuxtjs.org/options</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  axios: &#123;</span><br><span class="line">    proxy: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * proxy中间件</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  proxy: &#123;</span><br><span class="line">    <span class="string">'/mock'</span>: &#123;</span><br><span class="line">      target: <span class="string">'https://easy-mock.com/mock/5cc7f9cba978170c5029aaeb/linker'</span>,</span><br><span class="line">      changeOrigin: <span class="literal">true</span>,</span><br><span class="line">      pathRewrite: &#123;</span><br><span class="line">        <span class="string">'^/mock'</span>: <span class="string">''</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'/api'</span>: &#123;</span><br><span class="line">      target: <span class="string">'http://linker.sz.datastory.com.cn'</span></span><br><span class="line">      <span class="comment">// pathRewrite: &#123;</span></span><br><span class="line">      <span class="comment">//   '^/api': '/'</span></span><br><span class="line">      <span class="comment">// &#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Build configuration</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  build: &#123;</span><br><span class="line">    analyze: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    ** You can extend webpack config here</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    extend(config, ctx) &#123;</span><br><span class="line">      <span class="keyword">if</span> (ctx.isClient) &#123;</span><br><span class="line">        config.output.filename = ctx.isDev ? <span class="string">'[name].js'</span> : <span class="string">'[name].[chunkhash].js'</span></span><br><span class="line">        config.output.chunkFilename = ctx.isDev ? <span class="string">'[name].js'</span> : <span class="string">'[name].[chunkhash].js'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    optimization: &#123;</span><br><span class="line">      splitChunks: &#123;</span><br><span class="line">        chunks: <span class="string">'all'</span>,</span><br><span class="line">        automaticNameDelimiter: <span class="string">'.'</span>,</span><br><span class="line">        maxAsyncRequests: <span class="number">7</span>,</span><br><span class="line">        cacheGroups: &#123;</span><br><span class="line">          ramda: &#123;</span><br><span class="line">            test: <span class="regexp">/node_modules[\\/]ramda/</span>,</span><br><span class="line">            chunks: <span class="string">'all'</span>,</span><br><span class="line">            priority: <span class="number">20</span>,</span><br><span class="line">            name: <span class="literal">true</span></span><br><span class="line">          &#125;,</span><br><span class="line">          echarts: &#123;</span><br><span class="line">            test: <span class="regexp">/node_modules[\\/]echarts/</span>,</span><br><span class="line">            chunks: <span class="string">'all'</span>,</span><br><span class="line">            priority: <span class="number">20</span>,</span><br><span class="line">            name: <span class="literal">true</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      runtimeChunk: <span class="string">'single'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">      layouts: <span class="literal">false</span>,</span><br><span class="line">      pages: <span class="literal">true</span>,</span><br><span class="line">      commons: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    filenames: &#123;</span><br><span class="line">      app: <span class="function">(<span class="params">&#123; isDev, isClient, isServer &#125;</span>) =&gt;</span> isDev ? <span class="string">'[name].js'</span> : <span class="string">'[name].[chunkhash].js'</span>,</span><br><span class="line">      chunk: <span class="function">(<span class="params">&#123; isDev, isClient, isServer &#125;</span>) =&gt;</span> isDev ? <span class="string">'[name].js'</span> : <span class="string">'[name].[chunkhash].js'</span>,</span><br><span class="line">      css: <span class="function">(<span class="params">&#123; isDev &#125;</span>) =&gt;</span> isDev ? <span class="string">'[name].css'</span> : <span class="string">'[contenthash].css'</span>,</span><br><span class="line">      img: <span class="function">(<span class="params">&#123; isDev &#125;</span>) =&gt;</span> isDev ? <span class="string">'[path][name].[ext]'</span> : <span class="string">'img/[hash:7].[ext]'</span>,</span><br><span class="line">      font: <span class="function">(<span class="params">&#123; isDev &#125;</span>) =&gt;</span> isDev ? <span class="string">'[path][name].[ext]'</span> : <span class="string">'fonts/[hash:7].[ext]'</span>,</span><br><span class="line">      video: <span class="function">(<span class="params">&#123; isDev &#125;</span>) =&gt;</span> isDev ? <span class="string">'[path][name].[ext]'</span> : <span class="string">'videos/[hash:7].[ext]'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    babel: &#123;</span><br><span class="line">      <span class="comment">// eslint-disable-next-line array-bracket-newline</span></span><br><span class="line">      plugins: [</span><br><span class="line">        <span class="comment">// 按需导入</span></span><br><span class="line">        [<span class="string">'component'</span>, &#123;</span><br><span class="line">          libraryName: <span class="string">'vant'</span>,</span><br><span class="line">          libraryDirectory: <span class="string">'es'</span>,</span><br><span class="line">          style: <span class="literal">false</span></span><br><span class="line">        &#125;, <span class="string">'vant'</span>],</span><br><span class="line">        <span class="comment">// nuxt-property-decorator</span></span><br><span class="line">        [<span class="string">'@babel/plugin-transform-runtime'</span>],</span><br><span class="line">        <span class="comment">// nuxt-property-decorator</span></span><br><span class="line">        [<span class="string">'@babel/plugin-proposal-decorators'</span>, &#123; <span class="attr">legacy</span>: <span class="literal">true</span> &#125;],</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        [<span class="string">'@babel/plugin-proposal-class-properties'</span>, &#123; <span class="attr">loose</span>: <span class="literal">true</span> &#125;]</span><br><span class="line"></span><br><span class="line">      <span class="comment">// eslint-disable-next-line array-bracket-newline</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    postcss: [<span class="built_in">require</span>(<span class="string">'postcss-pxtorem'</span>)(&#123;</span><br><span class="line">      rootValue: <span class="number">37.5</span>, <span class="comment">// 设计稿是750px</span></span><br><span class="line">      propList: [<span class="string">'*'</span>],</span><br><span class="line">      selectorBlackList: [] <span class="comment">// 排除转换van</span></span><br><span class="line">    &#125;)],</span><br><span class="line">    publicPath: <span class="string">'/dist/client/'</span></span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = config</span><br></pre></td></tr></table></figure>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><blockquote>
+<p>假设域名为a.com,该域名映射到pc端网站（vue的spa）。a.com/m映射到服务端（nuxt启动的服务，移动端网站）</p>
+</blockquote>
+<ul>
+<li>nginx配置如下</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">upstream gateway_svr &#123;</span><br><span class="line">    server sznode1:16800;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">upstream h5_nuxt_ssr &#123;</span><br><span class="line">    <span class="comment">#h5移动端渲染</span></span><br><span class="line">    server 127.0.0.1:16700;</span><br><span class="line">    keepalive 64;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">map <span class="variable">$sent_http_content_type</span> <span class="variable">$expires</span> &#123;</span><br><span class="line">    <span class="string">"text/html"</span>                 epoch;</span><br><span class="line">    <span class="string">"text/html; charset=utf-8"</span>  epoch;</span><br><span class="line">    default                     off;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name   linker.sz.datastory.com.cn;</span><br><span class="line"></span><br><span class="line">   client_max_body_size 10M;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 0代表是pc端，1是移动端微信</span></span><br><span class="line">   <span class="built_in">set</span> <span class="variable">$wechatMobile_request</span>  0; </span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (<span class="variable">$http_user_agent</span> ~* MicroMessenger)&#123;</span><br><span class="line">            <span class="built_in">set</span> <span class="variable">$wechatMobile_request</span> 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># pc端静态资源</span></span><br><span class="line">    location ~* ^/static/.* &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$request_uri</span> ~ <span class="string">"[&amp;\?]max_age=([0-9]+)"</span>) &#123;</span><br><span class="line">            add_header <span class="string">"Cache-Control"</span> <span class="string">"max-age=<span class="variable">$1</span>"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        root /home/linker-frontend/dist;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># h5移动端</span></span><br><span class="line">    location ~* ^/dist/.* &#123;</span><br><span class="line">        root /home/linker-h5-frontend-root/nuxt-dist;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    location  /mock/ &#123;</span><br><span class="line">        root html;</span><br><span class="line">        proxy_connect_timeout 300s;</span><br><span class="line">        proxy_send_timeout   600s;</span><br><span class="line">        proxy_read_timeout   600s;</span><br><span class="line">        send_timeout 600s;</span><br><span class="line">        index  index.html index.htm index.php  index.jsp index.do default.do default.jsp default.html default.php;</span><br><span class="line">        proxy_next_upstream error http_503 http_504;</span><br><span class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        proxy_http_version 1.1; </span><br><span class="line">        proxy_set_header Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        proxy_set_header Connection <span class="string">"upgrade"</span>;</span><br><span class="line">        proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">        proxy_pass         https://easy-mock.com/mock/5cc7f9cba978170c5029aaeb/linker/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location  /api/ &#123;</span><br><span class="line">        root html;</span><br><span class="line">        proxy_connect_timeout 300s;</span><br><span class="line">        proxy_send_timeout   600s;</span><br><span class="line">        proxy_read_timeout   600s;</span><br><span class="line">        send_timeout 600s;</span><br><span class="line">        index  index.html index.htm index.php  index.jsp index.do default.do default.jsp default.html default.php;</span><br><span class="line">        proxy_next_upstream error http_503 http_504;</span><br><span class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        proxy_http_version 1.1; </span><br><span class="line">        proxy_set_header Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        proxy_set_header Connection <span class="string">"upgrade"</span>;</span><br><span class="line">        proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">        proxy_pass	http://gateway_svr/;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    location /m/ &#123;</span><br><span class="line">        expires <span class="variable">$expires</span>;</span><br><span class="line"></span><br><span class="line">        proxy_redirect                      off;</span><br><span class="line">        proxy_set_header Host               <span class="variable">$host</span>;</span><br><span class="line">        proxy_set_header X-Real-IP          <span class="variable">$remote_addr</span>;</span><br><span class="line">        proxy_set_header X-Forwarded-For    <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto  <span class="variable">$scheme</span>;</span><br><span class="line">        proxy_read_timeout          1m;</span><br><span class="line">        proxy_connect_timeout       1m;</span><br><span class="line">        proxy_pass                          http://h5_nuxt_ssr; </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root /home/linker-frontend/dist;</span><br><span class="line">        index index.html index.htm index.php index.jsp index.do default.do   default.jsp default.html default.php;</span><br><span class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.html;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同时nuxt配置router的base为<code>/m</code></li>
+</ul>
+<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><p>pm2可使进程常驻</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  apps: [&#123;</span><br><span class="line">    name: <span class="string">'h5-nuxt-ssr'</span>,</span><br><span class="line">    cwd: <span class="string">'./'</span>,<span class="comment">//当前工作路径</span></span><br><span class="line">    script: <span class="string">'npm'</span>,<span class="comment">// 实际启动脚本</span></span><br><span class="line">    args: [<span class="string">'start'</span>, <span class="string">'--max-memory-restart 500M'</span>],/参数</span><br><span class="line">    autorestart: <span class="literal">true</span>,</span><br><span class="line">    watch: [<span class="string">'nuxt-dist'</span>, <span class="string">'client'</span>, <span class="string">'server'</span>, <span class="string">'nuxt.config.ts'</span>],<span class="comment">// 监控变化的目录，一旦变化，自动重启</span></span><br><span class="line">    watch_delay: <span class="number">1000</span>,</span><br><span class="line">    ignore_watch: [<span class="string">'node_modules'</span>],<span class="comment">// 从监控目录中排除</span></span><br><span class="line">    watch_options: &#123;</span><br><span class="line">      followSymlinks: <span class="literal">false</span>,</span><br><span class="line">      usePolling: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    error_file: <span class="string">'./logs/app-err.log'</span>,<span class="comment">//错误日志</span></span><br><span class="line">    out_file: <span class="string">'./logs/app-out.log'</span><span class="comment">//输出日志</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最好配置脚本在package.json里</p>
+<ul>
+<li>“pm2-start”: “yarn build &amp;&amp; pm2 start pm2.config.js”</li>
+<li>“pm2-delete”: “pm2 delete h5-nuxt-ssr”,</li>
+<li>“pm2-monit”: “pm2 monit h5-nuxt-ssr”</li>
+</ul>
+<h3 id="开机自动启动"><a href="#开机自动启动" class="headerlink" title="开机自动启动"></a>开机自动启动</h3><blockquote>
+<p>我们希望直接通过服务器重启之后能自动启动</p>
+</blockquote>
+<ul>
+<li>通过pm2 save保存当前进程状态。</li>
+<li>pm2 startup</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/04/30/use-sftp-bash-deploy/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1745,152 +1907,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/08/06/think-douyin/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/08/06/think-douyin/" itemprop="url">关于抖音爬虫的复盘</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T13:52:39+08:00">
-                2018-08-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li>因为腾讯微视这边想知道做抖音的分析是大概一个怎么样的情况，我们可以做个 demo（抓的量极少，9000 个用户包括他们的粉丝和关注），通过数学建模尝试给他们方案（他们也不知道自己想要什么）</li>
-</ul>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h4 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h4><ul>
-<li>一开始爬虫组给了两个接口，通过 uid 分别拿到粉丝和关注的（上限最多 5000 个），但是这里拿不到用户的粉丝数和关注数（重要信息），只能根据粉丝数组来算，但是最多 5000 个不准确，后来换了新的能抓精确数的接口</li>
-<li>我通过一个 uid 递归抓取粉丝接口，直到拿满 9000 个用户</li>
-</ul>
-<h4 id="如何写"><a href="#如何写" class="headerlink" title="如何写"></a>如何写</h4><ul>
-<li>通过 python 的 requests 库，加上 ua 请求头（模拟手机登网页），请求接口，抓回来的数据写入 csv</li>
-<li>但是抓回来的数据发现了一个问题，就是会错行，如果抖音用户心情那里有换行，会导致 csv 换行，就会错（这个解决办法暂时是不抓心情）</li>
-<li>抓回来的数据其实极大，统共粉丝+关注有 1 千多万，并没有想的那么小</li>
-<li>一直以为 csv 是只能用逗号，没想到还能用\t 分割，csv 读出来可以选择分割的模式</li>
-<li>爬虫不能连续爬，写个循环你以为就完事了吗，马上就被封 ip（表现为拿回来的全是空数组），所以我每次请求 sleep 一秒钟</li>
-<li>单线程跑其实挺慢的，如果可以多线程，有 ip 池就好了</li>
-</ul>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ul>
-<li>做个模型分析的话其实挺好玩的</li>
-<li>用 9599 个用户拓展出了 15122878 个用户（1 千 5 百万的用户），其中 1303439 个不重复 id（130 多万）</li>
-<li>KOL 在 9599 个用户中的占比为 0.115%，即为 9599 个用户中有 11 个 KOL（粉丝大于 1 万即 kol 用户）</li>
-<li>把 9599 个用户分成 3 组，用户 A 组 3200 个，用户 B 组 3200 个，用户 C 组 3199 个<ul>
-<li>用户 A 组：平均粉丝数 89.71，平均关注数 1139.41</li>
-<li>用户 B 组：平均粉丝数 109.59，平均关注数 1481.78</li>
-<li>用户 C 组：平均粉丝数 69.75，平均关注数 1324.39</li>
-</ul>
-</li>
-<li>然后丢给分析师吧</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1943,7 +1959,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1956,7 +1972,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
