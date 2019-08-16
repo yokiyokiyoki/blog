@@ -377,6 +377,9 @@
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">postcss: [<span class="built_in">require</span>(<span class="string">'postcss-pxtorem'</span>)(&#123;</span><br><span class="line">    rootValue: <span class="number">37.5</span>, <span class="comment">// 设计稿是750px</span></span><br><span class="line">    propList: [<span class="string">'*'</span>],</span><br><span class="line">    unitPrecision: <span class="number">3</span>,        <span class="comment">// 指定`px`转换为`rem`单位值的小数位数（很多时候无法整除）</span></span><br><span class="line">    selectorBlackList: [<span class="string">'.ignore '</span>,<span class="string">'.hairlines'</span>], <span class="comment">//  指定不转换为`rem`单位的类，可以自定义，可以无限添加,建议定义一至两个通用的类名</span></span><br><span class="line">    minPixelValue: <span class="number">2</span>       <span class="comment">// 设置要替换的最小像素值(大于或等于`2px`才转换为`rem`单位)，你也可以设置为你想要的值</span></span><br><span class="line">&#125;)]</span><br></pre></td></tr></table></figure>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="处理1像素边框"><a href="#处理1像素边框" class="headerlink" title="处理1像素边框"></a>处理1像素边框</h3><p>在rem方案中，如果没有特殊处理，1px的线条在 dpr 大于 1 的设备会比较粗。根本原因是1px可能会占用两个物理像素点或以上。<br>可以采用 transform: scale(0.5);来解决，在上面的selectorBlackList添加’.ui-hairline’</p>
+<h1 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h1><ul>
+<li><a href="https://juejin.im/post/5c9cc7b6f265da6102099f36" target="_blank" rel="noopener">移动WEB的硬知识</a></li>
+</ul>
 
           
         
