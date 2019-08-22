@@ -264,6 +264,135 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/08/22/study-node-debugger/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2019/08/22/study-node-debugger/" itemprop="url">node的基本调试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-22T17:08:26+08:00">
+                2019-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="vscode调试"><a href="#vscode调试" class="headerlink" title="vscode调试"></a>vscode调试</h1><h2 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h2><p>无须多言</p>
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><blockquote>
+<p>两种模式</p>
+</blockquote>
+<ul>
+<li>一种是通过node的launch，也就是直接启动项目的入口。这种方式最为直接，但是实际上并不是很方便，因为每一次调试都需要重新启动项目。</li>
+<li>另一种是通过attach的方式，使用node-inspector进行调试。</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">  <span class="attr">"configurations"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"Launch Program"</span>,</span><br><span class="line">      <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/build/app.js"</span>,</span><br><span class="line">      <span class="attr">"sourceMaps"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"outFiles"</span>: [ // 该选项指定了map文件的寻找路径</span><br><span class="line">        <span class="string">"build"</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="attr">"request"</span>: <span class="string">"attach"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"附加"</span>,</span><br><span class="line">      <span class="attr">"port"</span>: <span class="number">5858</span>,</span><br><span class="line">      <span class="attr">"timeout"</span>: <span class="number">10000</span>,</span><br><span class="line">      <span class="attr">"restart"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"address"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">      <span class="attr">"sourceMaps"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"outFiles"</span>: [</span><br><span class="line">        <span class="string">"build"</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.barretlee.com/blog/2015/10/07/debug-nodejs-in-command-line/" target="_blank" rel="noopener">NodeJS的代码调试和性能调优</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2019/08/16/study-mobile-rem/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1761,154 +1890,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yokiyokiyoki.github.io/blog/blog/2018/09/27/publish-vue-component/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yoki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/09/27/publish-vue-component/" itemprop="url">npm上发布vue组件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-27T21:05:42+08:00">
-                2018-09-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="创建组件"><a href="#创建组件" class="headerlink" title="创建组件"></a>创建组件</h2><ul>
-<li>通过 vue-cli 3 来创建一个组件</li>
-</ul>
-<h4 id="为什么通过-vue-cli3"><a href="#为什么通过-vue-cli3" class="headerlink" title="为什么通过 vue-cli3"></a>为什么通过 vue-cli3</h4><ul>
-<li>该脚手架允许构建不同的目标，包括应用，库</li>
-</ul>
-<h2 id="修改-src-目录文件如下"><a href="#修改-src-目录文件如下" class="headerlink" title="修改 src 目录文件如下"></a>修改 src 目录文件如下</h2><ul>
-<li>src<ul>
-<li>index.js(插件入口)</li>
-<li>fullpage.vue（组件）</li>
-</ul>
-</li>
-</ul>
-<h2 id="修改-package-json-的-script"><a href="#修改-package-json-的-script" class="headerlink" title="修改 package.json 的 script"></a>修改 package.json 的 script</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"serve"</span>: <span class="string">"vue-cli-service serve"</span>,</span><br><span class="line">    <span class="comment">// build lib</span></span><br><span class="line">    <span class="string">"build:lib"</span>: <span class="string">"vue-cli-service build --target lib --name v-fullpage ./src/index.js"</span>,</span><br><span class="line">    <span class="string">"lint"</span>: <span class="string">"vue-cli-service lint"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="打包生成第三方库"><a href="#打包生成第三方库" class="headerlink" title="打包生成第三方库"></a>打包生成第三方库</h2><ul>
-<li>yarn build:lib</li>
-<li>根目录下就会出现 dist 文件夹，包含不同版本的 .js 文件，而 v-fullpage.umd.min.js 文件就是给到用户使用的第三方库了</li>
-</ul>
-<h2 id="上传-npm"><a href="#上传-npm" class="headerlink" title="上传 npm"></a>上传 npm</h2><ul>
-<li>npm login</li>
-<li>package.json</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"name"</span>: <span class="string">"v-fullpage"</span>, <span class="comment">// 包名,上传名字前到npm查看是否有同名</span></span><br><span class="line"><span class="string">"description"</span>: <span class="string">"A Vue.js components"</span>,<span class="comment">//对包的描述，在npmjs.com上搜索时会显示，有助于用户在搜索时进行筛选</span></span><br><span class="line"><span class="string">"version"</span>: <span class="string">"0.2.0"</span>, <span class="comment">// 每次发布需比上一个版本高,不然不给你发布的</span></span><br><span class="line"><span class="string">"author"</span>: <span class="string">"youjie &lt;419703726@qq.com&gt;"</span>,</span><br><span class="line"><span class="string">"private"</span>: <span class="literal">false</span>,</span><br><span class="line"><span class="string">"main"</span>: <span class="string">"dist/v-fullpage.umd.min.js"</span>, <span class="comment">// 入口,import pkg from 'package-name'时，其实导入的就是main定义的文件，它可以是CommonJs格式的, 也可以是umd格式。需要注意的是，当你把一个包发布到npm上时，它同时也可以在unpkg上获取到。也就是说，你的代码既可能在NodeJs环境也可能浏览器环境执行。为此你需要用umd格式打包，并且在package.json定义unpkg字段，一般而言此时它的命名为name.min.js</span></span><br><span class="line"><span class="string">"repository"</span>: &#123;</span><br><span class="line">    <span class="string">"type"</span>: <span class="string">"git"</span>,</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">"https://github.com/yokiyokiyoki/vue-fullpage.git"</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">"bugs"</span>: &#123;</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">"https://github.com/yokiyokiyoki/vue-fullpage/issues"</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">"keywords"</span>: [</span><br><span class="line">    <span class="string">"vue"</span>,<span class="comment">//有助于用户搜索</span></span><br><span class="line">    <span class="string">"vue-component"</span></span><br><span class="line">],</span><br><span class="line"><span class="string">"private"</span>: <span class="literal">false</span>,<span class="comment">//false才行</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>npm publish</li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://github.com/yokiyokiyoki/vue-fullpage" target="_blank" rel="noopener">vue-fullpage</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1961,7 +1942,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
