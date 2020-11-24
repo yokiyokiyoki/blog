@@ -1002,7 +1002,7 @@ hexo-bunyan@^1.0.0:
 
 hexo-cli@^1.1.0:
   version "1.1.0"
-  resolved "http://registry.npmjs.org/hexo-cli/-/hexo-cli-1.1.0.tgz#496d238d4646dbfd1cf047b6dc5271bfb5cb798f"
+  resolved "https://registry.npmjs.org/hexo-cli/-/hexo-cli-1.1.0.tgz#496d238d4646dbfd1cf047b6dc5271bfb5cb798f"
   dependencies:
     abbrev "^1.0.7"
     bluebird "^3.4.0"
@@ -1186,8 +1186,8 @@ hexo@^3.5.0:
     warehouse "^2.2.0"
 
 highlight.js@^9.4.0:
-  version "9.12.0"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
+  version "9.18.5"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.18.5.tgz#d18a359867f378c138d6819edfc2a8acd5f29825"
 
 hoek@2.x.x:
   version "2.16.3"
